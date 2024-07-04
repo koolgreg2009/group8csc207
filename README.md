@@ -1,4 +1,13 @@
-# group8csc207
+# 
+
+# Contributors
+* [Alex](https://github.com/lamberm2)
+* [Jane](https://github.com/snowykitkat)
+* [Jenny](https://github.com/yangje02)
+* [Joy](https://github.com/Joyce12345678)
+* [Justin](https://github.com/justinyoon95)
+* [Kevin](https://github.com/koolgreg2009)
+
 For our project, we plan to create a platform that lists verified and healthy pets for adoption.
 
 The program will act as a pet adoption site in which users are able to scroll through pets that are up for adoption. 
