@@ -1,5 +1,5 @@
-# 
-
+# Project: GBP 
+*The project name is currently a working title
 # Contributors
 * [Alex](https://github.com/lamberm2)
 * [Jane](https://github.com/snowykitkat)
