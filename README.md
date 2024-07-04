@@ -9,5 +9,4 @@ Additionally, users can set preferences on their profile page and use those pref
 The preference profile will include questions regarding the preferred pet type (i.e., dog, cat, frog, chinchilla, 
 fish, hamster, etc.), size, age, and personality to help find the perfect fit for the pet and the new owner. 
 
-UWU
  jeny was here
