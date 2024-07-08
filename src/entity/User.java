@@ -1,4 +1,7 @@
 package entity;
 
-public class User {
+public interface User {
+    void setUsername(String username);
+    void setPassword(String password);
+    void setProfile(Profile profile);
 }
