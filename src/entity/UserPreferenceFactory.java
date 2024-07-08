@@ -1,7 +1,8 @@
 package entity;
 
-public interface UserPreferenceFactory {
+public class UserPreferenceFactory implements UserPreferenceFactoryInt {
+    @Override
+    public void setUserPreference(UserPreference newPreference) {
 
-    void setUserPreference(UserPreference newPreference);
-
+    }
 }
