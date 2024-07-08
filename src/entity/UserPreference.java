@@ -6,7 +6,7 @@ import java.util.List;
 public class UserPreference implements UserPreferenceInt{
 
     private String species;
-    private ArrayList<> breeds;
+    private ArrayList<String> breeds;
     private int minAge;
     private int maxAge;
     private String activityLevel;
@@ -22,12 +22,12 @@ public class UserPreference implements UserPreferenceInt{
     }
 
     @Override
-    public void setBreeds(ArrayList<> breeds) {
+    public void setBreeds(ArrayList<String> breeds) {
         this.breeds = breeds;
     }
 
     @Override
-    public ArrayList<> getBreeds() {
+    public ArrayList<String> getBreeds() {
         return this.breeds;
     }
 
