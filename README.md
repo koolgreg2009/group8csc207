@@ -4,7 +4,7 @@
 * [Alex](https://github.com/lamberm2)
 * [Jane](https://github.com/snowykitkat)
 * [Jenny](https://github.com/yangje02)
-* [Joy](https://github.com/Joyce12345678)
+* [Joyce](https://github.com/Joyce12345678)
 * [Justin](https://github.com/justinyoon95)
 * [Kevin](https://github.com/koolgreg2009)
 
@@ -17,3 +17,8 @@ which they have to sign in to view the listed pets.
 Additionally, users can set preferences on their profile page and use those preferences as a filter in the search. 
 The preference profile will include questions regarding the preferred pet type (i.e., dog, cat, frog, chinchilla, 
 fish, hamster, etc.), size, age, and personality to help find the perfect fit for the pet and the new owner.
+
+* This project was written in Java, strictly adhering to Clean Architecture and the SOLID design principles.
+
+# APIs Used 
+TBA
