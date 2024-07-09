@@ -1,4 +1,4 @@
-package entity;
+package entity.Preference;
 
 public interface UserPreferenceFactoryInt {
 

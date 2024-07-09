@@ -1,6 +1,5 @@
-package entity;
+package entity.Preference;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface UserPreferenceInt {
@@ -8,8 +7,8 @@ public interface UserPreferenceInt {
     void setSpecies(String species);
     String getSpecies();
 
-    void setBreeds(ArrayList<String> breeds);
-    ArrayList<String> getBreeds();
+    void setBreeds(List<String> breeds);
+    List<String> getBreeds();
 
     void setMinAge(int min);
     int getMinAge();

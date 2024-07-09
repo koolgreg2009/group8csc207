@@ -1,4 +1,4 @@
-package entity;
+package entity.Preference;
 
 public class UserPreferenceFactory implements UserPreferenceFactoryInt {
     @Override
