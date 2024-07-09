@@ -17,8 +17,8 @@ public class Bookmark implements BookmarkInterface {
 
     public void createBookMark(Pet pet, LocalDateTime bookmarkedDate){
         /** Method to create a new individual bookmark.
-         * @param pet
-         * @param bookmarkedDate
+         * @param pet the pet that is to be bookmarked
+         * @param bookmarkedDate the date and time that pet is bookmarked
          */
         List<Object> bookmark = new ArrayList<>(2);
         bookmark.add(pet);
