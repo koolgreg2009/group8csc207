@@ -96,7 +96,7 @@ public class Pet{
     /**Gets the personality of the pet
      * @return A list of the pets's personality(s)
      */
-    public ArrayList getPetDetails(){
+    public List getPetDetails(){
         return personality;
     }
 
