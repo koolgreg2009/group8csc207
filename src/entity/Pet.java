@@ -3,7 +3,7 @@ package entity;
 import java.util.ArrayList;
 import java.util.List;
 /** Represents a pet.
- * @author uwuowouwuowouwuowouwuowo
+ * @author uwuowou
  */
 public class Pet{
     private int petID;
