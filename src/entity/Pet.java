@@ -59,7 +59,7 @@ public class Pet{
     }
 
     /**Gets the personality of the pet
-     * @return A list of the pet's personality(s)
+     * @return A list of the pet's personality traits
      */
     public List<String> getPersonality(){
         return personality;
