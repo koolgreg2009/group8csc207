@@ -3,7 +3,6 @@ package entity;
 import java.util.ArrayList;
 import java.util.List;
 /** Represents a pet.
- * @author uwuowouwuowouwuowouwuowo
  */
 public class Pet{
     private int petID;
@@ -39,7 +38,7 @@ public class Pet{
         return species;
     }
     /**Gets the age of the pet
-     * @return An int of the pets's age
+     * @return An int of the pet's age
      */
     public int getPetAge(){
         return age;
@@ -52,14 +51,14 @@ public class Pet{
     }
 
     /**Gets the breed of the pet
-     * @return A String of the pets's breed
+     * @return A String of the pet's breed
      */
     public String getBreed(){
         return breed;
     }
 
     /**Gets the personality of the pet
-     * @return A list of the pets's personality(s)
+     * @return A list of the pet's personality traits
      */
     public List<String> getPersonality(){
         return personality;
@@ -72,7 +71,7 @@ public class Pet{
     }
 
     /**Gets the bio of the pet
-     * @return A String of the pets's biography
+     * @return A String of the pet's biography
      */
     public String getBio(){
         return bio;
