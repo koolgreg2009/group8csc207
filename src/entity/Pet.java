@@ -1,7 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
-
+import java.util.List;
 /** Represents a pet.
  * @author uwuowouwuowouwuowouwuowo
  */
@@ -10,9 +10,10 @@ public class Pet{
     private String species;
     private int age;
     private String breed;
-    private ArrayList personality;
+    private List<String> personality = new ArrayList<>();
     private String bio;
     private boolean isAvailable;
+    // add owner name, email, phone number, and getters and setters for each.
 
     /** Pet class constructor
      * @param petID
@@ -21,9 +22,8 @@ public class Pet{
      * @param breed
      * @param personality
      * @param bio
-     * @param isAvailable
      */
-    public Pet(int petID, String species, int age, String breed, ArrayList personality, String bio, boolean isAvailable){
+    public Pet(int petID, String species, int age, String breed, List<String> personality, String bio){
         this.petID = petID;
         this.species = species;
         this.age = age;
@@ -61,7 +61,7 @@ public class Pet{
     /**Gets the personality of the pet
      * @return A list of the pets's personality(s)
      */
-    public ArrayList getPetDetails(){
+    public List<String> getPersonality(){
         return personality;
     }
 
