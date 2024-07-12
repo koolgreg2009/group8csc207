@@ -16,9 +16,6 @@ public class Pet{
     private ArrayList personality;
     private String bio;
     private boolean isAvailable;
-    private List<String> personality = new ArrayList<>();
-    private String bio;
-    private boolean isAvailable;
 
     /** Pet class constructor
      * @param owner
