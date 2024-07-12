@@ -1,28 +1,42 @@
 package entity;
 
 import java.util.ArrayList;
-import java.util.List;
+
 /** Represents a pet.
+ * @author uwuowouwuowouwuowouwuowo
  */
 public class Pet{
+    private String owner;
+    private String email;
+    private String phoneNum;
     private int petID;
     private String species;
     private int age;
     private String breed;
+    private ArrayList personality;
+    private String bio;
+    private boolean isAvailable;
     private List<String> personality = new ArrayList<>();
     private String bio;
     private boolean isAvailable;
-    // add owner name, email, phone number, and getters and setters for each.
 
     /** Pet class constructor
+     * @param owner
+     * @param email
+     * @param phoneNum
      * @param petID
      * @param species
      * @param age
      * @param breed
      * @param personality
      * @param bio
+     * @param isAvailable
+     // add owner name, email, phone number, and getters and setters for each.
      */
-    public Pet(int petID, String species, int age, String breed, List<String> personality, String bio){
+    public Pet(String owner, String email, String phoneNum, int petID, String species, int age, String breed, ArrayList personality, String bio, boolean isAvailable){
+        this.owner = owner;
+        this.email = email;
+        this.phoneNum = phoneNum;
         this.petID = petID;
         this.species = species;
         this.age = age;
@@ -31,6 +45,32 @@ public class Pet{
         this.bio = bio;
         this.isAvailable = true;
     }
+    /**Gets the owner of the pet
+     * @return A string of the species of the pet
+     */
+    public String getOwner(){
+        return owner;
+    }
+    /**Gets the email of the pet owner
+     * @return A string of the species of the pet
+     */
+    public String getEmail(){
+        return email;
+    }
+    /**Gets the phone number of the pet owner
+     * @return A string of the species of the pet
+     */
+    public String getPhoneNum(){
+        return phoneNum;
+    }
+
+    /**Gets the ID of the pet
+     * @return A string of the species of the pet
+     */
+    public int getPetID(){
+        return petID;
+    }
+  
     /**Gets the species of the pet
      * @return A string of the species of the pet
      */
@@ -58,7 +98,7 @@ public class Pet{
     }
 
     /**Gets the personality of the pet
-     * @return A list of the pet's personality traits
+     * @return A list of the pets's personality(s)
      */
     public List<String> getPersonality(){
         return personality;
@@ -83,10 +123,21 @@ public class Pet{
         this.bio = newBio;
     }
 
+    
+    public void adopt(){
+        this.isAvailable = false;
+    }
+  
+    /**Gets the availability of the pet
+     * @return A boolean to indicate availability of pet
+     */
+    public boolean isAvailable(){
+        return isAvailable;
+    }
+
     /**Set pet unavailable
      */
     public void markUnavailable(){
         this.isAvailable = false;
     }
-
 }
