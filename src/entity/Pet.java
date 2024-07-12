@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** Represents a pet.
  * @author uwuowouwuowouwuowouwuowo
@@ -13,7 +14,7 @@ public class Pet{
     private String species;
     private int age;
     private String breed;
-    private ArrayList personality;
+    private List<String> personality = new ArrayList<>();
     private String bio;
     private boolean isAvailable;
 
@@ -27,10 +28,9 @@ public class Pet{
      * @param breed
      * @param personality
      * @param bio
-     * @param isAvailable
      // add owner name, email, phone number, and getters and setters for each.
      */
-    public Pet(String owner, String email, String phoneNum, int petID, String species, int age, String breed, ArrayList personality, String bio, boolean isAvailable){
+    public Pet(String owner, String email, String phoneNum, int petID, String species, int age, String breed, List<String> personality, String bio){
         this.owner = owner;
         this.email = email;
         this.phoneNum = phoneNum;
@@ -123,6 +123,7 @@ public class Pet{
     
     public void adopt(){
         this.isAvailable = false;
+        // more to be added
     }
   
     /**Gets the availability of the pet
