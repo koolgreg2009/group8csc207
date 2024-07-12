@@ -16,6 +16,9 @@ public class Pet{
     private ArrayList personality;
     private String bio;
     private boolean isAvailable;
+    private List<String> personality = new ArrayList<>();
+    private String bio;
+    private boolean isAvailable;
 
     /** Pet class constructor
      * @param owner
@@ -28,6 +31,7 @@ public class Pet{
      * @param personality
      * @param bio
      * @param isAvailable
+     // add owner name, email, phone number, and getters and setters for each.
      */
     public Pet(String owner, String email, String phoneNum, int petID, String species, int age, String breed, ArrayList personality, String bio, boolean isAvailable){
         this.owner = owner;
@@ -40,7 +44,6 @@ public class Pet{
         this.personality = personality;
         this.bio = bio;
         this.isAvailable = true;
-        // add owner name, email, phone number, and getters and setters for each.
     }
     /**Gets the owner of the pet
      * @return A string of the species of the pet
@@ -67,6 +70,7 @@ public class Pet{
     public int getPetID(){
         return petID;
     }
+  
     /**Gets the species of the pet
      * @return A string of the species of the pet
      */
@@ -74,7 +78,7 @@ public class Pet{
         return species;
     }
     /**Gets the age of the pet
-     * @return An int of the pets's age
+     * @return An int of the pet's age
      */
     public int getPetAge(){
         return age;
@@ -87,7 +91,7 @@ public class Pet{
     }
 
     /**Gets the breed of the pet
-     * @return A String of the pets's breed
+     * @return A String of the pet's breed
      */
     public String getBreed(){
         return breed;
@@ -96,7 +100,7 @@ public class Pet{
     /**Gets the personality of the pet
      * @return A list of the pets's personality(s)
      */
-    public List getPetDetails(){
+    public List<String> getPersonality(){
         return personality;
     }
 
@@ -107,7 +111,7 @@ public class Pet{
     }
 
     /**Gets the bio of the pet
-     * @return A String of the pets's biography
+     * @return A String of the pet's biography
      */
     public String getBio(){
         return bio;
@@ -119,15 +123,21 @@ public class Pet{
         this.bio = newBio;
     }
 
-    /**Set pet unavailable
-     */
+    
     public void adopt(){
         this.isAvailable = false;
     }
+  
     /**Gets the availability of the pet
-     * @return A string of the species of the pet
+     * @return A boolean to indicate availability of pet
      */
     public boolean isAvailable(){
         return isAvailable;
+    }
+
+    /**Set pet unavailable
+     */
+    public void markUnavailable(){
+        this.isAvailable = false;
     }
 }

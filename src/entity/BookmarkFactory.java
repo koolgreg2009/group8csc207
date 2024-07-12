@@ -6,13 +6,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookmarkFactory implements BookmarkFactoryInterface {
-    /** Bookmarks that user made to save pets they are interested in adopting.
-     * @param pet the pet in the listing being bookmarked.
-     * @param time the date and time the bookmark is created.
+public class BookmarkFactory {
+    /** Factory that creates bookmarks for the user to use.
      */
 
-    public BookmarkInterface create(Pet pet, LocalDateTime time) {
-        return new Bookmark(pet, time);
+    public Bookmark create(Pet pet, LocalDateTime time) {
+        /** Method that creates a bookmark
+         */
+        return new Bookmark(pet, time); // return new bookmark
     }
 }

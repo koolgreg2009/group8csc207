@@ -9,6 +9,7 @@ public class UserPreference implements UserPreferenceInt {
 	private int minAge;
 	private int maxAge;
 	private String activityLevel;
+	private String location;
 
 	@Override
 	public void setSpecies(String species) {
@@ -58,5 +59,13 @@ public class UserPreference implements UserPreferenceInt {
 	@Override
 	public String getActivityLevel() {
 		return this.activityLevel;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getLocation(String location) {
+		return this.location;
 	}
 }
