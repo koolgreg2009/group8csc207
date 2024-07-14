@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * Extends {@link CommonUser} and implements {@link AdopterInterface}.
  *
  * @version 1.0
- * @since 2024-07-14
+ * @since 2024-07-12
  */
 public class AdopterUser extends CommonUser implements AdopterInterface {
 
