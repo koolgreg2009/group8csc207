@@ -1,6 +1,6 @@
 package use_case;
-import entity.Bookmark;
-import entity.BookmarkFactory;
+import entity.bookmark.Bookmark;
+import entity.bookmark.BookmarkFactory;
 
 public class AddBookmarkUsecaseInteractor implements BookmarkInputBoundary{
 

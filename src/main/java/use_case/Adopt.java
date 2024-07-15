@@ -1,6 +1,6 @@
 package use_case;
-import entity.Pet;
-import entity.Bookmark;
+import entity.pet.Pet;
+import entity.bookmark.Bookmark;
 
 import java.util.List;
 

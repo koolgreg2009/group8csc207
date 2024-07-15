@@ -1,4 +1,4 @@
-package entity;
+package entity.user;
 
 import entity.bookmark.Bookmark;
 import entity.preference.UserPreference;
@@ -10,12 +10,12 @@ import java.util.List;
 
 /**
  * Represents a user that is specifically classified as an adopter with bookmarks and preferences.
- * Extends {@link CommonUser} and implements {@link AdopterInterface}.
+ * Extends {@link CommonUser}.
  *
  * @version 1.0
  * @since 2024-07-12
  */
-public class AdopterUser extends CommonUser implements AdopterInterface {
+public class AdopterUser extends CommonUser{
 
 	/**
 	 * List of bookmarks that the adopter user has.
@@ -48,7 +48,6 @@ public class AdopterUser extends CommonUser implements AdopterInterface {
 	 *
 	 * @return the preferences of the adopter user
 	 */
-	@Override
 	public UserPreference getPreferences() {
 		return preferences;
 	}
