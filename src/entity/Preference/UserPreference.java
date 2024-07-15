@@ -4,24 +4,25 @@ import java.util.List;
 
 public class UserPreference{
 
-	private String species;
+	private List<String> species;
 	private List<String> breeds;
 	private int minAge;
 	private int maxAge;
 	private String activityLevel;
 	private String location;
+	private String gender;
 
 	/** Sets the preferred species of the user
 	 * @param species A string of the preferred species
 	 */
-	public void setSpecies(String species) {
+	public void setSpecies(List<String> species) {
 		this.species = species;
 	}
 
 	/** Gets the preferred species of the user
 	 * @return A string of the preferred species
 	 */
-	public String getSpecies() {
+	public List<String> getSpecies() {
 		return this.species;
 	}
 
@@ -94,4 +95,19 @@ public class UserPreference{
 	public String getLocation(String location) {
 		return this.location;
 	}
+
+	/** Sets the preferred gender that user has for their pet
+	 * @param gender A string of the preferred gender
+	 */
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	/** Gets the preferred gender that user has for their pet
+	 * @return A string of the preferred gender
+	 */
+	public String getGender() {
+		return this.gender;
+	}
+
 }
