@@ -5,6 +5,7 @@
     <groupId>com.yourcompany</groupId>
     <artifactId>abcde</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <!-- test -->
 
     <dependencies>
         <dependency>
