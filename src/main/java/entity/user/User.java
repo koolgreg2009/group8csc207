@@ -1,4 +1,4 @@
-package entity.User;
+package entity;
 
 public interface User {
 	long getUserId();

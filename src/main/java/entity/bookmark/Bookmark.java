@@ -1,4 +1,6 @@
-package entity;
+package entity.bookmark;
+
+import entity.pet.Pet;
 
 import java.time.LocalDateTime;
 

@@ -1,5 +1,6 @@
-package entity.User;
+package entity.user;
 
+import entity.User;
 import utils.IdCounter;
 
 /**

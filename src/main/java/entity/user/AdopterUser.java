@@ -1,9 +1,9 @@
-package entity.User;
+package entity;
 
-import entity.Bookmark;
-import entity.BookmarkFactory;
-import entity.Pet;
-import entity.Preference.UserPreference;
+import entity.bookmark.Bookmark;
+import entity.preference.UserPreference;
+import entity.user.CommonUser;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
