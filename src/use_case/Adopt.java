@@ -4,7 +4,7 @@ import entity.Bookmark;
 
 import java.util.List;
 
-public class Adopt {
+public class Adopt implements AdoptBoundary{
     private Pet pet;
     private List<Bookmark> bookmarkList;
 
@@ -13,12 +13,13 @@ public class Adopt {
         this.bookmarkList = bookmarkList;
     }
 
-    public String removeBookmark(){
-        for(int i = 0 ; i < bookmarkList.size(); i++){
-            if (bookmarkList.contains(pet)){
+
+    @Override
+    public void execute(Adopt adopt) {
+        for (int i = 0; i < bookmarkList.size(); i++) {
+            if (bookmarkList.contains(pet)) {
                 bookmarkList.remove(pet);
             }
         }
-        return "This pet has been adopted";
     }
 }
