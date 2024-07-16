@@ -5,29 +5,19 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Class containing bookmarks that adopter user made to save pets they are
- * interested in adopting.
+/** This Bookmark class contains bookmarks that adopter user made to save pets they are
+ * interested in adopting. Bookmarks are created with the pet ID and the time that
+ * the bookmark is created.
  *
- * @version 1.0
- * @since 2024-07-14
+ * @version 2.0
+ * @since 2024-07-16
  */
 public class Bookmark {
-
-	/**
-	 * The pet the bookmark is made for.
-	 */
 	private int petID;
-
-	/**
-	 * The date and time when the pet was bookmarked.
-	 */
 	private LocalDateTime bookmarkedDate;
 
-	/**
-	 * Initializer for a bookmark.
-	 *
-	 * @param petProfile the pet in the listing being bookmarked.
+	/** Initializer for a bookmark.
+	 * @param petID the pet in the listing being bookmarked.
 	 * @param time       the date and time the bookmark is created.
 	 */
 	@JsonCreator()
@@ -37,10 +27,16 @@ public class Bookmark {
 		this.bookmarkedDate = time;
 	}
 
+	/** Getter method for ID of pet.
+	 * @return int petID
+	 */
 	public int getPetID() {
 		return petID;
 	}
 
+	/** Getter method for date and time of bookmark.
+	 * @return LocalDateTime of date and time of bookmark.
+	 */
 	public LocalDateTime getBookmarkedDate() {
 		return bookmarkedDate;
 	}
