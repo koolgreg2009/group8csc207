@@ -1,21 +1,20 @@
 package use_case.signup;
 
 import data_access.UserSignupDAInterface;
-import entity.User.User;
-import entity.User.UserFactory;
-
+import entity.User.AdopterUser;
+import entity.User.AdopterUserFactory;
 import java.time.LocalDateTime;
 
 public class SignupInteractor implements SignupInputBoundary {
 
     final UserSignupDAInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
-    final UserFactory userFactory;
+    final AdopterUserFactory AdopterUserFactory;
 
-    public SignupInteractor(UserSignupDAInterface userSignupDAInterface, SignupOutputBoundary signupOutputBoundary, UserFactory userFactory) {
+    public SignupInteractor(UserSignupDAInterface userSignupDAInterface, SignupOutputBoundary signupOutputBoundary,  AdopterUserFactory AdopterUserFactory) {
         this.userDataAccessObject = userSignupDAInterface;
         this.userPresenter = signupOutputBoundary;
-        this.userFactory = userFactory;
+        this.AdopterUserFactory = AdopterUserFactory;
     }
 
     @Override
@@ -27,7 +26,7 @@ public class SignupInteractor implements SignupInputBoundary {
         } else {
 
             LocalDateTime now = LocalDateTime.now();
-            User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword(), now);
+            AdopterUser user = AdopterUserFactory.create(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getName(), signupInputData.getEmail(), signupInputData.getPhone());
             userDataAccessObject.save(user);
 
             SignupOutputData signupOutputData = new SignupOutputData(user.getName(), now.toString(), false);

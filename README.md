@@ -1,12 +1,17 @@
 # Project: GBP (Pet Adoption Website)
 *The project name is currently a working title
-# Contributors
+
+<hr>
+
+## Contributors
 * [Alex](https://github.com/lamberm2)
 * [Jane](https://github.com/snowykitkat)
 * [Jenny](https://github.com/yangje02)
 * [Joyce](https://github.com/Joyce12345678)
 * [Justin](https://github.com/justinyoon95)
 * [Kevin](https://github.com/koolgreg2009)
+
+<hr>
 
 # About
 Our project is a platform that lists verified and healthy pets for adoption.
@@ -18,7 +23,16 @@ Additionally, users can set preferences on their profile page and use those pref
 The preference profile will include questions regarding the preferred pet type (i.e., dog, cat, frog, chinchilla, 
 fish, hamster, etc.), size, age, and personality to help find the perfect fit for the pet and the new owner.
 
-* This project was written in Java, strictly adhering to Clean Architecture and the SOLID design principles.
+* This project was entirely written in Java. 
+* Java Swing was used for the GUI.
+* This project is strictly adhering to Clean Architecture and the SOLID design principles.
 
-# APIs Used 
+## Getting Started 
+1. Clone the repository
+2. You will need an IDE for Java (IntelliJ IDEA is recommended)
+3. Run the project by running the `main` method in `Main.java`.
+
+(Start guide to be updated)
+
+## APIs Used 
 TBA
