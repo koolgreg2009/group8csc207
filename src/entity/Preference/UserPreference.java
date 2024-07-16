@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserPreference{
 
-	private List<String> species;
+	private String species;
 	private List<String> breeds;
 	private int minAge;
 	private int maxAge;
@@ -21,18 +21,18 @@ public class UserPreference{
 	private String gender;
 
 	/** Sets the user's preferred species
-	 * @param species A list of strings of the user's preferred species
+	 * @param species A string of the user's preferred species
 	 */
 	@JsonProperty("species")
-	public void setSpecies(List<String> species) {
+	public void setSpecies(String species) {
 		this.species = species;
 	}
 
 	/** Gets the user's preferred species
-	 * @return A list of strings of the user's preferred species
+	 * @return A string of the user's preferred species
 	 */
 	@JsonProperty("species")
-	public List<String> getSpecies() {
+	public String getSpecies() {
 		return this.species;
 	}
 
