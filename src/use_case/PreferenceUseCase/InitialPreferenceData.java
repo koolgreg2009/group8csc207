@@ -1,13 +1,14 @@
-package use_case;
+package use_case.PreferenceUseCase;
 
 import java.util.List;
 
-/** The PreferenceData class bundles user input data for their Preference profile.
+/** The InitialPreferenceData class bundles user input data for their Preference profile
+ * after they create profile.
  *
- * @version 1.0
- * @since 2024-07-15
+ * @version 2.0
+ * @since 2024-07-16
  */
-public class PreferenceData {
+public class InitialPreferenceData {
 
     private String location; // location user wants to adopt pet
     private List<String> species; // species the user is willing to consider
@@ -17,17 +18,17 @@ public class PreferenceData {
     private String activityLevel;
     private String gender;
 
-    /** This is the initializer for PreferenceData.
-     * @param location
-     * @param species
-     * @param breeds
-     * @param minAge
-     * @param maxAge
-     * @param activityLevel
-     * @param gender
+    /** This is the initializer for InitialPreferenceData.
+     * @param location The user's preferred location
+     * @param species The user's preferred species
+     * @param breeds The user's preferred breeds
+     * @param minAge The user's preferred minimum pet age
+     * @param maxAge The user's preferred maximum pet age
+     * @param activityLevel The user's preferred pet's activity level
+     * @param gender The user's preferred pet gender
      */
 
-    public PreferenceData(String location, List<String> species, List<String> breeds, int minAge,
+    public InitialPreferenceData(String location, List<String> species, List<String> breeds, int minAge,
                           int maxAge, String activityLevel, String gender) {
         this.location = location;
         this.species = species;
