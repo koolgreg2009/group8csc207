@@ -13,21 +13,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @since 2024-07-14
  */
 public class Bookmark {
-
-	/**
-	 * The pet the bookmark is made for.
-	 */
 	private int petID;
-
-	/**
-	 * The date and time when the pet was bookmarked.
-	 */
 	private LocalDateTime bookmarkedDate;
 
 	/**
 	 * Initializer for a bookmark.
 	 *
-	 * @param petProfile the pet in the listing being bookmarked.
+	 * @param petID the pet in the listing being bookmarked.
 	 * @param time       the date and time the bookmark is created.
 	 */
 	@JsonCreator()
@@ -37,10 +29,16 @@ public class Bookmark {
 		this.bookmarkedDate = time;
 	}
 
+	/** Getter method for pet ID
+	 * @return integer pet ID
+	 */
 	public int getPetID() {
 		return petID;
 	}
 
+	/** Getter method for bookmark time and date
+	 * @return LocalDateTime date and time of bookmark creation
+	 */
 	public LocalDateTime getBookmarkedDate() {
 		return bookmarkedDate;
 	}
