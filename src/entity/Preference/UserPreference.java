@@ -2,6 +2,8 @@ package entity.Preference;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserPreference{
 
 	private String species;
@@ -14,6 +16,7 @@ public class UserPreference{
 	/** Sets the preferred species of the user
 	 * @param species A string of the preferred species
 	 */
+	@JsonProperty("species")
 	public void setSpecies(String species) {
 		this.species = species;
 	}
@@ -21,6 +24,7 @@ public class UserPreference{
 	/** Gets the preferred species of the user
 	 * @return A string of the preferred species
 	 */
+	@JsonProperty("species")
 	public String getSpecies() {
 		return this.species;
 	}
@@ -28,6 +32,7 @@ public class UserPreference{
 	/** Sets the preferred breeds of the user
 	 * @param breeds A list of strings of the preferred breeds
 	 */
+	@JsonProperty("breeds")
 	public void setBreeds(List<String> breeds) {
 		this.breeds = breeds;
 	}
@@ -35,6 +40,7 @@ public class UserPreference{
 	/** Gets the preferred breeds of the user
 	 * @return A list of strings of the preferred breeds
 	 */
+	@JsonProperty("breeds")
 	public List<String> getBreeds() {
 		return this.breeds;
 	}
@@ -42,6 +48,7 @@ public class UserPreference{
 	/** Sets the preferred minimum age of pet
 	 * @param min An integer of the preferred minimum age
 	 */
+	@JsonProperty("minAge")
 	public void setMinAge(int min) {
 		this.minAge = min;
 	}
@@ -49,6 +56,7 @@ public class UserPreference{
 	/** Gets the preferred minimum age of pet
 	 * @return An integer of the preferred minimum age
 	 */
+	@JsonProperty("minAge")
 	public int getMinAge() {
 		return this.minAge;
 	}
@@ -56,6 +64,7 @@ public class UserPreference{
 	/** Sets the preferred maximum age of pet
 	 * @param max An integer of the preferred maximum age
 	 */
+	@JsonProperty("maxAge")
 	public void setMaxAge(int max) {
 		this.maxAge = max;
 	}
@@ -63,6 +72,7 @@ public class UserPreference{
 	/** Gets the preferred maximum age of pet
 	 * @return An integer of the preferred maximum age
 	 */
+	@JsonProperty("maxAge")
 	public int getMaxAge() {
 		return this.maxAge;
 	}
@@ -70,6 +80,7 @@ public class UserPreference{
 	/** Sets the preferred activity level of the pet
 	 * @param level A string of the preferred activity level
 	 */
+	@JsonProperty("activityLevel")
 	public void setActivityLevel(String level) {
 		this.activityLevel = level;
 	}
@@ -77,6 +88,7 @@ public class UserPreference{
 	/** Gets the preferred activity level of the pet
 	 * @return A string of the preferred activity level
 	 */
+	@JsonProperty("activityLevel")
 	public String getActivityLevel() {
 		return this.activityLevel;
 	}
@@ -84,6 +96,7 @@ public class UserPreference{
 	/** Sets the preferred location for where to adopt the pet
 	 * @param location A string of the preferred location
 	 */
+	@JsonProperty("location")
 	public void setLocation(String location) {
 		this.location = location;
 	}
@@ -91,6 +104,7 @@ public class UserPreference{
 	/** Gets the preferred location for where to adopt the pet
 	 * @return A string of the preferred location
 	 */
+	@JsonProperty("location")
 	public String getLocation(String location) {
 		return this.location;
 	}
