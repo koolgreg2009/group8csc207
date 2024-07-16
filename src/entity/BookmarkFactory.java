@@ -1,18 +1,23 @@
 package entity;
-
-import entity.User.AdopterUser;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
+/** The BookmarkFactory class is a factory responsible for the creation of Bookmark
+ * entities for the adopter user.
+ *
+ * @author Jane Li
+ * @version 1.0
+ * @since 2024-07-15
+ *
+ */
 
 public class BookmarkFactory {
-    /** Factory that creates bookmarks for the user to use.
-     */
 
+    /** The create method creates a Bookmark.
+     * @param pet The pet that is being bookmarked.
+     * @param time The date and time that the bookmark is created
+     * @return the newly created Bookmark.
+     */
     public Bookmark create(Pet pet, LocalDateTime time) {
-        /** Method that creates a bookmark
-         */
         return new Bookmark(pet, time); // return new bookmark
     }
 }

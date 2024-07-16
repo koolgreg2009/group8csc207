@@ -8,8 +8,6 @@ import utils.IdCounter;
  *
  * @version 1.0
  * @since 2024-07-12
- *
- * Is this even working?
  */
 
 public class CommonUser implements User {
