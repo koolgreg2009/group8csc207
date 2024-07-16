@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import data_access.FileUserDAO;
 import data_access.UserDAOInterface;
+import data_access.UserSignupDAInterface;
 import entity.User.AdopterUserFactory;
 import entity.User.UserFactory;
 import interface_adapter.LoginViewModel;
@@ -37,12 +38,12 @@ public class SignupUseCaseFactory {
     }
 
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel) throws IOException {
-    	UserDAOInterface userDataAccessObject = new FileUserDAO("./users.json");
+    	FileUserDAO userDataAccessObject = new FileUserDAO("./users.json");
 
         // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
-        UserFactory userFactory = new AdopterUserFactory();
+        AdopterUserFactory userFactory = new AdopterUserFactory();
 
         SignupInputBoundary userSignupInteractor = new SignupInteractor(
                 userDataAccessObject, signupOutputBoundary, userFactory);

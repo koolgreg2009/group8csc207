@@ -57,7 +57,7 @@ public class FileUserDAO implements UserDAOInterface {
 	}
 
 	@Override
-	public String clearUsers() {
+	public String clearUsers() { //
 
 		try {
 			RandomAccessFile file = new RandomAccessFile(jsonFile, "rw");

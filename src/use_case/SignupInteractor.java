@@ -1,22 +1,21 @@
 package use_case;
 
+import data_access.UserDAOInterface;
+import data_access.UserSignupDAInterface;
+import entity.User.AdopterUser;
+import entity.User.AdopterUserFactory;
 import java.time.LocalDateTime;
 
-import data_access.UserDAOInterface;
-import entity.User.User;
-import entity.User.UserFactory;
-
 public class SignupInteractor implements SignupInputBoundary {
+
     final UserDAOInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
-    final UserFactory userFactory;
+    final AdopterUserFactory AdopterUserFactory;
 
-    public SignupInteractor(UserDAOInterface userSignupDataAccessInterface,
-                            SignupOutputBoundary signupOutputBoundary,
-                            UserFactory userFactory) {
-        this.userDataAccessObject = userSignupDataAccessInterface;
+    public SignupInteractor(UserDAOInterface userSignupDAInterface, SignupOutputBoundary signupOutputBoundary,  AdopterUserFactory AdopterUserFactory) {
+        this.userDataAccessObject = userSignupDAInterface;
         this.userPresenter = signupOutputBoundary;
-        this.userFactory = userFactory;
+        this.AdopterUserFactory = AdopterUserFactory;
     }
 
     @Override
@@ -28,11 +27,12 @@ public class SignupInteractor implements SignupInputBoundary {
         } else {
 
             LocalDateTime now = LocalDateTime.now();
-            User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword(), "", "", "");
+            AdopterUser user = AdopterUserFactory.create(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getName(), signupInputData.getEmail(), signupInputData.getPhone());
             userDataAccessObject.save(user);
 
             SignupOutputData signupOutputData = new SignupOutputData(user.getName(), now.toString(), false);
             userPresenter.prepareSuccessView(signupOutputData);
         }
     }
+
 }
