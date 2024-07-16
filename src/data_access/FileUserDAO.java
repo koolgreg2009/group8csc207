@@ -1,118 +1,86 @@
 package data_access;
 
-import entity.User.User;
-import entity.User.UserFactory;
-
-import java.io.*;
-import java.time.LocalDateTime;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import entity.User.AdopterUser;
+import entity.User.User;
 
 public class FileUserDAO implements UserDAOInterface {
 
-    private final File csvFile;
+	private final File jsonFile;
 
-    private final Map<String, Integer> headers = new LinkedHashMap<>();
+	private final Map<String, AdopterUser> accounts = new HashMap<String, AdopterUser>();
 
-    private final Map<String, User> accounts = new HashMap<>();
+	public FileUserDAO(String jsonPath) throws IOException {
+		jsonFile = new File(jsonPath);
+		if (jsonFile.length() == 0) {
+			save();
+		} else {
+			TypeReference<HashMap<String, AdopterUser>> typeRef = new TypeReference<HashMap<String, AdopterUser>>() {
+			};
+			ObjectMapper objectMapper = new ObjectMapper();
+			accounts.putAll(objectMapper.readValue(jsonFile, typeRef));
+		}
+	}
 
-    private UserFactory userFactory;
+	@Override
+	public void save(User user) {
+		accounts.put(user.getUsername(), (AdopterUser) user);
+		this.save();
+	}
 
-    public FileUserDAO(String csvPath, UserFactory userFactory) throws IOException {
-        this.userFactory = userFactory;
+	@Override
+	public User get(String username) {
+		return accounts.get(username);
+	}
 
-        csvFile = new File(csvPath);
-        headers.put("username", 0);
-        headers.put("password", 1);
-        headers.put("name", 2);
-        headers.put("email", 3);
-        headers.put("phone", 4);
-        headers.put("bookmark", 5);
-        headers.put("user preference", 6);
+	private void save() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			objectMapper.writeValue(jsonFile, accounts);
+		} catch (Exception ex) {
+			System.out.print("Failed saving file [" + jsonFile.getName() + "]: " + ex.getMessage());
+			throw new RuntimeException(ex);
+		}
+	}
 
-        if (csvFile.length() == 0) {
-            save();
-        } else {
+	@Override
+	public boolean existsByName(String identifier) {
+		return accounts.containsKey(identifier);
+	}
 
-            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-                String header = reader.readLine();
+	@Override
+	public String clearUsers() {
 
-                assert header.equals("username, password, name, email, phone, bookmark, user preference");
+		try {
+			RandomAccessFile file = new RandomAccessFile(jsonFile, "rw");
+			file.setLength(0);
+			file.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 
-                String row;
-                while ((row = reader.readLine()) != null) {
-                    String[] col = row.split(",");
-                    String username = String.valueOf(col[headers.get("username")]);
-                    String password = String.valueOf(col[headers.get("password")]);
-                    String name = String.valueOf(col[headers.get("name")]);
-                    String email = String.valueOf(col[headers.get("email")]);
-                    String phone = String.valueOf(col[headers.get("phone")]);
-                    String bookmark = String.valueOf(col[headers.get("bookmark")]);
-                    String userPreference = String.valueOf(col[headers.get("user preference")]);
-                    User user = userFactory.create(username, password, name, email, phone, bookmark, userPreference);
-                    accounts.put(username, user);
+		StringBuilder empty = new StringBuilder(new String(""));
+		for (User user : accounts.values()) {
+			empty.append(user.getName()).append("\n");
+		}
+		accounts.clear();
+		return empty.toString();
+	}
 
-                }
-            }
-        }
-    }
-
-    @Override
-    public void save(User user) {
-        accounts.put(user.getName(), user);
-        this.save();
-    }
-
-    @Override
-    public User get(String username) {
-        return accounts.get(username);
-    }
-
-    private void save() {
-        BufferedWriter writer;
-        try {
-            writer = new BufferedWriter(new FileWriter(csvFile));
-            writer.write(String.join(",", headers.keySet()));
-            writer.newLine();
-
-            for (User user : accounts.values()) {
-                String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s",
-                        user.getUserId(), user.getPassword(), user.getName(), user.getEmail(), user.getEmail(), user.getPhone(), user.getBookmark(), user.getPreference);
-                writer.write(line);
-                writer.newLine();
-            }
-
-            writer.close();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public boolean existsByName(String identifier) {
-        return accounts.containsKey(identifier);
-    }
-
-    @Override
-    public String clearUsers() {
-
-        try {
-            RandomAccessFile file = new RandomAccessFile(csvFile, "rw");
-            file.setLength(0);
-            file.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        StringBuilder empty = new StringBuilder(new String(""));
-        for (User user : accounts.values()) {
-            empty.append(user.getName()).append("\n");
-        }
-        accounts.clear();
-        return empty.toString();
-    }
-
+	@Override
+	public void removePetFromAllUserBookmarks(int petID) {
+		accounts.entrySet().stream()
+				.filter(a -> a.getValue().getBookmarks().stream().anyMatch(l -> l.getPetID() == petID))
+				.forEach(entry -> entry.getValue().getBookmarks().removeIf(b -> b.getPetID() == petID));
+		save();
+	}
 
 }
