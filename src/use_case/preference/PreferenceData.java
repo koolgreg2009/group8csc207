@@ -1,6 +1,7 @@
 package use_case.preference;
 
 import java.util.List;
+import entity.preference.UserPreference;
 
 /** The InitialPreferenceData class bundles user input data for their Preference profile
  * after they create profile.
@@ -10,68 +11,32 @@ import java.util.List;
  */
 public class PreferenceData {
 
-    private String location; // location user wants to adopt pet
-    private List<String> species; // species the user is willing to consider
-    private List<String> breeds;
-    private int minAge;
-    private int maxAge;
-    private String activityLevel;
-    private String gender;
+    private UserPreference userPreference;
+    private String username;
 
-    /** This is the initializer for InitialPreferenceData.
-     * @param location The user's preferred location
-     * @param species The user's preferred species
-     * @param breeds The user's preferred breeds
-     * @param minAge The user's preferred minimum pet age
-     * @param maxAge The user's preferred maximum pet age
-     * @param activityLevel The user's preferred pet's activity level
-     * @param gender The user's preferred pet gender
+    /** This is the initializer for class PreferenceData
+     * @param userPreference This is the set of user preferences as established in the
+     *                       entity package.
+     * @param username This is the username of the adopter user.
      */
 
-    public PreferenceData(String location, List<String> species, List<String> breeds, int minAge,
-                          int maxAge, String activityLevel, String gender) {
-        this.location = location;
-        this.species = species;
-        this.breeds = breeds;
-        this.minAge = minAge;
-        this.maxAge = maxAge;
-        this.activityLevel = activityLevel;
-        this.gender = gender;
+    public PreferenceData(String username, UserPreference userPreference) {
+        this.userPreference = userPreference;
+        this.username = username;
     }
 
-    /** Gets the location that the user set for their search.
-     * @return the location as a String.
+    /** Gets the user preferences of the specified user.
+     * @return the user preferences as a UserPreference object.
      */
-    String getLocation() {return location;}
+    public UserPreference getUserPreference() {
+        return userPreference;
+    }
 
-    /** Gets the species that the user prefers in their search.
-     * @return the species as a List of Strings.
+    /** Gets the username of the adopter.
+     * @return a String of the adopter's username.
      */
-    List<String> getSpecies() {return species;}
-
-    /** Gets the breeds that the user prefers in their search.
-     * @return the breeds as a List of Strings.
-     */
-    List<String> getBreeds() {return breeds;}
-
-    /** Gets the minimum age of pet that the user prefers.
-     * @return the minimum age as an int.
-     */
-    int getMinAge() {return minAge;}
-
-    /** Gets the maximum age of pet that the user prefers.
-     * @return the maximum age as an int.
-     */
-    int getMaxAge() {return maxAge;}
-
-    /** Gets the activity level of pet that the user prefers.
-     * @return the activity level as a String.
-     */
-    String getActivityLevel() {return activityLevel;}
-
-    /** Gets the gender of the pet that the user prefers.
-     * @return the gender as a String.
-     */
-    String getGender() {return gender;}
+    public String getUsername() {
+        return username;
+    }
 
 }
