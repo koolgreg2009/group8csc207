@@ -2,6 +2,7 @@ package use_case.displayAllAvailablePets;
 
 import data_access.FilePetDAO;
 import data_access.PetDAOInterface;
+import entity.Pet;
 import use_case.displayAllAvailablePets.displayAllPetsInputBoundary;
 import use_case.displayAllAvailablePets.displayAllPetsOutputBoundary;
 
@@ -18,7 +19,7 @@ public class displayAllPetsInteractor implements displayAllPetsInputBoundary{
 
     @Override
     public void execute(displayInputData displayInputdata){
-        List<String> pets = filePetDAO.getPreferencePets(displayInputdata.getPreferences());
+        List<Pet> pets = filePetDAO.getPreferencePets(displayInputdata.getPreferences());
         // return the pets via controller
         System.out.println(pets);
     }
