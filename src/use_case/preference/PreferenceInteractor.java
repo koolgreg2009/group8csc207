@@ -1,4 +1,4 @@
-package use_case.PreferenceUseCase;
+package use_case.preference;
 
 //tbh idk what I'm doing here...
 public class PreferenceInteractor {

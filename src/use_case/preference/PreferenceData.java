@@ -1,4 +1,4 @@
-package use_case.PreferenceUseCase;
+package use_case.preference;
 
 import java.util.List;
 

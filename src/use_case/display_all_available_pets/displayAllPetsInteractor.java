@@ -1,10 +1,7 @@
-package use_case.displayAllAvailablePets;
+package use_case.display_all_available_pets;
 
-import data_access.FilePetDAO;
 import data_access.PetDAOInterface;
 import entity.Pet;
-import use_case.displayAllAvailablePets.displayAllPetsInputBoundary;
-import use_case.displayAllAvailablePets.displayAllPetsOutputBoundary;
 
 import java.util.List;
 

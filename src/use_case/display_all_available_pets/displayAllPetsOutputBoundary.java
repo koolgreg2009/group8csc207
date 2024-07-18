@@ -1,4 +1,4 @@
-package use_case.displayAllAvailablePets;
+package use_case.display_all_available_pets;
 
 public interface displayAllPetsOutputBoundary {
 }

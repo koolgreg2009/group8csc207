@@ -1,10 +1,9 @@
-package use_case.bookmarkUsecase;
+package use_case.bookmarks;
 import data_access.FileUserDAO;
 import data_access.UserDAOInterface;
 import entity.Bookmark;
 import entity.BookmarkFactory;
-import entity.User.User;
-import entity.User.AdopterUser;
+import entity.user.AdopterUser;
 import java.time.LocalDateTime;
 
 public class AddBookmarkUsecaseInteractor implements BookmarkInputBoundary{
