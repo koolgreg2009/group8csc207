@@ -41,7 +41,7 @@ public class BookmarkInputData {
         this.username = username;
         this.petID = petID;
     }
-    public String getUserID() {
+    public String getUsername() {
         return this.username;
     }
 
