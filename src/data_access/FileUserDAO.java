@@ -83,4 +83,12 @@ public class FileUserDAO implements UserDAOInterface {
 		save();
 	}
 
+	public boolean userHasBookmark(String username, int petID) {
+		AdopterUser user = accounts.get(username);
+		if (user != null) {
+			return user.getBookmarks().stream().anyMatch(bookmark -> bookmark.getPetID() == petID);
+		}
+		return false;
+	}
+
 }
