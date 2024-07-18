@@ -16,7 +16,7 @@ public class AdoptInputData {
     public List<User> getBookmarkList() {
         return bookmarkList;
     }
-    public Pet getPet(){
-        return pet;
+    public int getPetID(){
+        return pet.getPetID();
     }
 }
