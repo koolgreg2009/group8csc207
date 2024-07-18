@@ -13,7 +13,6 @@ import entity.Preference.UserPreference;
 /**
  * Represents a user that is specifically classified as an adopter with
  * bookmarks and preferences. Extends {@link CommonUser} and implements
- * {@link AdopterInterface}.
  *
  * @version 1.0
  * @since 2024-07-12
