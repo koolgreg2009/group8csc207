@@ -3,6 +3,9 @@ import data_access.FileUserDAO;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.Pet;
+import entity.User.User;
+
+import java.util.List;
 
 public class Adopt implements AdoptInputBoundary {
     final PetDAOInterface petDAO;
@@ -20,6 +23,8 @@ public class Adopt implements AdoptInputBoundary {
         userPresenter.prepareAdopt("Pet has found a home");
         Pet uwu =  petDAO.get(adoptInputData.getPetID());
         uwu.markUnavailable();
-        userDAO.removePetFromAllUserBookmarks(uwu.getPetID());
+        List<String> users = userDAO.removePetFromAllUserBookmarks(uwu.getPetID());
+        petDAO.save(uwu);
+        System.out.println("Pet " + uwu + " has been Adopted by: ");
     }
 }
