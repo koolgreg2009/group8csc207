@@ -4,7 +4,7 @@
 * [Alex Lambermon](https://github.com/lamberm2)
 * [Jane Li](https://github.com/snowykitkat)
 * [Jenny Yang](https://github.com/yangje02)
-* [Joyce Cai](https://github.com/Joyce12345678)
+* [Joy Cai](https://github.com/Joyce12345678)
 * [Justin Yoon](https://github.com/justinyoon95)
 * [Kevin Hu](https://github.com/koolgreg2009)
 
