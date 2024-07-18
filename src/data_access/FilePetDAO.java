@@ -3,9 +3,11 @@ package data_access;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Pet;
+import entity.Preference.UserPreference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +50,43 @@ public class FilePetDAO {
 //    public boolean existsByName(String identifier) {
 //        return pets.containsKey(identifier);
 //    }
+    public ArrayList<Pet> getPreferencePets(UserPreference userPreference) {
+        ArrayList<Pet> matchingPets = new ArrayList<>();
+
+        for (Pet pet : pets.values()) {
+            if (matchesPreference(pet, userPreference)) {
+                matchingPets.add(pet);
+            }
+        }
+
+        return matchingPets;
+    }
+
+    private boolean matchesPreference(Pet pet, UserPreference userPreference) {
+        if (userPreference.getSpecies() != null && !userPreference.getSpecies().equals(pet.getSpecies())) {
+            return false;
+        }
+        if (userPreference.getBreeds() != null && !userPreference.getBreeds().isEmpty() && !userPreference.getBreeds().contains(pet.getBreed())) {
+            return false;
+        }
+        if (userPreference.getMinAge() != 0 && pet.getAge() <= userPreference.getMinAge()) {
+            return false;
+        }
+        if (userPreference.getMaxAge() != 0 && pet.getAge() >= userPreference.getMaxAge()) {
+            return false;
+        }
+        if (userPreference.getActivityLevel() != null && !userPreference.getActivityLevel().equals(pet.getActivityLevel())) {
+            return false;
+        }
+        if (userPreference.getLocation() != null && !userPreference.getLocation().equals(pet.getLocation())) {
+            return false;
+        }
+        if (userPreference.getGender() != null && !userPreference.getGender().equals(pet.getGender())) {
+            return false;
+        }
+
+        return true;
+    }
 
 
 }

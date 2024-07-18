@@ -19,7 +19,7 @@ public class Pet{
     private String breed;
     private List<String> personality = new ArrayList<>();
     private String bio;
-    private int activityLevel;
+    private String activityLevel;
     private String gender;
     private String location;
     private boolean isAvailable;
@@ -37,7 +37,7 @@ public class Pet{
      * @param gender
      */
     public Pet(String owner, String email, String phoneNum, int petID, String species, int age,
-               String breed, List<String> personality, String gender, int activityLevel, String bio){
+               String breed, List<String> personality, String gender, String activityLevel, String bio){
         this.owner = owner;
         this.email = email;
         this.phoneNum = phoneNum;
@@ -148,7 +148,7 @@ public class Pet{
         return age;
     }
 
-    public int getActivityLevel(){
+    public String getActivityLevel(){
         return this.activityLevel;
     }
 
