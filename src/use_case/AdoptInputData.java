@@ -5,6 +5,8 @@ import entity.User.User;
 
 import java.util.List;
 
+/** Getting data for Adopt
+ */
 public class AdoptInputData {
     private List<User> bookmarkList;
     private Pet pet;

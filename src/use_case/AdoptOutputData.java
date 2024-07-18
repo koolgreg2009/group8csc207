@@ -5,6 +5,8 @@ import entity.User.User;
 
 import java.util.List;
 
+/** Returns Data for Adopt
+ */
 public class AdoptOutputData {
     private Pet pet;
     private List<User> userList;
