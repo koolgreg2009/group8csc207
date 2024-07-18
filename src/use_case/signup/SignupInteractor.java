@@ -1,9 +1,9 @@
-package use_case;
+package use_case.signup;
 
 import data_access.UserDAOInterface;
-import data_access.UserSignupDAInterface;
 import entity.User.AdopterUser;
 import entity.User.AdopterUserFactory;
+
 import java.time.LocalDateTime;
 
 public class SignupInteractor implements SignupInputBoundary {

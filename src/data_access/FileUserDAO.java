@@ -3,7 +3,9 @@ package data_access;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -76,13 +78,18 @@ public class FileUserDAO implements UserDAOInterface {
 	}
 
 	@Override
-	public void removePetFromAllUserBookmarks(int petID) {
+	public List<String> removePetFromAllUserBookmarks(int petID) {
+		List<String> usersNotified = new ArrayList<>();
 		accounts.entrySet().stream()
 				.filter(a -> a.getValue().getBookmarks().stream().anyMatch(l -> l.getPetID() == petID))
-				.forEach(entry -> entry.getValue().getBookmarks().removeIf(b -> b.getPetID() == petID));
+				.forEach(entry -> {entry.getValue().getBookmarks().removeIf(b -> b.getPetID() == petID);
+				usersNotified.add(entry.getKey());
+				});
 		save();
+		return usersNotified;
 	}
 
+	@Override
 	public boolean userHasBookmark(String username, int petID) {
 		AdopterUser user = accounts.get(username);
 		if (user != null) {

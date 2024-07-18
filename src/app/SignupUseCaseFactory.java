@@ -6,18 +6,15 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import data_access.FileUserDAO;
-import data_access.UserDAOInterface;
-import data_access.UserSignupDAInterface;
 import entity.User.AdopterUserFactory;
-import entity.User.UserFactory;
-import interface_adapter.LoginViewModel;
-import interface_adapter.SignupController;
-import interface_adapter.SignupPresenter;
-import interface_adapter.SignupViewModel;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.signup.SignupController;
+import interface_adapter.signup.SignupPresenter;
+import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
-import use_case.SignupInputBoundary;
-import use_case.SignupInteractor;
-import use_case.SignupOutputBoundary;
+import use_case.signup.SignupInputBoundary;
+import use_case.signup.SignupInteractor;
+import use_case.signup.SignupOutputBoundary;
 import view.SignupView;
 
 public class SignupUseCaseFactory {

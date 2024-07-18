@@ -112,7 +112,7 @@ public class UserPreference{
 	 * @return A string of the user's preferred location for pet adoption
 	 */
 	@JsonProperty("location")
-	public String getLocation(String location) {
+	public String getLocation() {
 		return this.location;
 	}
 
