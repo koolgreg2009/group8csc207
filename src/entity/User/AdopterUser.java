@@ -1,5 +1,6 @@
 package entity.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import entity.Preference.UserPreference;
  * @version 1.0
  * @since 2024-07-12
  */
-public class AdopterUser extends CommonUser implements AdopterInterface {
+public class AdopterUser extends CommonUser{
 
 	/**
 	 * List of bookmarks that the adopter user has.
@@ -61,7 +62,6 @@ public class AdopterUser extends CommonUser implements AdopterInterface {
 	 *
 	 * @return the preferences of the adopter user
 	 */
-	@Override
 	public UserPreference getPreferences() {
 		return preferences;
 	}
@@ -71,7 +71,6 @@ public class AdopterUser extends CommonUser implements AdopterInterface {
 	 *
 	 * @param preferences the preferences of the adopter user
 	 */
-	@Override
 	public void setPreferences(UserPreference preferences) {
 		this.preferences = preferences;
 	}
@@ -81,7 +80,6 @@ public class AdopterUser extends CommonUser implements AdopterInterface {
 	 *
 	 * @param bookmark the bookmark being added to the adopter user
 	 */
-	@Override
 	public void addBookmark(Bookmark bookmark) {
 //		LocalDateTime now = LocalDateTime.now();
 //		BookmarkFactory bookmarkFactory = new BookmarkFactory();
@@ -100,7 +98,6 @@ public class AdopterUser extends CommonUser implements AdopterInterface {
 	 *
 	 * @param bookmark the bookmark that is being removed from the adopter user
 	 */
-	@Override
 	public void removeBookmark(Bookmark bookmark) {
 		bookmarks.remove(bookmark);
 	}
@@ -110,7 +107,6 @@ public class AdopterUser extends CommonUser implements AdopterInterface {
 	 *
 	 * @return a list of bookmarks
 	 */
-	@Override
 	public List<Bookmark> getBookmarks() {
 		return this.bookmarks;
 	}
