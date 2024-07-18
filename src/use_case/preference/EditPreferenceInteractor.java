@@ -1,11 +1,9 @@
-package use_case;
+package use_case.preference;
 
-import use_case.preference.InitialPreferenceData;
-package use_case.PreferenceUseCase;
-
+import use_case.preference.PreferenceData;
 import data_access.UserDAOInterface;
-import entity.User.AdopterUser;
-import entity.User.User;
+import entity.user.AdopterUser;
+import entity.user.User;
 
 /**
  * Interactor for use case of editing an adopter user's pet preference data.
