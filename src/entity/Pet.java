@@ -144,14 +144,24 @@ public class Pet{
         this.isAvailable = false;
         // more to be added
     }
+
+    /** Gets the pet's age
+     * @return An Int of the pet's age
+     */
     public int getAge(){
         return age;
     }
 
+    /** Gets the pet's activity level
+     * @return A String of the pet's activity
+     */
     public String getActivityLevel(){
         return this.activityLevel;
     }
 
+    /** Gets the pet's location
+     * @return A String of the pet's location
+     */
     public String getLocation(){
         return this.location;
     }
