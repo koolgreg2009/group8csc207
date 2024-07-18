@@ -1,5 +1,5 @@
 package data_access;
-import entity.User.User;
+import entity.user.User;
 
 import java.util.List;
 

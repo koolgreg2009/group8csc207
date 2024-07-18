@@ -1,3 +1,6 @@
+package use_case;
+
+import use_case.preference.InitialPreferenceData;
 package use_case.PreferenceUseCase;
 
 public class EditPreferenceInteractor implements PreferenceInputBoundary {

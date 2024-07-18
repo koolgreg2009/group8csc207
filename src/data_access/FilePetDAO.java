@@ -3,7 +3,7 @@ package data_access;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Pet;
-import entity.Preference.UserPreference;
+import entity.preference.UserPreference;
 
 import java.io.File;
 import java.io.IOException;

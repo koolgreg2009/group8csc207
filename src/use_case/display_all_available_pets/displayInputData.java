@@ -1,6 +1,6 @@
-package use_case.displayAllAvailablePets;
+package use_case.display_all_available_pets;
 
-import entity.Preference.UserPreference;
+import entity.preference.UserPreference;
 
 
 public class displayInputData {
