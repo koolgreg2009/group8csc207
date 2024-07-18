@@ -8,7 +8,7 @@ import java.util.List;
  * @version 2.0
  * @since 2024-07-16
  */
-public class InitialPreferenceData {
+public class PreferenceData {
 
     private String location; // location user wants to adopt pet
     private List<String> species; // species the user is willing to consider
@@ -28,7 +28,7 @@ public class InitialPreferenceData {
      * @param gender The user's preferred pet gender
      */
 
-    public InitialPreferenceData(String location, List<String> species, List<String> breeds, int minAge,
+    public PreferenceData(String location, List<String> species, List<String> breeds, int minAge,
                           int maxAge, String activityLevel, String gender) {
         this.location = location;
         this.species = species;
