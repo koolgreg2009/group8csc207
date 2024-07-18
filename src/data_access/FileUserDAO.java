@@ -89,6 +89,7 @@ public class FileUserDAO implements UserDAOInterface {
 		return usersNotified;
 	}
 
+	@Override
 	public boolean userHasBookmark(String username, int petID) {
 		AdopterUser user = accounts.get(username);
 		if (user != null) {

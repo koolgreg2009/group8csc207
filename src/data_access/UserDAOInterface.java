@@ -9,4 +9,5 @@ public interface UserDAOInterface {
 	String clearUsers();
 	User get(String username);
 	List<String> removePetFromAllUserBookmarks(int petID);
+	boolean userHasBookmark(String username, int petID);
 }
