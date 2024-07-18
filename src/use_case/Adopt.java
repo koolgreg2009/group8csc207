@@ -1,25 +1,30 @@
 package use_case;
+import data_access.FileUserDAO;
+import data_access.PetDAOInterface;
+import data_access.UserDAOInterface;
 import entity.Pet;
-import entity.Bookmark;
+import entity.User.User;
 
 import java.util.List;
 
-public class Adopt implements AdoptBoundary{
-    private Pet pet;
-    private List<Bookmark> bookmarkList;
+public class Adopt implements AdoptInputBoundary {
+    final PetDAOInterface petDAO;
+    final AdoptOutputBoundary userPresenter;
+    final UserDAOInterface userDAO;
 
-    public Adopt(Pet pet, List<Bookmark> bookmarkList){
-        this.pet = pet;
-        this.bookmarkList = bookmarkList;
+    public Adopt(PetDAOInterface petDAO, AdoptOutputBoundary userPresenter, UserDAOInterface userDAO){
+        this.petDAO = petDAO;
+        this.userPresenter = userPresenter;
+        this.userDAO = userDAO;
     }
 
-
     @Override
-    public void execute(Adopt adopt) {
-        for (int i = 0; i < bookmarkList.size(); i++) {
-            if (bookmarkList.contains(pet)) {
-                bookmarkList.remove(pet);
-            }
-        }
+    public void execute(AdoptInputData adoptInputData) {
+        userPresenter.prepareAdopt("Pet has found a home");
+        Pet uwu =  petDAO.get(adoptInputData.getPetID());
+        uwu.markUnavailable();
+        List<String> users = userDAO.removePetFromAllUserBookmarks(uwu.getPetID());
+        petDAO.save(uwu);
+        System.out.println("Pet " + uwu + " has been Adopted by: ");
     }
 }
