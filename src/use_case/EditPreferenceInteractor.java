@@ -1,7 +1,6 @@
 package use_case;
 
-import data_access.FileUserDAO;
-import use_case.PreferenceUseCase.InitialPreferenceData;
+import use_case.preference.InitialPreferenceData;
 
 public class EditPreferenceInteractor implements PreferenceInputBoundary{
 

@@ -1,4 +1,4 @@
-package entity.Preference;
+package entity.preference;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,4 +1,4 @@
-package use_case.bookmarkUsecase;
+package use_case.bookmarks;
 
 import entity.Pet;
 

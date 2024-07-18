@@ -1,6 +1,4 @@
-package entity.User;
-
-import java.time.LocalDateTime;
+package entity.user;
 
 public class AdopterUserFactory implements UserFactory {
 

@@ -1,4 +1,4 @@
-package entity.User;
+package entity.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import entity.Bookmark;
-import entity.Preference.UserPreference;
+import entity.preference.UserPreference;
 
 /**
  * Represents a user that is specifically classified as an adopter with

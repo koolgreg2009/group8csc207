@@ -1,7 +1,7 @@
 package interface_adapter;
 
-import use_case.PreferenceUseCase.PreferenceData;
-import use_case.PreferenceUseCase.PreferenceInputBoundary; // no PreferenceInputBoundary yet
+import use_case.preference.PreferenceData;
+import use_case.preference.PreferenceInputBoundary; // no PreferenceInputBoundary yet
 
 import java.util.List;
 
