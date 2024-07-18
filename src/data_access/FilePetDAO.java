@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FilePetDAO {
+public class FilePetDAO implements PetDAOInterface{
     private final File jsonFile;
 
     private final Map<Integer, Pet> pets = new HashMap<Integer, Pet>();
@@ -27,15 +27,15 @@ public class FilePetDAO {
             pets.putAll(objectMapper.readValue(jsonFile, typeRef));
         }
     }
+    @Override
+    public Pet get(int petID) {
+        return pets.get(petID);
+    }
+    @Override
     public void save(Pet pet) {
         pets.put(pet.getPetID(), pet); // apparently this autoboxes
         this.save();
     }
-
-    public Pet get(int petID) {
-        return pets.get(petID);
-    }
-
     private void save() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -50,6 +50,7 @@ public class FilePetDAO {
 //    public boolean existsByName(String identifier) {
 //        return pets.containsKey(identifier);
 //    }
+    @Override
     public ArrayList<Pet> getPreferencePets(UserPreference userPreference) {
         ArrayList<Pet> matchingPets = new ArrayList<>();
 
@@ -62,7 +63,7 @@ public class FilePetDAO {
         return matchingPets;
     }
 
-    private boolean matchesPreference(Pet pet, UserPreference userPreference) {
+    public boolean matchesPreference(Pet pet, UserPreference userPreference) {
         if (userPreference.getSpecies() != null && !userPreference.getSpecies().equals(pet.getSpecies())) {
             return false;
         }
