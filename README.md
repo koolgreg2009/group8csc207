@@ -1,8 +1,6 @@
 # Project: GBP (Pet Adoption Website)
 *The project name is currently a working title
 
-<hr>
-
 ## Contributors
 * [Alex](https://github.com/lamberm2)
 * [Jane](https://github.com/snowykitkat)
