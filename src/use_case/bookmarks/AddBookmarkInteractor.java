@@ -6,13 +6,13 @@ import entity.BookmarkFactory;
 import entity.user.AdopterUser;
 import java.time.LocalDateTime;
 
-public class AddBookmarkUsecaseInteractor implements BookmarkInputBoundary{
+public class AddBookmarkInteractor implements BookmarkInputBoundary{
 
-    final BookmarkOutputboundary bookmarkPresenter;
+    final BookmarkOutputBoundary bookmarkPresenter;
     final BookmarkFactory bookmarkFactory;
     final UserDAOInterface fileUserDAO;
 
-    public AddBookmarkUsecaseInteractor(BookmarkOutputboundary outputboundary, BookmarkFactory bookmarkFactory, FileUserDAO fileUserDAO) {
+    public AddBookmarkInteractor(BookmarkOutputBoundary outputboundary, BookmarkFactory bookmarkFactory, FileUserDAO fileUserDAO) {
         this.bookmarkPresenter = outputboundary;
         this.bookmarkFactory = bookmarkFactory;
         this.fileUserDAO = fileUserDAO;
