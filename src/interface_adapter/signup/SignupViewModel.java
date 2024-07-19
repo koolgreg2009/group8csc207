@@ -5,6 +5,10 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * ViewModel for the signup process, this handles communication between view and presenter including the state of the
+ * signup process
+ */
 public class SignupViewModel extends ViewModel {
 
     public final String TITLE_LABEL = "Sign Up View";
@@ -17,10 +21,18 @@ public class SignupViewModel extends ViewModel {
 
     private SignupState state = new SignupState();
 
+    /**
+     * Constructor for the Signup View Model with a default title "sign up".
+     */
     public SignupViewModel() {
         super("sign up");
     }
 
+    /**
+     * Sets the state of the signup process.
+     *
+     * @param state the state that the signup process is being set to
+     */
     public void setState(SignupState state) {
         this.state = state;
     }
@@ -29,14 +41,28 @@ public class SignupViewModel extends ViewModel {
 
     // This is what the Signup Presenter will call to let the ViewModel know
     // to alert the View
+
+    /**
+     * Lets the listeners know that there has been a change in the state property.
+     */
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
 
+    /**
+     * Adds a listener for any property changes.
+     *
+     * @param listener the listener being added
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
 
+    /**
+     * Gets the current state of the signup process.
+     *
+     * @return the state that the signup process is in
+     */
     public SignupState getState() {
         return state;
     }
