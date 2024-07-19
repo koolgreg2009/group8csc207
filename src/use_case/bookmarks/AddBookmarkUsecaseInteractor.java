@@ -18,7 +18,7 @@ public class AddBookmarkUsecaseInteractor implements BookmarkInputBoundary{
         this.fileUserDAO = fileUserDAO;
     }
 
-    public void addBookmark(BookmarkInputData inputData) {
+    public void execute(BookmarkInputData inputData) {
         // check for if duplicate. if duplicate, send present failed else:
         if (fileUserDAO.userHasBookmark(inputData.getUsername(), inputData.getPetID())) {
             // prepare fail view
