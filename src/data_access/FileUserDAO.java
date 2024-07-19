@@ -11,8 +11,8 @@ import java.util.Map;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import entity.User.AdopterUser;
-import entity.User.User;
+import entity.user.AdopterUser;
+import entity.user.User;
 
 public class FileUserDAO implements UserDAOInterface {
 

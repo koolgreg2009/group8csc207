@@ -1,7 +1,7 @@
 package data_access;
 
 import entity.Pet;
-import entity.Preference.UserPreference;
+import entity.preference.UserPreference;
 
 import java.util.ArrayList;
 

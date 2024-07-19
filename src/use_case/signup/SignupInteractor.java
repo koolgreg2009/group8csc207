@@ -1,8 +1,8 @@
 package use_case.signup;
 
 import data_access.UserDAOInterface;
-import entity.User.AdopterUser;
-import entity.User.AdopterUserFactory;
+import entity.user.AdopterUser;
+import entity.user.AdopterUserFactory;
 
 import java.time.LocalDateTime;
 

@@ -1,13 +1,12 @@
-# Project: GBP (Pet Adoption Website)
-*The project name is currently a working title
+# Pet Adoption Website
 
 ## Contributors
-* [Alex](https://github.com/lamberm2)
-* [Jane](https://github.com/snowykitkat)
-* [Jenny](https://github.com/yangje02)
-* [Joyce](https://github.com/Joyce12345678)
-* [Justin](https://github.com/justinyoon95)
-* [Kevin](https://github.com/koolgreg2009)
+* [Alex Lambermon](https://github.com/lamberm2)
+* [Jane Li](https://github.com/snowykitkat)
+* [Jenny Yang](https://github.com/yangje02)
+* [Joy Cai](https://github.com/Joyce12345678)
+* [Justin Yoon](https://github.com/justinyoon95)
+* [Kevin Hu](https://github.com/koolgreg2009)
 
 <hr>
 
