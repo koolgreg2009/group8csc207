@@ -178,4 +178,13 @@ public class Pet{
     public void markUnavailable(){
         this.isAvailable = false;
     }
+
+    /** for simple console print phase 1 */
+    @Override
+    public String toString() {
+        return "Pet [owner=" + owner + ", email=" + email + ", phoneNum=" + phoneNum + ", age=" + age +
+                ", breed=" + breed + ", personality=" + personality + ", species=" + species + ", bio=" + bio +
+                ", activity level=" + activityLevel + ", gender" + gender + ", location=" + location + ", isAvailable=" + isAvailable + "]";
+
+    }
 }
