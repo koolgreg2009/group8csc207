@@ -11,11 +11,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Data Access Object for Pet entities, which uses a JSON file for storage.
+ */
 public class FilePetDAO implements PetDAOInterface{
     private final File jsonFile;
 
     private final Map<Integer, Pet> pets = new HashMap<Integer, Pet>();
 
+    /**
+     * Constructor for the pet entity data access object from the json file path.
+     *
+     * @param jsonPath the json file path that the data access object is accessing
+     * @throws IOException if in IO error occurs
+     */
     public FilePetDAO(String jsonPath) throws IOException {
         jsonFile = new File(jsonPath);
         if (jsonFile.length() == 0) {
@@ -27,15 +36,32 @@ public class FilePetDAO implements PetDAOInterface{
             pets.putAll(objectMapper.readValue(jsonFile, typeRef));
         }
     }
+
+    /**
+     * Gets the pet with the pet ID that is specified.
+     *
+     * @param petID the ID of the et being retrieved
+     * @return the Pet with the pet ID that was specified, or null if the pet ID does not belong to an existing Pet.
+     */
     @Override
     public Pet get(int petID) {
         return pets.get(petID);
     }
+
+    /**
+     * Saves the Pet specified to the storage map.
+     *
+     * @param pet the Pet that is being saved
+     */
     @Override
     public void save(Pet pet) {
         pets.put(pet.getPetID(), pet); // apparently this autoboxes
         this.save();
     }
+
+    /**
+     * Saves the current state of the Pet storage map to the json file.
+     */
     private void save() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -50,6 +76,13 @@ public class FilePetDAO implements PetDAOInterface{
 //    public boolean existsByName(String identifier) {
 //        return pets.containsKey(identifier);
 //    }
+
+    /**
+     * Gets a list of the Pets that align with the UserPreference specified.
+     *
+     * @param userPreference the UserPreference that the listed pets are aligning to
+     * @return the list of Pets that match the UserPreference specified
+     */
     @Override
     public ArrayList<Pet> getPreferencePets(UserPreference userPreference) {
         ArrayList<Pet> matchingPets = new ArrayList<>();
@@ -63,6 +96,13 @@ public class FilePetDAO implements PetDAOInterface{
         return matchingPets;
     }
 
+    /**
+     * Checks if the Pet matches the preferences indicated in the specified UserPreference.
+     *
+     * @param pet the Pet being checked
+     * @param userPreference the UserPreferences that the Pet is being compared to
+     * @return true if the Pet matches the preferences from UserPreference or false in any other outcome
+     */
     public boolean matchesPreference(Pet pet, UserPreference userPreference) {
         if (userPreference.getSpecies() != null && !userPreference.getSpecies().equals(pet.getSpecies())) {
             return false;
