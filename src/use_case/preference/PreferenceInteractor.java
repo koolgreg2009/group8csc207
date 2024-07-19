@@ -2,6 +2,7 @@ package use_case.preference;
 
 import data_access.UserDAOInterface;
 import entity.user.AdopterUser;
+import entity.user.User;
 
 /** This is the interactor for the use case of editing an adopter user's pet preference data.
  *
@@ -29,9 +30,9 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
      */
     @Override
     public void execute(PreferenceData PreferenceData){
-        AdopterUser user = userDataAccessObject.get(PreferenceData.getUsername());
+        User user = userDataAccessObject.get(PreferenceData.getUsername());
 
-        user.setPreferences(PreferenceData.getPreference());
+        ((AdopterUser) user).setPreferences(PreferenceData.getUserPreference());
 
         userDataAccessObject.save(user);
 
