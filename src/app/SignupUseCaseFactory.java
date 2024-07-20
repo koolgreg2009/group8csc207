@@ -1,8 +1,6 @@
 package app;
 
-
 import java.io.IOException;
-
 import javax.swing.JOptionPane;
 
 import data_access.FileUserDAO;
