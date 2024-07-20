@@ -2,16 +2,35 @@ package use_case.login;
 
 import entity.user.User;
 
+/**
+ * The LoginInteractor class implements the LoginInputBoundary interface and handles the login process.
+ * It validates the login data, checks if the user exists, and verifies the password.
+ *
+ * @version 1.0
+ * @since 2024-07-19
+ */
 public class LoginInteractor implements LoginInputBoundary {
     final LoginUserDataAccessInterface userDataAccessObject;
     final LoginOutputBoundary loginPresenter;
 
+    /**
+     * Constructs a new LoginInteractor with the specified dependencies.
+     *
+     * @param userDataAccessInterface
+     * @param loginOutputBoundary
+     */
     public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
                            LoginOutputBoundary loginOutputBoundary) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;
     }
 
+    /**
+     * Executes the login process with the given input data.
+     * Validates the data, checks if the user exists, and verifies the password.
+     *
+     * @param loginInputData
+     */
     @Override
     public void execute(LoginInputData loginInputData) {
         String username = loginInputData.getUsername();
