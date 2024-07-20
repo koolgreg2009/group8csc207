@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  */
 public class AddBookmarkInteractor implements BookmarkInputBoundary{
 
-    final BookmarkOutputBoundary bookmarkPresenter;
+    final AddBookmarkOutputBoundary bookmarkPresenter;
     final UserDAOInterface fileUserDAO;
 
     /**
@@ -21,7 +21,7 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
      * @param fileUserDAO the data access object for the user data
      */
 
-    public AddBookmarkInteractor(BookmarkOutputBoundary outputBoundary,
+    public AddBookmarkInteractor(AddBookmarkOutputBoundary outputBoundary,
                                  FileUserDAO fileUserDAO) {
         this.bookmarkPresenter = outputBoundary;
         this.fileUserDAO = fileUserDAO;
@@ -42,9 +42,8 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
             AdopterUser user = ((AdopterUser) fileUserDAO.get(inputData.getUsername()));
             user.addBookmark(bookmark);
             fileUserDAO.save(user);
-
-            // create output data
-            // feed to presenter
+            AddBookmarkOutputData addBookmarkOutputData = new AddBookmarkOutputData(user.getBookmarks(), bookmark);
+            this.bookmarkPresenter.prepareSuccessView(addBookmarkOutputData);
         }
 
     }
