@@ -50,6 +50,8 @@ public class RemoveBookmarkInteractor implements RemoveBookmarkInputBoundary {
         }
         //remove the bookmark from the list
         userBookmarks.remove(bookmarkToRemove);
+        //save the information of the user back to the DAO
+        userDAO.save(user);
 
         //TODO: create output data to feed to Presenter
     }

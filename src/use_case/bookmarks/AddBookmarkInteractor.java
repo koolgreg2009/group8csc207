@@ -23,7 +23,8 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
      * @param bookmarkFactory the factory to create a new bookmark
      * @param fileUserDAO the data access object for the user data
      */
-    public AddBookmarkUsecaseInteractor(BookmarkOutputboundary outputboundary, BookmarkFactory bookmarkFactory, FileUserDAO fileUserDAO) {
+    public AddBookmarkInteractor(BookmarkOutputboundary outputboundary, BookmarkFactory bookmarkFactory,
+                                 FileUserDAO fileUserDAO) {
         this.bookmarkPresenter = outputboundary;
         this.bookmarkFactory = bookmarkFactory;
         this.fileUserDAO = fileUserDAO;
