@@ -8,6 +8,9 @@ import java.beans.PropertyChangeSupport;
 /**
  * ViewModel for the signup process, this handles communication between view and presenter including the state of the
  * signup process
+ *
+ * @version 1.0
+ * @since 2024-07-20
  */
 public class SignupViewModel extends ViewModel {
 
