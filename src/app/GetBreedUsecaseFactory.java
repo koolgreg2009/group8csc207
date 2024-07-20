@@ -9,7 +9,7 @@ import use_case.get_breed_info.GetBreedInteractor;
 import use_case.get_breed_info.GetBreedOutputBoundary;
 
 public class GetBreedUsecaseFactory {
-
+    private GetBreedUsecaseFactory() {}
     public static GetBreedController createGetBreedUsecase(){
         CatDAOInterface catDao = new CatBreedDAO();
         GetBreedOutputBoundary getBreedPresenter = new GetBreedPresenter(); // atm this doesnt have anythihng else

@@ -1,5 +1,4 @@
 package use_case.bookmarks;
-import data_access.FileUserDAO;
 import data_access.UserDAOInterface;
 import entity.Bookmark;
 import entity.user.AdopterUser;
@@ -23,7 +22,7 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
      */
 
     public AddBookmarkInteractor(AddBookmarkOutputBoundary outputBoundary,
-                                 FileUserDAO fileUserDAO) {
+                                 UserDAOInterface fileUserDAO) {
         this.bookmarkPresenter = outputBoundary;
         this.fileUserDAO = fileUserDAO;
     }
