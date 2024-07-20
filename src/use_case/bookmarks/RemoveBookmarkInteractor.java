@@ -7,21 +7,30 @@ import entity.user.AdopterUser;
 
 import java.util.ArrayList;
 
+/**
+ * This is an interactor for removing a bookmark from a user's list of bookmarks.
+ */
+
 public class RemoveBookmarkInteractor implements RemoveBookmarkInputBoundary {
 
     final FileUserDAO userDAO;
     final RemoveBookmarkOutputBoundary removeOutputBoundary;
 
+    /**
+     * Constructs a RemoveBookmarkInteractor with the specified user DAO and output boundary.
+     * @param userDAO the data access object for the user
+     * @param removeOutputBoundary the output boundary to handle the output of the bookmark removal process
+     */
     public RemoveBookmarkInteractor(FileUserDAO userDAO, RemoveBookmarkOutputBoundary removeOutputBoundary) {
         this.userDAO = userDAO;
         this.removeOutputBoundary = removeOutputBoundary;
     }
-//    public AddBookmarkInteractor(BookmarkOutputBoundary outputboundary, BookmarkFactory bookmarkFactory, FileUserDAO fileUserDAO) {
-//        this.bookmarkPresenter = outputboundary;
-//        this.bookmarkFactory = bookmarkFactory;
-//        this.fileUserDAO = fileUserDAO;
 
-    public void execute(BookmarkInputData inputData){
+    /**
+     * Removes a bookmark based on the input data given.
+     * @param inputData the data required to remove the bookmark.
+     */
+    public void removeBookmark(BookmarkInputData inputData){
         // Obtain the adopter user from the inputData provided.
         AdopterUser user = ((AdopterUser) userDAO.get(inputData.getUsername()));
 
