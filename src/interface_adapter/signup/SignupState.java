@@ -2,9 +2,6 @@ package interface_adapter.signup;
 
 /**
  * Represents the state of the signup process, which includes user input and any validation errors.
- *
- * @version 1.0
- * @since 2024-07-20
  */
 public class SignupState {
     private String username = "";
