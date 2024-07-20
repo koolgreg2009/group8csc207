@@ -3,6 +3,7 @@ package entity.user;
 import java.util.List;
 
 public interface User {
+	long getUserId();
     String getUsername();
     void setUsername(String username);
     String getPassword();
@@ -13,5 +14,5 @@ public interface User {
     void setEmail(String email);
     String getPhone();
     void setPhone(String num);
-    void addNotif(String notification);
+    void addNotif(String notif);
 }
