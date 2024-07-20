@@ -122,4 +122,5 @@ public class Main {
 
             // Close the scanner
             scanner.close();
-}
+        }
+    }

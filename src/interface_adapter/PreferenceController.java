@@ -1,5 +1,6 @@
 package interface_adapter;
 
+import entity.preference.UserPreference;
 import use_case.preference.PreferenceData;
 import use_case.preference.PreferenceInputBoundary; // no PreferenceInputBoundary yet
 
@@ -32,10 +33,8 @@ public class PreferenceController {
      * @param activityLevel The user's preferred pet's activity level
      * @param gender The user's preferred pet gender
      */
-    public void execute(String location, List<String> species, List<String> breeds, int minAge,
-                        int maxAge, String activityLevel, String gender){
-        PreferenceData initialPreferences = new PreferenceData(location, species, breeds, minAge,
-                maxAge, activityLevel, gender);
+    public void execute(String username, UserPreference preferences){
+        PreferenceData initialPreferences = new PreferenceData(username, preferences);
         preferenceInteractor.execute(initialPreferences);
     }
 }

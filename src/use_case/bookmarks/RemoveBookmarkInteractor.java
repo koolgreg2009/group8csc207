@@ -2,7 +2,6 @@ package use_case.bookmarks;
 
 import data_access.FileUserDAO;
 import entity.Bookmark;
-import entity.BookmarkFactory;
 import entity.user.AdopterUser;
 
 import java.util.ArrayList;

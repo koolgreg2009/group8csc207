@@ -1,7 +1,7 @@
 package use_case;
 
 import entity.Pet;
-import entity.User.User;
+import entity.user.User;
 
 import java.util.List;
 
