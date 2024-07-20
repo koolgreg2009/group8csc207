@@ -2,7 +2,6 @@ package use_case.bookmarks;
 import data_access.FileUserDAO;
 import data_access.UserDAOInterface;
 import entity.Bookmark;
-import entity.BookmarkFactory;
 import entity.user.AdopterUser;
 import java.time.LocalDateTime;
 
@@ -12,21 +11,19 @@ import java.time.LocalDateTime;
 public class AddBookmarkInteractor implements BookmarkInputBoundary{
 
     final BookmarkOutputBoundary bookmarkPresenter;
-    final BookmarkFactory bookmarkFactory;
     final UserDAOInterface fileUserDAO;
 
     /**
      * Constructor for AddBookmarkInteractor, which includes the bookmark output boundary, bookmark factory and
      * the file data access object for users.
      *
-     * @param outputboundary the output boundary to send results to presenter
-     * @param bookmarkFactory the factory to create a new bookmark
+     * @param outputBoundary the output boundary to send results to presenter
      * @param fileUserDAO the data access object for the user data
      */
-    public AddBookmarkInteractor(BookmarkOutputboundary outputboundary, BookmarkFactory bookmarkFactory,
+
+    public AddBookmarkInteractor(BookmarkOutputBoundary outputBoundary,
                                  FileUserDAO fileUserDAO) {
-        this.bookmarkPresenter = outputboundary;
-        this.bookmarkFactory = bookmarkFactory;
+        this.bookmarkPresenter = outputBoundary;
         this.fileUserDAO = fileUserDAO;
     }
 
@@ -42,7 +39,7 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
             this.bookmarkPresenter.prepareErrorView("Bookmark already exists");
         } else{
             LocalDateTime now = LocalDateTime.now();
-            Bookmark bookmark = this.bookmarkFactory.create(inputData.getPetID(), now);
+            Bookmark bookmark = new Bookmark(inputData.getPetID(), now);
             // get adapter use, append into array list
             AdopterUser user = ((AdopterUser) fileUserDAO.get(inputData.getUsername()));
             user.addBookmark(bookmark);
