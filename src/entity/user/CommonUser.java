@@ -1,6 +1,8 @@
 package entity.user;
 
-import java.util.LinkedList;
+import utils.IdCounter;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +44,6 @@ public class CommonUser implements User {
 	private List<String> notifications;
 	/**
 	 *
-	 *
 	 * @param username the username of the user
 	 * @param password the password of the user
 	 * @param name the name of the person the user belongs to
@@ -55,7 +56,7 @@ public class CommonUser implements User {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
-		this.notifications = new LinkedList<>();
+		this.notifications = new ArrayList<String>();
 	}
 
 	@Override
@@ -153,10 +154,9 @@ public class CommonUser implements User {
 		this.phone = num;
 	}
 
-
 	@Override
-	public void addNotif(String notification) {
-		this.notifications.add(notification);
+	public void addNotif(String notif) {
+		notifications.add(notif);
 	}
 
 }

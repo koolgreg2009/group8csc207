@@ -1,4 +1,4 @@
-package use_case;
+package use_case.adopt;
 
 import entity.Pet;
 import entity.user.User;
@@ -11,16 +11,16 @@ public class AdoptOutputData {
     private Pet pet;
     private List<User> userList;
 
-    public AdoptOutputData(Pet pet, List<User> userList){
+    public AdoptOutputData(Pet pet){
         this.pet = pet;
-        this.userList = userList;
     }
 
-    public Pet getPet() {
-        return pet;
+    public Integer getPetID() {
+        return pet.getPetID();
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public String getPetOwner(){
+        return pet.getOwner();
     }
+
 }
