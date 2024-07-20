@@ -2,6 +2,9 @@ package entity.user;
 
 import utils.IdCounter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a common user with attributes such as a user ID, username, password, name, email, and phone.
  * This class implements the {@link User} interface.
@@ -15,6 +18,7 @@ public class CommonUser implements User {
 	 * The unique identification for the user.
 	 */
 	private final long userId;
+	private List<String> notifications;
 
 	/**
 	 * Username of the user.
@@ -70,6 +74,7 @@ public class CommonUser implements User {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
+		this.notifications = new ArrayList<String>();
 	}
 
 	/**
@@ -180,6 +185,11 @@ public class CommonUser implements User {
 	@Override
 	public void setPhone(String num) {
 		this.phone = num;
+	}
+
+	@Override
+	public void addNotif(String notif) {
+		notifications.add(notif);
 	}
 
 }

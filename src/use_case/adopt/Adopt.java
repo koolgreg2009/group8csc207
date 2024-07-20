@@ -1,8 +1,7 @@
-package use_case;
+package use_case.adopt;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.Pet;
-import entity.user.User;
 
 import java.util.List;
 
@@ -21,11 +20,14 @@ public class Adopt implements AdoptInputBoundary {
 
     @Override
     public void execute(AdoptInputData adoptInputData) {
-        userPresenter.prepareAdopt("Pet has found a home");
         Pet uwu =  petDAO.get(adoptInputData.getPetID());
         uwu.markUnavailable();
         List<String> users = userDAO.removePetFromAllUserBookmarks(uwu.getPetID());
         petDAO.save(uwu);
-        System.out.println("Pet " + uwu + " has been Adopted");
+        for(String u : users){
+            userDAO.get(u).addNotif("This pet has found a home");
+        }
+        AdoptOutputData owo = new AdoptOutputData(uwu);
+        userPresenter.prepareAdopt(owo);
     }
 }

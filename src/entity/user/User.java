@@ -1,5 +1,7 @@
 package entity.user;
 
+import java.util.List;
+
 public interface User {
 	long getUserId();
     String getUsername();
@@ -12,4 +14,5 @@ public interface User {
     void setEmail(String email);
     String getPhone();
     void setPhone(String num);
+    void addNotif(String notif);
 }
