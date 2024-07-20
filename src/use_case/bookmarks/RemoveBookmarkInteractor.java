@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * This is an interactor for removing a bookmark from a user's list of bookmarks.
  */
 
-public class RemoveBookmarkInteractor implements RemoveBookmarkInputBoundary {
+public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
 
     final FileUserDAO userDAO;
     final RemoveBookmarkOutputBoundary removeOutputBoundary;
@@ -26,10 +26,10 @@ public class RemoveBookmarkInteractor implements RemoveBookmarkInputBoundary {
     }
 
     /**
-     * Removes a bookmark based on the input data given.
+     * Executes the removal a bookmark based on the input data given.
      * @param inputData the data required to remove the bookmark.
      */
-    public void removeBookmark(BookmarkInputData inputData){
+    public void execute(BookmarkInputData inputData){
         // Obtain the adopter user from the inputData provided.
         AdopterUser user = ((AdopterUser) userDAO.get(inputData.getUsername()));
 

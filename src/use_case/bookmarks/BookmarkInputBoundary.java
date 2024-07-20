@@ -7,8 +7,8 @@ package use_case.bookmarks;
  */
 public interface BookmarkInputBoundary {
 
-    /** Adds a new bookmark.
-     * @param inputData the data required to add the bookmark.
+    /** Executes the addition or removal of a bookmark based on the provided input data.
+     * @param inputData the data required to add or remove the bookmark.
      */
-    void addBookmark(BookmarkInputData inputData);
+    void execute(BookmarkInputData inputData);
 }

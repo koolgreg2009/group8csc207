@@ -28,11 +28,11 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
     }
 
     /**
-     * Adds a bookmark for a user. This also gives an error message if bookmark is already created.
+     * Executes the addition of a bookmark for a user. This also gives an error message if bookmark is already created.
      *
      * @param inputData the input data containing the username and pet ID
      */
-    public void addBookmark(BookmarkInputData inputData) {
+    public void execute(BookmarkInputData inputData) {
         // check for if duplicate. if duplicate, send present failed else:
         if (fileUserDAO.userHasBookmark(inputData.getUsername(), inputData.getPetID())) {
             // prepare fail view
