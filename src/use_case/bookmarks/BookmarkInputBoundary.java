@@ -1,14 +1,13 @@
 package use_case.bookmarks;
 
-/** The BookmarkInputBoundary interface is an interface for handling bookmark addition operations.
- *
- * @version 1.0
- * @since 2024-07-19
+/**
+ * The BookmarkInputBoundary interface is an interface for handling bookmark addition operations.
  */
 public interface BookmarkInputBoundary {
 
-    /** Adds a new bookmark.
-     * @param inputData the data required to add the bookmark.
+    /**
+     * Executes the addition or removal of a bookmark based on the provided input data.
+     * @param inputData the data required to add or remove the bookmark.
      */
-    void addBookmark(BookmarkInputData inputData);
+    void execute(BookmarkInputData inputData);
 }

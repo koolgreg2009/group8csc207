@@ -5,7 +5,8 @@ import entity.Bookmark;
 import entity.user.AdopterUser;
 import java.time.LocalDateTime;
 
-/** Interactor responsible for adding a bookmark. This handles the business logic for adding bookmarks to the account
+/**
+ * Interactor responsible for adding a bookmark. This handles the business logic for adding bookmarks to the account
  * of the user.
  */
 public class AddBookmarkInteractor implements BookmarkInputBoundary{
@@ -27,10 +28,11 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
         this.fileUserDAO = fileUserDAO;
     }
 
-    /** Adds a bookmark for a user. This also gives an error message if bookmark is already created.
-     * @param inputData the input data containing the username and pet ID
+    /**
+     * Executes the addition of a bookmark for a user. This also gives an error message if bookmark is already created.
+     * @param inputData the input data containing the username and pet ID.
      */
-    public void addBookmark(BookmarkInputData inputData) {
+    public void execute(BookmarkInputData inputData) {
         // check for if duplicate. if duplicate, send present failed else:
         if (fileUserDAO.userHasBookmark(inputData.getUsername(), inputData.getPetID())) {
             // prepare fail view
@@ -42,8 +44,8 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
             AdopterUser user = ((AdopterUser) fileUserDAO.get(inputData.getUsername()));
             user.addBookmark(bookmark);
             fileUserDAO.save(user);
-            AddBookmarkOutputData addBookmarkOutputData = new AddBookmarkOutputData(user.getBookmarks(), bookmark);
-            this.bookmarkPresenter.prepareSuccessView(addBookmarkOutputData);
+            BookmarkOutputData bookmarkOutputData = new BookmarkOutputData(user.getBookmarks(), bookmark);
+            this.bookmarkPresenter.prepareSuccessView(bookmarkOutputData);
         }
 
     }

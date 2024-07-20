@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * This is an interactor for removing a bookmark from a user's list of bookmarks.
  */
 
-public class RemoveBookmarkInteractor implements RemoveBookmarkInputBoundary {
+public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
 
     final FileUserDAO userDAO;
     final RemoveBookmarkOutputBoundary removeOutputBoundary;
@@ -26,17 +26,17 @@ public class RemoveBookmarkInteractor implements RemoveBookmarkInputBoundary {
     }
 
     /**
-     * Removes a bookmark based on the input data given.
+     * Executes the removal a bookmark based on the input data given.
      * @param inputData the data required to remove the bookmark.
      */
-    public void removeBookmark(BookmarkInputData inputData){
+    public void execute(BookmarkInputData inputData){
         // Obtain the adopter user from the inputData provided.
         AdopterUser user = ((AdopterUser) userDAO.get(inputData.getUsername()));
 
         //Obtain the list of all bookmarks associated with that adopter user.
         ArrayList<Bookmark> userBookmarks = (ArrayList<Bookmark>) user.getBookmarks();
 
-        //Initializing a Bookmark object to store the bookmark that is to be removed.
+        // Initializing a Bookmark object to store the bookmark that is to be removed.
         Bookmark bookmarkToRemove = null;
         for (Bookmark userBookmark : userBookmarks) {
             //found the correct bookmark to remove from all the bookmarks associated with that adopter user
@@ -47,9 +47,14 @@ public class RemoveBookmarkInteractor implements RemoveBookmarkInputBoundary {
                 break;
             }
         }
-        //remove the bookmark from the list
+        // remove the bookmark from the list
         userBookmarks.remove(bookmarkToRemove);
+        //save the information of the user back to the DAO
+        userDAO.save(user);
 
-        //TODO: create output data to feed to Presenter
+        // create a new output data object
+        BookmarkOutputData bookmarkOutputData = new BookmarkOutputData(userBookmarks, bookmarkToRemove);
+        // generate the success view and message.
+        this.removeOutputBoundary.successMessage(bookmarkOutputData);
     }
 }
