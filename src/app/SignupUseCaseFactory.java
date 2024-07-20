@@ -4,6 +4,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import data_access.FileUserDAO;
+import data_access.UserDAOInterface;
 import entity.user.AdopterUserFactory;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
@@ -40,7 +41,7 @@ public class SignupUseCaseFactory {
      * @param userDataAccessObject
      * @return A SignupView instance configured with the provided dependencies.
      */
-    public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface userDataAccessObject) {
+    public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, UserDAOInterface userDataAccessObject) {
 
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel);

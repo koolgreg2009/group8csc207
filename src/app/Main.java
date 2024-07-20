@@ -2,6 +2,8 @@ package app;
 
 
 import data_access.FileUserDAO;
+import data_access.UserDAOInterface;
+import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.signup.SignupViewModel;
@@ -24,48 +26,51 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Pet Adoption App");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        CardLayout cardLayout = new CardLayout();
-
-        // The various View objects. Only one view is visible at a time.
-        JPanel views = new JPanel(cardLayout);
-        application.add(views);
-
-        // This keeps track of and manages which view is currently showing.
-        ViewManagerModel viewManagerModel = new ViewManagerModel();
-        new ViewManager(views, cardLayout, viewManagerModel);
-
-        // The data for the views, such as username and password, are in the ViewModels.
-        // This information will be changed by a presenter object that is reporting the
-        // results from the use case. The ViewModels are observable, and will
-        // be observed by the Views.
-        LoginViewModel loginViewModel = new LoginViewModel();
-        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
-        SignupViewModel signupViewModel = new SignupViewModel();
-
-        FileUserDAO userDataAccessObject;
-        try {
-            userDataAccessObject = new FileUserDAO("./users.json");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
-        views.add(signupView, signupView.viewName);
-        
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
-        views.add(loginView, loginView.viewName);
-
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
-        views.add(loggedInView, loggedInView.viewName);
-
-        viewManagerModel.setActiveView(signupView.viewName);
-        viewManagerModel.firePropertyChanged();
-
-        application.pack();
-        application.setVisible(true);
+//        JFrame application = new JFrame("Pet Adoption App");
+//        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//
+//        CardLayout cardLayout = new CardLayout();
+//
+//        // The various View objects. Only one view is visible at a time.
+//        JPanel views = new JPanel(cardLayout);
+//        application.add(views);
+//
+//        // This keeps track of and manages which view is currently showing.
+//        ViewManagerModel viewManagerModel = new ViewManagerModel();
+//        new ViewManager(views, cardLayout, viewManagerModel);
+//
+//        // The data for the views, such as username and password, are in the ViewModels.
+//        // This information will be changed by a presenter object that is reporting the
+//        // results from the use case. The ViewModels are observable, and will
+//        // be observed by the Views.
+//        LoginViewModel loginViewModel = new LoginViewModel();
+//        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
+//        SignupViewModel signupViewModel = new SignupViewModel();
+//
+//        UserDAOInterface userDataAccessObject;
+//        try {
+//            userDataAccessObject = new FileUserDAO("./users.json");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
+//        views.add(signupView, signupView.viewName);
+//
+//        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+//        views.add(loginView, loginView.viewName);
+//
+//        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
+//        views.add(loggedInView, loggedInView.viewName);
+//
+//        viewManagerModel.setActiveView(signupView.viewName);
+//        viewManagerModel.firePropertyChanged();
+//
+//        application.pack();
+//        application.setVisible(true);
+        //catapi use case:
+        GetBreedController getBreedController = GetBreedUsecaseFactory.createGetBreedUsecase();
+        getBreedController.execute();
     }
 
     public static void main2(String[] args) {
@@ -86,9 +91,9 @@ public class Main {
             System.out.println("Name: ");
             String name = scanner.next();
             // fill out the rest, accomplish boundaries for line 89 to initiate
-            SignupInteractor signupInteractor = new SignupInteractor();
+            //SignupInteractor signupInteractor = new SignupInteractor();
             //fill out execute's parameters with variables
-            signupInteractor.execute();
+            // signupInteractor.execute();
         }
         //FILL THE LOG IN PATHWAY
         else if (command == 2) {}
@@ -99,28 +104,30 @@ public class Main {
         // After, it needs to prompt the user to select a pet (goes into another use case) to view details.
         // Perhaps after this, the pet can then be unavailable and goes into the next use case
         // yadayada we can play around with the order about how things go
+
+
     }
 
 
 
     }
 
-    public class ConsoleInputExample {
-        public static void main(String[] args) {
-            // Create a Scanner object to read input from the console
-            Scanner scanner = new Scanner(System.in);
-
-            // Prompt the user to enter some input
-            System.out.print("Enter your name: ");
-            String name = scanner.nextLine();
-
-            System.out.print("Enter your age: ");
-            int age = scanner.nextInt();
-
-            // Display the input back to the user
-            System.out.println("Your name is " + name + " and you are " + age + " years old.");
-
-            // Close the scanner
-            scanner.close();
-        }
-    }
+//    public class ConsoleInputExample {
+//        public static void main(String[] args) {
+//            // Create a Scanner object to read input from the console
+//            Scanner scanner = new Scanner(System.in);
+//
+//            // Prompt the user to enter some input
+//            System.out.print("Enter your name: ");
+//            String name = scanner.nextLine();
+//
+//            System.out.print("Enter your age: ");
+//            int age = scanner.nextInt();
+//
+//            // Display the input back to the user
+//            System.out.println("Your name is " + name + " and you are " + age + " years old.");
+//
+//            // Close the scanner
+//            scanner.close();
+//        }
+//    }
