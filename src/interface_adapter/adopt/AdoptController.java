@@ -5,6 +5,8 @@ import use_case.adopt.AdoptInputData;
 
 import java.util.Scanner;
 
+/** Class AdoptController that takes in information and executes
+ */
 public class AdoptController {
     private final AdoptInputBoundary adoptInteractor;
 
