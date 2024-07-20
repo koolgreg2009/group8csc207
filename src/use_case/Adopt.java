@@ -2,7 +2,7 @@ package use_case;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.Pet;
-import entity.User.User;
+import entity.user.User;
 
 import java.util.List;
 
@@ -26,6 +26,9 @@ public class Adopt implements AdoptInputBoundary {
         uwu.markUnavailable();
         List<String> users = userDAO.removePetFromAllUserBookmarks(uwu.getPetID());
         petDAO.save(uwu);
+        for(String u : users){
+            u.addNotif("Pet " + uwu + " has been Adopted");
+        }
         System.out.println("Pet " + uwu + " has been Adopted");
     }
 }

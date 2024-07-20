@@ -6,18 +6,38 @@ import entity.user.AdopterUserFactory;
 
 import java.time.LocalDateTime;
 
+/**
+ * The SignupInteractor class implements the SignupInputBoundary interface and handles the signup process.
+ * It validates the signup data, checks if the user already exists, and creates a new user if valid.
+ *
+ * @version 1.0
+ * @since 2024-07-19
+ */
 public class SignupInteractor implements SignupInputBoundary {
 
     final UserDAOInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
-    final AdopterUserFactory AdopterUserFactory;
+    final AdopterUserFactory adopterUserFactory;
 
-    public SignupInteractor(UserDAOInterface userSignupDAInterface, SignupOutputBoundary signupOutputBoundary,  AdopterUserFactory AdopterUserFactory) {
+    /**
+     * Constructs a new SignupInteractor with the specified dependencies.
+     *
+     * @param userSignupDAInterface
+     * @param signupOutputBoundary
+     * @param adopterUserFactory
+     */
+    public SignupInteractor(UserDAOInterface userSignupDAInterface, SignupOutputBoundary signupOutputBoundary,  AdopterUserFactory adopterUserFactory) {
         this.userDataAccessObject = userSignupDAInterface;
         this.userPresenter = signupOutputBoundary;
-        this.AdopterUserFactory = AdopterUserFactory;
+        this.adopterUserFactory = adopterUserFactory;
     }
 
+    /**
+     * Executes the signup process with the given input data.
+     * Validates the data and creates a new user if valid.
+     *
+     * @param signupInputData
+     */
     @Override
     public void execute(SignupInputData signupInputData) {
         if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
@@ -27,7 +47,7 @@ public class SignupInteractor implements SignupInputBoundary {
         } else {
 
             LocalDateTime now = LocalDateTime.now();
-            AdopterUser user = AdopterUserFactory.create(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getName(), signupInputData.getEmail(), signupInputData.getPhone());
+            AdopterUser user = adopterUserFactory.create(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getName(), signupInputData.getEmail(), signupInputData.getPhone());
             userDataAccessObject.save(user);
 
             SignupOutputData signupOutputData = new SignupOutputData(user.getName(), now.toString(), false);

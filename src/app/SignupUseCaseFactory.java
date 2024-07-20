@@ -1,11 +1,10 @@
 package app;
 
-
 import java.io.IOException;
-
 import javax.swing.JOptionPane;
 
 import data_access.FileUserDAO;
+import data_access.UserDAOInterface;
 import entity.user.AdopterUserFactory;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
@@ -18,12 +17,31 @@ import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupUserDataAccessInterface;
 import view.SignupView;
 
+/**
+ * The SignupUseCaseFactory class is responsible for creating instances of the components
+ * required for the signup use case, including the view, controller, and interactor.
+ * It sets up the necessary dependencies and wiring for the signup functionality.
+ *
+ * @version 1.0
+ * @since 2024-07-19
+ */
 public class SignupUseCaseFactory {
 
-    /** Prevent instantiation. */
+    /**
+     * Prevents instantiation of this utility class.
+     */
     private SignupUseCaseFactory() {}
 
-    public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface userDataAccessObject) {
+    /**
+     * Creates a SignupView instance, setting up the signup use case and its dependencies.
+     *
+     * @param viewManagerModel
+     * @param loginViewModel
+     * @param signupViewModel
+     * @param userDataAccessObject
+     * @return A SignupView instance configured with the provided dependencies.
+     */
+    public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, UserDAOInterface userDataAccessObject) {
 
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel);
@@ -35,6 +53,14 @@ public class SignupUseCaseFactory {
         return null;
     }
 
+    /**
+     * Creates a SignupController instance and sets up the signup interactor and presenter.
+     *
+     * @param viewManagerModel
+     * @param signupViewModel
+     * @param loginViewModel
+     * @return A SignupController instance configured with the provided dependencies.
+     */
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel) throws IOException {
     	FileUserDAO userDataAccessObject = new FileUserDAO("./users.json");
 
