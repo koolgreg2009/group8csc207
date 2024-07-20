@@ -44,8 +44,8 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
             AdopterUser user = ((AdopterUser) fileUserDAO.get(inputData.getUsername()));
             user.addBookmark(bookmark);
             fileUserDAO.save(user);
-            AddBookmarkOutputData addBookmarkOutputData = new AddBookmarkOutputData(user.getBookmarks(), bookmark);
-            this.bookmarkPresenter.prepareSuccessView(addBookmarkOutputData);
+            BookmarkOutputData bookmarkOutputData = new BookmarkOutputData(user.getBookmarks(), bookmark);
+            this.bookmarkPresenter.prepareSuccessView(bookmarkOutputData);
         }
 
     }

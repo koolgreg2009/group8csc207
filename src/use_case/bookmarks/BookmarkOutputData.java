@@ -4,16 +4,16 @@ import entity.Bookmark;
 
 import java.util.List;
 // bookmarks is user's list of bookmarks bookmark is the bookmark added to removed
-public class AddBookmarkOutputData {
-    private final List<Bookmark> bookmarks;
+public class BookmarkOutputData {
+    private final List<Bookmark> allBookmarks;
     private final Bookmark bookmark;
 
-    public AddBookmarkOutputData(List<Bookmark> bookmarks, Bookmark bookmark) {
-        this.bookmarks = bookmarks;
+    public BookmarkOutputData(List<Bookmark> allBookmarks, Bookmark bookmark) {
+        this.allBookmarks = allBookmarks;
         this.bookmark = bookmark;
     }
     public List<Bookmark> getBookmarks() {
-        return bookmarks;
+        return allBookmarks;
     }
     public Bookmark getBookmark() {
         return bookmark;
