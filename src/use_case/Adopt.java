@@ -2,7 +2,7 @@ package use_case;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.Pet;
-import entity.User.User;
+import entity.user.User;
 
 import java.util.List;
 
