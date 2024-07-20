@@ -20,8 +20,9 @@ public class AddBookmarkUsecaseFactory {
             BookmarkInputBoundary AddBookmarkInteractor = new AddBookmarkInteractor(bookmarkPresenter, userDAO);
             return new AddBookmarkController(AddBookmarkInteractor);
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Could not open user data file.");
-            return null;
+            System.out.println("Could not open user data file.");
+            return null; // idk how we should handle this atm. should we do it in this file? because rn it's kinda
+            // awkward since this method returns a controller, but creating dao might throw an exception
         }
 
     }
