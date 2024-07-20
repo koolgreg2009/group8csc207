@@ -6,33 +6,32 @@ import entity.BookmarkFactory;
 import entity.user.AdopterUser;
 import java.time.LocalDateTime;
 
-/**
- * Interactor responsible for adding a bookmark. This handles the business logic for adding bookmarks to the account
+/** Interactor responsible for adding a bookmark. This handles the business logic for adding bookmarks to the account
  * of the user.
  */
-public class AddBookmarkUsecaseInteractor implements BookmarkInputBoundary{
+public class AddBookmarkInteractor implements BookmarkInputBoundary{
 
-    final BookmarkOutputboundary bookmarkPresenter;
+    final BookmarkOutputBoundary bookmarkPresenter;
     final BookmarkFactory bookmarkFactory;
     final UserDAOInterface fileUserDAO;
 
     /**
-     * Constructor for AddBookmarkUsecaseInteractor, which includes the bookmark output boundary, bookmark factory and
+     * Constructor for AddBookmarkInteractor, which includes the bookmark output boundary, bookmark factory and
      * the file data access object for users.
      *
-     * @param outputboundary the output boundary to send results to presenter
+     * @param outputBoundary the output boundary to send results to presenter
      * @param bookmarkFactory the factory to create a new bookmark
      * @param fileUserDAO the data access object for the user data
      */
-    public AddBookmarkUsecaseInteractor(BookmarkOutputboundary outputboundary, BookmarkFactory bookmarkFactory, FileUserDAO fileUserDAO) {
-        this.bookmarkPresenter = outputboundary;
+
+    public AddBookmarkInteractor(BookmarkOutputBoundary outputBoundary, BookmarkFactory bookmarkFactory,
+                                 FileUserDAO fileUserDAO) {
+        this.bookmarkPresenter = outputBoundary;
         this.bookmarkFactory = bookmarkFactory;
         this.fileUserDAO = fileUserDAO;
     }
 
-    /**
-     * Adds a bookmark for a user. This also gives an error message if bookmark is already created.
-     *
+    /** Adds a bookmark for a user. This also gives an error message if bookmark is already created.
      * @param inputData the input data containing the username and pet ID
      */
     public void addBookmark(BookmarkInputData inputData) {
