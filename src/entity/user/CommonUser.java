@@ -1,7 +1,6 @@
 package entity.user;
 
-import utils.IdCounter;
-
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -13,10 +12,7 @@ import java.util.List;
  */
 
 public class CommonUser implements User {
-	/**
-	 * The unique identification for the user.
-	 */
-	private final long userId;
+
 
 	/**
 	 * Username of the user.
@@ -43,7 +39,9 @@ public class CommonUser implements User {
 	 */
 	private String phone;
 
+	private List<String> notifications;
 	/**
+	 *
 	 *
 	 * @param username the username of the user
 	 * @param password the password of the user
@@ -52,43 +50,14 @@ public class CommonUser implements User {
 	 * @param phone the phone number of the user
 	 */
 	public CommonUser(String username, String password, String name, String email, String phone) {
-		this(IdCounter.getNextID(), username, password, name, email, phone);
-	}
-
-	/**
-	 *
-	 * @param userId the unique identification for the user
-	 * @param username the username of the user
-	 * @param password the password of the user
-	 * @param name the password of the user
-	 * @param email the email of the user
-	 * @param phone the phone number of the user
-	 */
-	public CommonUser(long userId, String username, String password, String name, String email, String phone) {
-		this.userId = userId; // for json file processor to use -- tells it to use this to convert
-		//it into a java object. In addition, this constructor is made to use for the above constructor as well
 		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
+		this.notifications = new LinkedList<>();
 	}
 
-	/**
-	 * Gets the identification of the user.
-	 *
-	 * @return the identifier of the user
-	 */
-	@Override
-	public long getUserId() {
-		return userId;
-	}
-
-	/**
-	 * Gets the username of the user.
-	 *
-	 * @return username of the user
-	 */
 	@Override
 	public String getUsername() {
 		return username;
@@ -184,9 +153,10 @@ public class CommonUser implements User {
 		this.phone = num;
 	}
 
+
 	@Override
-	public List addNotif(List<String> notif) {
-		...
+	public void addNotif(String notification) {
+		this.notifications.add(notification);
 	}
 
 }

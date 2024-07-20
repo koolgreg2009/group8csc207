@@ -40,12 +40,12 @@ public class AdopterUser extends CommonUser{
 	 *
 	 */
 	@JsonCreator()
-	public AdopterUser(@JsonProperty("userId") long userId, @JsonProperty("username") String username,
+	public AdopterUser(@JsonProperty("username") String username,
 			@JsonProperty("password") String password, @JsonProperty("name") String name,
 			@JsonProperty("email") String email, @JsonProperty("phone") String phone,
 			@JsonProperty("bookmarks") ArrayList<Bookmark> bookmarks,
 			@JsonProperty("preferences") UserPreference preferences) {
-		super(userId, username, password, name, email, phone);
+		super(username, password, name, email, phone);
 		this.bookmarks = bookmarks;
 		this.preferences = preferences;
 	}
