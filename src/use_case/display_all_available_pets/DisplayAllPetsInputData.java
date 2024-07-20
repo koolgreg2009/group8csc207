@@ -3,10 +3,10 @@ package use_case.display_all_available_pets;
 import entity.preference.UserPreference;
 
 
-public class displayInputData {
+public class DisplayAllPetsInputData {
     private final UserPreference preferences;
 
-    public displayInputData(UserPreference preferences){
+    public DisplayAllPetsInputData(UserPreference preferences){
         this.preferences = preferences;
     }
 

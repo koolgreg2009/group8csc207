@@ -2,19 +2,19 @@ package use_case.get_breed_info;
 
 import data_access.CatDAOInterface;
 
-public class getBreedInteractor implements getBreedInputBoundary{
+public class GetBreedInteractor implements GetBreedInputBoundary {
     private final CatDAOInterface catDAO;
-    private final getBreedOutputBoundary getBreedPresenter;
+    private final GetBreedOutputBoundary getBreedPresenter;
 
-    public getBreedInteractor(CatDAOInterface catDAO, getBreedOutputBoundary getBreedPresenter) {
+    public GetBreedInteractor(CatDAOInterface catDAO, GetBreedOutputBoundary getBreedPresenter) {
         this.catDAO = catDAO;
         this.getBreedPresenter = getBreedPresenter;
     }
 
     @Override
-    public void execute(getBreedInputData breedInputData){
+    public void execute(GetBreedInputData breedInputData){
         String breedInfo = this.catDAO.getBreedInformation(breedInputData.getBreedName());
-        getBreedOutputData outputData = new getBreedOutputData(breedInfo);
+        GetBreedOutputData outputData = new GetBreedOutputData(breedInfo);
         this.getBreedPresenter.prepareGetBreedView(outputData);
     }
 }
