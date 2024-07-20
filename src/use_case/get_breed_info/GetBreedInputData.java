@@ -1,9 +1,9 @@
 package use_case.get_breed_info;
 
-public class getBreedInputData {
+public class GetBreedInputData {
     final private String breed_name;
 
-    public getBreedInputData(String breed_name) {
+    public GetBreedInputData(String breed_name) {
         this.breed_name = breed_name;
     }
 
