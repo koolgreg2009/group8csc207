@@ -16,7 +16,7 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
     final UserDAOInterface fileUserDAO;
 
     /**
-     * Constructor for AddBookmarkUsecaseInteractor, which includes the bookmark output boundary, bookmark factory and
+     * Constructor for AddBookmarkInteractor, which includes the bookmark output boundary, bookmark factory and
      * the file data access object for users.
      *
      * @param outputboundary the output boundary to send results to presenter
