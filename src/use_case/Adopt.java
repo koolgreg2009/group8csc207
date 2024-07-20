@@ -26,6 +26,9 @@ public class Adopt implements AdoptInputBoundary {
         uwu.markUnavailable();
         List<String> users = userDAO.removePetFromAllUserBookmarks(uwu.getPetID());
         petDAO.save(uwu);
+        for(String u : users){
+            u.addNotif("Pet " + uwu + " has been Adopted");
+        }
         System.out.println("Pet " + uwu + " has been Adopted");
     }
 }
