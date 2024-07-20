@@ -36,7 +36,7 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
         //Obtain the list of all bookmarks associated with that adopter user.
         ArrayList<Bookmark> userBookmarks = (ArrayList<Bookmark>) user.getBookmarks();
 
-        //Initializing a Bookmark object to store the bookmark that is to be removed.
+        // Initializing a Bookmark object to store the bookmark that is to be removed.
         Bookmark bookmarkToRemove = null;
         for (Bookmark userBookmark : userBookmarks) {
             //found the correct bookmark to remove from all the bookmarks associated with that adopter user
@@ -47,11 +47,14 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
                 break;
             }
         }
-        //remove the bookmark from the list
+        // remove the bookmark from the list
         userBookmarks.remove(bookmarkToRemove);
         //save the information of the user back to the DAO
         userDAO.save(user);
 
-        //TODO: create output data to feed to Presenter
+        // create a new output data object
+        BookmarkOutputData bookmarkOutputData = new BookmarkOutputData(userBookmarks, bookmarkToRemove);
+        // generate the success view and message.
+        this.removeOutputBoundary.successMessage(bookmarkOutputData);
     }
 }

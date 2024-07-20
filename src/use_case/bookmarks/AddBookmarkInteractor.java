@@ -5,7 +5,8 @@ import entity.Bookmark;
 import entity.user.AdopterUser;
 import java.time.LocalDateTime;
 
-/** Interactor responsible for adding a bookmark. This handles the business logic for adding bookmarks to the account
+/**
+ * Interactor responsible for adding a bookmark. This handles the business logic for adding bookmarks to the account
  * of the user.
  */
 public class AddBookmarkInteractor implements BookmarkInputBoundary{
@@ -29,8 +30,7 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
 
     /**
      * Executes the addition of a bookmark for a user. This also gives an error message if bookmark is already created.
-     *
-     * @param inputData the input data containing the username and pet ID
+     * @param inputData the input data containing the username and pet ID.
      */
     public void execute(BookmarkInputData inputData) {
         // check for if duplicate. if duplicate, send present failed else:
