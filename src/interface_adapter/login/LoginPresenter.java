@@ -19,59 +19,68 @@ import use_case.signup.SignupOutputData;
  */
 public class LoginPresenter implements LoginOutputBoundary {
 
-    /** The view model for the login view. */
-    private final LoginViewModel loginViewModel;
-
-    /** The view model for the logged-in view. */
-    private final LoggedInViewModel loggedInViewModel;
-
-    /** The view manager model used to switch between views. */
-    private ViewManagerModel viewManagerModel;
-
-    /**
-     * Constructs a LoginPresenter with the specified view models and view manager model.
-     *
-     * @param viewManagerModel
-     * @param loggedInViewModel
-     * @param loginViewModel
-     */
-    public LoginPresenter(ViewManagerModel viewManagerModel,
-                          LoggedInViewModel loggedInViewModel,
-                          LoginViewModel loginViewModel) {
-        this.viewManagerModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
-        this.loginViewModel = loginViewModel;
-    }
-
-    /**
-     * Prepares the success view when login is successful.
-     * Updates the logged-in state and switches to the logged-in view.
-     *
-     * @param response
-     */
+//    /** The view model for the login view. */
+//    private final LoginViewModel loginViewModel;
+//
+//    /** The view model for the logged-in view. */
+//    private final LoggedInViewModel loggedInViewModel;
+//
+//    /** The view manager model used to switch between views. */
+//    private ViewManagerModel viewManagerModel;
+//
+//    /**
+//     * Constructs a LoginPresenter with the specified view models and view manager model.
+//     *
+//     * @param viewManagerModel
+//     * @param loggedInViewModel
+//     * @param loginViewModel
+//     */
+//    public LoginPresenter(ViewManagerModel viewManagerModel,
+//                          LoggedInViewModel loggedInViewModel,
+//                          LoginViewModel loginViewModel) {
+//        this.viewManagerModel = viewManagerModel;
+//        this.loggedInViewModel = loggedInViewModel;
+//        this.loginViewModel = loginViewModel;
+//    }
+//
+//    /**
+//     * Prepares the success view when login is successful.
+//     * Updates the logged-in state and switches to the logged-in view.
+//     *
+//     * @param response
+//     */
+//    @Override
+//    public void prepareSuccessView(LoginOutputData response) {
+//        // On success, switch to the logged in view.
+//
+//        LoggedInState loggedInState = loggedInViewModel.getState();
+//        loggedInState.setUsername(response.getUsername());
+//        this.loggedInViewModel.setState(loggedInState);
+//        this.loggedInViewModel.firePropertyChanged();
+//
+//        this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+//        this.viewManagerModel.firePropertyChanged();
+//    }
+//
+//    /**
+//     * Prepares the fail view when login fails.
+//     * Updates the login view model with the error message.
+//     *
+//     * @param error
+//     */
+//    @Override
+//    public void prepareFailView(String error) {
+//        LoginState loginState = loginViewModel.getState();
+//        loginState.setUsernameError(error);
+//        loginViewModel.firePropertyChanged();
+//    }
     @Override
-    public void prepareSuccessView(LoginOutputData response) {
-        // On success, switch to the logged in view.
-
-        LoggedInState loggedInState = loggedInViewModel.getState();
-        loggedInState.setUsername(response.getUsername());
-        this.loggedInViewModel.setState(loggedInState);
-        this.loggedInViewModel.firePropertyChanged();
-
-        this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
+    public void prepareSuccessView(LoginOutputData data) {
+        System.out.println(data.getUsername() + " has successfully been logged in.");
     }
 
-    /**
-     * Prepares the fail view when login fails.
-     * Updates the login view model with the error message.
-     *
-     * @param error
-     */
     @Override
     public void prepareFailView(String error) {
-        LoginState loginState = loginViewModel.getState();
-        loginState.setUsernameError(error);
-        loginViewModel.firePropertyChanged();
+        System.out.println(error);
     }
 }
