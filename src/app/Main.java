@@ -6,6 +6,7 @@ import data_access.FileUserDAO;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.Pet;
+import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -78,7 +79,8 @@ public class Main {
 //        application.pack();
 //        application.setVisible(true);
         //catapi use case:
-
+        AddBookmarkController addBookmarkController = AddBookmarkUsecaseFactory.createAddBookmarkUsecase();
+        addBookmarkController.execute("");
         PetBioController petBioController = PetBioUseCaseFactory.createPetBioUseCase();
         petBioController.execute();
         GetBreedController getBreedController = GetBreedUsecaseFactory.createGetBreedUsecase();

@@ -11,6 +11,7 @@ import java.util.Map;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import entity.user.AdopterUser;
 import entity.user.User;
 
@@ -44,6 +45,7 @@ public class FileUserDAO implements UserDAOInterface {
 			TypeReference<HashMap<String, AdopterUser>> typeRef = new TypeReference<HashMap<String, AdopterUser>>() {
 			};
 			ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.registerModule(new JavaTimeModule());
 			accounts.putAll(objectMapper.readValue(jsonFile, typeRef));
 		}
 	}
@@ -77,6 +79,7 @@ public class FileUserDAO implements UserDAOInterface {
 	 */
 	private void save() {
 		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
 		try {
 			objectMapper.writeValue(jsonFile, accounts);
 		} catch (Exception ex) {

@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+
 /**
  * Data Access Object for Pet entities, which uses a JSON file for storage.
  */
@@ -33,6 +37,7 @@ public class FilePetDAO implements PetDAOInterface{
             TypeReference<HashMap<String, Pet>> typeRef = new TypeReference<HashMap<String, Pet>>() {
             };
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule());
             pets.putAll(objectMapper.readValue(jsonFile, typeRef));
         }
     }
@@ -64,6 +69,7 @@ public class FilePetDAO implements PetDAOInterface{
      */
     private void save() {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
         try {
             objectMapper.writeValue(jsonFile, pets);
         } catch (Exception ex) {
