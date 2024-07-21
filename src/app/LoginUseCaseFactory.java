@@ -92,8 +92,7 @@ public class LoginUseCaseFactory {
         try{
             UserDAOInterface userDAO = new FileUserDAO("./users.json");
             LoginOutputBoundary userPresenter = new LoginPresenter();
-            UserFactory adopterUserFactory = new AdopterUserFactory();
-            LoginInputBoundary LoginInteractor = new LoginInteractor(userDAO, userPresenter, adopterUserFactory);
+            LoginInputBoundary LoginInteractor = new LoginInteractor(userDAO, userPresenter);
 
             return new LoginController(LoginInteractor);
 
