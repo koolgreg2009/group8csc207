@@ -13,7 +13,7 @@ public class GetBreedController {
 
     public void execute(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter breed");
+        System.out.println("Enter cat breed");
         String breed = scanner.nextLine();
         this.getBreedInteractor.execute(new GetBreedInputData(breed));
     }
