@@ -41,17 +41,17 @@ public class SignupUseCaseFactory {
      * @param userDataAccessObject
      * @return A SignupView instance configured with the provided dependencies.
      */
-    public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, UserDAOInterface userDataAccessObject) {
-
-        try {
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel);
-            return new SignupView(signupController, signupViewModel);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Could not open user data file.");
-        }
-
-        return null;
-    }
+//    public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, UserDAOInterface userDataAccessObject) {
+//
+//        try {
+//            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel);
+//            return new SignupView(signupController, signupViewModel);
+//        } catch (IOException e) {
+//            JOptionPane.showMessageDialog(null, "Could not open user data file.");
+//        }
+//
+//        return null;
+//    }
 
     /**
      * Creates a SignupController instance and sets up the signup interactor and presenter.
@@ -62,7 +62,7 @@ public class SignupUseCaseFactory {
      * @return A SignupController instance configured with the provided dependencies.
      */
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel) throws IOException {
-    	FileUserDAO userDataAccessObject = new FileUserDAO("./users.json");
+    	UserDAOInterface userDataAccessObject = new FileUserDAO("./users.json");
 
         // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
