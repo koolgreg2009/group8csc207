@@ -29,7 +29,7 @@ public class DisplayAllPetsUseCaseFactory {
      *
      * @return an instance of {@link DisplayAllPetsController}, or {@code null} if an {@link IOException} occurs.
      */
-    public static DisplayAllPetsController createDisplayAllPetsUsecase() {
+    public static DisplayAllPetsController createDisplayAllPetsUseCase() {
         try {
             PetDAOInterface filePetDAO = new FilePetDAO("./pets.json");
             DisplayAllPetsOutputBoundary displayAllPetsPresenter = new DisplayAllPetsPresenter();

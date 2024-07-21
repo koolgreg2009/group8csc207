@@ -47,6 +47,7 @@ public class SignupController {
 
     //This is a temporary execute method for Phase 1 to work around Terminals.
     public void execute() {
+        System.out.println("Executing signup usecase");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Username: ");
         String username = scanner.next();

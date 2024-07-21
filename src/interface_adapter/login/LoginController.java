@@ -41,6 +41,7 @@ public class LoginController {
 //    }
     //This is a temporary execute method for Phase 1 to work around Terminals.
     public void execute() {
+        System.out.println("Executing login usecase");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Username: ");
         String username = scanner.next();
