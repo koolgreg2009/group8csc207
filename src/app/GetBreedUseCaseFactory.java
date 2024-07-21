@@ -29,7 +29,7 @@ public class GetBreedUseCaseFactory {
      *
      * @return an instance of {@link GetBreedController}.
      */
-    public static GetBreedController createGetBreedUsecase() {
+    public static GetBreedController createGetBreedUseCase() {
         CatDAOInterface catDao = new CatBreedDAO();
         // atm this doesn't have anything else
         GetBreedOutputBoundary getBreedPresenter = new GetBreedPresenter();

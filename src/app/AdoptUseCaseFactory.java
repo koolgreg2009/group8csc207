@@ -30,7 +30,7 @@ public class AdoptUseCaseFactory {
      *
      * @return an instance of {@link AdoptController}, or {@code null} if an {@link IOException} occurs.
      */
-    public static AdoptController createAdoptUsecase(){
+    public static AdoptController createAdoptUseCase(){
         try{
             PetDAOInterface pet = new FilePetDAO("./pets.json");
             UserDAOInterface user = new FileUserDAO("./users.json");
