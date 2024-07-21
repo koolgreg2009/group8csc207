@@ -26,7 +26,7 @@ public class PetBioController {
      */
     public void execute(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter petID");
+        System.out.println("Enter petID to see the pet's details");
         int petID = scanner.nextInt();
         this.petBioInteractor.execute(new PetBioInputData(petID));
     }
