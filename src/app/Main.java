@@ -1,41 +1,22 @@
 package app;
 
 
-import data_access.FilePetDAO;
-import data_access.FileUserDAO;
-import data_access.PetDAOInterface;
-import data_access.UserDAOInterface;
-import entity.Pet;
 import entity.preference.UserPreference;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginViewModel;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.pet_bio.PetBioController;
-import interface_adapter.pet_bio.PetBioPresenter;
 import interface_adapter.signup.SignupController;
-import interface_adapter.signup.SignupViewModel;
-import interface_adapter.ViewManagerModel;
-import use_case.login.LoginUserDataAccessInterface;
-import use_case.pet_bio.PetBioInteractor;
-import use_case.pet_bio.PetBioOutputBoundary;
-import use_case.pet_bio.PetBioOutputData;
-import use_case.signup.SignupInteractor;
 //import view.LoginView;
-import view.LoggedInView;
 //import view.SignupView;
-import view.ViewManager;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        // From Paul Gries's example
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
 
@@ -82,21 +63,22 @@ public class Main {
 //
 //        application.pack();
 //        application.setVisible(true);
+        //For our use case (part we need to edit)
         //catapi use case:
         SignupController signupController = SignupUseCaseFactory.createUserSignupUseCase();
         signupController.execute();
         LoginController loginController = LoginUseCaseFactory.createUserLoginUseCase();
         loginController.execute();
 
-        DisplayAllPetsController displayAllPetsController = DisplayAllPetsUsecaseFactory.createDisplayAllPetsUsecase();
+        DisplayAllPetsController displayAllPetsController = DisplayAllPetsUseCaseFactory.createDisplayAllPetsUsecase();
         java.util.List<String> breedList = new ArrayList<>();
         breedList.add("bengal");
         displayAllPetsController.execute(  new UserPreference("Cat",breedList, 1, 2, "hyper", "toronto", "male"));
-        AddBookmarkController addBookmarkController = AddBookmarkUsecaseFactory.createAddBookmarkUsecase();
+        AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUsecase();
         addBookmarkController.execute("");
         PetBioController petBioController = PetBioUseCaseFactory.createPetBioUseCase();
         petBioController.execute();
-        GetBreedController getBreedController = GetBreedUsecaseFactory.createGetBreedUsecase();
+        GetBreedController getBreedController = GetBreedUseCaseFactory.createGetBreedUsecase();
         getBreedController.execute();
     }
 

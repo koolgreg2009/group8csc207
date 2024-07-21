@@ -22,9 +22,6 @@ import java.io.IOException;
  * The LoginUseCaseFactory class is responsible for creating instances of the components
  * required for the login use case, including the view, controller, and interactor.
  * It sets up the necessary dependencies and wiring for the login functionality.
- *
- * @version 1.0
- * @since 2024-07-19
  */
 public class LoginUseCaseFactory {
 //
@@ -83,10 +80,20 @@ public class LoginUseCaseFactory {
 //
 //        return new LoginController(loginInteractor);
 //    }
+    /**
+     * Private constructor to prevent instantiation.
+     * This class is intended to be used as a factory for creating use case instances.
+     */
     private LoginUseCaseFactory() {
 
     }
 
+    /**
+     * Creates and returns a {@link LoginController} instance.
+     * Sets up the necessary dependencies including the data access object and presenter.
+     *
+     * @return an instance of {@link LoginController}, or {@code null} if an {@link IOException} occurs.
+     */
     public static LoginController createUserLoginUseCase() {
 
         try{

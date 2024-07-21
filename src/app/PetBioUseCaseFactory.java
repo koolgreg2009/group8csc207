@@ -10,10 +10,27 @@ import use_case.pet_bio.PetBioOutputBoundary;
 
 import java.io.IOException;
 
+/**
+ * Factory class responsible for creating instances of {@link PetBioController}.
+ */
 public class PetBioUseCaseFactory {
 
+    /**
+     * Private constructor to prevent instantiation.
+     * This class is intended to be used as a factory for creating use case instances.
+     */
+    private PetBioUseCaseFactory() {
+    }
+
+    /**
+     * Creates and returns a {@link PetBioController} instance.
+     * Sets up the necessary dependencies including the data access object and presenter.
+     *
+     * @return an instance of {@link PetBioController}, or {@code null} if an {@link IOException} occurs.
+     */
     public static PetBioController createPetBioUseCase() {
-        try {
+        try
+        {
             PetDAOInterface petDAO = new FilePetDAO("./pets.json");
             PetBioOutputBoundary bioPresenter = new PetBioPresenter();
             PetBioInputBoundary petBioInteractor = new PetBioInteractor(bioPresenter, petDAO);

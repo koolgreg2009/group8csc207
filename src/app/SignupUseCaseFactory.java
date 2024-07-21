@@ -28,8 +28,6 @@ import use_case.signup.SignupUserDataAccessInterface;
  * required for the signup use case, including the view, controller, and interactor.
  * It sets up the necessary dependencies and wiring for the signup functionality.
  *
- * @version 1.0
- * @since 2024-07-19
  */
 public class SignupUseCaseFactory {
 //
@@ -80,10 +78,20 @@ public class SignupUseCaseFactory {
 //
 //        return new SignupController(userSignupInteractor);
 //    }
+    /**
+     * Private constructor to prevent instantiation.
+     * This class is intended to be used as a factory for creating use case instances.
+     */
     private SignupUseCaseFactory() {
 
     }
 
+    /**
+     * Creates and returns a {@link SignupController} instance.
+     * Sets up the necessary dependencies including the data access object, presenter, and user factory.
+     *
+     * @return an instance of {@link SignupController}, or {@code null} if an {@link IOException} occurs.
+     */
     public static SignupController createUserSignupUseCase() {
 
         try{

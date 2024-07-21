@@ -1,6 +1,7 @@
 package use_case.bookmarks;
 
 import data_access.FileUserDAO;
+import data_access.UserDAOInterface;
 import entity.Bookmark;
 import entity.user.AdopterUser;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
 
-    final FileUserDAO userDAO;
+    final UserDAOInterface userDAO;
     final RemoveBookmarkOutputBoundary removeOutputBoundary;
 
     /**
@@ -20,7 +21,7 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
      * @param userDAO the data access object for the user
      * @param removeOutputBoundary the output boundary to handle the output of the bookmark removal process
      */
-    public RemoveBookmarkInteractor(FileUserDAO userDAO, RemoveBookmarkOutputBoundary removeOutputBoundary) {
+    public RemoveBookmarkInteractor(UserDAOInterface userDAO, RemoveBookmarkOutputBoundary removeOutputBoundary) {
         this.userDAO = userDAO;
         this.removeOutputBoundary = removeOutputBoundary;
     }
