@@ -12,11 +12,25 @@ import use_case.adopt.AdoptOutputBoundary;
 
 import java.io.IOException;
 
-/** Class AdoptUsecaseFactory that takes all the info and returns an AdoptController
+/**
+ * Factory class responsible for creating instances of {@link AdoptController}.
  */
-public class AdoptUsecaseFactory {
-    public static AdoptController createAdoptUsecase(){
+public class AdoptUseCaseFactory {
 
+    /**
+     * Private constructor to prevent instantiation.
+     * This class is intended to be used as a factory for creating use case instances.
+     */
+    private AdoptUseCaseFactory(){
+    }
+
+    /**
+     * Creates and returns an {@link AdoptController} instance.
+     * Sets up the necessary dependencies including the data access objects and presenter.
+     *
+     * @return an instance of {@link AdoptController}, or {@code null} if an {@link IOException} occurs.
+     */
+    public static AdoptController createAdoptUsecase(){
         try{
             PetDAOInterface pet = new FilePetDAO("./pets.json");
             UserDAOInterface user = new FileUserDAO("./users.json");
