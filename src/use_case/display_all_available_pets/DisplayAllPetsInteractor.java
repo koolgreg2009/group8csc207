@@ -6,8 +6,8 @@ import entity.Pet;
 import java.util.List;
 
 public class DisplayAllPetsInteractor implements DisplayAllPetsInputBoundary {
-    final PetDAOInterface filePetDAO;
-    final DisplayAllPetsOutputBoundary displayAllPetPresenter;
+    private final PetDAOInterface filePetDAO;
+    private final DisplayAllPetsOutputBoundary displayAllPetPresenter;
 
     public DisplayAllPetsInteractor(PetDAOInterface filePetDAO, DisplayAllPetsOutputBoundary displayAllPetPresenter){
         this.filePetDAO = filePetDAO;
