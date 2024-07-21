@@ -1,7 +1,9 @@
 package app;
 
 import data_access.FilePetDAO;
+import data_access.FileUserDAO;
 import data_access.PetDAOInterface;
+import data_access.UserDAOInterface;
 import interface_adapter.adopt.AdoptController;
 import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.display_all_pets.DisplayAllPetsPresenter;
@@ -32,8 +34,9 @@ public class DisplayAllPetsUseCaseFactory {
     public static DisplayAllPetsController createDisplayAllPetsUseCase() {
         try {
             PetDAOInterface filePetDAO = new FilePetDAO("./pets.json");
+            UserDAOInterface fileUserDAO = new FileUserDAO("./users.json");
             DisplayAllPetsOutputBoundary displayAllPetsPresenter = new DisplayAllPetsPresenter();
-            DisplayAllPetsInputBoundary displayAllPetsInteractor = new DisplayAllPetsInteractor(filePetDAO,
+            DisplayAllPetsInputBoundary displayAllPetsInteractor = new DisplayAllPetsInteractor(filePetDAO, fileUserDAO,
                     displayAllPetsPresenter);
             return new DisplayAllPetsController(displayAllPetsInteractor);
         } catch (IOException e) {

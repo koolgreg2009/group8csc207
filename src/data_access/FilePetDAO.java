@@ -110,7 +110,7 @@ public class FilePetDAO implements PetDAOInterface{
      * @return true if the Pet matches the preferences from UserPreference or false in any other outcome
      */
     public boolean matchesPreference(Pet pet, UserPreference userPreference) {
-        if (userPreference.getSpecies() != null && !userPreference.getSpecies().equals(pet.getSpecies())) {
+        if (userPreference.getSpecies() != null && !userPreference.getSpecies().isEmpty() && !userPreference.getSpecies().equals(pet.getSpecies())) {
             return false;
         }
         if (userPreference.getBreeds() != null && !userPreference.getBreeds().isEmpty() && !userPreference.getBreeds().contains(pet.getBreed())) {
@@ -122,13 +122,13 @@ public class FilePetDAO implements PetDAOInterface{
         if (userPreference.getMaxAge() != 0 && pet.getAge() > userPreference.getMaxAge()) {
             return false;
         }
-        if (userPreference.getActivityLevel() != null && !userPreference.getActivityLevel().equals(pet.getActivityLevel())) {
+        if (userPreference.getActivityLevel() != null && !userPreference.getSpecies().isEmpty()&& !userPreference.getActivityLevel().equals(pet.getActivityLevel())) {
             return false;
         }
-        if (userPreference.getLocation() != null && !userPreference.getLocation().equals(pet.getLocation())) {
+        if (userPreference.getLocation() != null && !userPreference.getSpecies().isEmpty() && !userPreference.getLocation().equals(pet.getLocation())) {
             return false;
         }
-        if (userPreference.getGender() != null && !userPreference.getGender().equals(pet.getGender())) {
+        if (userPreference.getGender() != null && !userPreference.getSpecies().isEmpty() && !userPreference.getGender().equals(pet.getGender())) {
             return false;
         }
 
