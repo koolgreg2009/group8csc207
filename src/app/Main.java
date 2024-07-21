@@ -10,6 +10,7 @@ import entity.preference.UserPreference;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.get_breed.GetBreedController;
+import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.pet_bio.PetBioController;
@@ -22,7 +23,7 @@ import use_case.pet_bio.PetBioInteractor;
 import use_case.pet_bio.PetBioOutputBoundary;
 import use_case.pet_bio.PetBioOutputData;
 import use_case.signup.SignupInteractor;
-import view.LoginView;
+//import view.LoginView;
 import view.LoggedInView;
 //import view.SignupView;
 import view.ViewManager;
@@ -84,6 +85,8 @@ public class Main {
         //catapi use case:
         SignupController signupController = SignupUseCaseFactory.createUserSignupUseCase();
         signupController.execute();
+        LoginController loginController = LoginUseCaseFactory.createUserLoginUseCase();
+        loginController.execute();
 
         DisplayAllPetsController displayAllPetsController = DisplayAllPetsUsecaseFactory.createDisplayAllPetsUsecase();
         java.util.List<String> breedList = new ArrayList<>();
