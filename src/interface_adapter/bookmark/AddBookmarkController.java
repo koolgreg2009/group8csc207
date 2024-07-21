@@ -1,5 +1,6 @@
 package interface_adapter.bookmark;
 
+import interface_adapter.SessionManager;
 import use_case.bookmarks.BookmarkInputBoundary;
 import use_case.bookmarks.BookmarkInputData;
 
@@ -24,12 +25,11 @@ public class AddBookmarkController {
      * Executes the process of adding a bookmark for a given user.
      * Prompts the user to enter the ID of the pet they want to bookmark and processes the input.
      *
-     * @param username The username of the user adding the bookmark.
      */
-    public void execute(String username){
+    public void execute(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the ID of the pet you want to bookmark: ");
         int petID = scanner.nextInt();
-        this.addBookmarkInteractor.execute(new BookmarkInputData(username, petID));
+        this.addBookmarkInteractor.execute(new BookmarkInputData(SessionManager.getCurrentUser(), petID));
     }
 }
