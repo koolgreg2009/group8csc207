@@ -16,7 +16,6 @@ public class AddBookmarkController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter pet ID of pet you want to bookmark: ");
         int petID = scanner.nextInt();
-        scanner.close();
         this.addBookmarkInteractor.execute(new BookmarkInputData(username, petID));
     }
 }
