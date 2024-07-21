@@ -73,7 +73,7 @@ public class Main {
         DisplayAllPetsController displayAllPetsController = DisplayAllPetsUseCaseFactory.createDisplayAllPetsUseCase();
         java.util.List<String> breedList = new ArrayList<>();
         breedList.add("bengal");
-        displayAllPetsController.execute(  new UserPreference("Cat",breedList, 1, 2, "hyper", "toronto", "male"));
+        displayAllPetsController.execute(new UserPreference("Cat", breedList, 1, 2, "hyper", "toronto", "male"));
         AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase();
         addBookmarkController.execute("");
         PetBioController petBioController = PetBioUseCaseFactory.createPetBioUseCase();
@@ -81,45 +81,6 @@ public class Main {
         GetBreedController getBreedController = GetBreedUseCaseFactory.createGetBreedUseCase();
         getBreedController.execute();
     }
-
-    // This main2 is temporary, just for Phase 1.
-    public static void main2(String[] args) {
-        //To read input from console
-        Scanner scanner = new Scanner(System.in);
-
-        //Prompt user
-        System.out.println("Sign up or log in? 1 for sign up, 2 for log in.");
-        int command = scanner.nextInt();
-
-        if (command == 1){
-            System.out.println("Username: ");
-            String username = scanner.next();
-            System.out.println("Password: ");
-            String password = scanner.next();
-            System.out.println("Repeat password: ");
-            String repeatPassword = scanner.next();
-            System.out.println("Name: ");
-            String name = scanner.next();
-            // fill out the rest, accomplish boundaries for line 89 to initiate
-            //SignupInteractor signupInteractor = new SignupInteractor();
-            //fill out execute's parameters with variables
-            // signupInteractor.execute();
-        }
-        //FILL THE LOG IN PATHWAY
-        else if (command == 2) {}
-
-        // continue going after the if else statement and pretend you are in the home page now, call the next use case
-        // SOME IDEAS ABOUT USER FLOW, OPEN TO CHANGE:
-        // in the home page, after it presents all the pets on console, it can prompt user to bookmark a certain pet.
-        // After, it needs to prompt the user to select a pet (goes into another use case) to view details.
-        // Perhaps after this, the pet can then be unavailable and goes into the next use case
-        // yadayada we can play around with the order about how things go
-
-        //PetBio part
-        PetBioController petBioController = PetBioUseCaseFactory.createPetBioUseCase();
-        petBioController.execute();
-    }
-
 }
 
 //    public class ConsoleInputExample {
