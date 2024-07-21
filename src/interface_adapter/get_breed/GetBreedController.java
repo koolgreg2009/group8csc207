@@ -15,6 +15,7 @@ public class GetBreedController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter breed");
         String breed = scanner.nextLine();
+        System.out.println("Running getbreed usecase.");
         this.getBreedInteractor.execute(new GetBreedInputData(breed));
     }
 }

@@ -16,6 +16,7 @@ public class AddBookmarkController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter pet ID of pet you want to bookmark: ");
         int petID = scanner.nextInt();
+        System.out.println("Running addbookmarkusecase.");
         this.addBookmarkInteractor.execute(new BookmarkInputData(username, petID));
     }
 }

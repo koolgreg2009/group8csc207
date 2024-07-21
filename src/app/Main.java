@@ -1,23 +1,14 @@
 package app;
 
 
-import data_access.FilePetDAO;
 import data_access.FileUserDAO;
-import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
-import entity.Pet;
 import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.pet_bio.PetBioController;
-import interface_adapter.pet_bio.PetBioPresenter;
-import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.login.LoginUserDataAccessInterface;
-import use_case.pet_bio.PetBioInteractor;
-import use_case.pet_bio.PetBioOutputBoundary;
-import use_case.pet_bio.PetBioOutputData;
 import use_case.signup.SignupInteractor;
 import view.LoginView;
 import view.LoggedInView;
@@ -78,14 +69,10 @@ public class Main {
 //        application.pack();
 //        application.setVisible(true);
         //catapi use case:
-
-        PetBioController petBioController = PetBioUseCaseFactory.createPetBioUseCase();
-        petBioController.execute();
         GetBreedController getBreedController = GetBreedUsecaseFactory.createGetBreedUsecase();
         getBreedController.execute();
     }
 
-    // This main2 is temporary, just for Phase 1.
     public static void main2(String[] args) {
         //To read input from console
         Scanner scanner = new Scanner(System.in);
@@ -118,12 +105,12 @@ public class Main {
         // Perhaps after this, the pet can then be unavailable and goes into the next use case
         // yadayada we can play around with the order about how things go
 
-        //PetBio part
-        PetBioController petBioController = PetBioUseCaseFactory.createPetBioUseCase();
-        petBioController.execute();
+
     }
 
-}
+
+
+    }
 
 //    public class ConsoleInputExample {
 //        public static void main(String[] args) {

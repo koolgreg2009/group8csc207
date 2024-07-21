@@ -8,6 +8,6 @@ public class PetBioPresenter implements PetBioOutputBoundary {
     @Override
     public void preparePetBio(PetBioOutputData petBio) {
         //quote in front allows for petBio.getPet() to know it's a string, and calls its toString method
-        System.out.println(petBio.getPet());
+        System.out.println("" + petBio.getPet());
     }
 }
