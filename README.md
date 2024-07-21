@@ -32,4 +32,8 @@ fish, hamster, etc.), size, age, and personality to help find the perfect fit fo
 (Start guide to be updated)
 
 ## APIs Used 
-TBA
+* [RescueGroups.org](https://rescuegroups.org/services/adoptable-pet-data-api/): This is the Adoptable pet data API provided by Rescuegroups.org.
+
+# Technical Problems and Notes
+For Phase 1, we have temporarily disabled the `main` method in `Main.java` and are utilizing the `main2` method instead. 
+Since our GUI is not yet fully functional, we plan to demonstrate our use cases through terminal commands for now.
