@@ -1,6 +1,7 @@
 package interface_adapter.preference;
 
 import entity.preference.UserPreference;
+import interface_adapter.SessionManager;
 import use_case.preference.PreferenceData;
 import use_case.preference.PreferenceInputBoundary; // no PreferenceInputBoundary yet
 
@@ -28,7 +29,7 @@ public class PreferenceController {
     }
 
 
-    public void execute(String username){
+    public void execute(){
         System.out.println("Executing set preference use case. If you have no preference for species, breeds, activity level, location and or gender, press enter without having anything typed in. For min and max age, enter 0.");
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter species: ");
@@ -36,8 +37,10 @@ public class PreferenceController {
         System.out.print("Enter breeds (comma-separated, no space in between): ");
         String breedsInput = scanner.nextLine();
         List<String> breeds = new ArrayList<>();
-        for (String breed : breedsInput.split(",")) {
-            breeds.add(breed.trim());
+        if (!breedsInput.isEmpty()) {
+            for (String breed : breedsInput.split(",")) {
+                breeds.add(breed.trim());
+            }
         }
 
         System.out.print("Enter minimum age: ");
@@ -57,7 +60,7 @@ public class PreferenceController {
         String gender = scanner.nextLine();
 
         UserPreference preferences = new UserPreference(species, breeds, minAge, maxAge, activityLevel, location, gender);
-        PreferenceData initialPreferences = new PreferenceData(username, preferences);
+        PreferenceData initialPreferences = new PreferenceData(SessionManager.getCurrentUser(), preferences);
         preferenceInteractor.execute(initialPreferences);
     }
 }
