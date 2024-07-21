@@ -15,8 +15,8 @@ public class LoginOutputData {
     /**
      * Constructs a new LoginOutputData object with the specified details.
      *
-     * @param username
-     * @param useCaseFailed
+     * @param username the username for the new login
+     * @param useCaseFailed boolean to see if the login worked
      */
     public LoginOutputData(String username, boolean useCaseFailed) {
         this.username = username;
