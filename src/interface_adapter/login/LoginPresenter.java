@@ -1,5 +1,6 @@
 package interface_adapter.login;
 
+import interface_adapter.SessionManager;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.ViewManagerModel;
@@ -76,6 +77,7 @@ public class LoginPresenter implements LoginOutputBoundary {
 //    }
     @Override
     public void prepareSuccessView(LoginOutputData data) {
+        SessionManager.login(data.getUsername());
         System.out.println(data.getUsername() + " has successfully been logged in.");
     }
 
