@@ -17,7 +17,6 @@ public class PetBioController {
         System.out.println("Enter petID");
         int petID = scanner.nextInt();
         this.petBioInteractor.execute(new PetBioInputData(petID));
-        scanner.close();
     }
 }
 
