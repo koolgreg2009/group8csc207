@@ -3,6 +3,7 @@ package use_case.signup;
 import data_access.UserDAOInterface;
 import entity.user.AdopterUser;
 import entity.user.AdopterUserFactory;
+import entity.user.UserFactory;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +18,7 @@ public class SignupInteractor implements SignupInputBoundary {
 
     final UserDAOInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
-    final AdopterUserFactory adopterUserFactory;
+    final UserFactory adopterUserFactory;
 
     /**
      * Constructs a new SignupInteractor with the specified dependencies.
@@ -26,7 +27,7 @@ public class SignupInteractor implements SignupInputBoundary {
      * @param signupOutputBoundary
      * @param adopterUserFactory
      */
-    public SignupInteractor(UserDAOInterface userSignupDAInterface, SignupOutputBoundary signupOutputBoundary,  AdopterUserFactory adopterUserFactory) {
+    public SignupInteractor(UserDAOInterface userSignupDAInterface, SignupOutputBoundary signupOutputBoundary,  UserFactory adopterUserFactory) {
         this.userDataAccessObject = userSignupDAInterface;
         this.userPresenter = signupOutputBoundary;
         this.adopterUserFactory = adopterUserFactory;
