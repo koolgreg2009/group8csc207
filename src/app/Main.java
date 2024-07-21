@@ -24,7 +24,7 @@ import use_case.pet_bio.PetBioOutputData;
 import use_case.signup.SignupInteractor;
 import view.LoginView;
 import view.LoggedInView;
-import view.SignupView;
+//import view.SignupView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -82,6 +82,9 @@ public class Main {
 //        application.pack();
 //        application.setVisible(true);
         //catapi use case:
+        SignupController signupController = SignupUseCaseFactory.createUserSignupUseCase();
+        signupController.execute();
+
         DisplayAllPetsController displayAllPetsController = DisplayAllPetsUsecaseFactory.createDisplayAllPetsUsecase();
         java.util.List<String> breedList = new ArrayList<>();
         breedList.add("bengal");
