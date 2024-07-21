@@ -17,7 +17,7 @@ import java.util.Map;
 public class FilePetDAO implements PetDAOInterface{
     private final File jsonFile;
 
-    private final Map<Integer, Pet> pets = new HashMap<Integer, Pet>();
+    private final Map<String, Pet> pets = new HashMap<String, Pet>();
 
     /**
      * Constructor for the pet entity data access object from the json file path.
@@ -30,7 +30,7 @@ public class FilePetDAO implements PetDAOInterface{
         if (jsonFile.length() == 0) {
             save();
         } else {
-            TypeReference<HashMap<Integer, Pet>> typeRef = new TypeReference<HashMap<Integer, Pet>>() {
+            TypeReference<HashMap<String, Pet>> typeRef = new TypeReference<HashMap<String, Pet>>() {
             };
             ObjectMapper objectMapper = new ObjectMapper();
             pets.putAll(objectMapper.readValue(jsonFile, typeRef));
@@ -45,7 +45,7 @@ public class FilePetDAO implements PetDAOInterface{
      */
     @Override
     public Pet get(int petID) {
-        return pets.get(petID);
+        return pets.get(String.valueOf(petID));
     }
 
     /**
@@ -55,7 +55,7 @@ public class FilePetDAO implements PetDAOInterface{
      */
     @Override
     public void save(Pet pet) {
-        pets.put(pet.getPetID(), pet); // apparently this autoboxes
+        pets.put(String.valueOf(pet.getPetID()), pet); // apparently this autoboxes
         this.save();
     }
 

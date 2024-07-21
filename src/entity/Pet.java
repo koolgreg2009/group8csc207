@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +38,17 @@ public class Pet{
      * @param bio
      * @param gender
      */
-    public Pet(String owner, String email, String phoneNum, int petID, String species, int age,
-               String breed, List<String> personality, String gender, String activityLevel, String bio){
+    public Pet(@JsonProperty("owner") String owner,
+               @JsonProperty("email") String email,
+               @JsonProperty("phoneNum") String phoneNum,
+               @JsonProperty("petID") int petID,
+               @JsonProperty("species") String species,
+               @JsonProperty("age") int age,
+               @JsonProperty("breed") String breed,
+               @JsonProperty("personality") List<String> personality,
+               @JsonProperty("gender") String gender,
+               @JsonProperty("activityLevel") String activityLevel,
+               @JsonProperty("bio") String bio){
         this.owner = owner;
         this.email = email;
         this.phoneNum = phoneNum;
