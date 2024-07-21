@@ -8,4 +8,5 @@
   "personality":["cool"],
   "bio":"he's super cool!",
   "gender":"male",
-  "activityLevel":"hyper"}}
+  "activityLevel":"hyper",
+  "location": "toronto"}}

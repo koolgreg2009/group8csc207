@@ -116,10 +116,10 @@ public class FilePetDAO implements PetDAOInterface{
         if (userPreference.getBreeds() != null && !userPreference.getBreeds().isEmpty() && !userPreference.getBreeds().contains(pet.getBreed())) {
             return false;
         }
-        if (userPreference.getMinAge() != 0 && pet.getAge() <= userPreference.getMinAge()) {
+        if (userPreference.getMinAge() != 0 && pet.getAge() < userPreference.getMinAge()) {
             return false;
         }
-        if (userPreference.getMaxAge() != 0 && pet.getAge() >= userPreference.getMaxAge()) {
+        if (userPreference.getMaxAge() != 0 && pet.getAge() > userPreference.getMaxAge()) {
             return false;
         }
         if (userPreference.getActivityLevel() != null && !userPreference.getActivityLevel().equals(pet.getActivityLevel())) {

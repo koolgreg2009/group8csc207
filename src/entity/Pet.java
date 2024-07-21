@@ -37,6 +37,7 @@ public class Pet{
      * @param personality
      * @param bio
      * @param gender
+     * @param location
      */
     public Pet(@JsonProperty("owner") String owner,
                @JsonProperty("email") String email,
@@ -48,7 +49,8 @@ public class Pet{
                @JsonProperty("personality") List<String> personality,
                @JsonProperty("gender") String gender,
                @JsonProperty("activityLevel") String activityLevel,
-               @JsonProperty("bio") String bio){
+               @JsonProperty("bio") String bio,
+            @JsonProperty("location") String location) {
         this.owner = owner;
         this.email = email;
         this.phoneNum = phoneNum;
@@ -60,6 +62,7 @@ public class Pet{
         this.bio = bio;
         this.gender = gender;
         this.activityLevel = activityLevel;
+        this.location = location;
         this.isAvailable = true;
     }
     /** Gets the pet owner's name

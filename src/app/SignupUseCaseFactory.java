@@ -21,7 +21,7 @@ import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupUserDataAccessInterface;
-import view.SignupView;
+//import view.SignupView;
 
 /**
  * The SignupUseCaseFactory class is responsible for creating instances of the components
@@ -84,7 +84,7 @@ public class SignupUseCaseFactory {
 
     }
 
-    private static SignupController createUserSignupUseCase() {
+    public static SignupController createUserSignupUseCase() {
 
         try{
             UserDAOInterface userDAO = new FileUserDAO("./users.json");

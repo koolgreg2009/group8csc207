@@ -6,7 +6,9 @@ import data_access.FileUserDAO;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.Pet;
+import entity.preference.UserPreference;
 import interface_adapter.bookmark.AddBookmarkController;
+import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -22,12 +24,13 @@ import use_case.pet_bio.PetBioOutputData;
 import use_case.signup.SignupInteractor;
 import view.LoginView;
 import view.LoggedInView;
-import view.SignupView;
+//import view.SignupView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -79,6 +82,13 @@ public class Main {
 //        application.pack();
 //        application.setVisible(true);
         //catapi use case:
+        SignupController signupController = SignupUseCaseFactory.createUserSignupUseCase();
+        signupController.execute();
+
+        DisplayAllPetsController displayAllPetsController = DisplayAllPetsUsecaseFactory.createDisplayAllPetsUsecase();
+        java.util.List<String> breedList = new ArrayList<>();
+        breedList.add("bengal");
+        displayAllPetsController.execute(  new UserPreference("Cat",breedList, 1, 2, "hyper", "toronto", "male"));
         AddBookmarkController addBookmarkController = AddBookmarkUsecaseFactory.createAddBookmarkUsecase();
         addBookmarkController.execute("");
         PetBioController petBioController = PetBioUseCaseFactory.createPetBioUseCase();
