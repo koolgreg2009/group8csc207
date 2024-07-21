@@ -1,5 +1,6 @@
 package app;
 
+import data_access.FileUserDAO;
 import data_access.UserDAOInterface;
 import entity.user.AdopterUserFactory;
 import entity.user.UserFactory;
@@ -26,60 +27,79 @@ import java.io.IOException;
  * @since 2024-07-19
  */
 public class LoginUseCaseFactory {
+//
+//    /**
+//     * Prevents instantiation of this utility class.
+//     */
+//    private LoginUseCaseFactory() {}
+//
+//    /**
+//     * Creates a LoginView instance, setting up the login use case and its dependencies.
+//     *
+//     * @param viewManagerModel
+//     * @param loginViewModel
+//     * @param loggedInViewModel
+//     * @param userDataAccessObject
+//     * @return A LoginView instance configured with the provided dependencies.
+//     */
+//    public static LoginView create(
+//            ViewManagerModel viewManagerModel,
+//            LoginViewModel loginViewModel,
+//            LoggedInViewModel loggedInViewModel,
+//            UserDAOInterface userDataAccessObject) {
+//
+//        try {
+//            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+//            return new LoginView(loginViewModel, loginController);
+//        } catch (IOException e) {
+//            JOptionPane.showMessageDialog(null, "Could not open user data file.");
+//        }
+//
+//        return null;
+//    }
+//
+//    /**
+//     * Creates a LoginController instance and sets up the login interactor and presenter.
+//     *
+//     * @param viewManagerModel
+//     * @param loginViewModel
+//     * @param loggedInViewModel
+//     * @param userDataAccessObject
+//     * @return A LoginController instance configured with the provided dependencies.
+//     */
+//
+//    private static LoginController createLoginUseCase(
+//            ViewManagerModel viewManagerModel,
+//            LoginViewModel loginViewModel,
+//            LoggedInViewModel loggedInViewModel,
+//            UserDAOInterface userDataAccessObject) throws IOException {
+//
+//        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
+//
+//        UserFactory userFactory = new AdopterUserFactory();
+//
+//        LoginInputBoundary loginInteractor = new LoginInteractor(
+//                userDataAccessObject, loginOutputBoundary);
+//
+//        return new LoginController(loginInteractor);
+//    }
+    private LoginUseCaseFactory() {
 
-    /**
-     * Prevents instantiation of this utility class.
-     */
-    private LoginUseCaseFactory() {}
-
-    /**
-     * Creates a LoginView instance, setting up the login use case and its dependencies.
-     *
-     * @param viewManagerModel
-     * @param loginViewModel
-     * @param loggedInViewModel
-     * @param userDataAccessObject
-     * @return A LoginView instance configured with the provided dependencies.
-     */
-    public static LoginView create(
-            ViewManagerModel viewManagerModel,
-            LoginViewModel loginViewModel,
-            LoggedInViewModel loggedInViewModel,
-            UserDAOInterface userDataAccessObject) {
-
-        try {
-            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
-            return new LoginView(loginViewModel, loginController);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Could not open user data file.");
-        }
-
-        return null;
     }
 
-    /**
-     * Creates a LoginController instance and sets up the login interactor and presenter.
-     *
-     * @param viewManagerModel
-     * @param loginViewModel
-     * @param loggedInViewModel
-     * @param userDataAccessObject
-     * @return A LoginController instance configured with the provided dependencies.
-     */
+    public static LoginController createUserLoginUseCase() {
 
-    private static LoginController createLoginUseCase(
-            ViewManagerModel viewManagerModel,
-            LoginViewModel loginViewModel,
-            LoggedInViewModel loggedInViewModel,
-            UserDAOInterface userDataAccessObject) throws IOException {
+        try{
+            UserDAOInterface userDAO = new FileUserDAO("./users.json");
+            LoginOutputBoundary userPresenter = new LoginPresenter();
+            UserFactory adopterUserFactory = new AdopterUserFactory();
+            LoginInputBoundary LoginInteractor = new LoginInteractor(userDAO, userPresenter, adopterUserFactory);
 
-        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
+            return new LoginController(LoginInteractor);
 
-        UserFactory userFactory = new AdopterUserFactory();
-
-        LoginInputBoundary loginInteractor = new LoginInteractor(
-                userDataAccessObject, loginOutputBoundary);
-
-        return new LoginController(loginInteractor);
+        } catch (IOException e) {
+            System.out.println("Could not open user data file.");
+            return null;
+        }
     }
 }
