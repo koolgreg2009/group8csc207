@@ -16,6 +16,5 @@ public class GetBreedController {
         System.out.println("Enter breed");
         String breed = scanner.nextLine();
         this.getBreedInteractor.execute(new GetBreedInputData(breed));
-        scanner.close();
     }
 }
