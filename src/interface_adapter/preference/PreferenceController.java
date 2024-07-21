@@ -1,12 +1,12 @@
-package interface_adapter;
+package interface_adapter.preference;
 
 import entity.preference.UserPreference;
 import use_case.preference.PreferenceData;
 import use_case.preference.PreferenceInputBoundary; // no PreferenceInputBoundary yet
 
-import java.util.List;
 
-/** This is the Controller for the user's preference profile.
+/**
+ * This is the Controller for the user's preference profile.
  *
  * @version 1.0
  * @since 2024-07-16
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PreferenceController {
 
-    final PreferenceInputBoundary preferenceInteractor; // ???
+    private final PreferenceInputBoundary preferenceInteractor; // ???
 
     /** This is the initializer for PreferenceController
      * @param preferenceInteractor The interactor

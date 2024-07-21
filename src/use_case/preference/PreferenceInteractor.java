@@ -16,12 +16,12 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
     /** This is the constructor for editing preferences.
      *
      * @param userDataAccessObject Access object for the adopter user that you are changing preferences for
-     * @param signupOutputBoundary output boundary for new preferences to be passed through and presented
+     * @param preferenceOutputBoundary output boundary for new preferences to be passed through and presented
      */
     public PreferenceInteractor(UserDAOInterface userDataAccessObject,
-                                PreferenceOutputBoundary signupOutputBoundary) {
+                                PreferenceOutputBoundary preferenceOutputBoundary) {
         this.userDataAccessObject = userDataAccessObject;
-        this.userPresenter = signupOutputBoundary;
+        this.userPresenter = preferenceOutputBoundary;
     }
 
     /** Executes the use case to edit the adopter user's preferences.
@@ -35,8 +35,8 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
         ((AdopterUser) user).setPreferences(PreferenceData.getUserPreference());
 
         userDataAccessObject.save(user);
-
-        System.out.println(user.getUsername() + " preferences have been updated");
+        PreferenceOutputData outputData = new PreferenceOutputData(((AdopterUser) user).getPreferences());
+        userPresenter.preparePreferenceView(outputData);
     }
 
 }
