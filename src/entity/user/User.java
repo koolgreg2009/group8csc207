@@ -13,5 +13,5 @@ public interface User {
     void setEmail(String email);
     String getPhone();
     void setPhone(String num);
-    void addNotif(String notif);
+    void addNotif(String notification);
 }

@@ -13,7 +13,7 @@
 # About
 Our project is a platform that lists verified and healthy pets for adoption.
 The program will act as a pet adoption site in which users are able to scroll through pets that are up for adoption. 
-Users looking to use_case.adopt are able to view all pets currently available for adoption. 
+Users looking to adopt are able to view all pets currently available for adoption. 
 Each user will be prompted to make a profile with their unique identification on the webpage, 
 which they have to sign in to view the listed pets. 
 Additionally, users can set preferences on their profile page and use those preferences as a filter in the search. 
@@ -32,8 +32,4 @@ fish, hamster, etc.), size, age, and personality to help find the perfect fit fo
 (Start guide to be updated)
 
 ## APIs Used 
-* [RescueGroups.org](https://rescuegroups.org/services/adoptable-pet-data-api/): This is the Adoptable pet data API provided by Rescuegroups.org.
-
-# Technical Problems and Notes
-For Phase 1, we have temporarily disabled the `main` method in `Main.java` and are utilizing the `main2` method instead. 
-Since our GUI is not yet fully functional, we plan to demonstrate our use cases through terminal commands for now.
+TBA
