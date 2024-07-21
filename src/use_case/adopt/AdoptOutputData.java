@@ -9,16 +9,23 @@ import java.util.List;
  */
 public class AdoptOutputData {
     private Pet pet;
-    private List<User> userList;
 
+    /** Constructor for AdoptOutputData\
+     * @param pet
+     */
     public AdoptOutputData(Pet pet){
         this.pet = pet;
     }
 
+    /** method to return petid
+     * @return petID
+     */
     public Integer getPetID() {
         return pet.getPetID();
     }
 
+    /** method to return pet owner
+     */
     public String getPetOwner(){
         return pet.getOwner();
     }

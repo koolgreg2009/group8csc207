@@ -41,6 +41,9 @@ public class CommonUser implements User {
 	 */
 	private String phone;
 
+	/**
+	 * The user's notifications
+	 */
 	private List<String> notifications;
 	/**
 	 *
@@ -154,6 +157,9 @@ public class CommonUser implements User {
 		this.phone = num;
 	}
 
+	/**
+	 * Adds to the user's notifications
+	 */
 	@Override
 	public void addNotif(String notif) {
 		notifications.add(notif);

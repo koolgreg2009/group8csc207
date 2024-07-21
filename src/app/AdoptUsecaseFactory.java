@@ -12,6 +12,8 @@ import use_case.adopt.AdoptOutputBoundary;
 
 import java.io.IOException;
 
+/** Class AdoptUsecaseFactory that takes all the info and returns an AdoptController
+ */
 public class AdoptUsecaseFactory {
     public static AdoptController createAdoptUsecase(){
 
