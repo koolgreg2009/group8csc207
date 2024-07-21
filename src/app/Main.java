@@ -70,15 +70,15 @@ public class Main {
         LoginController loginController = LoginUseCaseFactory.createUserLoginUseCase();
         loginController.execute();
 
-        DisplayAllPetsController displayAllPetsController = DisplayAllPetsUseCaseFactory.createDisplayAllPetsUsecase();
+        DisplayAllPetsController displayAllPetsController = DisplayAllPetsUseCaseFactory.createDisplayAllPetsUseCase();
         java.util.List<String> breedList = new ArrayList<>();
         breedList.add("bengal");
         displayAllPetsController.execute(  new UserPreference("Cat",breedList, 1, 2, "hyper", "toronto", "male"));
-        AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUsecase();
+        AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase();
         addBookmarkController.execute("");
         PetBioController petBioController = PetBioUseCaseFactory.createPetBioUseCase();
         petBioController.execute();
-        GetBreedController getBreedController = GetBreedUseCaseFactory.createGetBreedUsecase();
+        GetBreedController getBreedController = GetBreedUseCaseFactory.createGetBreedUseCase();
         getBreedController.execute();
     }
 
