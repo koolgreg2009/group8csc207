@@ -81,6 +81,7 @@ public class Main {
         getBreedController.execute();
     }
 
+    // This main2 is temporary, just for Phase 1.
     public static void main2(String[] args) {
         //To read input from console
         Scanner scanner = new Scanner(System.in);
@@ -118,9 +119,7 @@ public class Main {
         petBioController.execute();
     }
 
-
-
-    }
+}
 
 //    public class ConsoleInputExample {
 //        public static void main(String[] args) {
