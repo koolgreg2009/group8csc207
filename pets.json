@@ -1,1 +1,11 @@
-{"1":{"owner":"jack","email":"gmail","phoneNum":"647","petID":1,"species":"Cat","age":1,"breed":"bengal","personality":["cool"],"bio":"he's super cool!","gender":"male","activityLevel":"hyper"}}
+{"1":{"owner":"jack",
+  "email":"gmail",
+  "phoneNum":"647",
+  "petID":1,
+  "species":"Cat",
+  "age":1,
+  "breed":"bengal",
+  "personality":["cool"],
+  "bio":"he's super cool!",
+  "gender":"male",
+  "activityLevel":"hyper"}}
