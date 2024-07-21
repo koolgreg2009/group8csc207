@@ -1,5 +1,6 @@
 package use_case.login;
 
+import data_access.UserDAOInterface;
 import entity.user.User;
 
 /**
@@ -10,7 +11,7 @@ import entity.user.User;
  * @since 2024-07-19
  */
 public class LoginInteractor implements LoginInputBoundary {
-    final LoginUserDataAccessInterface userDataAccessObject;
+    final UserDAOInterface userDataAccessObject;
     final LoginOutputBoundary loginPresenter;
 
     /**
@@ -19,7 +20,7 @@ public class LoginInteractor implements LoginInputBoundary {
      * @param userDataAccessInterface
      * @param loginOutputBoundary
      */
-    public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
+    public LoginInteractor(UserDAOInterface userDataAccessInterface,
                            LoginOutputBoundary loginOutputBoundary) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;

@@ -1,5 +1,6 @@
 package app;
 
+import data_access.UserDAOInterface;
 import entity.user.AdopterUserFactory;
 import entity.user.UserFactory;
 import interface_adapter.ViewManagerModel;
@@ -44,7 +45,7 @@ public class LoginUseCaseFactory {
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
             LoggedInViewModel loggedInViewModel,
-            LoginUserDataAccessInterface userDataAccessObject) {
+            UserDAOInterface userDataAccessObject) {
 
         try {
             LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
@@ -70,7 +71,7 @@ public class LoginUseCaseFactory {
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
             LoggedInViewModel loggedInViewModel,
-            LoginUserDataAccessInterface userDataAccessObject) throws IOException {
+            UserDAOInterface userDataAccessObject) throws IOException {
 
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
 
