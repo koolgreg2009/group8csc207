@@ -14,7 +14,7 @@ public class PetBioUseCaseFactory {
 
     public static PetBioController createPetBioUseCase() {
         try {
-            PetDAOInterface petDAO = new FilePetDAO("/pets.json");
+            PetDAOInterface petDAO = new FilePetDAO("./pets.json");
             PetBioOutputBoundary bioPresenter = new PetBioPresenter();
             PetBioInputBoundary petBioInteractor = new PetBioInteractor(bioPresenter, petDAO);
             return new PetBioController(petBioInteractor);

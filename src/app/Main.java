@@ -11,6 +11,7 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.pet_bio.PetBioController;
 import interface_adapter.pet_bio.PetBioPresenter;
+import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.login.LoginUserDataAccessInterface;
@@ -77,6 +78,9 @@ public class Main {
 //        application.pack();
 //        application.setVisible(true);
         //catapi use case:
+
+        PetBioController petBioController = PetBioUseCaseFactory.createPetBioUseCase();
+        petBioController.execute();
         GetBreedController getBreedController = GetBreedUsecaseFactory.createGetBreedUsecase();
         getBreedController.execute();
     }

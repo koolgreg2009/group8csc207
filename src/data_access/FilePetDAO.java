@@ -45,7 +45,7 @@ public class FilePetDAO implements PetDAOInterface{
      */
     @Override
     public Pet get(int petID) {
-        return pets.get(petID);
+        return pets.get(String.valueOf(petID));
     }
 
     /**
