@@ -6,16 +6,13 @@ import interface_adapter.bookmark.AddBookmarkPresenter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import use_case.bookmarks.AddBookmarkInteractor;
-import use_case.bookmarks.BookmarkInputData;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class AddBookmarkInteractorIntegrationTest {
+class AddBookmarkInteractorTest {
 
     private FileUserDAO fileUserDAO;
     private AddBookmarkPresenter presenter;
