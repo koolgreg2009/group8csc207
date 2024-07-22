@@ -1,57 +1,65 @@
 package use_case.display_all_available_pets;
 
-import data_access.PetDAOInterface;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import data_access.UserDAOInterface;
-import entity.Pet;
 import entity.preference.UserPreference;
 import entity.user.AdopterUser;
+import entity.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import data_access.PetDAOInterface;
+import entity.Pet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+/** Unit test for DisplayAllAvailablePets
+ */
+@ExtendWith(MockitoExtension.class)
+public class DisplayAllPetsInteractorTest {
 
-class DisplayAllPetsInteractorIntegrationTest {
+    @Mock
+    private DisplayAllPetsOutputBoundary mockPresenter;
 
-    private PetDAOInterface filePetDAO;
-    private UserDAOInterface fileUserDAO;
-    private DisplayAllPetsOutputBoundary displayAllPetPresenter;
+    @Mock
+    private PetDAOInterface mockPetDAO;
+
+    @Mock
+    private UserDAOInterface mockUserDAO;
+
     private DisplayAllPetsInteractor interactor;
 
     @BeforeEach
-    void setUp() {
-        filePetDAO = mock(PetDAOInterface.class);
-        fileUserDAO = mock(UserDAOInterface.class);
-        displayAllPetPresenter = mock(DisplayAllPetsOutputBoundary.class);
-        interactor = new DisplayAllPetsInteractor(filePetDAO, fileUserDAO, displayAllPetPresenter);
-    }
+    public void setUp() {interactor = new DisplayAllPetsInteractor(mockPetDAO, mockUserDAO, mockPresenter);}
 
     @Test
-    void testDisplayAllPetsSuccess() {
-        // Given
-        String username = "testUser";
-        UserPreference userPreference = new UserPreference("Cat", List.of("British Shorthair"), 1, 5, "Low", "New York", "Female");
-        AdopterUser user = new AdopterUser(username, "password", "Test Name", "test@example.com", "1234567890");
-        user.setPreferences(userPreference);
-        when(fileUserDAO.get(username)).thenReturn(user);
+    public void displayAllPets() {
+        DisplayAllPetsInputData input = new DisplayAllPetsInputData("jenny");
+        UserPreference userPreference = new UserPreference("dog", Arrays.asList("golden"), 0, 1, "happy", "toronto", "male");
+        AdopterUser user = new AdopterUser("jenny", "dog", "jenny", "test email", "613",
+                null, userPreference);
+        Pet pet = new Pet("person", "email", "111", 1, "dog", 1, "golden",
+                null, "male", "happy", "is a dog", "toronto", true);
+        ArrayList<Pet> listp = new ArrayList<>(Arrays.asList(pet));
 
-        Pet pet1 = new Pet("Owner1", "owner1@example.com", "1234567890", 1, "Cat", 3, "British Shorthair", List.of("Friendly"), "Male", "Low", "small cat", "new york", true);
-        Pet pet2 = new Pet("Owner2", "owner2@example.com", "1234567890", 2, "Cat", 2, "British Shorthair", List.of("Playful"), "Female", "Low", "small cat", "new york", true);
-        List<Pet> matchingPets = List.of(pet1, pet2);
-        when(filePetDAO.getPreferencePets(userPreference)).thenReturn(new ArrayList<>(matchingPets));
+        when(mockPetDAO.getPreferencePets(userPreference)).thenReturn(listp);
+        when(mockUserDAO.get("jenny")).thenReturn(user);
 
-        // Prepare input data
-        DisplayAllPetsInputData inputData = new DisplayAllPetsInputData(username);
+        interactor.execute(input);
 
-        // Execute the use case
-        interactor.execute(inputData);
+        ArgumentCaptor<DisplayAllPetsOutputData> captor = ArgumentCaptor.forClass(DisplayAllPetsOutputData.class);
+        verify(mockPresenter).displayAllPetsOutput(captor.capture());
 
-        // Verify that the pets were retrieved and passed to the presenter
-        verify(fileUserDAO).get(username);
-        verify(filePetDAO).getPreferencePets(userPreference);
-        verify(displayAllPetPresenter).displayAllPetsOutput(any(DisplayAllPetsOutputData.class));
+        DisplayAllPetsOutputData output = captor.getValue();
+        assertEquals(pet, output.getPets().get(0));
     }
 }
