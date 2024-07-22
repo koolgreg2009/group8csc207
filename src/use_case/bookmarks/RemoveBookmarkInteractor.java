@@ -1,6 +1,5 @@
 package use_case.bookmarks;
 
-import data_access.FileUserDAO;
 import data_access.UserDAOInterface;
 import entity.Bookmark;
 import entity.user.AdopterUser;

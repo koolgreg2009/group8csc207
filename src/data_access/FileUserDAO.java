@@ -19,16 +19,12 @@ import entity.user.User;
  * The FileUserDAO class provides an implementation for managing user data stored in a JSON file.
  * It supports loading, saving, and modifying user data, including operations for user bookmarks.
  * This class implements the UserDAOInterface to define the behavior for user data access.
- *
- * @version 1.0
- * @since 2024-07-19
  */
 public class FileUserDAO implements UserDAOInterface {
-
-	/** The file used for storing user data in JSON format. */
+	 // The file used for storing user data in JSON format.
 	private final File jsonFile;
 
-	/** A map of usernames to user objects for in-memory user data management. */
+	 // A map of usernames to user objects for in-memory user data management.
 	private final Map<String, AdopterUser> accounts = new HashMap<String, AdopterUser>();
 
 	/**
