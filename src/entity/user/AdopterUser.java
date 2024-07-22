@@ -109,4 +109,8 @@ public class AdopterUser extends CommonUser{
 	public List<Bookmark> getBookmarks() {
 		return this.bookmarks;
 	}
+
+	public String toString(){
+		return this.getClass()+": " + super.toString() + "\nBookmarks: " + bookmarks + "\nPreferences: " + preferences;
+	}
 }

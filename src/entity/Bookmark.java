@@ -40,4 +40,8 @@ public class Bookmark {
 	public LocalDateTime getBookmarkedDate() {
 		return bookmarkedDate;
 	}
+
+	public String toString() {
+		return "Bookmark: Pet id:" + petID + "Bookmarked Date: " + bookmarkedDate;
+	}
 }
