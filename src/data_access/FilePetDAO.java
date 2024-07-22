@@ -1,7 +1,9 @@
 package data_access;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import entity.Pet;
 import entity.preference.UserPreference;
 
@@ -11,32 +13,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-
 /**
  * Data Access Object for Pet entities, which uses a JSON file for storage.
  */
-public class FilePetDAO implements PetDAOInterface{
+public class FilePetDAO implements PetDAOInterface {
     private final File jsonFile;
-
-    private final Map<String, Pet> pets = new HashMap<String, Pet>();
+    private final Map<String, Pet> pets = new HashMap<>();
 
     /**
      * Constructor for the pet entity data access object from the json file path.
      *
      * @param jsonPath the json file path that the data access object is accessing
-     * @throws IOException if in IO error occurs
+     * @throws IOException if an IO error occurs
      */
     public FilePetDAO(String jsonPath) throws IOException {
         jsonFile = new File(jsonPath);
         if (jsonFile.length() == 0) {
             save();
         } else {
-            TypeReference<HashMap<String, Pet>> typeRef = new TypeReference<HashMap<String, Pet>>() {
-            };
+            TypeReference<HashMap<String, Pet>> typeRef = new TypeReference<HashMap<String, Pet>>() {};
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             objectMapper.registerModule(new JavaTimeModule());
             pets.putAll(objectMapper.readValue(jsonFile, typeRef));
         }
@@ -45,7 +42,7 @@ public class FilePetDAO implements PetDAOInterface{
     /**
      * Gets the pet with the pet ID that is specified.
      *
-     * @param petID the ID of the et being retrieved
+     * @param petID the ID of the pet being retrieved
      * @return the Pet with the pet ID that was specified, or null if the pet ID does not belong to an existing Pet.
      */
     @Override
@@ -77,11 +74,6 @@ public class FilePetDAO implements PetDAOInterface{
             throw new RuntimeException(ex);
         }
     }
-
-//    @Override
-//    public boolean existsByName(String identifier) {
-//        return pets.containsKey(identifier);
-//    }
 
     /**
      * Gets a list of the Pets that align with the UserPreference specified.
@@ -116,10 +108,10 @@ public class FilePetDAO implements PetDAOInterface{
         if (userPreference.getBreeds() != null && !userPreference.getBreeds().isEmpty() && !userPreference.getBreeds().contains(pet.getBreed())) {
             return false;
         }
-        if (userPreference.getMinAge() != 0 && pet.getAge() < userPreference.getMinAge()) {
+        if (userPreference.getMinAge() != 0 && pet.getPetAge() < userPreference.getMinAge()) {
             return false;
         }
-        if (userPreference.getMaxAge() != 0 && pet.getAge() > userPreference.getMaxAge()) {
+        if (userPreference.getMaxAge() != 0 && pet.getPetAge() > userPreference.getMaxAge()) {
             return false;
         }
         if (userPreference.getActivityLevel() != null && !userPreference.getActivityLevel().isEmpty() && !userPreference.getActivityLevel().equals(pet.getActivityLevel())) {
@@ -134,6 +126,4 @@ public class FilePetDAO implements PetDAOInterface{
 
         return true;
     }
-
-
 }
