@@ -68,15 +68,13 @@ public class Main {
 //        application.setVisible(true);
         //For our use case (part we need to edit)
         //catapi use case:
-//        SignupController signupController = SignupUseCaseFactory.createUserSignupUseCase();
-//        signupController.execute(); // try fail signup (different password or already exists)
-//        signupController.execute(); // try successful signup
+        SignupController signupController = SignupUseCaseFactory.createUserSignupUseCase();
+        signupController.execute(); // try fail signup (different password or already exists)
+        signupController.execute(); // try successful signup
 
         LoginController loginController = LoginUseCaseFactory.createUserLoginUseCase();
         loginController.execute(); // try fail sign in (different password)
-//        loginController.execute(); // try successful sign in
-        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase();
-        adoptController.execute();
+        loginController.execute(); // try successful sign in
         PreferenceController preferenceController = PreferenceUsecaseFactory.createPreferenceUsecase();
         preferenceController.execute(); // try some preference
 
@@ -94,6 +92,7 @@ public class Main {
         GetBreedController getBreedController = GetBreedUseCaseFactory.createGetBreedUseCase();
         getBreedController.execute();
 //        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase();
+        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase();
         adoptController.execute();
     }
 }
