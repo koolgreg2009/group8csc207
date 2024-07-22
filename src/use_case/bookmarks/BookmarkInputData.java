@@ -1,7 +1,5 @@
 package use_case.bookmarks;
 
-import entity.Pet;
-
 /**
  * The BookmarkInputData class bundles user input data for bookmarking.
  */
