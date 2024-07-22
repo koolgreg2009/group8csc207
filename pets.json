@@ -1,12 +1,1 @@
-{"1":{"owner":"jack",
-  "email":"gmail",
-  "phoneNum":"647",
-  "petID":1,
-  "species":"Cat",
-  "age":1,
-  "breed":"bengal",
-  "personality":["cool"],
-  "bio":"he's super cool!",
-  "gender":"male",
-  "activityLevel":"hyper",
-  "location": "toronto"}}
+{"1":{"owner":"jack","email":"gmail","phoneNum":"647","petID":1,"species":"Cat","petAge":1,"breed":"bengal","personality":["cool"],"gender":"male","activityLevel":"hyper","bio":"he's super cool!","location":"toronto","available":true},"2":{"owner":"greg","email":"abcde@gmail.com","phoneNum":"123456670","petID":2,"species":"Cat","petAge":99,"breed":"Abyssinian","personality":["eats a lot","fat"],"gender":"male","activityLevel":"Low","bio":"he's cool!","location":"chad","available":true},"3":{"owner":"Voldemort","email":"dieharrypotter@hogwarts.com","phoneNum":"9994446666","petID":5,"species":"Snake","petAge":0,"breed":"Anaconda","personality":["sociopathic","scary","antisocial"],"gender":"male","activityLevel":"high","bio":"Might kill you in your sleep, or not.","location":"chamber of secrets","available":true},"69":{"owner":"Oyo","email":"uwu@owo.ca","phoneNum":"1234567890","petID":69,"species":"hilichurl","petAge":0,"breed":"normal","personality":["yah!"],"gender":"male","activityLevel":"high","bio":"Muhe ye","location":"Teyvat","available":false},"4":{"owner":"Gru","email":"stealthemoon@evil.com","phoneNum":"1987654321","petID":4,"species":"Minion","petAge":0,"breed":"normal","personality":["round","small","yellow"],"gender":"male","activityLevel":"high","bio":"Banana.","location":"Grus Evil Lair","available":true},"6":{"owner":"Drizzy","email":"kdotsucks@ovo.ca","phoneNum":"6666666666","petID":6,"species":"Dog","petAge":0,"breed":"bichon","personality":["high energy"],"gender":"male","activityLevel":"high","bio":"Kendrick Lamar sucks ngl","location":"Toronto","available":true},"7":{"owner":"Oyo","email":"uwu@owo.ca","phoneNum":"1234567890","petID":69,"species":"hilichurl","petAge":0,"breed":"normal","personality":["yah!"],"gender":"male","activityLevel":"high","bio":"Muhe ye","location":"Teyvat","available":true}}

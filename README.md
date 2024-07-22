@@ -17,8 +17,8 @@ Users looking to use_case.adopt are able to view all pets currently available fo
 Each user will be prompted to make a profile with their unique identification on the webpage, 
 which they have to sign in to view the listed pets. 
 Additionally, users can set preferences on their profile page and use those preferences as a filter in the search. 
-The preference profile will include questions regarding the preferred pet type (i.e., dog, cat, frog, chinchilla, 
-fish, hamster, etc.), size, age, and personality to help find the perfect fit for the pet and the new owner.
+The preference profile will include questions regarding the preferred pet type (cat for now), size, age, and 
+personality to help find the perfect fit for the pet and the new owner.
 
 * This project was entirely written in Java. 
 * Java Swing was used for the GUI.
@@ -29,19 +29,30 @@ fish, hamster, etc.), size, age, and personality to help find the perfect fit fo
 2. You will need an IDE for Java (IntelliJ IDEA is recommended).
 3. Run the project by running the `main` method in `Main.java`.
 4. Since our GUI is not yet fully functional, we plan to demonstrate our use cases through terminal commands for now.
-5. Terminal execution order as follows:
+5. We will execute use cases in order as follows:
    1. Signup will execute twice. Test out the fail case first (where you would intentionally input incorrect repeated 
    password or sign in with an existing account information like username, for example). Then, when the second Signup
    executes, test it out properly by creating a new account.
    2. Login will execute twice. Test out the fail case first (where you would intentionally input incorrect password, 
    for example). Then, when the second login executes, test it out properly by logging in with the account you created.
-   3. After you log in, the program will ask you to input your preference for the pets. (Empty string will be considered as skip).
-   4. Then, the program will display available pets based on your preferences.
+      (Justin Usecase)
+   3. After you log in, the program will ask you to input your preference for the pets. (Empty string will be considered as skip). (Alex usecase)
+   4. Then, the program will display available pets based on current logged in user's preferences. (Team usecase)
    5. Then, the program will again execute set preference, repeat iii. (This is a temporary feature for phase 1, just to
    demonstrate that you can change your preference anytime). Try setting up different preferences from the previous one.
-   6. Then, the program will display new available pets based on your new preferences.
-   7. To bookmark or remove the bookmark of the displayed pet, input the petID of the desired pet.
-   8. Finally, if you would like to adopt a pet, simply input the petID (make sure to check if the pet is availble).
+   6. Then, the program will display new available pets based on your new preferences. 
+   7. To bookmark or remove the bookmark of the displayed pet, input the petID of the desired pet. (Kevin + Jane Usecase) The bookmark changes will changed and stored based on the current logged in user. 
+   8. Enter pet ID to find pet bio. (Jenny usecase) 
+   9. Enter cat breed to retrieve breed information from TheCATAPI. Currently returns a json response will parse in the future. (API call) Can enter example breeds like: "Abyssinian", "Aegean", "bengal".
+   8. Finally, if you would like to adopt a pet, simply input the petID (make sure to check if the pet is available). (Team + Joy usecase)
+
+Notes:
+We have manually entered some sample pet data. We plan to explore adding pets through other ways in the future.
+They can be found in pets.json
+Users can be stored to users.json through the sign up use case.
+
+A RI for all use cases is that the input petID must exists in pets.json. This is because when we later introduce the view,
+all arguments passed to the controller will be from the list of available pets.
 
 ## Getting Started (For later)
 1. Clone the repository.
@@ -50,7 +61,7 @@ fish, hamster, etc.), size, age, and personality to help find the perfect fit fo
 4. (Start guide to be updated)
 
 ## APIs Used 
-* [RescueGroups.org](https://rescuegroups.org/services/adoptable-pet-data-api/): This is the Adoptable pet data API provided by Rescuegroups.org.
+* [TheCATAPI](https://documenter.getpostman.com/view/5578104/RWgqUxxh#intro): API that returns cat information.
 
 # Technical Problems and Notes
 Since our GUI is not yet fully functional, we plan to demonstrate our use cases through terminal commands for now.
