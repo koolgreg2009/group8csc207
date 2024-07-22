@@ -40,7 +40,7 @@ public class Adopt implements AdoptInputBoundary {
         for(String u : users){
             userDAO.get(u).addNotif("This pet has found a home");
         }
-        AdoptOutputData owo = new AdoptOutputData(uwu);
+        AdoptOutputData owo = new AdoptOutputData(uwu.getOwner(), uwu.getEmail(), uwu.getPhoneNum(), String.valueOf(uwu.getPetID()));
         userPresenter.prepareAdopt(owo);
     }
 }
