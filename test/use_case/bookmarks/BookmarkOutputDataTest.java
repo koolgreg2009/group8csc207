@@ -1,9 +1,9 @@
-package test;
+package use_case.bookmarks;
 
 import entity.Bookmark;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import use_case.bookmarks.BookmarkOutputData;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
