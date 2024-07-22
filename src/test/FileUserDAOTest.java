@@ -7,26 +7,26 @@ import static org.junit.jupiter.api.Assertions.*;
 class FileUserDAOTest {
 
     @Test
-    void testSave() {
+    void save() {
     }
 
     @Test
-    void testGet() {
+    void get() {
     }
 
     @Test
-    void testExistsByName() {
+    void existsByName() {
     }
 
     @Test
-    void testClearUsers() {
+    void clearUsers() {
     }
 
     @Test
-    void testRemovePetFromAllUserBookmarks() {
+    void removePetFromAllUserBookmarks() {
     }
 
     @Test
-    void testUserHasBookmark() {
+    void userHasBookmark() {
     }
 }

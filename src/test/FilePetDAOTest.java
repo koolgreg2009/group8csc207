@@ -7,18 +7,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class FilePetDAOTest {
 
     @Test
-    void testGet() {
+    void get() {
     }
 
     @Test
-    void testSave() {
+    void save() {
     }
 
     @Test
-    void testGetPreferencePets() {
+    void getPreferencePets() {
     }
 
     @Test
-    void testMatchesPreference() {
+    void getCatchesPreference() {
     }
 }

@@ -7,6 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class CatBreedDAOTest {
 
     @Test
-    void testGetBreedInformation() {
+    void getBreedInformation() {
     }
 }
