@@ -2,7 +2,6 @@ package use_case.login;
 
 import data_access.UserDAOInterface;
 import entity.user.AdopterUser;
-import entity.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,7 +12,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-//May not work at the moment. Needs update
 class LoginInteractorTest {
 
     @Mock
@@ -46,9 +44,9 @@ class LoginInteractorTest {
     @Test
     void testIncorrectPassword() {
         // Arrange
-        User user = new User("existingUser", "correctPassword");
+        AdopterUser adopterUser = new AdopterUser("existingUser", "correctPassword", "John Doe", "john.doe@example.com", "123-456-7890");
         when(userDAO.existsByName(anyString())).thenReturn(true);
-        when(userDAO.get(anyString())).thenReturn(user);
+        when(userDAO.get(anyString())).thenReturn(adopterUser);
         LoginInputData inputData = new LoginInputData("existingUser", "wrongPassword");
 
         // Act
@@ -61,9 +59,9 @@ class LoginInteractorTest {
     @Test
     void testSuccessfulLogin() {
         // Arrange
-        User user = new User("existingUser", "correctPassword");
+        AdopterUser adopterUser = new AdopterUser("existingUser", "correctPassword", "John Doe", "john.doe@example.com", "123-456-7890");
         when(userDAO.existsByName(anyString())).thenReturn(true);
-        when(userDAO.get(anyString())).thenReturn(user);
+        when(userDAO.get(anyString())).thenReturn(adopterUser);
         LoginInputData inputData = new LoginInputData("existingUser", "correctPassword");
 
         // Act
