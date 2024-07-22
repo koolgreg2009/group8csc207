@@ -17,7 +17,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PreferenceInteractorIntegrationTest {
+class PreferenceTest {
 
     private File tempFile;
     private FileUserDAO userDAO;
