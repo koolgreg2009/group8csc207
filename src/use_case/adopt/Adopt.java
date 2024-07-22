@@ -34,13 +34,18 @@ public class Adopt implements AdoptInputBoundary {
     @Override
     public void execute(AdoptInputData adoptInputData) {
         Pet uwu =  petDAO.get(adoptInputData.getPetID());
-        uwu.markUnavailable();
-        List<String> users = userDAO.removePetFromAllUserBookmarks(uwu.getPetID());
-        petDAO.save(uwu);
-        for(String u : users){
-            userDAO.get(u).addNotif("This pet has found a home");
+        if (!uwu.isAvailable()){
+            System.out.println("Pet" + uwu.getPetID() + " has already been adopted and is unavailable.");
         }
-        AdoptOutputData owo = new AdoptOutputData(uwu);
-        userPresenter.prepareAdopt(owo);
+        else {
+            uwu.markUnavailable();
+            List<String> users = userDAO.removePetFromAllUserBookmarks(uwu.getPetID());
+            petDAO.save(uwu);
+            for (String u : users) {
+                userDAO.get(u).addNotif("This pet has found a home");
+            }
+            AdoptOutputData owo = new AdoptOutputData(uwu.getOwner(), uwu.getEmail(), uwu.getPhoneNum(), String.valueOf(uwu.getPetID()));
+            userPresenter.prepareAdopt(owo);
+        }
     }
 }

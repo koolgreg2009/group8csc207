@@ -2,11 +2,14 @@ package app;
 
 
 import entity.preference.UserPreference;
+import interface_adapter.adopt.AdoptController;
 import interface_adapter.bookmark.AddBookmarkController;
+import interface_adapter.bookmark.RemoveBookmarkController;
 import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.login.LoginController;
 import interface_adapter.pet_bio.PetBioController;
+import interface_adapter.preference.PreferenceController;
 import interface_adapter.signup.SignupController;
 //import view.LoginView;
 //import view.SignupView;
@@ -65,21 +68,33 @@ public class Main {
 //        application.setVisible(true);
         //For our use case (part we need to edit)
         //catapi use case:
-        SignupController signupController = SignupUseCaseFactory.createUserSignupUseCase();
-        signupController.execute();
+//        SignupController signupController = SignupUseCaseFactory.createUserSignupUseCase();
+//        signupController.execute(); // try fail signup (different password or already exists)
+//        signupController.execute(); // try successful signup
+
         LoginController loginController = LoginUseCaseFactory.createUserLoginUseCase();
-        loginController.execute();
+        loginController.execute(); // try fail sign in (different password)
+//        loginController.execute(); // try successful sign in
+        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase();
+        adoptController.execute();
+        PreferenceController preferenceController = PreferenceUsecaseFactory.createPreferenceUsecase();
+        preferenceController.execute(); // try some preference
 
         DisplayAllPetsController displayAllPetsController = DisplayAllPetsUseCaseFactory.createDisplayAllPetsUseCase();
-        java.util.List<String> breedList = new ArrayList<>();
-        breedList.add("bengal");
-        displayAllPetsController.execute(new UserPreference("Cat", breedList, 1, 2, "hyper", "toronto", "male"));
+        displayAllPetsController.execute();
+        preferenceController.execute(); // try another preference
+        displayAllPetsController.execute();
+
         AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase();
-        addBookmarkController.execute("");
+        addBookmarkController.execute();
+        RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase();
+        removeBookmarkController.execute();
         PetBioController petBioController = PetBioUseCaseFactory.createPetBioUseCase();
         petBioController.execute();
         GetBreedController getBreedController = GetBreedUseCaseFactory.createGetBreedUseCase();
         getBreedController.execute();
+//        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase();
+        adoptController.execute();
     }
 }
 
