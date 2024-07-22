@@ -1,8 +1,7 @@
-package test;
+package use_case.bookmarks;
 
 import org.junit.jupiter.api.Test;
-import use_case.bookmarks.BookmarkInputData;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit tests for the {@link BookmarkInputData} class.
