@@ -8,26 +8,30 @@ import java.util.List;
 /** Returns Data for Adopt
  */
 public class AdoptOutputData {
-    private Pet pet;
+    private final String petOwner;
+    private final String ownerEmail;
+    private final String ownerPhone;
+    private final String petID;
 
-    /** Constructor for AdoptOutputData\
-     * @param pet
-     */
-    public AdoptOutputData(Pet pet){
-        this.pet = pet;
+
+    public AdoptOutputData(String petOwner, String ownerEmail, String ownerPhone, String petID){
+        this.petOwner = petOwner;
+        this.ownerEmail = ownerEmail;
+        this.ownerPhone = ownerPhone;
+        this.petID = petID;
+
     }
 
-    /** method to return petid
-     * @return petID
-     */
-    public Integer getPetID() {
-        return pet.getPetID();
+    public String getPetOwner() {
+        return petOwner;
     }
-
-    /** method to return pet owner
-     */
-    public String getPetOwner(){
-        return pet.getOwner();
+    public String getOwnerEmail() {
+        return ownerEmail;
     }
-
+    public String getOwnerPhone() {
+        return ownerPhone;
+    }
+    public String getID() {
+        return petID;
+    }
 }

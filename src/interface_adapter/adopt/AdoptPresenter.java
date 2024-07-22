@@ -1,5 +1,6 @@
 package interface_adapter.adopt;
 
+import interface_adapter.SessionManager;
 import use_case.adopt.AdoptOutputBoundary;
 import use_case.adopt.AdoptOutputData;
 
@@ -11,6 +12,7 @@ public class AdoptPresenter implements AdoptOutputBoundary {
      */
     @Override
     public void prepareAdopt(AdoptOutputData adoptoutdata){
-        System.out.println(adoptoutdata.getPetOwner() + " has adopt " + adoptoutdata.getPetID());
+        System.out.println("Thank  you "+ SessionManager.getCurrentUser()+" for adopting Pet: "+adoptoutdata.getID()+"\n" +
+                "You may contact the owner "+adoptoutdata.getPetOwner() +" through: \n             " + adoptoutdata.getOwnerEmail() +" and "+ adoptoutdata.getOwnerPhone());
     }
 }
