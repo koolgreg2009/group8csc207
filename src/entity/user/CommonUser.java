@@ -165,4 +165,12 @@ public class CommonUser implements User {
 		notifications.add(notif);
 	}
 
+	public List<String> getNotifications() {
+		return notifications;
+	}
+
+	public String toString(){
+		return this.getClass() + "username: " + this.getUsername()+"\npassword: " + this.getPassword()+"\nname: " + this.getName()+"\nemail: " + this.getEmail();
+	}
+
 }
