@@ -31,7 +31,8 @@ public class FileUserDAO implements UserDAOInterface {
 	 * Constructs a new FileUserDAO with the specified JSON file path.
 	 * Initializes the user data from the file or creates a new file if it is empty.
 	 *
-	 * @param jsonPath
+	 * @param jsonPath the path to the JSON file that stores user data.
+	 * @throws IOException if an I/O error occurs while reading from or writing to the file.
 	 */
 	public FileUserDAO(String jsonPath) throws IOException {
 		jsonFile = new File(jsonPath);
@@ -50,7 +51,7 @@ public class FileUserDAO implements UserDAOInterface {
 	 * Saves the specified user to the JSON file.
 	 * Updates the in-memory user map and writes the changes to the file.
 	 *
-	 * @param user
+	 * @param user the specific user to be saved to the JSON file.
 	 */
 	@Override
 	public void save(User user) {
@@ -61,7 +62,7 @@ public class FileUserDAO implements UserDAOInterface {
 	/**
 	 * Retrieves the user with the specified username.
 	 *
-	 * @param username
+	 * @param username the username of the user
 	 * @return The user associated with the specified username, or null if not found.
 	 */
 	@Override
@@ -71,7 +72,12 @@ public class FileUserDAO implements UserDAOInterface {
 
 	/**
 	 * Saves the current state of user data to the JSON file.
-	 * This method is called to persist changes made to the in-memory user map.
+	 * This method persists the changes made to the in-memory user map by writing it to the file specified
+	 * during construction.
+	 * <p>
+	 * If an error occurs during the saving process, an error message is printed, and a {@link RuntimeException}
+	 * is thrown.
+	 * </p>
 	 */
 	private void save() {
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -87,7 +93,7 @@ public class FileUserDAO implements UserDAOInterface {
 	/**
 	 * Checks if a user with the specified identifier exists in the system.
 	 *
-	 * @param identifier
+	 * @param identifier the unique identifier of the user to check.
 	 * @return true if a user with the specified identifier exists; false otherwise.
 	 */
 	@Override
@@ -96,13 +102,19 @@ public class FileUserDAO implements UserDAOInterface {
 	}
 
 	/**
-	 * Clears all user data from the JSON file and returns a string containing the names of all cleared users.
+	 * Clears all user data from the JSON file and the in-memory user map.
+	 * <p>
+	 * This method truncates the file to remove all existing user data and clears the in-memory user map.
+	 * It returns a string listing the names of all users that were removed, with each name on a new line.
+	 * </p>
+	 * <p>
+	 * If an I/O error occurs while truncating the file, a {@link RuntimeException} is thrown.
+	 * </p>
 	 *
-	 * @return A string containing the names of all users that were cleared.
+	 * @return A string containing the names of all removed users, each followed by a newline character.
 	 */
 	@Override
 	public String clearUsers() { //
-
 		try {
 			RandomAccessFile file = new RandomAccessFile(jsonFile, "rw");
 			file.setLength(0);
@@ -111,7 +123,7 @@ public class FileUserDAO implements UserDAOInterface {
 			throw new RuntimeException(e);
 		}
 
-		StringBuilder empty = new StringBuilder(new String(""));
+		StringBuilder empty = new StringBuilder();
 		for (User user : accounts.values()) {
 			empty.append(user.getName()).append("\n");
 		}
@@ -122,7 +134,7 @@ public class FileUserDAO implements UserDAOInterface {
 	/**
 	 * Removes a pet from all user bookmarks and returns a list of usernames whose bookmarks were updated.
 	 *
-	 * @param petID
+	 * @param petID the ID of the pet on the bookmark that is being removed.
 	 * @return A list of usernames whose bookmarks were updated.
 	 */
 	@Override
