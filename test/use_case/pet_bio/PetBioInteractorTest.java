@@ -1,4 +1,4 @@
-package test;
+package use_case.pet_bio;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -13,10 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import data_access.PetDAOInterface;
 import entity.Pet;
-import use_case.pet_bio.PetBioInputData;
-import use_case.pet_bio.PetBioInteractor;
-import use_case.pet_bio.PetBioOutputBoundary;
-import use_case.pet_bio.PetBioOutputData;
 
 /** Unit test for PetBioInteractor
  */
