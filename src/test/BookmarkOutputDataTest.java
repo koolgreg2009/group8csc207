@@ -74,5 +74,6 @@ class BookmarkOutputDataTest {
         assertEquals(LocalDateTime.of(2023,12,30,8,46),
                 result.getBookmarkedDate(), "The bookmarked date and time of the removed " +
                         "bookmark should be 2023-12-30 8:46.");
+        assertEquals(removedBookmark, result, "The removed bookmark retrieved should match removedBookmark");
     }
 }
