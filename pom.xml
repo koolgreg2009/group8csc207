@@ -59,10 +59,10 @@
       <version>4.9.3</version>
     </dependency>
       <dependency>
-          <groupId>group8csc207</groupId>
-          <artifactId>group8csc207</artifactId>
-          <version>0.0.1-SNAPSHOT</version>
-          <scope>test</scope>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter-api</artifactId>
+          <version>5.9.1</version>
+          <scope>compile</scope>
       </dependency>
   </dependencies>
 
