@@ -22,7 +22,7 @@ personality to help find the perfect fit for the pet and the new owner.
 
 * This project was entirely written in Java. 
 * Java Swing was used for the GUI.
-* This project is strictly adhering to Clean Architecture and the SOLID design principles.
+* This project is strictly adhering to the Clean Architecture and the SOLID design principles.
 
 ## Getting Started (For Phase 1)
 1. Clone the repository.
@@ -30,24 +30,24 @@ personality to help find the perfect fit for the pet and the new owner.
 3. Run the project by running the `main` method in `Main.java`.
 4. Since our GUI is not yet fully functional, we plan to demonstrate our use cases through terminal commands for now.
 5. We will execute use cases in order as follows:
-   1. Signup will execute twice. Test out the fail case first (where you would intentionally input incorrect repeated 
-   password or sign in with an existing account information like username, for example). Then, when the second Signup
+   1. Signup will execute twice. Test out the fail case first (where you would intentionally input an incorrect repeated 
+   password or sign in with existing account information like username, for example). Then, when the second Signup
    executes, test it out properly by creating a new account.
-   2. Login will execute twice. Test out the fail case first (where you would intentionally input incorrect password, 
+   2. Login will execute twice. Test out the fail case first (where you would intentionally input an incorrect password, 
    for example). Then, when the second login executes, test it out properly by logging in with the account you created.
-      (Justin Usecase)
-   3. After you log in, the program will ask you to input your preference for the pets. (Empty string will be considered as skip). (Alex usecase)
-   4. Then, the program will display available pets based on current logged in user's preferences. (Team usecase) Check available pets below
+      (Justin Use case)
+   3. After you log in, the program will ask you to input your preference for the pets. (Empty string will be considered as skip). (Alex use case)
+   4. Then, the program will display available pets based on the current logged-in user's preferences. (Team use case) Check the available pets below.
    5. Then, the program will again execute set preference, repeat iii. (This is a temporary feature for phase 1, just to
    demonstrate that you can change your preference anytime). Try setting up different preferences from the previous one.
-   6. Then, the program will display new available pets based on your new preferences. 
+   6. Then, the program will display newly available pets based on your new preferences. 
    7. To bookmark or remove the bookmark of the displayed pet, input the petID of the desired pet. (Kevin + Jane Usecase) The bookmark changes will changed and stored based on the current logged in user. 
-   8. Enter pet ID to find pet bio. (Jenny usecase) 
-   9. Enter cat breed to retrieve breed information from TheCATAPI. Currently returns a json response will parse in the future. (API call) Can enter example breeds like: "Abyssinian", "Aegean", "bengal".
-   8. Finally, if you would like to adopt a pet, simply input the petID (make sure to check if the pet is available). (Team + Joy usecase). Once adopted, the pet will become unavailable to other users and disappear from the viewallPets result.
+   8. Enter pet ID to find the pet bio. (Jenny use case) 
+   9. Enter cat breed to retrieve breed information from TheCATAPI. Currently returns a JSON response will parse in the future. (API call) Can enter example breeds like: "Abyssinian", "Aegean", "bengal".
+   8. Finally, if you would like to adopt a pet, simply input the petID (make sure to check if the pet is available). (Team + Joy use case). Once adopted, the pet will become unavailable to other users and disappear from the viewallPets result.
 
 Notes:
-We have manually entered some sample pet data. We plan to explore adding pets through other ways in the future.
+We have manually entered some sample pet data. We plan to explore adding pets in other ways in the future.
 They can be found in pets.json.
 {
 "1": {
@@ -157,9 +157,9 @@ They can be found in pets.json.
 }
 }
 
-Users can be stored to users.json through the sign up use case.
+Users can be stored in users.json through the signup use case.
 
-A RI for all use cases is that the input petID must exists in pets.json. This is because when we later introduce the view,
+An RI for all use cases is that the input petID must exist in pets.json. This is because when we later introduce the view,
 all arguments passed to the controller will be from the list of available pets.
 
 ## Getting Started (For later)
