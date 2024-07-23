@@ -1,6 +1,6 @@
 # Pet Adoption Website
 
-## Contributors
+### Contributors
 * [Alex Lambermon](https://github.com/lamberm2)
 * [Jane Li](https://github.com/snowykitkat)
 * [Jenny Yang](https://github.com/yangje02)
@@ -46,116 +46,118 @@ personality to help find the perfect fit for the pet and the new owner.
    9. Enter cat breed to retrieve breed information from TheCATAPI. Currently returns a JSON response will parse in the future. (API call) Can enter example breeds like: "Abyssinian", "Aegean", "bengal".
    8. Finally, if you would like to adopt a pet, simply input the petID (make sure to check if the pet is available). (Team + Joy use case). Once adopted, the pet will become unavailable to other users and disappear from the viewallPets result.
 
-Notes:
+### Sample Pet Data for Phase 1
 We have manually entered some sample pet data. We plan to explore adding pets in other ways in the future.
 They can be found in pets.json.
+```
 {
-"1": {
-"owner": "jack",
-"email": "gmail",
-"phoneNum": "647",
-"petID": 1,
-"species": "Cat",
-"petAge": 1,
-"breed": "bengal",
-"personality": ["cool"],
-"gender": "male",
-"activityLevel": "hyper",
-"bio": "he's super cool!",
-"location": "toronto",
-"available": true
-},
-"2": {
-"owner": "greg",
-"email": "abcde@gmail.com",
-"phoneNum": "123456670",
-"petID": 2,
-"species": "Cat",
-"petAge": 99,
-"breed": "Abyssinian",
-"personality": ["eats a lot", "fat"],
-"gender": "male",
-"activityLevel": "Low",
-"bio": "he's cool!",
-"location": "chad",
-"available": true
-},
-"3": {
-"owner": "Voldemort",
-"email": "dieharrypotter@hogwarts.com",
-"phoneNum": "9994446666",
-"petID": 5,
-"species": "Snake",
-"petAge": 0,
-"breed": "Anaconda",
-"personality": ["sociopathic", "scary", "antisocial"],
-"gender": "male",
-"activityLevel": "high",
-"bio": "Might kill you in your sleep, or not.",
-"location": "chamber of secrets",
-"available": true
-},
-"69": {
-"owner": "Oyo",
-"email": "uwu@owo.ca",
-"phoneNum": "1234567890",
-"petID": 69,
-"species": "hilichurl",
-"petAge": 0,
-"breed": "normal",
-"personality": ["yah!"],
-"gender": "male",
-"activityLevel": "high",
-"bio": "Muhe ye",
-"location": "Teyvat",
-"available": true
-},
-"4": {
-"owner": "Gru",
-"email": "stealthemoon@evil.com",
-"phoneNum": "1987654321",
-"petID": 4,
-"species": "Minion",
-"petAge": 0,
-"breed": "normal",
-"personality": ["round", "small", "yellow"],
-"gender": "male",
-"activityLevel": "high",
-"bio": "Banana.",
-"location": "Grus Evil Lair",
-"available": true
-},
-"6": {
-"owner": "Drizzy",
-"email": "kdotsucks@ovo.ca",
-"phoneNum": "6666666666",
-"petID": 6,
-"species": "Dog",
-"petAge": 0,
-"breed": "bichon",
-"personality": ["high energy"],
-"gender": "male",
-"activityLevel": "high",
-"bio": "Kendrick Lamar sucks ngl",
-"location": "Toronto",
-"available": true
-},
-"7": {
-"owner": "Oyo",
-"email": "uwu@owo.ca",
-"phoneNum": "1234567890",
-"petID": 69,
-"species": "hilichurl",
-"petAge": 0,
-"breed": "normal",
-"personality": ["yah!"],
-"gender": "male",
-"activityLevel": "high",
-"bio": "Muhe ye",
-"location": "Teyvat",
-"available": true
+   "1": {
+   "owner": "jack",
+   "email": "gmail",
+   "phoneNum": "647",
+   "petID": 1,
+   "species": "Cat",
+   "petAge": 1,
+   "breed": "bengal",
+   "personality": ["cool"],
+   "gender": "male",
+   "activityLevel": "hyper",
+   "bio": "he's super cool!",
+   "location": "toronto",
+   "available": true
+   },
+   "2": {
+   "owner": "greg",
+   "email": "abcde@gmail.com",
+   "phoneNum": "123456670",
+   "petID": 2,
+   "species": "Cat",
+   "petAge": 99,
+   "breed": "Abyssinian",
+   "personality": ["eats a lot", "fat"],
+   "gender": "male",
+   "activityLevel": "Low",
+   "bio": "he's cool!",
+   "location": "chad",
+   "available": true
+   },
+   "3": {
+   "owner": "Voldemort",
+   "email": "dieharrypotter@hogwarts.com",
+   "phoneNum": "9994446666",
+   "petID": 5,
+   "species": "Snake",
+   "petAge": 0,
+   "breed": "Anaconda",
+   "personality": ["sociopathic", "scary", "antisocial"],
+   "gender": "male",
+   "activityLevel": "high",
+   "bio": "Might kill you in your sleep, or not.",
+   "location": "chamber of secrets",
+   "available": true
+   },
+   "69": {
+   "owner": "Oyo",
+   "email": "uwu@owo.ca",
+   "phoneNum": "1234567890",
+   "petID": 69,
+   "species": "hilichurl",
+   "petAge": 0,
+   "breed": "normal",
+   "personality": ["yah!"],
+   "gender": "male",
+   "activityLevel": "high",
+   "bio": "Muhe ye",
+   "location": "Teyvat",
+   "available": true
+   },
+   "4": {
+   "owner": "Gru",
+   "email": "stealthemoon@evil.com",
+   "phoneNum": "1987654321",
+   "petID": 4,
+   "species": "Minion",
+   "petAge": 0,
+   "breed": "normal",
+   "personality": ["round", "small", "yellow"],
+   "gender": "male",
+   "activityLevel": "high",
+   "bio": "Banana.",
+   "location": "Grus Evil Lair",
+   "available": true
+   },
+   "6": {
+   "owner": "Drizzy",
+   "email": "kdotsucks@ovo.ca",
+   "phoneNum": "6666666666",
+   "petID": 6,
+   "species": "Dog",
+   "petAge": 0,
+   "breed": "bichon",
+   "personality": ["high energy"],
+   "gender": "male",
+   "activityLevel": "high",
+   "bio": "Kendrick Lamar sucks ngl",
+   "location": "Toronto",
+   "available": true
+   },
+   "7": {
+   "owner": "Oyo",
+   "email": "uwu@owo.ca",
+   "phoneNum": "1234567890",
+   "petID": 69,
+   "species": "hilichurl",
+   "petAge": 0,
+   "breed": "normal",
+   "personality": ["yah!"],
+   "gender": "male",
+   "activityLevel": "high",
+   "bio": "Muhe ye",
+   "location": "Teyvat",
+   "available": true
+   }
 }
-}
+```
 
 Users can be stored in users.json through the signup use case.
 
