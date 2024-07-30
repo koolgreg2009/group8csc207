@@ -1,9 +1,10 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.signup.SignupState;
+import interface_adapter.signup.SignupViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     public final String viewName = "log in";
     private final LoginViewModel loginViewModel;
+    private final SignupViewModel signupViewModel;
+    private final ViewManagerModel viewManagerModel;
 
     final JTextField usernameInputField = new JTextField(15);
     private final JLabel usernameErrorField = new JLabel();
@@ -26,14 +29,17 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JLabel passwordErrorField = new JLabel();
 
     final JButton logIn;
-    final JButton cancel;
+    final JButton signUp;
     private final LoginController loginController;
 
-    public LoginView(LoginViewModel loginViewModel, LoginController controller) {
+    public LoginView(LoginViewModel loginViewModel, LoginController controller, ViewManagerModel viewManagerModel,
+                     SignupViewModel signupViewModel) {
 
+        this.signupViewModel = signupViewModel;
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
+        this.viewManagerModel = viewManagerModel;
 
         JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -44,10 +50,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 new JLabel("Password"), passwordInputField);
 
         JPanel buttons = new JPanel();
+        signUp = new JButton(loginViewModel.SIGNUP_BUTTON_LABEL);
+        buttons.add(signUp);
         logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
         buttons.add(logIn);
-        cancel = new JButton(loginViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
+
 
         logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -55,16 +62,23 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                         if (evt.getSource().equals(logIn)) {
                             LoginState currentState = loginViewModel.getState();
 
-//                            loginController.execute(
-//                                    currentState.getUsername(),
-//                                    currentState.getPassword()
-//                            );
+                            loginController.execute(
+                                    currentState.getUsername(),
+                                    currentState.getPassword()
+                            );
                         }
                     }
                 }
         );
 
-        cancel.addActionListener(this);
+        signUp.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        viewManagerModel.setActiveView(signupViewModel.getViewName());
+                        viewManagerModel.firePropertyChanged();
+                    }
+                }
+        );
 
         usernameInputField.addKeyListener(new KeyListener() {
             @Override
@@ -113,18 +127,22 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     /**
      * React to a button click that results in evt.
      */
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
-    }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LoginState state = (LoginState) evt.getNewValue();
-        setFields(state);
+        if (state.getError() != null) {
+            JOptionPane.showMessageDialog(this, state.getError());
+        }
     }
 
     private void setFields(LoginState state) {
         usernameInputField.setText(state.getUsername());
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }
