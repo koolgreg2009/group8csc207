@@ -82,9 +82,10 @@ public class SignupUseCaseFactory {
      * Private constructor to prevent instantiation.
      * This class is intended to be used as a factory for creating use case instances.
      */
-    private SignupUseCaseFactory() {
+//    private SignupUseCaseFactory() {
+//
+//    }
 
-    }
 
     /**
      * Creates and returns a {@link SignupController} instance.
@@ -92,6 +93,7 @@ public class SignupUseCaseFactory {
      *
      * @return an instance of {@link SignupController}, or {@code null} if an {@link IOException} occurs.
      */
+    public SignupUseCaseFactory() {}
     public static SignupController createUserSignupUseCase() {
 
         try{

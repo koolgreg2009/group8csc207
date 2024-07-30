@@ -40,13 +40,8 @@ public class LoginController {
 //        loginUseCaseInteractor.execute(loginInputData);
 //    }
     //This is a temporary execute method for Phase 1 to work around Terminals.
-    public void execute() {
+    public void execute(String username, String password) {
         System.out.println("Executing login usecase");
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Username: ");
-        String username = scanner.next();
-        System.out.println("Password: ");
-        String password = scanner.next();
         this.loginUseCaseInteractor.execute(new LoginInputData(username, password));
     }
 }

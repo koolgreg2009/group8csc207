@@ -1,5 +1,7 @@
 package use_case.login;
 
+import entity.user.User;
+
 /**
  * The LoginOutputData class encapsulates the output data of the login process.
  * It includes fields for the username and a flag indicating if the login attempt failed.
@@ -10,17 +12,14 @@ package use_case.login;
 public class LoginOutputData {
 
     private final String username;
-    private boolean useCaseFailed;
 
     /**
      * Constructs a new LoginOutputData object with the specified details.
      *
      * @param username the username for the new login
-     * @param useCaseFailed boolean to see if the login worked
      */
-    public LoginOutputData(String username, boolean useCaseFailed) {
+    public LoginOutputData(String username) {
         this.username = username;
-        this.useCaseFailed = useCaseFailed;
     }
 
     /**
@@ -31,5 +30,6 @@ public class LoginOutputData {
     public String getUsername() {
         return username;
     }
+
 
 }

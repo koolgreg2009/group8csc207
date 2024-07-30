@@ -20,15 +20,15 @@ import use_case.signup.SignupOutputData;
  */
 public class LoginPresenter implements LoginOutputBoundary {
 
-//    /** The view model for the login view. */
-//    private final LoginViewModel loginViewModel;
-//
-//    /** The view model for the logged-in view. */
-//    private final LoggedInViewModel loggedInViewModel;
-//
-//    /** The view manager model used to switch between views. */
-//    private ViewManagerModel viewManagerModel;
-//
+    /** The view manager model used to switch between views. */
+    private final ViewManagerModel viewManagerModel;
+    /** The view model for the login view. */
+    private final LoginViewModel loginViewModel;
+
+    /** The view model for the logged-in view. */
+    private final LoggedInViewModel loggedInViewModel;
+
+
 //    /**
 //     * Constructs a LoginPresenter with the specified view models and view manager model.
 //     *
@@ -36,13 +36,12 @@ public class LoginPresenter implements LoginOutputBoundary {
 //     * @param loggedInViewModel
 //     * @param loginViewModel
 //     */
-//    public LoginPresenter(ViewManagerModel viewManagerModel,
-//                          LoggedInViewModel loggedInViewModel,
-//                          LoginViewModel loginViewModel) {
-//        this.viewManagerModel = viewManagerModel;
-//        this.loggedInViewModel = loggedInViewModel;
-//        this.loginViewModel = loginViewModel;
-//    }
+    public LoginPresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
+                          LoginViewModel loginViewModel) {
+        this.viewManagerModel = viewManagerModel;
+        this.loggedInViewModel = new LoggedInViewModel();
+        this.loginViewModel = loginViewModel;
+    }
 //
 //    /**
 //     * Prepares the success view when login is successful.
@@ -78,11 +77,15 @@ public class LoginPresenter implements LoginOutputBoundary {
     @Override
     public void prepareSuccessView(LoginOutputData data) {
         SessionManager.login(data.getUsername());
-        System.out.println(data.getUsername() + " has successfully been logged in.");
+        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
-        System.out.println(error);
+        // prepareing for error pop up
+        LoginState loginState = loginViewModel.getState();
+        loginState.setError(error);
+        loginViewModel.firePropertyChanged();
     }
 }
