@@ -43,7 +43,20 @@ public class PetAdoptionUI extends JFrame {
         JPanel petPanel = new JPanel();
         petPanel.setLayout(new FlowLayout());
 
-        JLabel nameLabel = new JLabel("Name: " + pet.getName());
+        JButton nameButton = new JButton("Name: " + pet.getName());
+        nameButton.setBorderPainted(false);
+        nameButton.setContentAreaFilled(false);
+        nameButton.setFocusPainted(false);
+        nameButton.setForeground(Color.BLUE);
+        nameButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        nameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Show pet details in a popup
+                JOptionPane.showMessageDialog(null, "Pet Details:\nName: " + pet.getName() + "\nBreed: " + pet.getBreed());
+            }
+        });
+
         JLabel breedLabel = new JLabel("Breed: " + pet.getBreed());
 
         JButton adoptButton = new JButton("Adopt");
@@ -64,7 +77,7 @@ public class PetAdoptionUI extends JFrame {
             }
         });
 
-        petPanel.add(nameLabel);
+        petPanel.add(nameButton);
         petPanel.add(breedLabel);
         petPanel.add(adoptButton);
         petPanel.add(bookmarkButton);
