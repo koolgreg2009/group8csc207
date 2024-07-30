@@ -1,7 +1,9 @@
 package app;
 
 
+import data_access.FilePetDAO;
 import data_access.FileUserDAO;
+import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.preference.UserPreference;
 import interface_adapter.ViewManagerModel;
@@ -60,14 +62,14 @@ public class Main {
         SignupViewModel signupViewModel = new SignupViewModel();
         // creating user and pet DAO to be used for all use cases. declared outside so compiler doesnt cry
         UserDAOInterface userDAO = null;
-        UserDAOInterface petDAO = null;
+        PetDAOInterface petDAO = null;
         try{
             userDAO = new FileUserDAO("./users.json");
         } catch (IOException e) {
             System.out.println("Could not open user data file.");
         }
         try{
-            petDAO = new FileUserDAO("./pets.json");
+            petDAO = new FilePetDAO("./pets.json");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
