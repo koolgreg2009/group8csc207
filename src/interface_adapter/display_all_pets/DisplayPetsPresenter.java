@@ -5,7 +5,7 @@ import use_case.display.DisplayPetsOutputData;
 
 public class DisplayPetsPresenter implements DisplayPetsOutputBoundary {
 
-    public void displayAllPetsOutput(DisplayPetsOutputData displayPetsOutputData) {
+    public void displayPetsOutput(DisplayPetsOutputData displayPetsOutputData) {
         System.out.println(displayPetsOutputData.getPets());
     }
 }

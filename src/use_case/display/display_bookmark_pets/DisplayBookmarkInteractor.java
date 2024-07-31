@@ -24,6 +24,6 @@ public class DisplayBookmarkInteractor implements DisplayBookmarkInputBoundary{
         for(Bookmark bookmark: bookmarks){
             pets.add(filePetDAO.get(bookmark.getPetID()));
         }
-        displayBookmarkPresenter.displayAllPetsOutput(new DisplayPetsOutputData(pets));
+        displayBookmarkPresenter.displayPetsOutput(new DisplayPetsOutputData(pets));
     }
 }
