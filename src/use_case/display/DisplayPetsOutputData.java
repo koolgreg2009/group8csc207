@@ -1,12 +1,12 @@
-package use_case.display_all_available_pets;
+package use_case.display;
 
 import java.util.List;
 import entity.Pet;
 
-public class DisplayAllPetsOutputData {
+public class DisplayPetsOutputData {
     private final List<Pet> pets;
 
-    public DisplayAllPetsOutputData(List<Pet> pets) {
+    public DisplayPetsOutputData(List<Pet> pets) {
         this.pets = pets;
     }
     public List<Pet> getPets() {
