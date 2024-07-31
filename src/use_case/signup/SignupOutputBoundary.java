@@ -21,6 +21,5 @@ public interface SignupOutputBoundary {
      *
      * @param error
      */
-
     void prepareFailView(String error);
 }

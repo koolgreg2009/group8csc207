@@ -3,12 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/** This UserPreference class contains all the preferences that the user can select
- * to filter the kinds of adoption postings they want to see.
+/**
+ * Represents the user preferences for selecting pets.
  *
- * @version 1.0
- * @since 2024-07-16
- *
+ * <p>This class encapsulates various preferences that a user may have for choosing a pet, including
+ * species, breeds, age range, activity level, location, and gender.
  */
 
 public class UserPreference{
@@ -21,9 +20,25 @@ public class UserPreference{
 	private String location;
 	private String gender;
 
-
+	/**
+	 * Constructs an empty {@code UserPreference} object.
+	 * <p>This constructor allows for the creation of a {@code UserPreference} object
+	 * without initializing any fields. Fields can be set using setter methods.
+	 */
 	public UserPreference(){
 	}
+
+	/**
+	 * Constructs a {@code UserPreference} object with the specified preferences.
+	 *
+	 * @param species the preferred species of the pet
+	 * @param breeds the preferred breeds of the pet
+	 * @param minAge the minimum age of the pet
+	 * @param maxAge the maximum age of the pet
+	 * @param activityLevel the preferred activity level of the pet
+	 * @param location the preferred location of the pet
+	 * @param gender the preferred gender of the pet
+	 */
 	public UserPreference(String species, List<String> breeds, int minAge, int maxAge, String activityLevel, String location, String gender){
 		this.species = species;
 		this.breeds = breeds;
