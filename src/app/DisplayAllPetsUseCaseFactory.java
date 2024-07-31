@@ -4,12 +4,11 @@ import data_access.FilePetDAO;
 import data_access.FileUserDAO;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
-import interface_adapter.adopt.AdoptController;
 import interface_adapter.display_all_pets.DisplayAllPetsController;
-import interface_adapter.display_all_pets.DisplayAllPetsPresenter;
-import use_case.display_all_available_pets.DisplayAllPetsInputBoundary;
-import use_case.display_all_available_pets.DisplayAllPetsInteractor;
-import use_case.display_all_available_pets.DisplayAllPetsOutputBoundary;
+import interface_adapter.display_all_pets.DisplayPetsPresenter;
+import use_case.display.display_all_available_pets.DisplayAllPetsInputBoundary;
+import use_case.display.display_all_available_pets.DisplayAllPetsInteractor;
+import use_case.display.DisplayPetsOutputBoundary;
 
 import java.io.IOException;
 
@@ -35,7 +34,7 @@ public class DisplayAllPetsUseCaseFactory {
         try {
             PetDAOInterface filePetDAO = new FilePetDAO("./pets.json");
             UserDAOInterface fileUserDAO = new FileUserDAO("./users.json");
-            DisplayAllPetsOutputBoundary displayAllPetsPresenter = new DisplayAllPetsPresenter();
+            DisplayPetsOutputBoundary displayAllPetsPresenter = new DisplayPetsPresenter();
             DisplayAllPetsInputBoundary displayAllPetsInteractor = new DisplayAllPetsInteractor(filePetDAO, fileUserDAO,
                     displayAllPetsPresenter);
             return new DisplayAllPetsController(displayAllPetsInteractor);
