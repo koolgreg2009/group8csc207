@@ -1,4 +1,4 @@
-package use_case.display_all_available_pets;
+package use_case.display.display_all_available_pets;
 
 /**
  * This interface defines the contract for displaying all pets for a specific user.

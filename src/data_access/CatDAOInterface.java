@@ -1,7 +1,7 @@
 package data_access;
 
-import java.io.IOException;
+import java.util.HashMap;
 
 public interface CatDAOInterface {
-    String getBreedInformation(String breedName);
+    HashMap<String, Object> getBreedInformation(String breedName);
 }

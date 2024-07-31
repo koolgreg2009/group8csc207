@@ -1,10 +1,12 @@
-package use_case.display_all_available_pets;
+package use_case.display.display_all_available_pets;
 
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.Pet;
 import entity.user.AdopterUser;
 import entity.user.User;
+import use_case.display.DisplayPetsOutputBoundary;
+import use_case.display.DisplayPetsOutputData;
 
 import java.util.List;
 
@@ -16,7 +18,7 @@ import java.util.List;
 public class DisplayAllPetsInteractor implements DisplayAllPetsInputBoundary {
     private final PetDAOInterface filePetDAO;
     private final UserDAOInterface fileUserDAO;
-    private final DisplayAllPetsOutputBoundary displayAllPetPresenter;
+    private final DisplayPetsOutputBoundary displayAllPetPresenter;
 
     /**
      * Constructs a new DisplayAllPetsInteractor with the given data access objects and presenter.
@@ -25,7 +27,7 @@ public class DisplayAllPetsInteractor implements DisplayAllPetsInputBoundary {
      * @param fileUserDAO The data access object used to fetch user information.
      * @param displayAllPetPresenter The presenter used to prepare the view for displaying all pets.
      */
-    public DisplayAllPetsInteractor(PetDAOInterface filePetDAO, UserDAOInterface fileUserDAO, DisplayAllPetsOutputBoundary displayAllPetPresenter) {
+    public DisplayAllPetsInteractor(PetDAOInterface filePetDAO, UserDAOInterface fileUserDAO, DisplayPetsOutputBoundary displayAllPetPresenter) {
         this.filePetDAO = filePetDAO;
         this.fileUserDAO = fileUserDAO;
         this.displayAllPetPresenter = displayAllPetPresenter;
@@ -41,6 +43,6 @@ public class DisplayAllPetsInteractor implements DisplayAllPetsInputBoundary {
     public void execute(DisplayAllPetsInputData displayAllPetsInputData) {
         User user = fileUserDAO.get(displayAllPetsInputData.getUser());
         List<Pet> pets = filePetDAO.getPreferencePets(((AdopterUser) user).getPreferences());
-        this.displayAllPetPresenter.displayAllPetsOutput(new DisplayAllPetsOutputData(pets));
+        this.displayAllPetPresenter.displayAllPetsOutput(new DisplayPetsOutputData(pets));
     }
 }

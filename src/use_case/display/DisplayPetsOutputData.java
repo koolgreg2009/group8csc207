@@ -1,4 +1,4 @@
-package use_case.display_all_available_pets;
+package use_case.display;
 
 import java.util.List;
 import entity.Pet;
