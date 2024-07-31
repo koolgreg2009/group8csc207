@@ -10,62 +10,105 @@ public class GetBreedOutputData {
     private final String breedName;
     private final String description;
     private final String adaptability;
-    private final String affection_level;
-    private final String child_friendly;
-    private final String dog_friendly;
-    private final String energy_level;
-    private final String img_url;
-
+    private final String affectionLevel;
+    private final String childFriendly;
+    private final String dogFriendly;
+    private final String energyLevel;
+    private final String imgUrl;
 
     /**
-     * Constructs a {@code GetBreedOutputData} object with the specified breed information in JSON format.
+     * Constructs a {@code GetBreedOutputData} object with the specified attributes.
      *
-     * @param breedJson the breed information in JSON format
+     * @param breedName the name of the breed
+     * @param description a description of the breed
+     * @param adaptability how adaptable the breed is
+     * @param affectionLevel the level of affection the breed typically shows
+     * @param childFriendly how friendly the breed is with children
+     * @param dogFriendly how friendly the breed is with other dogs
+     * @param energyLevel the energy level of the breed
+     * @param imgUrl a URL to an image of the breed
      */
-    public GetBreedOutputData(String breed_json) {
-        this.breed_json = breed_json;
-
-    public GetBreedOutputData(String breedName, String description, String adaptability, String affection_level, String child_friendly, String dog_friendly, String energy_level, String img_url) {
+    public GetBreedOutputData(String breedName, String description, String adaptability, String affectionLevel,
+                String childFriendly, String dogFriendly, String energyLevel, String imgUrl) {
         this.breedName = breedName;
         this.description = description;
         this.adaptability = adaptability;
-        this.affection_level = affection_level;
-        this.child_friendly = child_friendly;
-        this.dog_friendly = dog_friendly;
-        this.energy_level = energy_level;
-        this.img_url = img_url;
-
+        this.affectionLevel = affectionLevel;
+        this.childFriendly = childFriendly;
+        this.dogFriendly = dogFriendly;
+        this.energyLevel = energyLevel;
+        this.imgUrl = imgUrl;
     }
+
+    /**
+     * Retrieves the name of the breed.
+     *
+     * @return the breed name
+     */
     public String getBreedName() {
         return breedName;
     }
+
+    /**
+     * Retrieves the description of the breed.
+     *
+     * @return the breed description
+     */
     public String getDescription() {
         return description;
     }
+
+    /**
+     * Retrieves the adaptability of the breed.
+     *
+     * @return the breed's adaptability
+     */
     public String getAdaptability() {
         return adaptability;
     }
 
     /**
-     * Returns the breed information in JSON format.
+     * Retrieves the level of affection the breed typically shows.
      *
-     * @return the breed information as a JSON string
+     * @return the affection level of the breed
      */
-    public String getBreedJson() {
-        return breed_json;
-    public String getAffection_level() {
-        return affection_level;
+    public String getAffectionLevel() {
+        return affectionLevel;
     }
-    public String getChild_friendly() {
-        return child_friendly;
+
+    /**
+     * Retrieves how friendly the breed is with children.
+     *
+     * @return the breed's child friendliness
+     */
+    public String getChildFriendly() {
+        return childFriendly;
     }
-    public String getDog_friendly() {
-        return dog_friendly;
+
+    /**
+     * Retrieves how friendly the breed is with other dogs.
+     *
+     * @return the breed's dog friendliness
+     */
+    public String getDogFriendly() {
+        return dogFriendly;
     }
-    public String getEnergy_level() {
-        return energy_level;
+
+    /**
+     * Retrieves the energy level of the breed.
+     *
+     * @return the breed's energy level
+     */
+    public String getEnergyLevel() {
+        return energyLevel;
     }
-    public String getImg_url() {
-        return img_url;
+
+    /**
+     * Retrieves the URL of an image of the breed.
+     *
+     * @return the image URL of the breed
+     */
+    public String getImgUrl() {
+        return imgUrl;
     }
 }
