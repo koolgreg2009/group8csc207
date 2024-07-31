@@ -1,12 +1,12 @@
-package interface_adapter.bookmark;
+package interface_adapter.preference;
 
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 
-public class BookmarkViewModel extends ViewModel {
-    public BookmarkViewModel() {
-        super("bookmark");
+public class PreferenceViewModel extends ViewModel {
+    public PreferenceViewModel() {
+        super("preference");
     }
 
     @Override
