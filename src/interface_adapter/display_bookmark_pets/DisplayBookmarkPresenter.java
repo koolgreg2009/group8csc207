@@ -9,7 +9,7 @@ public class DisplayBookmarkPresenter implements DisplayPetsOutputBoundary {
 
 
     @Override
-    public void displayAllPetsOutput(DisplayPetsOutputData displayPetsOutputData) {
+    public void displayPetsOutput(DisplayPetsOutputData displayPetsOutputData) {
         //
     }
 }

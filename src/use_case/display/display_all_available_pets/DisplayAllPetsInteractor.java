@@ -43,6 +43,6 @@ public class DisplayAllPetsInteractor implements DisplayAllPetsInputBoundary {
     public void execute(DisplayAllPetsInputData displayAllPetsInputData) {
         User user = fileUserDAO.get(displayAllPetsInputData.getUser());
         List<Pet> pets = filePetDAO.getPreferencePets(((AdopterUser) user).getPreferences());
-        this.displayAllPetPresenter.displayAllPetsOutput(new DisplayPetsOutputData(pets));
+        this.displayAllPetPresenter.displayPetsOutput(new DisplayPetsOutputData(pets));
     }
 }

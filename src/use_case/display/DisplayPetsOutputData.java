@@ -8,7 +8,7 @@ import entity.Pet;
  * <p>
  * This class stores a list of pets and provides a method to access this list.
  */
-public class DisplayAllPetsOutputData {
+public class DisplayPetsOutputData {
     private final List<Pet> pets;
 
     /**
@@ -16,7 +16,7 @@ public class DisplayAllPetsOutputData {
      *
      * @param pets the list of pets to be displayed
      */
-    public DisplayAllPetsOutputData(List<Pet> pets) {
+    public DisplayPetsOutputData(List<Pet> pets) {
         this.pets = pets;
     }
 
