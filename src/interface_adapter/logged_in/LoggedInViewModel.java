@@ -22,8 +22,17 @@ public class LoggedInViewModel extends ViewModel {
     /** The current state of the logged-in user. */
     private LoggedInState state = new LoggedInState();
 
+    /** Label for Profile button */
+    public final String PROFILE_BUTTON_LABEL = "Profile";
+
+    /** Label for Preference button */
+    public final String PREFERENCE_BUTTON_LABEL = "My Preferences";
+
+    /** Label for Bookmark button */
+    public final String BOOKMARK_BUTTON_LABEL = "My Bookmarks";
+
     /** The label for the logout button. */
-    public static final String LOGOUT_BUTTON_LABEL = "Log out";
+    public final String LOGOUT_BUTTON_LABEL = "Log out";
 
     /** The username of the currently logged-in user. */
     private String loggedInUser;

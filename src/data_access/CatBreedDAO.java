@@ -24,7 +24,7 @@ public class CatBreedDAO implements CatDAOInterface {
      * @return A JSON string containing the breed information, or null if an error occurs.
      */
     @Override
-    public String getBreedInformation(String breedName) {
+    public HashMap<String, Object> getBreedInformation(String breedName) {
         String url = System.getenv("API_URL") + "?q=" + breedName + "&attach_image=1";
 
         Request request = new Request.Builder()
