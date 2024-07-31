@@ -11,10 +11,7 @@ public class GetBreedController {
         this.getBreedInteractor = getBreedInteractor;
     }
 
-    public void execute(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter cat breed");
-        String breed = scanner.nextLine();
-        this.getBreedInteractor.execute(new GetBreedInputData(breed));
+    public void execute(String breedName){
+        this.getBreedInteractor.execute(new GetBreedInputData(breedName));
     }
 }

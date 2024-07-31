@@ -3,8 +3,11 @@ package data_access;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * The CatBreedDAO class is responsible for fetching breed information from TheCatAPI.
@@ -20,10 +23,10 @@ public class CatBreedDAO implements CatDAOInterface {
      * Fetches breed information for a given breed name from TheCatAPI.
      *
      * @param breedName The name of the breed to fetch information for.
-     * @return A JSON string containing the breed information, or null if an error occurs.
+     * @return A java hashmap of field name to values.
      */
     @Override
-    public String getBreedInformation(String breedName) {
+    public HashMap<String, Object> getBreedInformation(String breedName) {
         String url = API_URL + "?q=" + breedName + "&attach_image=1";
 
         Request request = new Request.Builder()
@@ -34,11 +37,43 @@ public class CatBreedDAO implements CatDAOInterface {
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-            // Return the JSON response as a string
-            return response.body().string();
+            String responseBody = response.body().string();
+            return parseJsonResponseToMap(responseBody);
+
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+
+    }
+    /**
+     * Parses the JSON response and extracts the required fields into a HashMap.
+     *
+     * @param jsonResponse The JSON response as a string.
+     * @return A HashMap containing the extracted information.
+     */
+    private HashMap<String, Object> parseJsonResponseToMap(String jsonResponse) {
+        JSONArray jsonArray = new JSONArray(jsonResponse);
+        if (jsonArray.isEmpty()) {
+            return null;
+        }
+        JSONObject breed = jsonArray.getJSONObject(0);
+        HashMap<String, Object> breedInfo = new HashMap<>();
+        breedInfo.put("name", breed.getString("name"));
+        breedInfo.put("description", breed.getString("description"));
+        breedInfo.put("adaptability", breed.getInt("adaptability"));
+        breedInfo.put("affection_level", breed.getInt("affection_level"));
+        breedInfo.put("child_friendly", breed.getInt("child_friendly"));
+        breedInfo.put("dog_friendly", breed.getInt("dog_friendly"));
+        breedInfo.put("energy_level", breed.getInt("energy_level"));
+        breedInfo.put("image_url", breed.getJSONObject("image").getString("url"));
+
+        return breedInfo;
+    }
+
+    public static void main(String[] args) {
+        CatBreedDAO catBreedDAO = new CatBreedDAO();
+
     }
 }
+
