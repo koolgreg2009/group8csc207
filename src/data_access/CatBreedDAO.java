@@ -15,23 +15,21 @@ import java.util.HashMap;
  * perform HTTP requests.
  */
 public class CatBreedDAO implements CatDAOInterface {
-    private static final String API_KEY = "live_DUQgLUE2gN2cW7JxlvdupPwS1n2CyUFee5yfvYXnyUps7D6CEF9yjk6bCHdwqGiY";
-    private static final String API_URL = "https://api.thecatapi.com/v1/breeds/search";
     private final OkHttpClient client = new OkHttpClient();
 
     /**
      * Fetches breed information for a given breed name from TheCatAPI.
      *
      * @param breedName The name of the breed to fetch information for.
-     * @return A java hashmap of field name to values.
+     * @return A JSON string containing the breed information, or null if an error occurs.
      */
     @Override
-    public HashMap<String, Object> getBreedInformation(String breedName) {
-        String url = API_URL + "?q=" + breedName + "&attach_image=1";
+    public String getBreedInformation(String breedName) {
+        String url = System.getenv("API_URL") + "?q=" + breedName + "&attach_image=1";
 
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader("x-api-key", API_KEY)
+                .addHeader("x-api-key", System.getenv("API_KEY"))
                 .build();
 
         try (Response response = client.newCall(request).execute()) {

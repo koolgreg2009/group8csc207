@@ -7,7 +7,7 @@ public interface AdoptOutputBoundary {
 
     /**
      * Shows a message when a pet has been adopted
-     * @param adoptoutdata the output data containing information about the pet
+     * @param adoptOutputData the output data containing information about the pet
      */
-    void prepareAdopt(AdoptOutputData adoptoutdata);
+    void prepareAdopt(AdoptOutputData adoptOutputData);
 }

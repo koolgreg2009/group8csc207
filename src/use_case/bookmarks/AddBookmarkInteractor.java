@@ -32,14 +32,11 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
      * @param inputData the input data containing the username and pet ID.
      */
     public void execute(BookmarkInputData inputData) {
-        // check for if duplicate. if duplicate, send present failed else:
         if (fileUserDAO.userHasBookmark(inputData.getUsername(), inputData.getPetID())) {
-            // prepare fail view
             this.bookmarkPresenter.prepareErrorView("Bookmark already exists");
         } else{
             LocalDateTime now = LocalDateTime.now();
             Bookmark bookmark = new Bookmark(inputData.getPetID(), now);
-            // get adapter use, append into array list
             AdopterUser user = ((AdopterUser) fileUserDAO.get(inputData.getUsername()));
             user.addBookmark(bookmark);
             fileUserDAO.save(user);
