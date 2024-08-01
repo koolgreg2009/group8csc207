@@ -77,7 +77,7 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        SignupView signupView = new SignupView(); // change this later to something similar to loginview setup, made it empty just to test
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDAO);
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, signupViewModel, userDAO);
