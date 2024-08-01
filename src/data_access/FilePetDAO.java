@@ -119,7 +119,7 @@ public class FilePetDAO implements PetDAOInterface {
 
         RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
         Request request = new Request.Builder()
-                .url(BASE_URL + "/public/animals/search/")
+                .url(BASE_URL + "/public/animals/search/available/cats")
                 .post(body)
                 .addHeader("Authorization", API_KEY)
                 .addHeader("Content-Type", "application/vnd.api+json")
