@@ -20,7 +20,7 @@ public class IdCounter {
      *
      * @return The next unique identifier.
      */
-    public static long getNextID() {
-        return idCounter.getAndIncrement();
+    public static int getNextID() {
+        return (int) idCounter.getAndIncrement();
     }
 }

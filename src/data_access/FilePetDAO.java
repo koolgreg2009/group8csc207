@@ -2,71 +2,62 @@ package data_access;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import entity.Pet;
 import entity.preference.UserPreference;
+import okhttp3.*;
+import org.json.JSONObject;
+import utils.IdCounter;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-/**
- * Data Access Object for Pet entities, which uses a JSON file for storage.
- */
 public class FilePetDAO implements PetDAOInterface {
     private final File jsonFile;
+    private final String API_KEY = "Av56m5jr";
+    private final String BASE_URL = "https://api.rescuegroups.org/v5";
     private final Map<String, Pet> pets = new HashMap<>();
+    private final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final OkHttpClient client;
 
-    /**
-     * Constructor for the pet entity data access object from the json file path.
-     *
-     * @param jsonPath the json file path that the data access object is accessing
-     * @throws IOException if an IO error occurs
-     */
     public FilePetDAO(String jsonPath) throws IOException {
         jsonFile = new File(jsonPath);
+        client = new OkHttpClient.Builder()
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(25, TimeUnit.SECONDS)
+                .build();
         if (jsonFile.length() == 0) {
+            fetchAndStorePets();
             save();
         } else {
             TypeReference<HashMap<String, Pet>> typeRef = new TypeReference<HashMap<String, Pet>>() {};
-            ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             objectMapper.registerModule(new JavaTimeModule());
             pets.putAll(objectMapper.readValue(jsonFile, typeRef));
         }
+
     }
 
-    /**
-     * Gets the pet with the pet ID that is specified.
-     *
-     * @param petID the ID of the pet being retrieved
-     * @return the Pet with the pet ID that was specified, or null if the pet ID does not belong to an existing Pet.
-     */
     @Override
     public Pet get(int petID) {
         return pets.get(String.valueOf(petID));
     }
 
-    /**
-     * Saves the Pet specified to the storage map.
-     *
-     * @param pet the Pet that is being saved
-     */
     @Override
     public void save(Pet pet) {
-        pets.put(String.valueOf(pet.getPetID()), pet); // apparently this autoboxes
-        this.save();
+        pets.put(String.valueOf(pet.getPetID()), pet); // autoboxing
+        save();
     }
 
-    /**
-     * Saves the current state of the Pet storage map to the json file.
-     */
     private void save() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
         try {
             objectMapper.writeValue(jsonFile, pets);
         } catch (Exception ex) {
@@ -75,32 +66,17 @@ public class FilePetDAO implements PetDAOInterface {
         }
     }
 
-    /**
-     * Gets a list of the Pets that align with the UserPreference specified.
-     *
-     * @param userPreference the UserPreference that the listed pets are aligning to
-     * @return the list of Pets that match the UserPreference specified
-     */
     @Override
     public ArrayList<Pet> getPreferencePets(UserPreference userPreference) {
         ArrayList<Pet> matchingPets = new ArrayList<>();
-
         for (Pet pet : pets.values()) {
             if (matchesPreference(pet, userPreference)) {
                 matchingPets.add(pet);
             }
         }
-
         return matchingPets;
     }
 
-    /**
-     * Checks if the Pet matches the preferences indicated in the specified UserPreference.
-     *
-     * @param pet the Pet being checked
-     * @param userPreference the UserPreferences that the Pet is being compared to
-     * @return true if the Pet matches the preferences from UserPreference or false in any other outcome
-     */
     public boolean matchesPreference(Pet pet, UserPreference userPreference) {
         if (userPreference.getSpecies() != null && !userPreference.getSpecies().isEmpty() && !userPreference.getSpecies().equals(pet.getSpecies())) {
             return false;
@@ -123,7 +99,105 @@ public class FilePetDAO implements PetDAOInterface {
         if (userPreference.getGender() != null && !userPreference.getGender().isEmpty() && !userPreference.getGender().equals(pet.getGender())) {
             return false;
         }
-
         return true;
+    }
+
+    public void fetchAndStorePets() throws IOException {
+        JSONObject jsonBody = new JSONObject();
+        JSONObject filter = new JSONObject();
+        filter.put("fieldName", "species.plural");
+        filter.put("operation", "equals");
+        filter.put("criteria", "cats");
+
+        JSONObject filterStatus = new JSONObject();
+        filterStatus.put("fieldName", "statuses.name");
+        filterStatus.put("operation", "equals");
+        filterStatus.put("criteria", "Available");
+
+        jsonBody.append("filter", filter);
+        jsonBody.append("filter", filterStatus);
+
+        RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + "/public/animals/search/")
+                .post(body)
+                .addHeader("Authorization", API_KEY)
+                .addHeader("Content-Type", "application/vnd.api+json")
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful() && response.body() != null) {
+                String responseBody = response.body().string();
+                JsonNode root = objectMapper.readTree(responseBody);
+                JsonNode data = root.get("data");
+                JsonNode included = root.get("included");
+
+                for (JsonNode petNode : data) {
+                    Pet pet = parsePet(petNode, included);
+                    if (pet != null) {
+                        save(pet);
+                    }
+                }
+            } else {
+                throw new IOException("Animal search failed with HTTP code: " + response.code() + " and message: " + response.message());
+            }
+        }
+    }
+
+    private Pet parsePet(JsonNode petNode, JsonNode included) throws IOException {
+        String orgId = petNode.get("relationships").get("orgs").get("data").get(0).get("id").asText();
+        String orgUrl = BASE_URL + "/public/orgs/" + orgId;
+        Request orgRequest = new Request.Builder()
+                .url(orgUrl)
+                .addHeader("Authorization", API_KEY)
+                .addHeader("Content-Type", "application/vnd.api+json")
+                .get()
+                .build();
+
+        try (Response orgResponse = client.newCall(orgRequest).execute()) {
+            if (orgResponse.isSuccessful() && orgResponse.body() != null) {
+                String orgResponseBody = orgResponse.body().string();
+                System.out.println("Org Response: " + orgResponseBody); // Log response
+                JsonNode orgRoot = objectMapper.readTree(orgResponseBody);
+                JsonNode dataNode = orgRoot.get("data");
+                JsonNode orgData = dataNode.get(0).get("attributes");
+                String owner = orgData.get("name").asText();
+                String email = orgData.has("email") ? orgData.get("email").asText() : "N/A";
+                String location = orgData.get("citystate").asText();
+                String phoneNum = orgData.has("phone") ? orgData.get("phone").asText() : "N/A";
+                int age = petNode.get("attributes").has("ageString") ? parseAgeString(petNode.get("attributes").get("ageString").asText()) : 0;
+                String breed = petNode.get("attributes").get("breedPrimary").asText();
+                String desc =  petNode.get("attributes").has("descriptionText") ? petNode.get("attributes").get("descriptionText").asText() : "N/A";
+                String activityLevel = petNode.get("attributes").has("activityLevel")
+                        ? petNode.get("attributes").get("activityLevel").asText()
+                        : "N/A";
+                String gender = petNode.get("attributes").has("sex") ? petNode.get("attributes").get("sex").asText() : "N/A";
+                String name = petNode.get("attributes").has("name") ? petNode.get("attributes").get("name").asText() :
+                        "N/A";
+
+                return new Pet(
+                        owner,
+                        email,
+                        phoneNum,
+                        IdCounter.getNextID(),
+                        "Cat",
+                        age,
+                        breed,
+                        new ArrayList<>(), // assuming personality is an array of strings
+                        desc,
+                        activityLevel,
+                        gender,
+                        location,
+                        true,
+                        name
+                );
+            } else {
+                throw new IOException("Failed to fetch organization details with HTTP code: " + orgResponse.code() + " and message: " + orgResponse.message());
+            }
+        }
+    }
+
+    private int parseAgeString(String ageString) {
+        return 0; // placeholder
     }
 }
