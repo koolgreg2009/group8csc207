@@ -157,7 +157,6 @@ public class FilePetDAO implements PetDAOInterface {
         try (Response orgResponse = client.newCall(orgRequest).execute()) {
             if (orgResponse.isSuccessful() && orgResponse.body() != null) {
                 String orgResponseBody = orgResponse.body().string();
-                System.out.println("Org Response: " + orgResponseBody); // Log response
                 JsonNode orgRoot = objectMapper.readTree(orgResponseBody);
                 JsonNode dataNode = orgRoot.get("data");
                 JsonNode orgData = dataNode.get(0).get("attributes");
@@ -183,10 +182,10 @@ public class FilePetDAO implements PetDAOInterface {
                         "Cat",
                         age,
                         breed,
-                        new ArrayList<>(), // assuming personality is an array of strings
-                        desc,
-                        activityLevel,
+                        new ArrayList<>(),
                         gender,
+                        activityLevel,
+                        desc,
                         location,
                         true,
                         name
@@ -197,7 +196,15 @@ public class FilePetDAO implements PetDAOInterface {
         }
     }
 
+    /**
+     * parses string age into int months
+     * @param ageString
+     * RI: format must be in x Years y Months format
+     * @return age in months
+     */
     private int parseAgeString(String ageString) {
-        return 0; // placeholder
+        String[] split =  ageString.split(" ");
+
+        return split.length == 4 ? Integer.parseInt(split[0])*12+Integer.parseInt(split[2]) : Integer.parseInt(split[0])*12;
     }
 }
