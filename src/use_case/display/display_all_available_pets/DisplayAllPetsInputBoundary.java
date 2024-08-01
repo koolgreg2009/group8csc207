@@ -13,5 +13,5 @@ public interface DisplayAllPetsInputBoundary {
      *
      * @param displayAllPetsInputData the data required to display all pets for the user
      */
-    void execute(DisplayAllPetsInputData displayAllPetsInputdata);
+    void execute(DisplayAllPetsInputData displayAllPetsInputData);
 }
