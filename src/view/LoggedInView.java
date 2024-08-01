@@ -34,7 +34,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final JButton logOut;
     private final JButton preferences;
     private final JButton bookmark;
-    private final JButton profile;
+    private final JButton notifications;
 
 
     /**
@@ -62,8 +62,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         username = new JLabel();
 
         JPanel buttons = new JPanel();
-        profile = new JButton(loggedInViewModel.PROFILE_BUTTON_LABEL);
-        buttons.add(profile);
+        notifications = new JButton(loggedInViewModel.NOTIF_BUTTON);
+        buttons.add(notifications);
         preferences = new JButton(loggedInViewModel.PREFERENCE_BUTTON_LABEL);
         buttons.add(preferences);
         bookmark = new JButton(loggedInViewModel.BOOKMARK_BUTTON_LABEL);
@@ -79,9 +79,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.add(usernameInfo);
         this.add(username);
         this.add(buttons);
-        profile.addActionListener(
+        notifications.addActionListener(
                 evt -> {
-                    viewManagerModel.setActiveView(profileViewModel.getViewName());
+                    viewManagerModel.getActiveView(loggedInViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
         );

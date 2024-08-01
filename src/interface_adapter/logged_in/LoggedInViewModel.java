@@ -3,6 +3,7 @@ package interface_adapter.logged_in;
 import interface_adapter.ViewModel;
 import interface_adapter.login.LoginState;
 
+import javax.management.Notification;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -20,7 +21,7 @@ public class LoggedInViewModel extends ViewModel {
     public final String TITLE_LABEL = "Logged In View";
 
     /** The current state of the logged-in user. */
-    private LoggedInState state = new LoggedInState();
+    private NotificationState state = new NotificationState();
 
     /** Label for Profile button */
     public final String PROFILE_BUTTON_LABEL = "Profile";
@@ -37,6 +38,8 @@ public class LoggedInViewModel extends ViewModel {
     /** The username of the currently logged-in user. */
     private String loggedInUser;
 
+    public String NOTIF_BUTTON= "notifications";
+
     /**
      * Constructs a new LoggedInViewModel with a predefined view name.
      */
@@ -44,14 +47,14 @@ public class LoggedInViewModel extends ViewModel {
         super("logged in");
     }
 
-    /**
-     * Sets the state of the logged-in user.
-     *
-     * @param state
-     */
-    public void setState(LoggedInState state) {
-        this.state = state;
-    }
+//    /**
+//     * Sets the state of the logged-in user.
+//     *
+//     * @param state
+//     */
+//    public void setState(LoggedInState state) {
+//        this.state = state;
+//    }
 
     /** Support for firing property change events. */
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -77,7 +80,7 @@ public class LoggedInViewModel extends ViewModel {
      *
      * @return The current state.
      */
-    public LoggedInState getState() {
+    public NotificationState getState() {
         return state;
     }
 
