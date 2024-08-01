@@ -53,8 +53,7 @@ public class FilePetDAO implements PetDAOInterface {
 
     @Override
     public void save(Pet pet) {
-        pets.put(String.valueOf(pet.getPetID()), pet); // autoboxing
-        save();
+        pets.put(String.valueOf(pet.getPetID()), pet);
     }
 
     private void save() {
@@ -103,24 +102,8 @@ public class FilePetDAO implements PetDAOInterface {
     }
 
     public void fetchAndStorePets() throws IOException {
-        JSONObject jsonBody = new JSONObject();
-        JSONObject filter = new JSONObject();
-        filter.put("fieldName", "species.plural");
-        filter.put("operation", "equals");
-        filter.put("criteria", "cats");
-
-        JSONObject filterStatus = new JSONObject();
-        filterStatus.put("fieldName", "statuses.name");
-        filterStatus.put("operation", "equals");
-        filterStatus.put("criteria", "Available");
-
-        jsonBody.append("filter", filter);
-        jsonBody.append("filter", filterStatus);
-
-        RequestBody body = RequestBody.create(jsonBody.toString(), JSON);
         Request request = new Request.Builder()
                 .url(BASE_URL + "/public/animals/search/available/cats")
-                .post(body)
                 .addHeader("Authorization", API_KEY)
                 .addHeader("Content-Type", "application/vnd.api+json")
                 .build();
