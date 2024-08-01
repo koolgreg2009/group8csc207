@@ -27,6 +27,7 @@ public class Pet {
     private final String gender;
     private final String location;
     private boolean isAvailable;
+    private final String name;
 
     /**
      * Constructs a {@code Pet} object with the specified details.
@@ -44,6 +45,7 @@ public class Pet {
      * @param bio a brief biography of the pet
      * @param location the location of the pet
      * @param available the availability status of the pet
+     * @param name name of pet
      */
     public Pet(@JsonProperty("owner") String owner,
                @JsonProperty("email") String email,
@@ -57,7 +59,8 @@ public class Pet {
                @JsonProperty("activityLevel") String activityLevel,
                @JsonProperty("bio") String bio,
                @JsonProperty("location") String location,
-               @JsonProperty("available") boolean available) {
+               @JsonProperty("available") boolean available,
+               @JsonProperty("name") String name) {
         this.owner = owner;
         this.email = email;
         this.phoneNum = phoneNum;
@@ -71,6 +74,7 @@ public class Pet {
         this.activityLevel = activityLevel;
         this.location = location;
         this.isAvailable = available;
+        this.name = name;
     }
 
     /**
@@ -188,6 +192,10 @@ public class Pet {
      */
     public boolean isAvailable(){
         return isAvailable;
+    }
+
+    public String getName(){
+        return name;
     }
 
     /**
