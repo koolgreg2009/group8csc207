@@ -14,4 +14,8 @@ public class GetBreedPresenter implements GetBreedOutputBoundary {
         System.out.println("Energy Level: " + getBreedOutputData.getEnergyLevel());
         System.out.println("Image URL: " + getBreedOutputData.getImgUrl());
     }
+
+    public void prepareFailView(String errorMessage){
+        System.out.println(errorMessage);
+    }
 }
