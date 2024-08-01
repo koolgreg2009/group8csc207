@@ -4,9 +4,6 @@ import use_case.pet_bio.PetBioInputData;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInputData;
 
-//temp
-import use_case.signup.SignupInteractor;
-
 import java.util.Scanner;
 
 /**
@@ -38,12 +35,12 @@ public class SignupController {
      * @param password1
      * @param password2
      */
-//    public void execute(String username, String password1, String password2) {
-//        SignupInputData signupInputData = new SignupInputData(
-//                username, password1, password2, "", "", "");
-//
-//        userSignupUseCaseInteractor.execute(signupInputData);
-//    }
+    public void execute(String username, String password1, String password2) {
+        SignupInputData signupInputData = new SignupInputData(
+                username, password1, password2, "", "", "");
+
+        userSignupUseCaseInteractor.execute(signupInputData);
+    }
 
     //This is a temporary execute method for Phase 1 to work around Terminals.
     public void execute() {
