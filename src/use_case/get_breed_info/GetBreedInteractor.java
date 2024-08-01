@@ -32,17 +32,23 @@ public class GetBreedInteractor implements GetBreedInputBoundary {
      */
     @Override
     public void execute(GetBreedInputData breedInputData) {
-        HashMap<String, Object> breedInfo = this.catDAO.getBreedInformation(breedInputData.getBreedName());
-        String breedName = (String) breedInfo.get("name");
-        String description = (String) breedInfo.get("description");
-        String adaptability = String.valueOf(breedInfo.get("adaptability"));
-        String affection_level = String.valueOf(breedInfo.get("affection_level"));
-        String child_friendly = String.valueOf(breedInfo.get("child_friendly"));
-        String dog_friendly = String.valueOf(breedInfo.get("dog_friendly"));
-        String energy_level = String.valueOf(breedInfo.get("energy_level"));
-        String img_url = (String) breedInfo.get("image_url");
+        String breed = breedInputData.getBreedName();
+        HashMap<String, Object> breedInfo = this.catDAO.getBreedInformation(breed);
+        if (breedInfo != null) {
+            String breedName = (String) breedInfo.get("name");
+            String description = (String) breedInfo.get("description");
+            String adaptability = String.valueOf(breedInfo.get("adaptability"));
+            String affection_level = String.valueOf(breedInfo.get("affection_level"));
+            String child_friendly = String.valueOf(breedInfo.get("child_friendly"));
+            String dog_friendly = String.valueOf(breedInfo.get("dog_friendly"));
+            String energy_level = String.valueOf(breedInfo.get("energy_level"));
+            String img_url = (String) breedInfo.get("image_url");
+            GetBreedOutputData outputData = new GetBreedOutputData(breedName, description, adaptability, affection_level, child_friendly, dog_friendly, energy_level, img_url);
+            this.getBreedPresenter.prepareGetBreedView(outputData);
+        }else{
+            this.getBreedPresenter.prepareFailView("Information on " + breed+" could not be found.");
+        }
 
-        GetBreedOutputData outputData = new GetBreedOutputData(breedName, description, adaptability, affection_level, child_friendly, dog_friendly, energy_level, img_url);
-        this.getBreedPresenter.prepareGetBreedView(outputData);
+
     }
 }

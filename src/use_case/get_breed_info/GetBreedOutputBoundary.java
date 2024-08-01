@@ -14,4 +14,5 @@ public interface GetBreedOutputBoundary {
      * @param breedOutputData the data containing the breed information to be presented
      */
     void prepareGetBreedView(GetBreedOutputData breedOutputData);
+    void prepareFailView(String errorMessage);
 }
