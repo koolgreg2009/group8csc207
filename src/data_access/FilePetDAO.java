@@ -149,16 +149,16 @@ public class FilePetDAO implements PetDAOInterface {
         JsonNode dataNode = orgRoot.get("data");
         JsonNode orgData = dataNode.get(0).get("attributes");
         String owner = orgData.get("name").asText();
-        String email = orgData.has("email") ? orgData.get("email").asText() : "N/A";
+        String email = orgData.has("email") ? orgData.get("email").asText().replaceAll("\\s+", "") : "N/A";
         String location = orgData.get("citystate").asText();
-        String phoneNum = orgData.has("phone") ? orgData.get("phone").asText() : "N/A";
+        String phoneNum = orgData.has("phone") ? orgData.get("phone").asText().replaceAll("\\s+", "") : "N/A";
         int age = petNode.get("attributes").has("ageString") ? parseAgeString(petNode.get("attributes").get("ageString").asText()) : 0;
         String breed = petNode.get("attributes").get("breedPrimary").asText();
         String desc =  petNode.get("attributes").has("descriptionText") ? petNode.get("attributes").get("descriptionText").asText() : "N/A";
         String activityLevel = petNode.get("attributes").has("activityLevel")
-                ? petNode.get("attributes").get("activityLevel").asText()
+                ? petNode.get("attributes").get("activityLevel").asText().replaceAll("\\s+", "")
                 : "N/A";
-        String gender = petNode.get("attributes").has("sex") ? petNode.get("attributes").get("sex").asText() : "N/A";
+        String gender = petNode.get("attributes").has("sex") ? petNode.get("attributes").get("sex").asText().replaceAll("\\s+", "") : "N/A";
         String name = petNode.get("attributes").has("name") ? petNode.get("attributes").get("name").asText() :
                 "N/A";
         String imgUrl = petNode.get("attributes").has("pictureThumbnailUrl") ? petNode.get("attributes").get("pictureThumbnailUrl").asText() : "";
