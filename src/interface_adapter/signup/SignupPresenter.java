@@ -19,72 +19,62 @@ import java.time.format.DateTimeFormatter;
  */
 public class SignupPresenter implements SignupOutputBoundary {
 
-//    /** The view model for the signup view. */
-//    private final SignupViewModel signupViewModel;
-//
-//    /** The view model for the login view. */
-//    private final LoginViewModel loginViewModel;
-//
-//    /** The model for managing views and switching between them. */
-//    private ViewManagerModel viewManagerModel;
-//
-//    /**
-//     * Constructs a new SignupPresenter with the given view models and view manager model.
-//     *
-//     * @param viewManagerModel
-//     * @param signupViewModel
-//     * @param loginViewModel
-//     */
-//    public SignupPresenter(ViewManagerModel viewManagerModel,
-//                           SignupViewModel signupViewModel,
-//                           LoginViewModel loginViewModel) {
-//        this.viewManagerModel = viewManagerModel;
-//        this.signupViewModel = signupViewModel;
-//        this.loginViewModel = loginViewModel;
-//    }
-//
-//    /**
-//     * Prepares the view for a successful signup by updating the login view model
-//     * and switching to the login view.
-//     *
-//     * @param response
-//     */
-//    @Override
-//    public void prepareSuccessView(SignupOutputData response) {
-//        // On success, switch to the login view.
-//        LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
-//        response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
-//
-//        SignupState signupState = signupViewModel.getState();
-//        LoginState loginState = loginViewModel.getState();
-//        loginState.setUsername(response.getUsername());
-//        this.loginViewModel.setState(loginState);
-//        loginViewModel.firePropertyChanged();
-//        viewManagerModel.setActiveView(loginViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
-//    }
-//
-//    /**
-//     * Prepares the view for a failed signup by updating the signup view model
-//     * with the provided error message.
-//     *
-//     * @param error
-//     */
-//    @Override
-//    public void prepareFailView(String error) {
-//        SignupState signupState = signupViewModel.getState();
-//        signupState.setUsernameError(error);
-//        signupViewModel.firePropertyChanged();
-//    }
+    /** The view model for the signup view. */
+    private final SignupViewModel signupViewModel;
 
-    @Override
-    public void prepareSuccessView(SignupOutputData response) {
-        System.out.println(response.getUsername() + " has successfully been signed up.");
+    /** The view model for the login view. */
+    private final LoginViewModel loginViewModel;
+
+    /** The model for managing views and switching between them. */
+    private ViewManagerModel viewManagerModel;
+
+    /**
+     * Constructs a new SignupPresenter with the given view models and view manager model.
+     *
+     * @param viewManagerModel
+     * @param signupViewModel
+     * @param loginViewModel
+     */
+    public SignupPresenter(ViewManagerModel viewManagerModel,
+                           SignupViewModel signupViewModel,
+                           LoginViewModel loginViewModel) {
+        this.viewManagerModel = viewManagerModel;
+        this.signupViewModel = signupViewModel;
+        this.loginViewModel = loginViewModel;
     }
 
+    /**
+     * Prepares the view for a successful signup by updating the login view model
+     * and switching to the login view.
+     *
+     * @param response
+     */
+    @Override
+    public void prepareSuccessView(SignupOutputData response) {
+        // On success, switch to the login view.
+        LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
+        response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
+
+        SignupState signupState = signupViewModel.getState();
+        LoginState loginState = loginViewModel.getState();
+        loginState.setUsername(response.getUsername());
+        this.loginViewModel.setState(loginState);
+        loginViewModel.firePropertyChanged();
+        viewManagerModel.setActiveView(loginViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    /**
+     * Prepares the view for a failed signup by updating the signup view model
+     * with the provided error message.
+     *
+     * @param error
+     */
     @Override
     public void prepareFailView(String error) {
-        System.out.println(error);
+        SignupState signupState = signupViewModel.getState();
+        signupState.setUsernameError(error);
+        signupViewModel.firePropertyChanged();
     }
 
 }
