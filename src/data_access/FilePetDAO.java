@@ -8,7 +8,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import entity.Pet;
 import entity.preference.UserPreference;
 import okhttp3.*;
-import org.json.JSONObject;
 import utils.IdCounter;
 
 import java.io.File;
@@ -23,7 +22,6 @@ public class FilePetDAO implements PetDAOInterface {
     private final String API_KEY = "Av56m5jr";
     private final String BASE_URL = "https://api.rescuegroups.org/v5";
     private final Map<String, Pet> pets = new HashMap<>();
-    private final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final OkHttpClient client;
 
@@ -75,7 +73,7 @@ public class FilePetDAO implements PetDAOInterface {
         }
         return matchingPets;
     }
-
+    @Override
     public boolean matchesPreference(Pet pet, UserPreference userPreference) {
         if (userPreference.getSpecies() != null && !userPreference.getSpecies().isEmpty() && !userPreference.getSpecies().equals(pet.getSpecies())) {
             return false;
@@ -100,7 +98,7 @@ public class FilePetDAO implements PetDAOInterface {
         }
         return true;
     }
-
+    @Override
     public void fetchAndStorePets() throws IOException {
         Request request = new Request.Builder()
                 .url(BASE_URL + "/public/animals/search/available/cats")
@@ -126,69 +124,72 @@ public class FilePetDAO implements PetDAOInterface {
             }
         }
     }
-
-    private Pet parsePet(JsonNode petNode, JsonNode included) throws IOException {
-        String orgId = petNode.get("relationships").get("orgs").get("data").get(0).get("id").asText();
-        String orgUrl = BASE_URL + "/public/orgs/" + orgId;
-        Request orgRequest = new Request.Builder()
+    public String fetchOrg(String orgId, String orgUrl) throws IOException {
+        Request orgRequest =   new Request.Builder()
                 .url(orgUrl)
                 .addHeader("Authorization", API_KEY)
                 .addHeader("Content-Type", "application/vnd.api+json")
                 .get()
                 .build();
-
         try (Response orgResponse = client.newCall(orgRequest).execute()) {
             if (orgResponse.isSuccessful() && orgResponse.body() != null) {
                 String orgResponseBody = orgResponse.body().string();
-                JsonNode orgRoot = objectMapper.readTree(orgResponseBody);
-                JsonNode dataNode = orgRoot.get("data");
-                JsonNode orgData = dataNode.get(0).get("attributes");
-                String owner = orgData.get("name").asText();
-                String email = orgData.has("email") ? orgData.get("email").asText() : "N/A";
-                String location = orgData.get("citystate").asText();
-                String phoneNum = orgData.has("phone") ? orgData.get("phone").asText() : "N/A";
-                int age = petNode.get("attributes").has("ageString") ? parseAgeString(petNode.get("attributes").get("ageString").asText()) : 0;
-                String breed = petNode.get("attributes").get("breedPrimary").asText();
-                String desc =  petNode.get("attributes").has("descriptionText") ? petNode.get("attributes").get("descriptionText").asText() : "N/A";
-                String activityLevel = petNode.get("attributes").has("activityLevel")
-                        ? petNode.get("attributes").get("activityLevel").asText()
-                        : "N/A";
-                String gender = petNode.get("attributes").has("sex") ? petNode.get("attributes").get("sex").asText() : "N/A";
-                String name = petNode.get("attributes").has("name") ? petNode.get("attributes").get("name").asText() :
-                        "N/A";
-                String imgUrl = petNode.get("attributes").has("pictureThumbnailUrl") ? petNode.get("attributes").get("pictureThumbnailUrl").asText() : "";
-                String parsedUrl = imgUrl.split("\\?")[0];
-                return new Pet(
-                        owner,
-                        email,
-                        phoneNum,
-                        IdCounter.getNextID(),
-                        "Cat",
-                        age,
-                        breed,
-                        gender,
-                        activityLevel,
-                        desc,
-                        location,
-                        true,
-                        name,
-                        parsedUrl
-                );
+                return orgResponseBody;
             } else {
                 throw new IOException("Failed to fetch organization details with HTTP code: " + orgResponse.code() + " and message: " + orgResponse.message());
             }
         }
     }
+    @Override
+    public Pet parsePet(JsonNode petNode, JsonNode included) throws IOException {
+        String orgId = petNode.get("relationships").get("orgs").get("data").get(0).get("id").asText();
+        String orgUrl = BASE_URL + "/public/orgs/" + orgId;
+        String orgResponseBody = fetchOrg(orgId, orgUrl);
+        JsonNode orgRoot = objectMapper.readTree(orgResponseBody);
+        JsonNode dataNode = orgRoot.get("data");
+        JsonNode orgData = dataNode.get(0).get("attributes");
+        String owner = orgData.get("name").asText();
+        String email = orgData.has("email") ? orgData.get("email").asText() : "N/A";
+        String location = orgData.get("citystate").asText();
+        String phoneNum = orgData.has("phone") ? orgData.get("phone").asText() : "N/A";
+        int age = petNode.get("attributes").has("ageString") ? parseAgeString(petNode.get("attributes").get("ageString").asText()) : 0;
+        String breed = petNode.get("attributes").get("breedPrimary").asText();
+        String desc =  petNode.get("attributes").has("descriptionText") ? petNode.get("attributes").get("descriptionText").asText() : "N/A";
+        String activityLevel = petNode.get("attributes").has("activityLevel")
+                ? petNode.get("attributes").get("activityLevel").asText()
+                : "N/A";
+        String gender = petNode.get("attributes").has("sex") ? petNode.get("attributes").get("sex").asText() : "N/A";
+        String name = petNode.get("attributes").has("name") ? petNode.get("attributes").get("name").asText() :
+                "N/A";
+        String imgUrl = petNode.get("attributes").has("pictureThumbnailUrl") ? petNode.get("attributes").get("pictureThumbnailUrl").asText() : "";
+        String parsedUrl = imgUrl.split("\\?")[0];
+        return new Pet(
+                owner,
+                email,
+                phoneNum,
+                IdCounter.getNextID(),
+                "Cat",
+                age,
+                breed,
+                gender,
+                activityLevel,
+                desc,
+                location,
+                true,
+                name,
+                parsedUrl
+        );
 
+        }
     /**
      * parses string age into int months
      * @param ageString
      * RI: format must be in x Years y Months format
      * @return age in months
      */
-    private int parseAgeString(String ageString) {
+    @Override
+    public int parseAgeString(String ageString) {
         String[] split =  ageString.split(" ");
-
         return split.length == 4 ? Integer.parseInt(split[0])*12+Integer.parseInt(split[2]) : Integer.parseInt(split[0])*12;
     }
 }
