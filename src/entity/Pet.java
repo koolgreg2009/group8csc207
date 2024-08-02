@@ -21,13 +21,13 @@ public class Pet {
     private final String species;
     private final int petAge;
     private final String breed;
-    private List<String> personality = new ArrayList<>();
     private String bio;
     private final String activityLevel;
     private final String gender;
     private final String location;
     private boolean isAvailable;
     private final String name;
+    private final String imgUrl;
 
     /**
      * Constructs a {@code Pet} object with the specified details.
@@ -39,13 +39,13 @@ public class Pet {
      * @param species the species of the pet
      * @param petAge the age of the pet
      * @param breed the breed of the pet
-     * @param personality a list of the pet's personality traits
      * @param gender the gender of the pet
      * @param activityLevel the activity level of the pet
      * @param bio a brief biography of the pet
      * @param location the location of the pet
      * @param available the availability status of the pet
      * @param name name of pet
+     * @param imgUrl url img of pet
      */
     public Pet(@JsonProperty("owner") String owner,
                @JsonProperty("email") String email,
@@ -54,13 +54,13 @@ public class Pet {
                @JsonProperty("species") String species,
                @JsonProperty("petAge") int petAge,
                @JsonProperty("breed") String breed,
-               @JsonProperty("personality") List<String> personality,
                @JsonProperty("gender") String gender,
                @JsonProperty("activityLevel") String activityLevel,
                @JsonProperty("bio") String bio,
                @JsonProperty("location") String location,
                @JsonProperty("available") boolean available,
-               @JsonProperty("name") String name) {
+               @JsonProperty("name") String name,
+               @JsonProperty("imgUrl") String imgUrl){
         this.owner = owner;
         this.email = email;
         this.phoneNum = phoneNum;
@@ -68,13 +68,13 @@ public class Pet {
         this.species = species;
         this.petAge = petAge;
         this.breed = breed;
-        this.personality = personality;
         this.bio = bio;
         this.gender = gender;
         this.activityLevel = activityLevel;
         this.location = location;
         this.isAvailable = available;
         this.name = name;
+        this.imgUrl = imgUrl;
     }
 
     /**
@@ -129,15 +129,6 @@ public class Pet {
      */
     public String getBreed(){
         return breed;
-    }
-
-    /**
-     * Returns the list of personality traits of the pet.
-     *
-     * @return a list of the pet's personality traits
-     */
-    public List<String> getPersonality(){
-        return personality;
     }
 
     /**
@@ -210,10 +201,14 @@ public class Pet {
      *
      * @return a string containing all relevant details of the pet
      */
+    public String getImgUrl(){
+        return imgUrl;
+    }
+
     @Override
     public String toString() {
         return "Pet [owner=" + owner + ", email=" + email + ", phoneNum=" + phoneNum + ", petAge=" + petAge +
-                ", breed=" + breed + ", personality=" + personality + ", species=" + species + ", bio=" + bio +
+                ", breed=" + breed + ", personality=" + ", species=" + species + ", bio=" + bio +
                 ", activity level=" + activityLevel + ", gender" + gender + ", location=" + location + ", isAvailable=" + isAvailable + "]";
 
     }
