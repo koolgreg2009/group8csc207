@@ -156,7 +156,8 @@ public class FilePetDAO implements PetDAOInterface {
                 String gender = petNode.get("attributes").has("sex") ? petNode.get("attributes").get("sex").asText() : "N/A";
                 String name = petNode.get("attributes").has("name") ? petNode.get("attributes").get("name").asText() :
                         "N/A";
-
+                String imgUrl = petNode.get("attributes").has("pictureThumbnailUrl") ? petNode.get("attributes").get("pictureThumbnailUrl").asText() : "";
+                String parsedUrl = imgUrl.split("\\?")[0];
                 return new Pet(
                         owner,
                         email,
@@ -165,13 +166,13 @@ public class FilePetDAO implements PetDAOInterface {
                         "Cat",
                         age,
                         breed,
-                        new ArrayList<>(),
                         gender,
                         activityLevel,
                         desc,
                         location,
                         true,
-                        name
+                        name,
+                        parsedUrl
                 );
             } else {
                 throw new IOException("Failed to fetch organization details with HTTP code: " + orgResponse.code() + " and message: " + orgResponse.message());
