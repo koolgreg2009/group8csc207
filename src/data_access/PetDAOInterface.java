@@ -1,8 +1,10 @@
 package data_access;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import entity.preference.UserPreference;
 import entity.Pet;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public interface PetDAOInterface {
@@ -11,4 +13,11 @@ public interface PetDAOInterface {
     Pet get(int petID);
     ArrayList<Pet> getPreferencePets(UserPreference userPreference);
 
+    void fetchAndStorePets() throws IOException;
+
+    String fetchOrg(String orgId, String orgUrl) throws IOException;
+
+    Pet parsePet(JsonNode petNode) throws IOException;
+
+    int parseAgeString(String ageString);
 }

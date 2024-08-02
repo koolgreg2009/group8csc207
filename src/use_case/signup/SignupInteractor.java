@@ -6,6 +6,7 @@ import entity.user.AdopterUserFactory;
 import entity.user.UserFactory;
 
 import java.time.LocalDateTime;
+import java.util.regex.Pattern;
 
 /**
  * The SignupInteractor class implements the SignupInputBoundary interface and handles the signup process.
@@ -41,12 +42,17 @@ public class SignupInteractor implements SignupInputBoundary {
      */
     @Override
     public void execute(SignupInputData signupInputData) {
+        Pattern emailRegex = Pattern.compile("^[\\w|.%+-]@a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$");
+        Pattern phoneRegex = Pattern.compile("^\\(\\d{3}\\)\\d{3}-\\d{4}$");
         if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
             userPresenter.prepareFailView("User already exists.");
         } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
             userPresenter.prepareFailView("Passwords don't match.");
+        } else if (!emailRegex.matcher(signupInputData.getEmail()).matches()){
+            userPresenter.prepareFailView("Invalid email address.");
+        } else if (!phoneRegex.matcher(signupInputData.getPhone()).matches()){
+            userPresenter.prepareFailView("Invalid phone number.");
         } else {
-
             LocalDateTime now = LocalDateTime.now();
             AdopterUser user = adopterUserFactory.createAdopter(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getName(), signupInputData.getEmail(), signupInputData.getPhone());
             userDataAccessObject.save(user);
