@@ -15,7 +15,9 @@ public interface PetDAOInterface {
 
     void fetchAndStorePets() throws IOException;
 
-    Pet parsePet(JsonNode petNode, JsonNode included) throws IOException;
+    String fetchOrg(String orgId, String orgUrl) throws IOException;
+
+    Pet parsePet(JsonNode petNode) throws IOException;
 
     int parseAgeString(String ageString);
 }

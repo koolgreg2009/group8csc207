@@ -73,6 +73,7 @@ public class FilePetDAO implements PetDAOInterface {
         }
         return matchingPets;
     }
+
     @Override
     public boolean matchesPreference(Pet pet, UserPreference userPreference) {
         if (userPreference.getSpecies() != null && !userPreference.getSpecies().isEmpty() && !userPreference.getSpecies().equals(pet.getSpecies())) {
@@ -98,6 +99,7 @@ public class FilePetDAO implements PetDAOInterface {
         }
         return true;
     }
+
     @Override
     public void fetchAndStorePets() throws IOException {
         Request request = new Request.Builder()
@@ -111,10 +113,8 @@ public class FilePetDAO implements PetDAOInterface {
                 String responseBody = response.body().string();
                 JsonNode root = objectMapper.readTree(responseBody);
                 JsonNode data = root.get("data");
-                JsonNode included = root.get("included");
-
                 for (JsonNode petNode : data) {
-                    Pet pet = parsePet(petNode, included);
+                    Pet pet = parsePet(petNode);
                     if (pet != null) {
                         save(pet);
                     }
@@ -124,8 +124,9 @@ public class FilePetDAO implements PetDAOInterface {
             }
         }
     }
+    @Override
     public String fetchOrg(String orgId, String orgUrl) throws IOException {
-        Request orgRequest =   new Request.Builder()
+        Request orgRequest = new Request.Builder()
                 .url(orgUrl)
                 .addHeader("Authorization", API_KEY)
                 .addHeader("Content-Type", "application/vnd.api+json")
@@ -140,8 +141,9 @@ public class FilePetDAO implements PetDAOInterface {
             }
         }
     }
+
     @Override
-    public Pet parsePet(JsonNode petNode, JsonNode included) throws IOException {
+    public Pet parsePet(JsonNode petNode) throws IOException {
         String orgId = petNode.get("relationships").get("orgs").get("data").get(0).get("id").asText();
         String orgUrl = BASE_URL + "/public/orgs/" + orgId;
         String orgResponseBody = fetchOrg(orgId, orgUrl);
@@ -156,7 +158,7 @@ public class FilePetDAO implements PetDAOInterface {
         String breed = petNode.get("attributes").get("breedPrimary").asText();
         String desc =  petNode.get("attributes").has("descriptionText") ? petNode.get("attributes").get("descriptionText").asText() : "N/A";
         String activityLevel = petNode.get("attributes").has("activityLevel")
-                ? petNode.get("attributes").get("activityLevel").asText().replaceAll("\\s+", "")
+                ? petNode.get("attributes").get("activityLevel").asText()
                 : "N/A";
         String gender = petNode.get("attributes").has("sex") ? petNode.get("attributes").get("sex").asText().replaceAll("\\s+", "") : "N/A";
         String name = petNode.get("attributes").has("name") ? petNode.get("attributes").get("name").asText() :
@@ -180,7 +182,15 @@ public class FilePetDAO implements PetDAOInterface {
                 parsedUrl
         );
 
-        }
+
+    }
+
+    @Override
+    public Pet parsePet(JsonNode petNode, JsonNode included) throws IOException {
+        return null;
+    }
+
+
     /**
      * parses string age into int months
      * @param ageString
