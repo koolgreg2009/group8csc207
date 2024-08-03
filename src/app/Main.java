@@ -1,105 +1,148 @@
-package app;
-
-
-import data_access.FilePetDAO;
-import data_access.FileUserDAO;
-import data_access.PetDAOInterface;
-import data_access.UserDAOInterface;
-import entity.preference.UserPreference;
-import interface_adapter.ProfileViewModel;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.adopt.AdoptController;
-import interface_adapter.bookmark.AddBookmarkController;
-import interface_adapter.bookmark.BookmarkViewModel;
-import interface_adapter.bookmark.RemoveBookmarkController;
-import interface_adapter.display_all_pets.DisplayAllPetsController;
-import interface_adapter.get_breed.GetBreedController;
-import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginViewModel;
-import interface_adapter.pet_bio.PetBioController;
-import interface_adapter.preference.PreferenceController;
-import interface_adapter.preference.PreferenceViewModel;
-import interface_adapter.signup.SignupController;
-import interface_adapter.signup.SignupViewModel;
-import view.*;
-import view.LoginView;
-import view.SignupView;
-
+package view.bookmark;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Main {
-    public static void main(String[] args) {
-        // From Paul Gries's example
-        // Build the main program window, the main panel containing the
-        // various cards, and the layout, and stitch them together.
+public class BookmarkHeader extends JPanel implements ActionListener {
 
-        // The main application window.
-        JFrame application = new JFrame("Login Page");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    public final Color BACKGROUND_COLOR = new Color(250,248,228);
+    public final Font SIDE_BUTTONS_FONT = new Font("Microsoft JhengHei UI", Font.BOLD, 12);
+    public final Color SIDE_BUTTONS_COLOR = new Color(255,189,65);
 
-        CardLayout cardLayout = new CardLayout();
+    JButton myProfileButton = new JButton();
+    JButton myPreferencesButton = new JButton();
+    JButton logoutButton = new JButton();
+    JButton homeButton = new JButton();
+    GroupLayout layout = new GroupLayout(this);
 
-        // The various View objects. Only one view is visible at a time.
-        JPanel views = new JPanel(cardLayout);
-        application.add(views);
-
-        // This keeps track of and manages which view is currently showing.
-        ViewManagerModel viewManagerModel = new ViewManagerModel();
-        new ViewManager(views, cardLayout, viewManagerModel);
-
-        // The data for the views, such as username and password, are in the ViewModels.
-        // This information will be changed by a presenter object that is reporting the
-        // results from the use case. The ViewModels are observable, and will
-        // be observed by the Views.
-
-        LoginViewModel loginViewModel = new LoginViewModel();
-        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
-        SignupViewModel signupViewModel = new SignupViewModel();
-        BookmarkViewModel bookmarkViewModel = new BookmarkViewModel();
-        PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
-        ProfileViewModel profileViewModel = new ProfileViewModel();
-        // creating user and pet DAO to be used for all use cases. declared outside so compiler doesnt cry
-        UserDAOInterface userDAO = null;
-        PetDAOInterface petDAO = null;
-        try{
-            userDAO = new FileUserDAO("./users.json");
-        } catch (IOException e) {
-            System.out.println("Could not open user data file.");
-        }
-        try{
-            petDAO = new FilePetDAO("./pets.json");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDAO);
-        views.add(signupView, signupView.viewName);
-
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, signupViewModel, userDAO);
-        views.add(loginView, loginView.viewName);
-
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, viewManagerModel);
-        views.add(loggedInView, loggedInView.viewName);
-
-        BookmarkView bookmarkView = new BookmarkView();
-        views.add(bookmarkView, bookmarkView.viewName);
-
-        ProfileView profileView = new ProfileView();
-        views.add(profileView, profileView.viewName);
-
-        PreferenceView preferenceView = new PreferenceView();
-        views.add(preferenceView, preferenceView.viewName);
-
-        viewManagerModel.setActiveView(loginView.viewName);
-        viewManagerModel.firePropertyChanged();
-
-        application.pack();
-        application.setVisible(true);
+    public BookmarkHeader() {
+        initComponents();
     }
-}
 
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+
+        setBackground(BACKGROUND_COLOR);
+
+        profileButtonDesign();
+        myProfileButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+                myProfileButtonActionPerformed(event);
+            }
+        });
+
+        preferenceButtonDesign();
+        myPreferencesButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+                myPreferencesButtonActionPerformed(event);
+            }
+        });
+
+        logoutButtonDesign();
+        logoutButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+                logoutButtonActionPerformed(event);
+            }
+        });
+
+        homeButtonDesign();
+        homeButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+                homeButtonActionPerformed(event);
+            }
+        });
+
+        buttonLayout();
+    }
+
+    private void homeButtonDesign(){
+        homeButton.setBackground(new Color(255,153,153));
+        homeButton.setText("Home Page");
+        homeButton.setFont(new Font("Microsoft JhengHei UI", Font.BOLD, 18));
+        homeButton.setBorder(BorderFactory.createBevelBorder(0));
+    }
+
+    private void profileButtonDesign(){
+        myProfileButton.setBackground(SIDE_BUTTONS_COLOR);
+        myProfileButton.setText("My Profile");
+        myProfileButton.setFont(SIDE_BUTTONS_FONT);
+        myProfileButton.setBorder(BorderFactory.createBevelBorder(0));
+    }
+
+    private void logoutButtonDesign(){
+        logoutButton.setBackground(SIDE_BUTTONS_COLOR);
+        logoutButton.setText("Log Out");
+        logoutButton.setFont(SIDE_BUTTONS_FONT);
+        logoutButton.setBorder(BorderFactory.createBevelBorder(0));
+    }
+
+    private void preferenceButtonDesign(){
+        myPreferencesButton.setBackground(SIDE_BUTTONS_COLOR);
+        myPreferencesButton.setText("My Preferences");
+        myPreferencesButton.setFont(SIDE_BUTTONS_FONT);
+        myPreferencesButton.setBorder(BorderFactory.createBevelBorder(0));
+    }
+
+    private void buttonLayout(){
+        this.setLayout(layout);
+        layout.setHorizontalGroup(horizontalGroup());
+        layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {myProfileButton, myPreferencesButton, logoutButton});
+        layout.setVerticalGroup(verticalGroup());
+    }
+
+    private GroupLayout.SequentialGroup logoutHGroup(){
+        return layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(logoutButton, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE);
+    }
+
+    private GroupLayout.SequentialGroup homeAndPreferenceHGroup() {
+        return layout.createSequentialGroup().addContainerGap()
+                .addComponent(homeButton, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                .addComponent(myPreferencesButton, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE);
+    }
+
+    private GroupLayout.SequentialGroup profileHGroup(){
+        return layout.createSequentialGroup()
+                .addGap(716, 716, 716)
+                .addComponent(myProfileButton, GroupLayout.PREFERRED_SIZE, 123,
+                        GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE);
+    }
+
+    private GroupLayout.Group horizontalGroup(){
+        return layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addGroup(logoutHGroup())
+                                .addGroup(profileHGroup())
+                                .addGroup(GroupLayout.Alignment.TRAILING, homeAndPreferenceHGroup()))
+                        .addContainerGap());
+    }
+
+    private GroupLayout.ParallelGroup homeAndPreferenceVGroup(){
+        return layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addGap(5,5,5)
+                        .addComponent(myPreferencesButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+                                Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                        .addGap(2,2,2)
+                        .addComponent(homeButton, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE));
+
+    }
+
+    private GroupLayout.Group verticalGroup(){
+        return layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(myProfileButton, GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                        .addGroup(homeAndPreferenceVGroup())
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(logoutButton, GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                        .addContainerGap());
+    }
+
+    private void
+}
