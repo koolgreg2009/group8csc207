@@ -81,8 +81,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.add(buttons);
         notifications.addActionListener(
                 evt -> {
-                    viewManagerModel.getActiveView(loggedInViewModel.getViewName());
-                    viewManagerModel.firePropertyChanged();
+//                    viewManagerModel.getActiveView(loggedInViewModel.getViewName());
+//                    viewManagerModel.firePropertyChanged();
+                    // change to joys pop up logic
                 }
         );
         preferences.addActionListener(
