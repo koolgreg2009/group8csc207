@@ -22,7 +22,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
-    private final JTextField fullnameInputField = new JTextField(15);
+    private final JTextField nameInputField = new JTextField(15);
     private final JTextField emailInputField = new JTextField(15);
     private final JTextField phoneInputField = new JTextField(15);
     private final SignupController signupController;
@@ -46,7 +46,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
                 new JLabel(signupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
         LabelTextPanel fullnameInfo = new LabelTextPanel(
-                new JLabel(signupViewModel.FULLNAME_LABEL), fullnameInputField);
+                new JLabel(signupViewModel.NAME_LABEL), nameInputField);
         LabelTextPanel emailInfo = new LabelTextPanel(
                 new JLabel(signupViewModel.EMAIL_LABEL), emailInputField);
         LabelTextPanel phoneInfo = new LabelTextPanel(
