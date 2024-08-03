@@ -13,6 +13,12 @@ public class SignupState {
     private String passwordError = null;
     private String repeatPassword = "";
     private String repeatPasswordError = null;
+    private String name = "";
+    private String nameError = null;
+    private String email = "";
+    private String emailError = null;
+    private String phone = "";
+    private String phoneError = null;
 
     /**
      * Constructor for creating a new copy of SignupState based on an existing SignupState.
@@ -26,6 +32,13 @@ public class SignupState {
         passwordError = copy.passwordError;
         repeatPassword = copy.repeatPassword;
         repeatPasswordError = copy.repeatPasswordError;
+        name = copy.name;
+        nameError = copy.nameError;
+        email = copy.email;
+        emailError = copy.emailError;
+        phone = copy.phone;
+        phoneError = copy.phoneError;
+
     }
 
     /**
@@ -89,6 +102,60 @@ public class SignupState {
     }
 
     /**
+     * Gets the name.
+     *
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Gets the name error message
+     *
+     * @return the name error if there is one
+     */
+    public String getNameError() {
+        return nameError;
+    }
+
+    /**
+     * Gets the email.
+     *
+     * @return the email.
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Gets the email error message
+     *
+     * @return the email error if there is one
+     */
+    public String getEmailError() {
+        return emailError;
+    }
+
+    /**
+     * Gets the phone number.
+     *
+     * @return the phone number.
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * Gets the phone number error message
+     *
+     * @return the phone number error if there is one
+     */
+    public String getPhoneError() {
+        return phoneError;
+    }
+
+    /**
      * Sets the username.
      *
      * @param username the username being set
@@ -140,5 +207,59 @@ public class SignupState {
      */
     public void setRepeatPasswordError(String repeatPasswordError) {
         this.repeatPasswordError = repeatPasswordError;
+    }
+
+    /**
+     * Sets the name.
+     *
+     * @param name the name being set
+     */
+    public void setName(String name) { this.name = name; }
+
+    /**
+     * Sets the name error message.
+     *
+     * @param nameError the error and message being sent if there is a name error
+     */
+    public void setNameError(String nameError) { this.nameError = nameError; }
+
+    /**
+     * Sets the email.
+     *
+     * @param email the email being set
+     */
+    public void setEmail(String email) { this.email = email; }
+
+    /**
+     * Sets the email error message.
+     *
+     * @param emailError the error and message being sent if there is an email error
+     */
+    public void setEmailError(String emailError) { this.emailError = emailError; }
+
+    /**
+     * Sets the phone number.
+     *
+     * @param phone the phone number being set
+     */
+    public void setPhone(String phone) { this.phone = phone; }
+
+    /**
+     * Sets the phone error message.
+     *
+     * @param phoneError the error and message being sent if there is a phone error
+     */
+    public void setPhoneError(String phoneError) { this.phoneError = phoneError; }
+
+    @Override
+    public String toString() {
+        return "SignupState{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", repeatPassword='" + repeatPassword + '\'' +
+                "name='" + name + '\'' +
+                "email='" + email + '\'' +
+                "phone='" + phone + '\'' +
+                '}';
     }
 }
