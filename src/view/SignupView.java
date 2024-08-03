@@ -51,7 +51,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new JLabel(signupViewModel.EMAIL_LABEL), emailInputField);
         LabelTextPanel phoneInfo = new LabelTextPanel(
                 new JLabel(signupViewModel.PHONE_LABEL), phoneInputField);
-        )
 
         JPanel buttons = new JPanel();
         signUp = new JButton(signupViewModel.SIGNUP_BUTTON_LABEL);
