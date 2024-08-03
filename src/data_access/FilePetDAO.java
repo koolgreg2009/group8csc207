@@ -125,7 +125,7 @@ public class FilePetDAO implements PetDAOInterface {
         }
     }
 
-    public String fetchOrg(String orgId, String orgUrl) throws IOException {
+    private String fetchOrg(String orgUrl) throws IOException {
         Request orgRequest = new Request.Builder()
                 .url(orgUrl)
                 .addHeader("Authorization", API_KEY)
@@ -134,8 +134,7 @@ public class FilePetDAO implements PetDAOInterface {
                 .build();
         try (Response orgResponse = client.newCall(orgRequest).execute()) {
             if (orgResponse.isSuccessful() && orgResponse.body() != null) {
-                String orgResponseBody = orgResponse.body().string();
-                return orgResponseBody;
+                return orgResponse.body().string();
             } else {
                 throw new IOException("Failed to fetch organization details with HTTP code: " + orgResponse.code() + " and message: " + orgResponse.message());
             }
@@ -146,7 +145,7 @@ public class FilePetDAO implements PetDAOInterface {
     public Pet parsePet(JsonNode petNode) throws IOException {
         String orgId = petNode.get("relationships").get("orgs").get("data").get(0).get("id").asText();
         String orgUrl = BASE_URL + "/public/orgs/" + orgId;
-        String orgResponseBody = fetchOrg(orgId, orgUrl);
+        String orgResponseBody = fetchOrg(orgUrl);
         JsonNode orgRoot = objectMapper.readTree(orgResponseBody);
         JsonNode dataNode = orgRoot.get("data");
         JsonNode orgData = dataNode.get(0).get("attributes");
@@ -189,6 +188,7 @@ public class FilePetDAO implements PetDAOInterface {
      * RI: format must be in x Years y Months format
      * @return age in months
      */
+
     private int parseAgeString(String ageString) {
         String[] split =  ageString.split(" ");
 
