@@ -205,17 +205,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(buttons);
     }
 
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        return pattern.matcher(email).matches();
-    }
-
-    private boolean isValidPhone(String phone) {
-        String phoneRegex = "^[0-9]{10,15}$";
-        Pattern pattern = Pattern.compile(phoneRegex);
-        return pattern.matcher(phone).matches();
-    }
 
     /**
      * React to a button click that results in evt.
