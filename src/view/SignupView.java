@@ -64,18 +64,14 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
                             SignupState currentState = signupViewModel.getState();
-                            if (isValidEmail(currentState.getEmail()) && isValidPhone(currentState.getPhone())) {
-                                signupController.execute(
-                                        currentState.getUsername(),
-                                        currentState.getPassword(),
-                                        currentState.getRepeatPassword(),
-                                        currentState.getName(),
-                                        currentState.getEmail(),
-                                        currentState.getPhone()
-                                );
-                            } else {
-                                JOptionPane.showMessageDialog(SignupView.this, "Invalid email or phone number.");
-                            }
+                            signupController.execute(
+                                    currentState.getUsername(),
+                                    currentState.getPassword(),
+                                    currentState.getRepeatPassword(),
+                                    currentState.getName(),
+                                    currentState.getEmail(),
+                                    currentState.getPhone()
+                            );
                         }
                     }
                 }
@@ -144,7 +140,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
-                        currentState.setUsername(nameInputField.getText() + e.getKeyChar());
+                        currentState.setName(nameInputField.getText() + e.getKeyChar());
                         signupViewModel.setState(currentState);
                     }
 
@@ -162,7 +158,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
-                        currentState.setUsername(emailInputField.getText() + e.getKeyChar());
+                        currentState.setEmail(emailInputField.getText() + e.getKeyChar());
                         signupViewModel.setState(currentState);
                     }
 
@@ -180,7 +176,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
-                        currentState.setUsername(phoneInputField.getText() + e.getKeyChar());
+                        currentState.setPhone(phoneInputField.getText() + e.getKeyChar());
                         signupViewModel.setState(currentState);
                     }
 

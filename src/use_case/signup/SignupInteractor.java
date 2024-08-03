@@ -42,8 +42,8 @@ public class SignupInteractor implements SignupInputBoundary {
      */
     @Override
     public void execute(SignupInputData signupInputData) {
-        Pattern emailRegex = Pattern.compile("^[\\w|.%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-        Pattern phoneRegex = Pattern.compile("^\\(\\d{3}\\)\\d{3}-\\d{4}$");
+        Pattern emailRegex = Pattern.compile("^[\\w.%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+        Pattern phoneRegex = Pattern.compile("^[0-9]{10,15}$");
         if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
             userPresenter.prepareFailView("User already exists.");
         } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
