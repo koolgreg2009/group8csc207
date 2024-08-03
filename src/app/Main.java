@@ -23,8 +23,8 @@ import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupViewModel;
 import view.*;
-//import view.LoginView;
-//import view.SignupView;
+import view.LoginView;
+import view.SignupView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,19 +43,19 @@ public class Main {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
-//
-//        // The various View objects. Only one view is visible at a time.
+
+        // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
         application.add(views);
-//
-//        // This keeps track of and manages which view is currently showing.
+
+        // This keeps track of and manages which view is currently showing.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
-//
-//        // The data for the views, such as username and password, are in the ViewModels.
-//        // This information will be changed by a presenter object that is reporting the
-//        // results from the use case. The ViewModels are observable, and will
-//        // be observed by the Views.
+
+        // The data for the views, such as username and password, are in the ViewModels.
+        // This information will be changed by a presenter object that is reporting the
+        // results from the use case. The ViewModels are observable, and will
+        // be observed by the Views.
 
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
@@ -77,16 +77,15 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-//
-        SignupView signupView = new SignupView(); // change this later to something similar to loginview setup, made it empty just to test
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDAO);
         views.add(signupView, signupView.viewName);
-//
+
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, signupViewModel, userDAO);
         views.add(loginView, loginView.viewName);
-//
+
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, viewManagerModel);
         views.add(loggedInView, loggedInView.viewName);
-//
+
         BookmarkView bookmarkView = new BookmarkView();
         views.add(bookmarkView, bookmarkView.viewName);
 
@@ -98,36 +97,7 @@ public class Main {
 
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
-//
-//        application.pack();
-//        application.setVisible(true);
 
-//        SignupController signupController = SignupUseCaseFactory.createUserSignupUseCase();
-//        signupController.execute(); // try fail signup (different password or already exists)
-//        signupController.execute(); // try successful signup
-//
-////        LoginController loginController = LoginUseCaseFactory.createUserLoginUseCase();
-////        loginController.execute(); // try fail sign in (different password)
-////        loginController.execute(); // try successful sign in
-//        PreferenceController preferenceController = PreferenceUsecaseFactory.createPreferenceUsecase();
-//        preferenceController.execute(); // try some preference
-//
-//        DisplayAllPetsController displayAllPetsController = DisplayAllPetsUseCaseFactory.createDisplayAllPetsUseCase();
-//        displayAllPetsController.execute();
-//        preferenceController.execute(); // try another preference
-//        displayAllPetsController.execute();
-//
-//        AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase();
-//        addBookmarkController.execute();
-//        RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase();
-//        removeBookmarkController.execute();
-//        PetBioController petBioController = PetBioUseCaseFactory.createPetBioUseCase();
-//        petBioController.execute();
-//        GetBreedController getBreedController = GetBreedUseCaseFactory.createGetBreedUseCase();
-//        getBreedController.execute();
-////        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase();
-//        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase();
-//        adoptController.execute();
         application.pack();
         application.setVisible(true);
     }
