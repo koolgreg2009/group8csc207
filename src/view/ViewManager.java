@@ -15,14 +15,8 @@ import java.beans.PropertyChangeListener;
  * @since 2024-07-19
  */
 public class ViewManager implements PropertyChangeListener {
-
-    /** The layout manager for switching between different views. */
     private final CardLayout cardLayout;
-
-    /** The panel containing the different views. */
     private final JPanel views;
-
-    /** The model used to manage the active view. */
     private ViewManagerModel viewManagerModel;
 
     /**
