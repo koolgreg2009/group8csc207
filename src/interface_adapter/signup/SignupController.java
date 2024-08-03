@@ -32,10 +32,13 @@ public class SignupController {
      * @param username
      * @param password1
      * @param password2
+     * @param name
+     * @param email
+     * @param phone
      */
-    public void execute(String username, String password1, String password2) {
+    public void execute(String username, String password1, String password2, String name, String email, String phone) {
         SignupInputData signupInputData = new SignupInputData(
-                username, password1, password2, "", "", "");
+                username, password1, password2, name, email, phone);
 
         userSignupUseCaseInteractor.execute(signupInputData);
     }

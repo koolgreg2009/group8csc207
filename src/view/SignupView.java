@@ -140,12 +140,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     }
                 });
 
-        fullnameInputField.addKeyListener(
+        nameInputField.addKeyListener(
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
-                        currentState.setUsername(fullnameInputField.getText() + e.getKeyChar());
+                        currentState.setUsername(nameInputField.getText() + e.getKeyChar());
                         signupViewModel.setState(currentState);
                     }
 
