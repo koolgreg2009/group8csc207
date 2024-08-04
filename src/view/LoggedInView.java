@@ -66,7 +66,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
 
         JLabel title = new JLabel("Home Page Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JLabel usernameInfo = new JLabel("Currently logged in: ");
+        JLabel usernameInfo = new JLabel("Currently logged in: " + loggedInViewModel.getLoggedInUser());
         usernameInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
         username = new JLabel();
 
@@ -80,7 +80,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         logOut = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
         buttons.add(logOut);
         petListingPanel = new JPanel();
-        petListingPanel.setLayout(new GridLayout(0, 5));
+        petListingPanel.setLayout(new GridLayout(3, 3));
         logOut.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

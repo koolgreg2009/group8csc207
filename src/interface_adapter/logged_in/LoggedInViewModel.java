@@ -3,6 +3,7 @@ package interface_adapter.logged_in;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import interface_adapter.SessionManager;
 import interface_adapter.ViewModel;
 
 /**
@@ -36,7 +37,6 @@ public class LoggedInViewModel extends ViewModel {
     public final String LOGOUT_BUTTON_LABEL = "Log out";
 
     /** The username of the currently logged-in user. */
-    private String loggedInUser;
 
     public String NOTIF_BUTTON= "Notifications";
 
@@ -92,7 +92,7 @@ public class LoggedInViewModel extends ViewModel {
      * @return The username of the logged-in user.
      */
     public String getLoggedInUser() {
-        return loggedInUser;
+        return state.getUsername();
     }
 
     /**
@@ -100,7 +100,5 @@ public class LoggedInViewModel extends ViewModel {
      *
      * @param loggedInUser
      */
-    public void setLoggedInUser(String loggedInUser) {
-        this.loggedInUser = loggedInUser;
-    }
+
 }
