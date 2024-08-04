@@ -1,21 +1,26 @@
 package data_access;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import entity.Pet;
-import entity.preference.UserPreference;
-import okhttp3.*;
-import utils.IdCounter;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import entity.Pet;
+import entity.preference.UserPreference;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import utils.IdCounter;
 
 public class FilePetDAO implements PetDAOInterface {
     private final File jsonFile;
@@ -74,7 +79,8 @@ public class FilePetDAO implements PetDAOInterface {
         return matchingPets;
     }
 
-    public boolean matchesPreference(Pet pet, UserPreference userPreference) {
+    @Override
+	public boolean matchesPreference(Pet pet, UserPreference userPreference) {
         if (userPreference.getSpecies() != null && !userPreference.getSpecies().isEmpty() && !userPreference.getSpecies().equals(pet.getSpecies())) {
             return false;
         }
@@ -194,4 +200,9 @@ public class FilePetDAO implements PetDAOInterface {
 
         return split.length == 4 ? Integer.parseInt(split[0])*12+Integer.parseInt(split[2]) : Integer.parseInt(split[0])*12;
     }
+
+	@Override
+	public ArrayList<Pet> getAvailablePets() {
+		return pets.values().stream().filter(pet -> pet.isAvailable()).collect(Collectors.toCollection(ArrayList::new));
+	}
 }

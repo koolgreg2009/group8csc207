@@ -1,7 +1,5 @@
 package interface_adapter.pet_bio;
 
-import java.util.Scanner;
-
 import use_case.pet_bio.PetBioInputBoundary;
 import use_case.pet_bio.PetBioInputData;
 
@@ -23,11 +21,9 @@ public class PetBioController {
 
     /**
      * Executes the pet bio use case by prompting the user for a pet ID while passing input data to the interactor.
+     * @param petID 
      */
-    public void execute(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter petID to see the pet's details");
-        int petID = scanner.nextInt();
+    public void execute(int petID){
         this.petBioInteractor.execute(new PetBioInputData(petID));
     }
 }

@@ -1,5 +1,10 @@
 package interface_adapter.logged_in;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import dto.pet.PetDTO;
+
 /**
  * The LoggedInState class represents the state of a logged-in user.
  * It maintains the username of the currently logged-in user and provides methods to access and modify this information.
@@ -9,6 +14,7 @@ package interface_adapter.logged_in;
  */
 public class LoggedInState {
     private String username = "";
+    private List<PetDTO> pets = new ArrayList<>();
 
     /**
      * Constructs a new LoggedInState object by copying the state from another LoggedInState instance.
@@ -41,4 +47,12 @@ public class LoggedInState {
     public void setUsername(String username) {
         this.username = username;
     }
+
+	public List<PetDTO> getPets() {
+		return pets;
+	}
+
+	public void setPets(List<PetDTO> pets) {
+		this.pets = pets;
+	}
 }

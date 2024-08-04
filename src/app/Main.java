@@ -1,36 +1,31 @@
 package app;
 
 
+import java.awt.CardLayout;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
 import data_access.FilePetDAO;
 import data_access.FileUserDAO;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
-import entity.preference.UserPreference;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.adopt.AdoptController;
-import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
-import interface_adapter.bookmark.RemoveBookmarkController;
-import interface_adapter.display_all_pets.DisplayAllPetsController;
-import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.pet_bio.PetBioController;
-import interface_adapter.preference.PreferenceController;
+import interface_adapter.pet_bio.PetBioVIewModel;
 import interface_adapter.preference.PreferenceViewModel;
-import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupViewModel;
-import view.*;
+import view.BookmarkView;
+import view.LoggedInView;
 import view.LoginView;
+import view.ProfileView;
 import view.SignupView;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import view.ViewManager;
 
 public class Main {
     public static void main(String[] args) {
@@ -63,6 +58,7 @@ public class Main {
         BookmarkViewModel bookmarkViewModel = new BookmarkViewModel();
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
         ProfileViewModel profileViewModel = new ProfileViewModel();
+        PetBioVIewModel petBioViewModel = new PetBioVIewModel();
         // creating user and pet DAO to be used for all use cases. declared outside so compiler doesnt cry
         UserDAOInterface userDAO = null;
         PetDAOInterface petDAO = null;
@@ -80,10 +76,11 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDAO);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, signupViewModel, userDAO);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, signupViewModel, userDAO, petDAO);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, viewManagerModel);
+		LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, userDAO, petDAO, 
+        		petBioViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
         BookmarkView bookmarkView = new BookmarkView();

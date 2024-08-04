@@ -1,11 +1,9 @@
 package interface_adapter.logged_in;
 
-import interface_adapter.ViewModel;
-import interface_adapter.login.LoginState;
-
-import javax.management.Notification;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+
+import interface_adapter.ViewModel;
 
 /**
  * The LoggedInViewModel class represents the view model for the logged-in state of the application.
@@ -21,7 +19,9 @@ public class LoggedInViewModel extends ViewModel {
     public final String TITLE_LABEL = "Logged In View";
 
     /** The current state of the logged-in user. */
-    private NotificationState state = new NotificationState();
+    private NotificationState notState = new NotificationState();
+    
+    private LoggedInState state = new LoggedInState();
 
     /** Label for Profile button */
     public final String PROFILE_BUTTON_LABEL = "Profile";
@@ -62,7 +62,8 @@ public class LoggedInViewModel extends ViewModel {
     /**
      * Fires a property change event to notify listeners of a change in the state.
      */
-    public void firePropertyChanged() {
+    @Override
+	public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
 
@@ -71,7 +72,8 @@ public class LoggedInViewModel extends ViewModel {
      *
      * @param listener
      */
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
 
@@ -80,7 +82,7 @@ public class LoggedInViewModel extends ViewModel {
      *
      * @return The current state.
      */
-    public NotificationState getState() {
+    public LoggedInState getState() {
         return state;
     }
 
