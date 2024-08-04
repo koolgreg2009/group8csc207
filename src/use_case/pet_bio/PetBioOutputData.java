@@ -1,6 +1,6 @@
 package use_case.pet_bio;
 
-import entity.Pet;
+import dto.pet.PetDTO;
 
 /**
  * The PetBioOutputData class encapsulates the output data of the pet bio use case.
@@ -11,15 +11,15 @@ import entity.Pet;
  */
 public class PetBioOutputData {
 
-    private Pet pet;
+    private PetDTO pet;
 
     /**
      * Constructs a new PetBioOutputData object with the specified pet.
      *
-     * @param pet the pet whose bio is being output
+     * @param petDTO the pet whose bio is being output
      */
-    public PetBioOutputData(Pet pet) {
-        this.pet = pet;
+    public PetBioOutputData(PetDTO petDTO) {
+        this.pet = petDTO;
     }
 
     /**
@@ -27,7 +27,7 @@ public class PetBioOutputData {
      *
      * @return the pet from the PetBioOutputData object
      */
-    public Pet getPet() {
+    public PetDTO getPet() {
         return pet;
     }
 
