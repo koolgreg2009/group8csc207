@@ -31,7 +31,7 @@ personality to help find the perfect fit for the pet and the new owner.
 4. (Start guide to be updated)
 
 ## APIs Used
-* [RescueGroups.org](https://rescuegroups.org/services/adoptable-pet-data-api/) API that provides us adoptable pet data.
+* [RescueGroups.org](https://rescuegroups.org/services/adoptable-pet-data-api/): API that provides us adoptable pet data.
 * [TheCATAPI](https://documenter.getpostman.com/view/5578104/RWgqUxxh#intro): API that returns cat information.
 
 # Technical Problems and Notes
