@@ -23,7 +23,7 @@ public class NotifView {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addNotification("UWU!");
+                addNotification("Awe pet has been adopted!");
             }
             private void addNotification(String message) {notifList.addElement(message);
             }
