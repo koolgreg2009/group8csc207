@@ -5,23 +5,14 @@ import data_access.FilePetDAO;
 import data_access.FileUserDAO;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
-import entity.preference.UserPreference;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.adopt.AdoptController;
-import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
-import interface_adapter.bookmark.RemoveBookmarkController;
-import interface_adapter.display_all_pets.DisplayAllPetsController;
-import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.pet_bio.PetBioController;
-import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferenceViewModel;
-import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupViewModel;
+import view.BookmarkView;
 import view.*;
 import view.LoginView;
 import view.SignupView;
@@ -29,8 +20,6 @@ import view.SignupView;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {

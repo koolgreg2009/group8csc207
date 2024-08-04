@@ -45,8 +45,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                         PreferenceViewModel preferenceViewModel,
                         LoginViewModel loginViewModel,
                         ProfileViewModel profileViewModel,
-
                         ViewManagerModel viewManagerModel) {
+
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
         this.bookmarkViewModel = bookmarkViewModel;
