@@ -188,14 +188,6 @@ public class PreferenceState {
     }
 
 
-    //    /**
-//     * Sets the error message related to the password.
-//     *
-//     * @param passwordError
-//     */
-//    public void setPasswordError(String passwordError) {
-//        this.passwordError = passwordError;
-//    }
     public String getError() {
         return error;
     }
