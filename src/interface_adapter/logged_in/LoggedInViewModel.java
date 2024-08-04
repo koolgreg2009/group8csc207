@@ -38,7 +38,7 @@ public class LoggedInViewModel extends ViewModel {
     /** The username of the currently logged-in user. */
     private String loggedInUser;
 
-    public String NOTIF_BUTTON= "notifications";
+    public String NOTIF_BUTTON= "Notifications";
 
     /**
      * Constructs a new LoggedInViewModel with a predefined view name.

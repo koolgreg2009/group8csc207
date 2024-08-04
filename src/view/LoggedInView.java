@@ -3,6 +3,7 @@ package view;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.adopt.AdoptViewModel;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -27,6 +28,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final ProfileViewModel profileViewModel;
     private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final AdoptViewModel adoptViewModel;
 
 
     JLabel username;
@@ -45,13 +47,14 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                         PreferenceViewModel preferenceViewModel,
                         LoginViewModel loginViewModel,
                         ProfileViewModel profileViewModel,
-
+                        AdoptViewModel adoptViewModel,
                         ViewManagerModel viewManagerModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
         this.bookmarkViewModel = bookmarkViewModel;
         this.preferenceViewModel = preferenceViewModel;
         this.profileViewModel = profileViewModel;
+        this.adoptViewModel = adoptViewModel;
         this.loginViewModel = loginViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
@@ -81,9 +84,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.add(buttons);
         notifications.addActionListener(
                 evt -> {
-//                    viewManagerModel.getActiveView(loggedInViewModel.getViewName());
-//                    viewManagerModel.firePropertyChanged();
-                    // change to joys pop up logic
+                    viewManagerModel.setActiveView(adoptViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
                 }
         );
         preferences.addActionListener(
