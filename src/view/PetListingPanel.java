@@ -1,9 +1,12 @@
 package view;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import dto.pet.PetDTO;
+
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class PetListingPanel extends javax.swing.JPanel {
 	private PetActionView petActionView;
@@ -11,10 +14,12 @@ public class PetListingPanel extends javax.swing.JPanel {
 
 	public PetListingPanel(PetActionView petActionView, PetDTO pet) {
 		initComponents();
-		this.setPreferredSize(new Dimension(50, 50));
+//		this.setPreferredSize(new Dimension(50, 50));
 		this.petActionView = petActionView;
 		this.pet = pet;
 		loadData();
+        this.setBorder(new EmptyBorder(20, 20, 20, 20));
+        this.setBorder(new LineBorder(Color.white, 10));
 	}
 
 	private void loadData() {
@@ -123,7 +128,7 @@ public class PetListingPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 128, Short.MAX_VALUE)
+                                .addGap(5, 128, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel1)
                                         .addComponent(jLabel2))
