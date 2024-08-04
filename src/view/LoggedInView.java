@@ -35,7 +35,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final JButton preferences;
     private final JButton bookmark;
     private final JButton notifications;
-
+    private final JPanel petListingPanel;
 
     /**
      * A window with a title and a JButton.
@@ -57,7 +57,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         JLabel title = new JLabel("Home Page Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         JLabel usernameInfo = new JLabel("Currently logged in: ");
         username = new JLabel();
 
@@ -70,7 +69,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         buttons.add(bookmark);
         logOut = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
         buttons.add(logOut);
+        petListingPanel = new JPanel();
+        for(int count = 0; count <= 10; count++){
+            petListingPanel.add(new PetListingPanel());
 
+        }
+        petListingPanel.setLayout(new GridLayout(3, 3));
         logOut.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -79,6 +83,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.add(usernameInfo);
         this.add(username);
         this.add(buttons);
+        this.add(petListingPanel);
         notifications.addActionListener(
                 evt -> {
 //                    viewManagerModel.getActiveView(loggedInViewModel.getViewName());
