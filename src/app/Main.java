@@ -37,7 +37,7 @@ public class Main {
         JFrame application = new JFrame("Pet Adoption");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.setResizable(true);
-        application.
+        application.setExtendedState(JFrame.MAXIMIZED_BOTH);
 //        application.setSize(800, 500);
         CardLayout cardLayout = new CardLayout();
 
