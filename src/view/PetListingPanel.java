@@ -11,7 +11,7 @@ public class PetListingPanel extends javax.swing.JPanel {
 
 	public PetListingPanel(PetActionView petActionView, PetDTO pet) {
 		initComponents();
-		this.setPreferredSize(new Dimension(50, 50));
+//		this.setPreferredSize(new Dimension(50, 50));
 		this.petActionView = petActionView;
 		this.pet = pet;
 		loadData();
@@ -123,7 +123,7 @@ public class PetListingPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 128, Short.MAX_VALUE)
+                                .addGap(5, 128, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel1)
                                         .addComponent(jLabel2))

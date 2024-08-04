@@ -34,10 +34,11 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Login Page");
+        JFrame application = new JFrame("Pet Adoption");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        application.setResizable(false);
-        application.setSize(800, 500);
+        application.setResizable(true);
+        application.
+//        application.setSize(800, 500);
         CardLayout cardLayout = new CardLayout();
 
         // The various View objects. Only one view is visible at a time.
