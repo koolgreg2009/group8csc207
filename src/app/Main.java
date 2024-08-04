@@ -1,6 +1,13 @@
 package app;
 
 
+import java.awt.CardLayout;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
 import data_access.FilePetDAO;
 import data_access.FileUserDAO;
 import data_access.PetDAOInterface;
@@ -10,16 +17,15 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.pet_bio.PetBioVIewModel;
 import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupViewModel;
 import view.BookmarkView;
-import view.*;
+import view.LoggedInView;
 import view.LoginView;
+import view.ProfileView;
 import view.SignupView;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
+import view.ViewManager;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,15 +34,16 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Login Page");
+        JFrame application = new JFrame("Pet Adoption");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
+        application.setResizable(true);
+        application.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        application.setSize(800, 500);
         CardLayout cardLayout = new CardLayout();
 
         // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
         application.add(views);
-
         // This keeps track of and manages which view is currently showing.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
@@ -52,6 +59,7 @@ public class Main {
         BookmarkViewModel bookmarkViewModel = new BookmarkViewModel();
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
         ProfileViewModel profileViewModel = new ProfileViewModel();
+        PetBioVIewModel petBioViewModel = new PetBioVIewModel();
         // creating user and pet DAO to be used for all use cases. declared outside so compiler doesnt cry
         UserDAOInterface userDAO = null;
         PetDAOInterface petDAO = null;
@@ -69,10 +77,11 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDAO);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, signupViewModel, userDAO);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, signupViewModel, userDAO, petDAO);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, viewManagerModel);
+		LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, userDAO, petDAO,
+        		petBioViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
         BookmarkView bookmarkView = new BookmarkView();
@@ -87,7 +96,8 @@ public class Main {
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        application.pack();
+        //application.pack();
+        application.setLocationRelativeTo(null);
         application.setVisible(true);
     }
 }

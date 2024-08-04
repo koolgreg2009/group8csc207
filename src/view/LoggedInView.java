@@ -1,24 +1,33 @@
 package view;
 
-import interface_adapter.ProfileViewModel;
-import interface_adapter.SessionManager;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.bookmark.BookmarkViewModel;
-import interface_adapter.logged_in.LoggedInState;
-import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.login.LoginViewModel;
-import interface_adapter.preference.PreferenceViewModel;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import dto.pet.PetDTO;
+import interface_adapter.ProfileViewModel;
+import interface_adapter.SessionManager;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.adopt.AdoptViewModel;
+import interface_adapter.bookmark.BookmarkViewModel;
+import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.pet_bio.PetBioController;
+import interface_adapter.preference.PreferenceViewModel;
 
 //We need to work on this. -Justin
 
-public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
+public class LoggedInView extends JPanel implements PetActionView, ActionListener, PropertyChangeListener {
 
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
@@ -27,6 +36,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final ProfileViewModel profileViewModel;
     private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final AdoptViewModel adoptViewModel;
 
 
     JLabel username;
@@ -35,30 +45,29 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final JButton preferences;
     private final JButton bookmark;
     private final JButton notifications;
-
+    private final JPanel petListingPanel;
+	private PetBioController petBioController;
 
     /**
      * A window with a title and a JButton.
      */
-    public LoggedInView(LoggedInViewModel loggedInViewModel,
-                        BookmarkViewModel bookmarkViewModel,
-                        PreferenceViewModel preferenceViewModel,
-                        LoginViewModel loginViewModel,
-                        ProfileViewModel profileViewModel,
-                        ViewManagerModel viewManagerModel) {
-
+	public LoggedInView(PetBioController petBioController, LoggedInViewModel loggedInViewModel,
+			BookmarkViewModel bookmarkViewModel, PreferenceViewModel preferenceViewModel, LoginViewModel loginViewModel,
+			ProfileViewModel profileViewModel, AdoptViewModel adoptViewModel, ViewManagerModel viewManagerModel) {
+		this.petBioController = petBioController;
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
         this.bookmarkViewModel = bookmarkViewModel;
         this.preferenceViewModel = preferenceViewModel;
         this.profileViewModel = profileViewModel;
+        this.adoptViewModel = adoptViewModel;
         this.loginViewModel = loginViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Home Page Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         JLabel usernameInfo = new JLabel("Currently logged in: ");
+        usernameInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
         username = new JLabel();
 
         JPanel buttons = new JPanel();
@@ -70,7 +79,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         buttons.add(bookmark);
         logOut = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
         buttons.add(logOut);
-
+        petListingPanel = new JPanel();
+        petListingPanel.setLayout(new GridLayout(0, 5));
         logOut.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -79,11 +89,11 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.add(usernameInfo);
         this.add(username);
         this.add(buttons);
+        this.add(petListingPanel);
         notifications.addActionListener(
                 evt -> {
-//                    viewManagerModel.getActiveView(loggedInViewModel.getViewName());
-//                    viewManagerModel.firePropertyChanged();
-                    // change to joys pop up logic
+                    viewManagerModel.setActiveView(adoptViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
                 }
         );
         preferences.addActionListener(
@@ -110,7 +120,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     /**
      * React to a button click that results in evt.
      */
-    public void actionPerformed(ActionEvent evt) {
+    @Override
+	public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
 
@@ -118,5 +129,27 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     public void propertyChange(PropertyChangeEvent evt) {
         LoggedInState state = (LoggedInState) evt.getNewValue();
         username.setText(state.getUsername());
+        List<PetDTO> pets = state.getPets();
+        petListingPanel.removeAll();
+		for (PetDTO pet : pets) {
+			petListingPanel.add(new PetListingPanel(this, pet));
+		}
     }
+
+	@Override
+	public void save(int petID) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void goDetail(int petID) {
+		petBioController.execute(petID);
+	}
+
+	@Override
+	public void adopt(int petID) {
+		// TODO Auto-generated method stub
+
+	}
 }

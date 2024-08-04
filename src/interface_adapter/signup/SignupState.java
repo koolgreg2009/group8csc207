@@ -161,7 +161,7 @@ public class SignupState {
      * @param username the username being set
      */
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.trim();
     }
 
     /**
@@ -179,7 +179,7 @@ public class SignupState {
      * @param password the password being set
      */
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password.trim();
     }
 
     /**
@@ -197,7 +197,7 @@ public class SignupState {
      * @param repeatPassword the repeated password being set
      */
     public void setRepeatPassword(String repeatPassword) {
-        this.repeatPassword = repeatPassword;
+        this.repeatPassword = repeatPassword.trim();
     }
 
     /**
@@ -214,7 +214,7 @@ public class SignupState {
      *
      * @param name the name being set
      */
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) { this.name = name.trim(); }
 
     /**
      * Sets the name error message.
@@ -228,7 +228,7 @@ public class SignupState {
      *
      * @param email the email being set
      */
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) { this.email = email.trim(); }
 
     /**
      * Sets the email error message.
@@ -242,7 +242,7 @@ public class SignupState {
      *
      * @param phone the phone number being set
      */
-    public void setPhone(String phone) { this.phone = phone; }
+    public void setPhone(String phone) { this.phone = phone.trim(); }
 
     /**
      * Sets the phone error message.
