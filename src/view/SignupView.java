@@ -1,11 +1,6 @@
 package view;
 
-import interface_adapter.signup.SignupController;
-import interface_adapter.signup.SignupState;
-import interface_adapter.signup.SignupViewModel;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,6 +8,18 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.regex.Pattern;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import interface_adapter.signup.SignupController;
+import interface_adapter.signup.SignupState;
+import interface_adapter.signup.SignupViewModel;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -61,7 +68,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
+                    @Override
+					public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
                             SignupState currentState = signupViewModel.getState();
                             signupController.execute(
@@ -205,7 +213,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     /**
      * React to a button click that results in evt.
      */
-    public void actionPerformed(ActionEvent evt) {
+    @Override
+	public void actionPerformed(ActionEvent evt) {
 		signupController.execute(usernameInputField.getText(), String.valueOf(passwordInputField.getPassword()),
 				String.valueOf(repeatPasswordInputField.getPassword()), emailInputField.getText(),
                 phoneInputField.getText(),

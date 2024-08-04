@@ -1,6 +1,8 @@
 package use_case.login;
 
-import entity.user.User;
+import java.util.List;
+
+import dto.pet.PetDTO;
 
 /**
  * The LoginOutputData class encapsulates the output data of the login process.
@@ -12,14 +14,17 @@ import entity.user.User;
 public class LoginOutputData {
 
     private final String username;
+	private final List<PetDTO> pets;
 
     /**
      * Constructs a new LoginOutputData object with the specified details.
      *
      * @param username the username for the new login
+     * @param petDtoList 
      */
-    public LoginOutputData(String username) {
+    public LoginOutputData(String username, List<PetDTO> petDtoList) {
         this.username = username;
+        this.pets = petDtoList;
     }
 
     /**
@@ -30,6 +35,10 @@ public class LoginOutputData {
     public String getUsername() {
         return username;
     }
+
+	public List<PetDTO> getPets() {
+		return pets;
+	}
 
 
 }
