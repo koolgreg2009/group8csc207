@@ -51,7 +51,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new JLabel(signupViewModel.EMAIL_LABEL), emailInputField);
         LabelTextPanel phoneInfo = new LabelTextPanel(
                 new JLabel(signupViewModel.PHONE_LABEL), phoneInputField);
-        )
 
         JPanel buttons = new JPanel();
         signUp = new JButton(signupViewModel.SIGNUP_BUTTON_LABEL);
@@ -65,18 +64,14 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
                             SignupState currentState = signupViewModel.getState();
-                            if (isValidEmail(currentState.getEmail()) && isValidPhone(currentState.getPhone())) {
-                                signupController.execute(
-                                        currentState.getUsername(),
-                                        currentState.getPassword(),
-                                        currentState.getRepeatPassword(),
-                                        currentState.getName(),
-                                        currentState.getEmail(),
-                                        currentState.getPhone()
-                                );
-                            } else {
-                                JOptionPane.showMessageDialog(SignupView.this, "Invalid email or phone number.");
-                            }
+                            signupController.execute(
+                                    currentState.getUsername(),
+                                    currentState.getPassword(),
+                                    currentState.getRepeatPassword(),
+                                    currentState.getName(),
+                                    currentState.getEmail(),
+                                    currentState.getPhone()
+                            );
                         }
                     }
                 }
@@ -145,7 +140,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
-                        currentState.setUsername(nameInputField.getText() + e.getKeyChar());
+                        currentState.setName(nameInputField.getText() + e.getKeyChar());
                         signupViewModel.setState(currentState);
                     }
 
@@ -163,7 +158,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
-                        currentState.setUsername(emailInputField.getText() + e.getKeyChar());
+                        currentState.setEmail(emailInputField.getText() + e.getKeyChar());
                         signupViewModel.setState(currentState);
                     }
 
@@ -181,7 +176,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
-                        currentState.setUsername(phoneInputField.getText() + e.getKeyChar());
+                        currentState.setPhone(phoneInputField.getText() + e.getKeyChar());
                         signupViewModel.setState(currentState);
                     }
 
@@ -206,17 +201,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(buttons);
     }
 
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        return pattern.matcher(email).matches();
-    }
-
-    private boolean isValidPhone(String phone) {
-        String phoneRegex = "^[0-9]{10,15}$";
-        Pattern pattern = Pattern.compile(phoneRegex);
-        return pattern.matcher(phone).matches();
-    }
 
     /**
      * React to a button click that results in evt.

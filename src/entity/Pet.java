@@ -21,7 +21,7 @@ public class Pet {
     private final String species;
     private final int petAge;
     private final String breed;
-    private String bio;
+    private final String bio;
     private final String activityLevel;
     private final String gender;
     private final String location;
