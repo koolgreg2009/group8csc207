@@ -63,7 +63,7 @@ public class LoginInteractor implements LoginInputBoundary {
 										pet.getPhoneNum(), pet.getActivityLevel(), pet.getLocation(), pet.getImgUrl()))
 								.collect(Collectors.toList());
 				petDtoList.sort((p1, p2) -> p1.getPetID() - p2.getPetID());
-				LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), petDtoList);
+				LoginOutputData loginOutputData = new LoginOutputData(user.getUsername());
 				loginPresenter.prepareSuccessView(loginOutputData);
             }
         }

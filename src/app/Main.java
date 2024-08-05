@@ -20,12 +20,7 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.pet_bio.PetBioVIewModel;
 import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupViewModel;
-import view.BookmarkView;
-import view.LoggedInView;
-import view.LoginView;
-import view.ProfileView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -54,7 +49,7 @@ public class Main {
         // be observed by the Views.
 
         LoginViewModel loginViewModel = new LoginViewModel();
-        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
+        LoggedInViewModel loggedInViewModel = new LoggedInViewModel(viewManagerModel);
         SignupViewModel signupViewModel = new SignupViewModel();
         BookmarkViewModel bookmarkViewModel = new BookmarkViewModel();
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();

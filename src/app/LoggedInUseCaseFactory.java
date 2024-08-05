@@ -5,6 +5,7 @@ import data_access.UserDAOInterface;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.bookmark.BookmarkViewModel;
+import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.pet_bio.PetBioController;
@@ -35,13 +36,19 @@ public class LoggedInUseCaseFactory {
      *
      * @return A LoggedInView instance configured with the provided dependencies.
      */
-	public static LoggedInView create(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
-			BookmarkViewModel bookmarkViewModel, PreferenceViewModel preferenceViewModel, LoginViewModel loginViewModel,
-			ProfileViewModel profileViewModel, UserDAOInterface userDAO, PetDAOInterface petDAO,
-			PetBioVIewModel petBioViewModel) {
+	public static LoggedInView create(ViewManagerModel viewManagerModel,
+                                      LoggedInViewModel loggedInViewModel,
+                                      BookmarkViewModel bookmarkViewModel,
+                                      PreferenceViewModel preferenceViewModel,
+                                      LoginViewModel loginViewModel,
+                                      ProfileViewModel profileViewModel,
+                                      UserDAOInterface userDAO, PetDAOInterface petDAO,
+                                      PetBioVIewModel petBioViewModel) {
 		PetBioController petBioController = createPetBioUseCase(viewManagerModel, petBioViewModel, loggedInViewModel,
-				petDAO);
-		return new LoggedInView(petBioController, loggedInViewModel, bookmarkViewModel,
+                                                                petDAO);
+        DisplayAllPetsController displayAllPetsController =
+                DisplayAllPetsUseCaseFactory.createDisplayAllPetsUseCase(userDAO, petDAO, loggedInViewModel);
+		return new LoggedInView(petBioController, displayAllPetsController, loggedInViewModel, bookmarkViewModel,
 				preferenceViewModel, loginViewModel, profileViewModel, null, viewManagerModel);
 
 	}
@@ -63,4 +70,5 @@ public class LoggedInUseCaseFactory {
 
         return new PetBioController(petBioInteractor);
     }
+
 }
