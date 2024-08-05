@@ -17,9 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.login.LoginViewModel;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -33,15 +35,21 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JTextField emailInputField = new JTextField(15);
     private final JTextField phoneInputField = new JTextField(15);
     private final SignupController signupController;
+    private final LoginViewModel loginViewModel;
+    private final ViewManagerModel viewManagerModel;
+
 
     private final JButton signUp;
     private final JButton cancel;
 
-    public SignupView(SignupController controller, SignupViewModel signupViewModel) {
+    public SignupView(SignupController controller, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel,
+                      LoginViewModel loginViewModel) {
 
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
         signupViewModel.addPropertyChangeListener(this);
+        this.loginViewModel = loginViewModel;
+        this.viewManagerModel = viewManagerModel;
 
         JLabel title = new JLabel(signupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -85,7 +93,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-        cancel.addActionListener(this);
+        cancel.addActionListener(
+                evt -> {
+                    viewManagerModel.setActiveView(loginViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                }
+        );
 
         usernameInputField.addKeyListener(
                 new KeyListener() {
