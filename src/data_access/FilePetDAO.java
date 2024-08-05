@@ -96,15 +96,18 @@ public class FilePetDAO implements PetDAOInterface {
         if (!isMatching(userPreference.getGender(), pet.getGender())) {
             return false;
         }
+        if(!pet.isAvailable()){
+            return false;
+        }
         return true;
     }
 
     private boolean isMatching(String preference, String attribute) {
-        return preference != null && !preference.isEmpty() && Objects.equals(preference, attribute);
+        return preference == null || !preference.isEmpty() || Objects.equals(preference, attribute);
     }
 
     private boolean isMatching(List<String> preferences, String attribute) {
-        return preferences != null && !preferences.isEmpty() && preferences.contains(attribute);
+        return preferences == null || !preferences.isEmpty() || preferences.contains(attribute);
     }
 
     private boolean isInRange(int min, int max, int value) {
@@ -123,8 +126,6 @@ public class FilePetDAO implements PetDAOInterface {
                 String responseBody = response.body().string();
                 JsonNode root = objectMapper.readTree(responseBody);
                 JsonNode data = root.get("data");
-                JsonNode included = root.get("included");
-
                 for (JsonNode petNode : data) {
                     Pet pet = parsePet(petNode);
                     if (pet != null) {
