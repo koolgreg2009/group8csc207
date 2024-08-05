@@ -2,13 +2,16 @@ package use_case.display.display_all_available_pets;
 
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
+import dto.pet.PetDTO;
 import entity.Pet;
 import entity.user.AdopterUser;
 import entity.user.User;
 import use_case.display.DisplayPetsOutputBoundary;
 import use_case.display.DisplayPetsOutputData;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The DisplayAllPetsInteractor class is responsible for fetching all available pets that match
@@ -43,6 +46,14 @@ public class DisplayAllPetsInteractor implements DisplayAllPetsInputBoundary {
     public void execute(DisplayAllPetsInputData displayAllPetsInputData) {
         User user = fileUserDAO.get(displayAllPetsInputData.getUser());
         List<Pet> pets = filePetDAO.getPreferencePets(((AdopterUser) user).getPreferences());
-        this.displayAllPetPresenter.displayPetsOutput(new DisplayPetsOutputData(pets));
+        List<PetDTO> petDtoList = pets == null ? new ArrayList<>()
+                : pets.stream()
+                .map(pet -> new PetDTO(pet.getPetID(), pet.getName(), pet.getBreed(), pet.getGender(),
+                        pet.getSpecies(), pet.getPetAge(), pet.getBio(), pet.getOwner(), pet.getEmail(),
+                        pet.getPhoneNum(), pet.getActivityLevel(), pet.getLocation(), pet.getImgUrl()))
+                .collect(Collectors.toList());
+        petDtoList.sort((p1, p2) -> p1.getPetID() - p2.getPetID());
+        displayAllPetPresenter.displayPetsOutput(new DisplayPetsOutputData(petDtoList));
+
     }
 }

@@ -19,6 +19,7 @@ import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptViewModel;
 import interface_adapter.bookmark.BookmarkViewModel;
+import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -47,14 +48,16 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
     private final JButton notifications;
     private final JPanel petListingPanel;
 	private PetBioController petBioController;
+    private DisplayAllPetsController displayAllPetsController;
 
     /**
      * A window with a title and a JButton.
      */
-	public LoggedInView(PetBioController petBioController, LoggedInViewModel loggedInViewModel,
+	public LoggedInView(PetBioController petBioController, DisplayAllPetsController displayAllPetsController, LoggedInViewModel loggedInViewModel,
 			BookmarkViewModel bookmarkViewModel, PreferenceViewModel preferenceViewModel, LoginViewModel loginViewModel,
 			ProfileViewModel profileViewModel, AdoptViewModel adoptViewModel, ViewManagerModel viewManagerModel) {
 		this.petBioController = petBioController;
+        this.displayAllPetsController = displayAllPetsController;
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
         this.bookmarkViewModel = bookmarkViewModel;
@@ -63,6 +66,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.adoptViewModel = adoptViewModel;
         this.loginViewModel = loginViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
+        this.viewManagerModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Home Page Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -81,8 +85,6 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         buttons.add(logOut);
         petListingPanel = new JPanel();
         petListingPanel.setLayout(new GridLayout(3, 3));
-        logOut.addActionListener(this);
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
@@ -127,13 +129,20 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LoggedInState state = (LoggedInState) evt.getNewValue();
-        username.setText(state.getUsername());
-        List<PetDTO> pets = state.getPets();
-        petListingPanel.removeAll();
-		for (PetDTO pet : pets) {
-			petListingPanel.add(new PetListingPanel(this, pet));
-		}
+        if (evt.getPropertyName().equals("state")) {
+            LoggedInState state = (LoggedInState) evt.getNewValue();
+            username.setText(state.getUsername());
+            List<PetDTO> pets = state.getPets();
+            petListingPanel.removeAll();
+            for (PetDTO pet : pets) {
+                petListingPanel.add(new PetListingPanel(this, pet));
+            }
+        } else if (evt.getPropertyName().equals("view") && evt.getNewValue().equals("logged in")){
+            displayAllPetsController.execute();
+        }
+
+        
+        // add method here
     }
 
 	@Override

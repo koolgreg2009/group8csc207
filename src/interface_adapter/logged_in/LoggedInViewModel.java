@@ -1,9 +1,11 @@
 package interface_adapter.logged_in;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import interface_adapter.SessionManager;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.ViewModel;
 
 /**
@@ -40,11 +42,13 @@ public class LoggedInViewModel extends ViewModel {
 
     public String NOTIF_BUTTON= "Notifications";
 
+    public final ViewManagerModel viewManagerModel;
     /**
      * Constructs a new LoggedInViewModel with a predefined view name.
      */
-    public LoggedInViewModel() {
+    public LoggedInViewModel(ViewManagerModel viewManagerModel) {
         super("logged in");
+        this.viewManagerModel = viewManagerModel;
     }
 
 //    /**
@@ -95,10 +99,6 @@ public class LoggedInViewModel extends ViewModel {
         return state.getUsername();
     }
 
-    /**
-     * Sets the username of the currently logged-in user.
-     *
-     * @param loggedInUser
-     */
+
 
 }
