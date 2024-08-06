@@ -85,8 +85,8 @@ public class Main {
         ProfileView profileView = new ProfileView();
         views.add(profileView, profileView.viewName);
 
-//        PreferenceView preferenceView = new PreferenceView();
-//        views.add(preferenceView, preferenceView.viewName);
+        PreferenceView preferenceView = PreferenceUsecaseFactory.create(viewManagerModel, loggedInViewModel, preferenceViewModel, userDAO);
+        views.add(preferenceView, preferenceView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
