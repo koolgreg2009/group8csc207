@@ -18,7 +18,7 @@ import interface_adapter.ProfileViewModel;
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
-import interface_adapter.adopt.AdoptViewModel;
+import interface_adapter.adopt.NotifViewModel;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
@@ -40,7 +40,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
     private final ProfileViewModel profileViewModel;
     private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
-    private final AdoptViewModel adoptViewModel;
+    private final NotifViewModel notifViewModel;
 
 
     JLabel username;
@@ -66,7 +66,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
                         PreferenceViewModel preferenceViewModel,
                         LoginViewModel loginViewModel,
                         ProfileViewModel profileViewModel,
-                        AdoptViewModel adoptViewModel,
+                        NotifViewModel notifViewModel,
                         ViewManagerModel viewManagerModel,
                         AdoptController adoptController,
                         AddBookmarkController addBookmarkController,
@@ -78,7 +78,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.bookmarkViewModel = bookmarkViewModel;
         this.preferenceViewModel = preferenceViewModel;
         this.profileViewModel = profileViewModel;
-        this.adoptViewModel = adoptViewModel;
+        this.notifViewModel = notifViewModel;
         this.loginViewModel = loginViewModel;
         this.adoptController = adoptController;
         this.addBookmarkController = addBookmarkController;
@@ -112,7 +112,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.add(petListingPanel);
         notifications.addActionListener(
                 evt -> {
-                    viewManagerModel.setActiveView(adoptViewModel.getViewName());
+                    viewManagerModel.setActiveView(notifViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
         );

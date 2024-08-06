@@ -21,8 +21,8 @@ public class LoggedInViewModel extends ViewModel {
     /** The title label for the logged-in view. */
     public final String TITLE_LABEL = "Logged In View";
 
-    /** The current state of the logged-in user. */
-    private NotificationState notState = new NotificationState();
+    /** The notification state of the logged-in user. */
+    private NotificationState notifState = new NotificationState();
     
     private LoggedInState state = new LoggedInState();
 
@@ -38,8 +38,7 @@ public class LoggedInViewModel extends ViewModel {
     /** The label for the logout button. */
     public final String LOGOUT_BUTTON_LABEL = "Log out";
 
-    /** The username of the currently logged-in user. */
-
+    /** The label for notification button. */
     public String NOTIF_BUTTON= "Notifications";
 
     public final ViewManagerModel viewManagerModel;
