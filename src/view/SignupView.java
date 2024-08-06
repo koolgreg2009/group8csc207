@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.regex.Pattern;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,6 +21,7 @@ import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.preference.PreferenceViewModel;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -36,6 +36,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JTextField phoneInputField = new JTextField(15);
     private final SignupController signupController;
     private final LoginViewModel loginViewModel;
+    private final PreferenceViewModel preferenceViewModel;
     private final ViewManagerModel viewManagerModel;
 
 
@@ -43,12 +44,13 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JButton cancel;
 
     public SignupView(SignupController controller, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel,
-                      LoginViewModel loginViewModel) {
+                      LoginViewModel loginViewModel, PreferenceViewModel preferenceViewModel) {
 
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
         signupViewModel.addPropertyChangeListener(this);
         this.loginViewModel = loginViewModel;
+        this.preferenceViewModel = preferenceViewModel;
         this.viewManagerModel = viewManagerModel;
 
         JLabel title = new JLabel(signupViewModel.TITLE_LABEL);
