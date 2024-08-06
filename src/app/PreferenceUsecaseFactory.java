@@ -44,7 +44,7 @@ public class PreferenceUsecaseFactory {
             PreferenceViewModel preferenceViewModel,
             UserDAOInterface userDAO) {
         PreferenceController preferenceController = createPreferenceUseCase(viewManagerModel, loggedInViewModel, userDAO);
-        return new PreferenceView(preferenceViewModel, preferenceController, viewManagerModel);
+        return new PreferenceView(preferenceViewModel, preferenceController, viewManagerModel, loggedInViewModel);
 
     }
 

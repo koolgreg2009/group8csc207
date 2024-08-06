@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.PreferenceState;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferenceViewModel;
 
@@ -44,7 +45,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     private final PreferenceController preferenceController;
 
     public PreferenceView(PreferenceViewModel preferenceViewModel, PreferenceController controller,
-                          ViewManagerModel viewManagerModel) {
+                          ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel) {
 
         this.preferenceController = controller;
         this.preferenceViewModel = preferenceViewModel;
@@ -78,7 +79,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
         save.addActionListener(
                 evt -> {
-                    viewManagerModel.setActiveView(preferenceViewModel.getViewName());
+                    viewManagerModel.setActiveView(loggedInViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
         );
