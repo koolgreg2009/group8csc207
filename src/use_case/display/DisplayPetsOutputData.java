@@ -1,7 +1,8 @@
 package use_case.display;
 
 import java.util.List;
-import entity.Pet;
+
+import dto.pet.PetDTO;
 
 /**
  * Encapsulates the output data required to display all pets.
@@ -9,14 +10,14 @@ import entity.Pet;
  * This class stores a list of pets and provides a method to access this list.
  */
 public class DisplayPetsOutputData {
-    private final List<Pet> pets;
+    private final List<PetDTO> pets;
 
     /**
      * Constructs a {@code DisplayAllPetsOutputData} object with the specified list of pets.
      *
      * @param pets the list of pets to be displayed
      */
-    public DisplayPetsOutputData(List<Pet> pets) {
+    public DisplayPetsOutputData(List<PetDTO> pets) {
         this.pets = pets;
     }
 
@@ -25,7 +26,7 @@ public class DisplayPetsOutputData {
      *
      * @return the list of pets
      */
-    public List<Pet> getPets() {
+    public List<PetDTO> getPets() {
         return pets;
     }
 }

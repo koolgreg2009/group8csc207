@@ -2,6 +2,7 @@ package use_case.display.display_bookmark_pets;
 
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
+import dto.pet.PetDTO;
 import entity.Bookmark;
 import entity.Pet;
 import use_case.display.DisplayPetsOutputBoundary;
@@ -9,6 +10,7 @@ import use_case.display.DisplayPetsOutputData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DisplayBookmarkInteractor implements DisplayBookmarkInputBoundary{
     private final PetDAOInterface filePetDAO;
@@ -24,6 +26,13 @@ public class DisplayBookmarkInteractor implements DisplayBookmarkInputBoundary{
         for(Bookmark bookmark: bookmarks){
             pets.add(filePetDAO.get(bookmark.getPetID()));
         }
-        displayBookmarkPresenter.displayPetsOutput(new DisplayPetsOutputData(pets));
+        List<PetDTO> petDtoList = pets == null ? new ArrayList<>()
+                : pets.stream()
+                .map(pet -> new PetDTO(pet.getPetID(), pet.getName(), pet.getBreed(), pet.getGender(),
+                        pet.getSpecies(), pet.getPetAge(), pet.getBio(), pet.getOwner(), pet.getEmail(),
+                        pet.getPhoneNum(), pet.getActivityLevel(), pet.getLocation(), pet.getImgUrl()))
+                .collect(Collectors.toList());
+        petDtoList.sort((p1, p2) -> p1.getPetID() - p2.getPetID());
+        displayBookmarkPresenter.displayPetsOutput(new DisplayPetsOutputData(petDtoList));
     }
 }

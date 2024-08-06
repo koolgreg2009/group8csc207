@@ -2,9 +2,7 @@ package data_access;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -16,7 +14,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import entity.Pet;
 import entity.preference.UserPreference;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -80,29 +77,41 @@ public class FilePetDAO implements PetDAOInterface {
     }
 
     @Override
-	public boolean matchesPreference(Pet pet, UserPreference userPreference) {
-        if (userPreference.getSpecies() != null && !userPreference.getSpecies().isEmpty() && !userPreference.getSpecies().equals(pet.getSpecies())) {
+    public boolean matchesPreference(Pet pet, UserPreference userPreference) {
+        if (!isMatching(userPreference.getSpecies(), pet.getSpecies())) {
             return false;
         }
-        if (userPreference.getBreeds() != null && !userPreference.getBreeds().isEmpty() && !userPreference.getBreeds().contains(pet.getBreed())) {
+        if (!isMatching(userPreference.getBreeds(), pet.getBreed())) {
             return false;
         }
-        if (userPreference.getMinAge() != 0 && pet.getPetAge() < userPreference.getMinAge()) {
+        if (!isInRange(userPreference.getMinAge(), userPreference.getMaxAge(), pet.getPetAge())) {
             return false;
         }
-        if (userPreference.getMaxAge() != 0 && pet.getPetAge() > userPreference.getMaxAge()) {
+        if (!isMatching(userPreference.getActivityLevel(), pet.getActivityLevel())) {
             return false;
         }
-        if (userPreference.getActivityLevel() != null && !userPreference.getActivityLevel().isEmpty() && !userPreference.getActivityLevel().equals(pet.getActivityLevel())) {
+        if (!isMatching(userPreference.getLocation(), pet.getLocation())) {
             return false;
         }
-        if (userPreference.getLocation() != null && !userPreference.getLocation().isEmpty() && !userPreference.getLocation().equals(pet.getLocation())) {
+        if (!isMatching(userPreference.getGender(), pet.getGender())) {
             return false;
         }
-        if (userPreference.getGender() != null && !userPreference.getGender().isEmpty() && !userPreference.getGender().equals(pet.getGender())) {
+        if(!pet.isAvailable()){
             return false;
         }
         return true;
+    }
+
+    private boolean isMatching(String preference, String attribute) {
+        return preference == null || !preference.isEmpty() || Objects.equals(preference, attribute);
+    }
+
+    private boolean isMatching(List<String> preferences, String attribute) {
+        return preferences == null || !preferences.isEmpty() || preferences.contains(attribute);
+    }
+
+    private boolean isInRange(int min, int max, int value) {
+        return (min == 0 || value >= min) && (max == 0 || value <= max);
     }
 
     public void fetchAndStorePets() throws IOException {
@@ -117,8 +126,6 @@ public class FilePetDAO implements PetDAOInterface {
                 String responseBody = response.body().string();
                 JsonNode root = objectMapper.readTree(responseBody);
                 JsonNode data = root.get("data");
-                JsonNode included = root.get("included");
-
                 for (JsonNode petNode : data) {
                     Pet pet = parsePet(petNode);
                     if (pet != null) {

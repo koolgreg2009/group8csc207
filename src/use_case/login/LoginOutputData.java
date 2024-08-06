@@ -14,17 +14,14 @@ import dto.pet.PetDTO;
 public class LoginOutputData {
 
     private final String username;
-	private final List<PetDTO> pets;
 
     /**
      * Constructs a new LoginOutputData object with the specified details.
      *
      * @param username the username for the new login
-     * @param petDtoList 
      */
-    public LoginOutputData(String username, List<PetDTO> petDtoList) {
+    public LoginOutputData(String username) {
         this.username = username;
-        this.pets = petDtoList;
     }
 
     /**
@@ -35,10 +32,5 @@ public class LoginOutputData {
     public String getUsername() {
         return username;
     }
-
-	public List<PetDTO> getPets() {
-		return pets;
-	}
-
 
 }
