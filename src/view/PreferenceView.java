@@ -22,7 +22,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     final JTextField speciesInputField = new JTextField(15);
     private final JLabel speciesErrorField = new JLabel();
 
-    final JTextField breedInputField = new JPasswordField(30);
+    final JTextField breedInputField = new JTextField(30);
     private final JLabel breedErrorField = new JLabel();
 
     final JTextField minAgeInputField = new JTextField(8);
@@ -37,7 +37,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     final JTextField locationInputField = new JTextField(15);
     private final JLabel locationErrorField = new JLabel();
 
-    final JTextField genderInputField = new JTextField(10);
+    final JTextField genderInputField = new JTextField(8);
     private final JLabel genderErrorField = new JLabel();
 
     final JButton save;
@@ -67,7 +67,9 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         LabelTextPanel locationInfo = new LabelTextPanel(
                 new JLabel("Location"), locationInputField);
         LabelTextPanel genderInfo = new LabelTextPanel(
-                new JLabel("Gender"), genderInputField);
+                new JLabel("Select Gender, Enter M or F"), genderInputField);
+
+
 
         JPanel buttons = new JPanel();
         save = new JButton(preferenceViewModel.SAVE_BUTTON_LABEL);
