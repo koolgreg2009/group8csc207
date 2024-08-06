@@ -1,4 +1,4 @@
-package use_case.display.display_bookmark_pets;
+package use_case.display_bookmark_pets;
 
 import entity.Bookmark;
 

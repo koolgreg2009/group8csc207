@@ -17,7 +17,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.login_success.DisplayPetsViewModel;
+import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.pet_bio.PetBioVIewModel;
 import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupViewModel;

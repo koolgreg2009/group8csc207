@@ -1,4 +1,4 @@
-package use_case.login_success;
+package use_case.display_pets;
 
 public interface DisplayPetsOutputBoundary {
 

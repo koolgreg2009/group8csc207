@@ -4,12 +4,12 @@ import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.login_success.DisplayPetsController;
-import interface_adapter.login_success.DisplayPetsPresenter;
+import interface_adapter.display_pets.DisplayPetsController;
+import interface_adapter.display_pets.DisplayPetsPresenter;
 import interface_adapter.pet_bio.PetBioVIewModel;
-import use_case.login_success.DisplayPetsInputBoundary;
-import use_case.login_success.DisplayPetsInteractor;
-import use_case.login_success.DisplayPetsOutputBoundary;
+import use_case.display_pets.DisplayPetsInputBoundary;
+import use_case.display_pets.DisplayPetsInteractor;
+import use_case.display_pets.DisplayPetsOutputBoundary;
 import view.PetDetailView;
 
 public class PetDetailUseCaseFactory {

@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 
 import dto.pet.PetDTO;
-import interface_adapter.login_success.DisplayPetsController;
+import interface_adapter.display_pets.DisplayPetsController;
 import interface_adapter.pet_bio.PetBioState;
 import interface_adapter.pet_bio.PetBioVIewModel;
 
