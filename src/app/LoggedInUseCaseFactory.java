@@ -52,7 +52,7 @@ public class LoggedInUseCaseFactory {
         DisplayAllPetsController displayAllPetsController =
                 DisplayAllPetsUseCaseFactory.createDisplayAllPetsUseCase(userDAO, petDAO, loggedInViewModel);
         AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO);
-        AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO);
+        AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO, loggedInViewModel);
         RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase(userDAO);
 		return new LoggedInView(petBioController, displayAllPetsController, loggedInViewModel, bookmarkViewModel,
 				preferenceViewModel, loginViewModel, profileViewModel, null, viewManagerModel,

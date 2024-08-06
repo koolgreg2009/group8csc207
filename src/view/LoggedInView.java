@@ -153,7 +153,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
             List<PetDTO> pets = state.getPets();
             petListingPanel.removeAll();
             for (PetDTO pet : pets) {
-                petListingPanel.add(new PetListingPanel(this, pet));
+                petListingPanel.add(new PetListingPanel(this, pet, true));
             }
         } else if (evt.getPropertyName().equals("view") && evt.getNewValue().equals("logged in")){
             displayAllPetsController.execute();
@@ -164,10 +164,13 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
     }
 
 	@Override
-	public void save(int petID) {
-		// TODO Auto-generated method stub
-		
+	public void add(int petID) {
+        addBookmarkController.execute(petID);
 	}
+    @Override
+    public void remove(int petID){
+        removeBookmarkController.execute(petID);
+    }
 
 	@Override
 	public void goDetail(int petID) {
