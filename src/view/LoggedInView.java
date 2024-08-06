@@ -8,10 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import dto.pet.PetDTO;
 import interface_adapter.ProfileViewModel;
@@ -144,6 +141,14 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
 	public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
+    private void showNotification() {
+        LoggedInState state = loggedInViewModel.getState();
+        if (state.isNotificationSuccess()) {
+            JOptionPane.showMessageDialog(this, state.getNotificationMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, state.getNotificationMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -158,10 +163,13 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         } else if (evt.getPropertyName().equals("view") && evt.getNewValue().equals("logged in")){
             displayAllPetsController.execute();
         }
+        else if ("notification".equals(evt.getPropertyName())) {
+            showNotification();
+        }
 
-        
         // add method here
     }
+
 
 	@Override
 	public void add(int petID) {

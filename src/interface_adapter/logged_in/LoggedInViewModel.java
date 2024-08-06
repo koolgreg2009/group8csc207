@@ -70,6 +70,10 @@ public class LoggedInViewModel extends ViewModel {
         support.firePropertyChange("state", null, this.state);
     }
 
+    public void fireNotificationChanged() {
+        support.firePropertyChange("notification", null, this.state);
+        // firePropertyChanged();
+    }
     /**
      * Adds a listener for property change events.
      *
@@ -96,6 +100,17 @@ public class LoggedInViewModel extends ViewModel {
      */
     public String getLoggedInUser() {
         return state.getUsername();
+    }
+    /**
+     * Setter for notification popup in state
+     *
+     * @param message msg to user to be displayed
+     * @param isSuccess whether if user action was successful
+     */
+    public void setNotification(String message, boolean isSuccess) {
+        this.state.setNotificationMessage(message);
+        this.state.setNotificationSuccess(isSuccess);
+        fireNotificationChanged();
     }
 
 

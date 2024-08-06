@@ -20,8 +20,7 @@ public class AddBookmarkPresenter implements AddBookmarkOutputBoundary {
      *                   bookmarks associated with the user.
      */
     public void prepareSuccessView(BookmarkOutputData outputData){
-        System.out.println(outputData.getBookmark()+" has been added. Here are all your bookmarks: "
-                + outputData.getAllBookmarks());
+        loggedInViewModel.setNotification("Added bookmark", true);
     }
 
     /** Prepares the view to display an error message when the addition of bookmark is not successful.
@@ -29,6 +28,7 @@ public class AddBookmarkPresenter implements AddBookmarkOutputBoundary {
      * @param errormsg the error message that will be displayed to the user.
      */
     public void prepareErrorView(String errormsg){
-        loggedInViewModel.firePropertyChanged();
+        loggedInViewModel.setNotification("Bookmark already exists", true);
+
     }
 }
