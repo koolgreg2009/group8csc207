@@ -35,9 +35,10 @@ public class PetBioInteractor implements PetBioInputBoundary{
     public void execute(PetBioInputData petBioInputData) {
         int petID = petBioInputData.getPetID();
         Pet pet = petDAO.get(petID);
-        PetBioOutputData petBioOutputData = new PetBioOutputData(new PetDTO(pet.getPetID(), pet.getName(), pet.getBreed(), pet.getGender(),
-				pet.getSpecies(), pet.getPetAge(), pet.getBio(), pet.getOwner(), pet.getEmail(),
-				pet.getPhoneNum(), pet.getActivityLevel(), pet.getLocation(), pet.getImgUrl()));
-        bioPresenter.preparePetBio(petBioOutputData);
+		PetBioOutputData petBioOutputData = new PetBioOutputData(petBioInputData.getViewUser(),
+				new PetDTO(pet.getPetID(), pet.getName(), pet.getBreed(), pet.getGender(), pet.getSpecies(),
+						pet.getPetAge(), pet.getBio(), pet.getOwner(), pet.getEmail(), pet.getPhoneNum(),
+						pet.getActivityLevel(), pet.getLocation(), pet.getImgUrl()));
+		bioPresenter.preparePetBio(petBioOutputData);
     }
 }

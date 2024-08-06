@@ -21,10 +21,11 @@ public class PetBioController {
 
     /**
      * Executes the pet bio use case by prompting the user for a pet ID while passing input data to the interactor.
+     * @param userName 
      * @param petID 
      */
-    public void execute(int petID){
-        this.petBioInteractor.execute(new PetBioInputData(petID));
+    public void execute(String userName, int petID){
+        this.petBioInteractor.execute(new PetBioInputData(userName, petID));
     }
 }
 

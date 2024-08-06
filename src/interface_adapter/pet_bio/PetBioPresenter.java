@@ -29,6 +29,7 @@ public class PetBioPresenter implements PetBioOutputBoundary {
 		// its toString method
 		System.out.println(petBio.getPet());
 		petBioViewModel.getState().setPet(petBio.getPet());
+		petBioViewModel.getState().setViewUser(petBio.getViewUser());
 		petBioViewModel.firePropertyChanged();
 		
 		viewManagerModel.setActiveView(petBioViewModel.getViewName());

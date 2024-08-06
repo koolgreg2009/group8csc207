@@ -1,11 +1,8 @@
 package interface_adapter.logged_in;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import interface_adapter.SessionManager;
-import interface_adapter.ViewManagerModel;
 import interface_adapter.ViewModel;
 
 /**
@@ -41,13 +38,11 @@ public class LoggedInViewModel extends ViewModel {
     /** The label for notification button. */
     public String NOTIF_BUTTON= "Notifications";
 
-    public final ViewManagerModel viewManagerModel;
     /**
      * Constructs a new LoggedInViewModel with a predefined view name.
      */
-    public LoggedInViewModel(ViewManagerModel viewManagerModel) {
+    public LoggedInViewModel() {
         super("logged in");
-        this.viewManagerModel = viewManagerModel;
     }
 
 //    /**

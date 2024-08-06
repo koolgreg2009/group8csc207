@@ -12,14 +12,17 @@ import dto.pet.PetDTO;
 public class PetBioOutputData {
 
     private PetDTO pet;
+	private String viewUser;
 
     /**
      * Constructs a new PetBioOutputData object with the specified pet.
+     * @param viewUser 
      *
      * @param petDTO the pet whose bio is being output
      */
-    public PetBioOutputData(PetDTO petDTO) {
+    public PetBioOutputData(String viewUser, PetDTO petDTO) {
         this.pet = petDTO;
+        this.viewUser = viewUser;
     }
 
     /**
@@ -30,5 +33,9 @@ public class PetBioOutputData {
     public PetDTO getPet() {
         return pet;
     }
+
+	public String getViewUser() {
+		return viewUser;
+	}
 
 }
