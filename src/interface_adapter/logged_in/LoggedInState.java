@@ -15,7 +15,7 @@ import dto.pet.PetDTO;
 public class LoggedInState {
     private String username = "";
     private List<PetDTO> pets = new ArrayList<>();
-
+    private String bookmarkErrorMsg = "Bookmark already exists";
     /**
      * Constructs a new LoggedInState object by copying the state from another LoggedInState instance.
      *
@@ -44,8 +44,13 @@ public class LoggedInState {
      *
      * @param username
      */
+
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getBookmarkErrorMsg() {
+        return bookmarkErrorMsg;
     }
 
 	public List<PetDTO> getPets() {
