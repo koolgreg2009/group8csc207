@@ -30,16 +30,10 @@ public class AdoptUseCaseFactory {
      *
      * @return an instance of {@link AdoptController}, or {@code null} if an {@link IOException} occurs.
      */
-    public static AdoptController createAdoptUseCase(){
-        try{
-            PetDAOInterface pet = new FilePetDAO("./pets.json");
-            UserDAOInterface user = new FileUserDAO("./users.json");
+    public static AdoptController createAdoptUseCase(PetDAOInterface petDAO, UserDAOInterface userDAO){
             AdoptOutputBoundary adoptPresenter = new AdoptPresenter();
-            AdoptInputBoundary adoptInteractor = new Adopt(pet, adoptPresenter, user);
+            AdoptInputBoundary adoptInteractor = new Adopt(petDAO, adoptPresenter, userDAO);
             return new AdoptController(adoptInteractor);
-        } catch(IOException e){
-            System.out.println("File not found");
-            return null;
-        }
+
     }
 }
