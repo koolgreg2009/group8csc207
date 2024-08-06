@@ -22,7 +22,7 @@ personality to help find the perfect fit for the pet and the new owner.
 
 * This project was entirely written in Java.
 * Java Swing was used for the GUI.
-* This project is strictly adhering to the Clean Architecture and the SOLID design principles.
+* This project strictly adheres to the Clean Architecture and SOLID design principles.
 
 ## Getting Started (For later)
 1. Clone the repository.
@@ -31,6 +31,7 @@ personality to help find the perfect fit for the pet and the new owner.
 4. (Start guide to be updated)
 
 ## APIs Used
+* [RescueGroups.org](https://rescuegroups.org/services/adoptable-pet-data-api/): API that provides us adoptable pet data.
 * [TheCATAPI](https://documenter.getpostman.com/view/5578104/RWgqUxxh#intro): API that returns cat information.
 
 # Technical Problems and Notes

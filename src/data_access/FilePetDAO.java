@@ -1,21 +1,23 @@
 package data_access;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import entity.Pet;
 import entity.preference.UserPreference;
-import okhttp3.*;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import utils.IdCounter;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class FilePetDAO implements PetDAOInterface {
     private final File jsonFile;
@@ -76,31 +78,42 @@ public class FilePetDAO implements PetDAOInterface {
 
     @Override
     public boolean matchesPreference(Pet pet, UserPreference userPreference) {
-        if (userPreference.getSpecies() != null && !userPreference.getSpecies().isEmpty() && !userPreference.getSpecies().equals(pet.getSpecies())) {
+        if (!isMatching(userPreference.getSpecies(), pet.getSpecies())) {
             return false;
         }
-        if (userPreference.getBreeds() != null && !userPreference.getBreeds().isEmpty() && !userPreference.getBreeds().contains(pet.getBreed())) {
+        if (!isMatching(userPreference.getBreeds(), pet.getBreed())) {
             return false;
         }
-        if (userPreference.getMinAge() != 0 && pet.getPetAge() < userPreference.getMinAge()) {
+        if (!isInRange(userPreference.getMinAge(), userPreference.getMaxAge(), pet.getPetAge())) {
             return false;
         }
-        if (userPreference.getMaxAge() != 0 && pet.getPetAge() > userPreference.getMaxAge()) {
+        if (!isMatching(userPreference.getActivityLevel(), pet.getActivityLevel())) {
             return false;
         }
-        if (userPreference.getActivityLevel() != null && !userPreference.getActivityLevel().isEmpty() && !userPreference.getActivityLevel().equals(pet.getActivityLevel())) {
+        if (!isMatching(userPreference.getLocation(), pet.getLocation())) {
             return false;
         }
-        if (userPreference.getLocation() != null && !userPreference.getLocation().isEmpty() && !userPreference.getLocation().equals(pet.getLocation())) {
+        if (!isMatching(userPreference.getGender(), pet.getGender())) {
             return false;
         }
-        if (userPreference.getGender() != null && !userPreference.getGender().isEmpty() && !userPreference.getGender().equals(pet.getGender())) {
+        if(!pet.isAvailable()){
             return false;
         }
         return true;
     }
 
-    @Override
+    private boolean isMatching(String preference, String attribute) {
+        return preference == null || !preference.isEmpty() || Objects.equals(preference, attribute);
+    }
+
+    private boolean isMatching(List<String> preferences, String attribute) {
+        return preferences == null || !preferences.isEmpty() || preferences.contains(attribute);
+    }
+
+    private boolean isInRange(int min, int max, int value) {
+        return (min == 0 || value >= min) && (max == 0 || value <= max);
+    }
+
     public void fetchAndStorePets() throws IOException {
         Request request = new Request.Builder()
                 .url(BASE_URL + "/public/animals/search/available/cats")
@@ -124,8 +137,8 @@ public class FilePetDAO implements PetDAOInterface {
             }
         }
     }
-    @Override
-    public String fetchOrg(String orgId, String orgUrl) throws IOException {
+
+    private String fetchOrg(String orgUrl) throws IOException {
         Request orgRequest = new Request.Builder()
                 .url(orgUrl)
                 .addHeader("Authorization", API_KEY)
@@ -134,8 +147,7 @@ public class FilePetDAO implements PetDAOInterface {
                 .build();
         try (Response orgResponse = client.newCall(orgRequest).execute()) {
             if (orgResponse.isSuccessful() && orgResponse.body() != null) {
-                String orgResponseBody = orgResponse.body().string();
-                return orgResponseBody;
+                return orgResponse.body().string();
             } else {
                 throw new IOException("Failed to fetch organization details with HTTP code: " + orgResponse.code() + " and message: " + orgResponse.message());
             }
@@ -146,7 +158,7 @@ public class FilePetDAO implements PetDAOInterface {
     public Pet parsePet(JsonNode petNode) throws IOException {
         String orgId = petNode.get("relationships").get("orgs").get("data").get(0).get("id").asText();
         String orgUrl = BASE_URL + "/public/orgs/" + orgId;
-        String orgResponseBody = fetchOrg(orgId, orgUrl);
+        String orgResponseBody = fetchOrg(orgUrl);
         JsonNode orgRoot = objectMapper.readTree(orgResponseBody);
         JsonNode dataNode = orgRoot.get("data");
         JsonNode orgData = dataNode.get(0).get("attributes");
@@ -181,15 +193,7 @@ public class FilePetDAO implements PetDAOInterface {
                 name,
                 parsedUrl
         );
-
-
     }
-
-    @Override
-    public Pet parsePet(JsonNode petNode, JsonNode included) throws IOException {
-        return null;
-    }
-
 
     /**
      * parses string age into int months
@@ -197,9 +201,15 @@ public class FilePetDAO implements PetDAOInterface {
      * RI: format must be in x Years y Months format
      * @return age in months
      */
-    @Override
-    public int parseAgeString(String ageString) {
+
+    private int parseAgeString(String ageString) {
         String[] split =  ageString.split(" ");
+
         return split.length == 4 ? Integer.parseInt(split[0])*12+Integer.parseInt(split[2]) : Integer.parseInt(split[0])*12;
     }
+
+	@Override
+	public ArrayList<Pet> getAvailablePets() {
+		return pets.values().stream().filter(pet -> pet.isAvailable()).collect(Collectors.toCollection(ArrayList::new));
+	}
 }

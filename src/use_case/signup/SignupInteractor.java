@@ -42,8 +42,8 @@ public class SignupInteractor implements SignupInputBoundary {
      */
     @Override
     public void execute(SignupInputData signupInputData) {
-        Pattern emailRegex = Pattern.compile("^[\\w|.%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-        Pattern phoneRegex = Pattern.compile("^\\(\\d{3}\\)\\d{3}-\\d{4}$");
+        Pattern emailRegex = Pattern.compile("^[\\w.%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+        Pattern phoneRegex = Pattern.compile("^[0-9]{10,15}$");
         if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
             userPresenter.prepareFailView("User already exists.");
         } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
@@ -53,14 +53,14 @@ public class SignupInteractor implements SignupInputBoundary {
         } else if (!phoneRegex.matcher(signupInputData.getPhone()).matches()){
             userPresenter.prepareFailView("Invalid phone number.");
         } else {
-
             LocalDateTime now = LocalDateTime.now();
             AdopterUser user = adopterUserFactory.createAdopter(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getName(), signupInputData.getEmail(), signupInputData.getPhone());
             userDataAccessObject.save(user);
-
             SignupOutputData signupOutputData = new SignupOutputData(user.getName(), now.toString(), false);
             userPresenter.prepareSuccessView(signupOutputData);
         }
+
+
     }
 
 }

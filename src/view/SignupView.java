@@ -1,11 +1,6 @@
 package view;
 
-import interface_adapter.signup.SignupController;
-import interface_adapter.signup.SignupState;
-import interface_adapter.signup.SignupViewModel;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,6 +8,20 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.regex.Pattern;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import interface_adapter.ViewManagerModel;
+import interface_adapter.signup.SignupController;
+import interface_adapter.signup.SignupState;
+import interface_adapter.signup.SignupViewModel;
+import interface_adapter.login.LoginViewModel;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -26,15 +35,21 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JTextField emailInputField = new JTextField(15);
     private final JTextField phoneInputField = new JTextField(15);
     private final SignupController signupController;
+    private final LoginViewModel loginViewModel;
+    private final ViewManagerModel viewManagerModel;
+
 
     private final JButton signUp;
     private final JButton cancel;
 
-    public SignupView(SignupController controller, SignupViewModel signupViewModel) {
+    public SignupView(SignupController controller, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel,
+                      LoginViewModel loginViewModel) {
 
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
         signupViewModel.addPropertyChangeListener(this);
+        this.loginViewModel = loginViewModel;
+        this.viewManagerModel = viewManagerModel;
 
         JLabel title = new JLabel(signupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -61,27 +76,29 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
+                    @Override
+					public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
                             SignupState currentState = signupViewModel.getState();
-                            if (isValidEmail(currentState.getEmail()) && isValidPhone(currentState.getPhone())) {
-                                signupController.execute(
-                                        currentState.getUsername(),
-                                        currentState.getPassword(),
-                                        currentState.getRepeatPassword(),
-                                        currentState.getName(),
-                                        currentState.getEmail(),
-                                        currentState.getPhone()
-                                );
-                            } else {
-                                JOptionPane.showMessageDialog(SignupView.this, "Invalid email or phone number.");
-                            }
+                            signupController.execute(
+                                    currentState.getUsername(),
+                                    currentState.getPassword(),
+                                    currentState.getRepeatPassword(),
+                                    currentState.getName(),
+                                    currentState.getEmail(),
+                                    currentState.getPhone()
+                            );
                         }
                     }
                 }
         );
 
-        cancel.addActionListener(this);
+        cancel.addActionListener(
+                evt -> {
+                    viewManagerModel.setActiveView(loginViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                }
+        );
 
         usernameInputField.addKeyListener(
                 new KeyListener() {
@@ -144,7 +161,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
-                        currentState.setUsername(nameInputField.getText() + e.getKeyChar());
+                        currentState.setName(nameInputField.getText() + e.getKeyChar());
                         signupViewModel.setState(currentState);
                     }
 
@@ -162,7 +179,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
-                        currentState.setUsername(emailInputField.getText() + e.getKeyChar());
+                        currentState.setEmail(emailInputField.getText() + e.getKeyChar());
                         signupViewModel.setState(currentState);
                     }
 
@@ -180,7 +197,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
-                        currentState.setUsername(phoneInputField.getText() + e.getKeyChar());
+                        currentState.setPhone(phoneInputField.getText() + e.getKeyChar());
                         signupViewModel.setState(currentState);
                     }
 
@@ -205,22 +222,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(buttons);
     }
 
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        return pattern.matcher(email).matches();
-    }
-
-    private boolean isValidPhone(String phone) {
-        String phoneRegex = "^[0-9]{10,15}$";
-        Pattern pattern = Pattern.compile(phoneRegex);
-        return pattern.matcher(phone).matches();
-    }
 
     /**
      * React to a button click that results in evt.
      */
-    public void actionPerformed(ActionEvent evt) {
+    @Override
+	public void actionPerformed(ActionEvent evt) {
 		signupController.execute(usernameInputField.getText(), String.valueOf(passwordInputField.getPassword()),
 				String.valueOf(repeatPasswordInputField.getPassword()), emailInputField.getText(),
                 phoneInputField.getText(),

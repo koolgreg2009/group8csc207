@@ -1,36 +1,26 @@
 package app;
 
 
+import java.awt.CardLayout;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
 import data_access.FilePetDAO;
 import data_access.FileUserDAO;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
-import entity.preference.UserPreference;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.adopt.AdoptController;
-import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
-import interface_adapter.bookmark.RemoveBookmarkController;
-import interface_adapter.display_all_pets.DisplayAllPetsController;
-import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.pet_bio.PetBioController;
-import interface_adapter.preference.PreferenceController;
+import interface_adapter.pet_bio.PetBioVIewModel;
 import interface_adapter.preference.PreferenceViewModel;
-import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupViewModel;
 import view.*;
-import view.LoginView;
-import view.SignupView;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -39,15 +29,16 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Login Page");
+        JFrame application = new JFrame("Pet Adoption");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
+        application.setResizable(true);
+        application.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        application.setSize(800, 500);
         CardLayout cardLayout = new CardLayout();
 
         // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
         application.add(views);
-
         // This keeps track of and manages which view is currently showing.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
@@ -58,11 +49,12 @@ public class Main {
         // be observed by the Views.
 
         LoginViewModel loginViewModel = new LoginViewModel();
-        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
+        LoggedInViewModel loggedInViewModel = new LoggedInViewModel(viewManagerModel);
         SignupViewModel signupViewModel = new SignupViewModel();
         BookmarkViewModel bookmarkViewModel = new BookmarkViewModel();
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
         ProfileViewModel profileViewModel = new ProfileViewModel();
+        PetBioVIewModel petBioViewModel = new PetBioVIewModel();
         // creating user and pet DAO to be used for all use cases. declared outside so compiler doesnt cry
         UserDAOInterface userDAO = null;
         PetDAOInterface petDAO = null;
@@ -80,10 +72,11 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDAO);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, signupViewModel, userDAO);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, signupViewModel, userDAO, petDAO);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, viewManagerModel);
+		LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, userDAO, petDAO, 
+        		petBioViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
         BookmarkView bookmarkView = new BookmarkView();
@@ -98,7 +91,8 @@ public class Main {
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        application.pack();
+        //application.pack();
+        application.setLocationRelativeTo(null);
         application.setVisible(true);
     }
 }

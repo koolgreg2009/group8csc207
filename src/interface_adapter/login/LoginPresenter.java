@@ -1,14 +1,11 @@
 package interface_adapter.login;
 
 import interface_adapter.SessionManager;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.signup.SignupState;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
-import use_case.signup.SignupOutputBoundary;
-import use_case.signup.SignupOutputData;
 
 /**
  * The LoginPresenter class implements the LoginOutputBoundary interface
@@ -39,7 +36,7 @@ public class LoginPresenter implements LoginOutputBoundary {
     public LoginPresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
                           LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.loggedInViewModel = new LoggedInViewModel();
+        this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
     }
 //

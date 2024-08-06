@@ -6,6 +6,7 @@ import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.display_all_pets.DisplayPetsPresenter;
+import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.display.display_all_available_pets.DisplayAllPetsInputBoundary;
 import use_case.display.display_all_available_pets.DisplayAllPetsInteractor;
 import use_case.display.DisplayPetsOutputBoundary;
@@ -30,17 +31,12 @@ public class DisplayAllPetsUseCaseFactory {
      *
      * @return an instance of {@link DisplayAllPetsController}, or {@code null} if an {@link IOException} occurs.
      */
-    public static DisplayAllPetsController createDisplayAllPetsUseCase() {
-        try {
-            PetDAOInterface filePetDAO = new FilePetDAO("./pets.json");
-            UserDAOInterface fileUserDAO = new FileUserDAO("./users.json");
-            DisplayPetsOutputBoundary displayAllPetsPresenter = new DisplayPetsPresenter();
-            DisplayAllPetsInputBoundary displayAllPetsInteractor = new DisplayAllPetsInteractor(filePetDAO, fileUserDAO,
-                    displayAllPetsPresenter);
-            return new DisplayAllPetsController(displayAllPetsInteractor);
-        } catch (IOException e) {
-            System.out.println("Error creating file pet DAO");
-            return null;
-        }
+    public static DisplayAllPetsController createDisplayAllPetsUseCase(UserDAOInterface userDAO, PetDAOInterface petDAO, LoggedInViewModel loggedInViewModel) {
+
+        DisplayPetsOutputBoundary displayAllPetsPresenter = new DisplayPetsPresenter(loggedInViewModel);
+        DisplayAllPetsInputBoundary displayAllPetsInteractor = new DisplayAllPetsInteractor(petDAO, userDAO,
+                displayAllPetsPresenter);
+        return new DisplayAllPetsController(displayAllPetsInteractor);
+
     }
 }

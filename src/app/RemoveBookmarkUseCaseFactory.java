@@ -27,15 +27,11 @@ public class RemoveBookmarkUseCaseFactory {
      *
      * @return an instance of {@link RemoveBookmarkController}, or {@code null} if an {@link IOException} occurs.
      */
-    public static RemoveBookmarkController removeBookmarkUseCase(){
-        try{
-            UserDAOInterface userDAO = new FileUserDAO("./users.json");
-            RemoveBookmarkOutputBoundary bookmarkPresenter = new RemoveBookmarkPresenter();
-            BookmarkInputBoundary removeBookmarkInteractor = new RemoveBookmarkInteractor(userDAO, bookmarkPresenter);
-            return new RemoveBookmarkController(removeBookmarkInteractor);
-        } catch (IOException e) {
-            System.out.println("Could not open user data file.");
-            return null;
-        }
+    public static RemoveBookmarkController removeBookmarkUseCase(UserDAOInterface userDAO){
+
+        RemoveBookmarkOutputBoundary bookmarkPresenter = new RemoveBookmarkPresenter();
+        BookmarkInputBoundary removeBookmarkInteractor = new RemoveBookmarkInteractor(userDAO, bookmarkPresenter);
+        return new RemoveBookmarkController(removeBookmarkInteractor);
+
     }
 }

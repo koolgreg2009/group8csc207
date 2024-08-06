@@ -14,11 +14,7 @@ public class AdoptController {
         this.adoptInteractor = adoptInteractor;
     }
 
-    public void execute(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Executing Adopt usecase");
-        System.out.println("Please enter petID: ");
-        int id = scanner.nextInt();
-        this.adoptInteractor.execute(new AdoptInputData(id));
+    public void execute(int petID){
+        this.adoptInteractor.execute(new AdoptInputData(petID));
     }
 }

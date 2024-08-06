@@ -26,13 +26,13 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
 
     /** Executes the use case to edit the adopter user's preferences.
      *
-     * @param PreferenceData is the preference data for the adopter user which is trying to edit preferences
+     * @param preferenceData is the preference data for the adopter user which is trying to edit preferences
      */
     @Override
-    public void execute(PreferenceData PreferenceData){
-        User user = userDataAccessObject.get(PreferenceData.getUsername());
+    public void execute(PreferenceData preferenceData){
+        User user = userDataAccessObject.get(preferenceData.getUsername());
 
-        ((AdopterUser) user).setPreferences(PreferenceData.getUserPreference());
+        ((AdopterUser) user).setPreferences(preferenceData.getUserPreference());
 
         userDataAccessObject.save(user);
         PreferenceOutputData outputData = new PreferenceOutputData(((AdopterUser) user).getPreferences());

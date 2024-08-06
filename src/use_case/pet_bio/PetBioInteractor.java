@@ -2,6 +2,7 @@ package use_case.pet_bio;
 
 
 import data_access.PetDAOInterface;
+import dto.pet.PetDTO;
 import entity.Pet;
 
 /**
@@ -34,7 +35,9 @@ public class PetBioInteractor implements PetBioInputBoundary{
     public void execute(PetBioInputData petBioInputData) {
         int petID = petBioInputData.getPetID();
         Pet pet = petDAO.get(petID);
-        PetBioOutputData petBioOutputData = new PetBioOutputData(pet);
+        PetBioOutputData petBioOutputData = new PetBioOutputData(new PetDTO(pet.getPetID(), pet.getName(), pet.getBreed(), pet.getGender(),
+				pet.getSpecies(), pet.getPetAge(), pet.getBio(), pet.getOwner(), pet.getEmail(),
+				pet.getPhoneNum(), pet.getActivityLevel(), pet.getLocation(), pet.getImgUrl()));
         bioPresenter.preparePetBio(petBioOutputData);
     }
 }
