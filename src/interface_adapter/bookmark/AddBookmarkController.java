@@ -26,10 +26,7 @@ public class AddBookmarkController {
      * Prompts the user to enter the ID of the pet they want to bookmark and processes the input.
      *
      */
-    public void execute(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the ID of the pet you want to bookmark: ");
-        int petID = scanner.nextInt();
+    public void execute(int petID){
         this.addBookmarkInteractor.execute(new BookmarkInputData(SessionManager.getCurrentUser(), petID));
     }
 }
