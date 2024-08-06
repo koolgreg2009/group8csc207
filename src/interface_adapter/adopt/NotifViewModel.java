@@ -4,8 +4,8 @@ import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 
-public class AdoptViewModel extends ViewModel {
-    public AdoptViewModel() {
+public class NotifViewModel extends ViewModel {
+    public NotifViewModel() {
         super("Notification");
     }
 
