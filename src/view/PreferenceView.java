@@ -15,7 +15,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class PreferenceView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "Set preferences";
+    public final String viewName = "preference";
     private final PreferenceViewModel preferenceViewModel;
     private final ViewManagerModel viewManagerModel;
 
