@@ -2,8 +2,8 @@ package interface_adapter.login;
 
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInState;
-import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.login_success.DisplayPetsState;
+import interface_adapter.login_success.DisplayPetsViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
@@ -22,21 +22,21 @@ public class LoginPresenter implements LoginOutputBoundary {
     /** The view model for the login view. */
     private final LoginViewModel loginViewModel;
 
-    /** The view model for the logged-in view. */
-    private final LoggedInViewModel loggedInViewModel;
+    /** The view model for the success logged-in view. */
+    private final DisplayPetsViewModel displayPetsViewModel;
 
 
 //    /**
 //     * Constructs a LoginPresenter with the specified view models and view manager model.
 //     *
 //     * @param viewManagerModel
-//     * @param loggedInViewModel
+//     * @param displayPetsViewModel
 //     * @param loginViewModel
 //     */
-    public LoginPresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
+    public LoginPresenter(ViewManagerModel viewManagerModel, DisplayPetsViewModel displayPetsViewModel,
                           LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
+        this.displayPetsViewModel = displayPetsViewModel;
         this.loginViewModel = loginViewModel;
     }
 //
@@ -74,8 +74,9 @@ public class LoginPresenter implements LoginOutputBoundary {
     @Override
     public void prepareSuccessView(LoginOutputData data) {
         SessionManager.login(data.getUsername());
-        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+        DisplayPetsState state = displayPetsViewModel.getState();
+        state.setUsername(SessionManager.getCurrentUser());
+        displayPetsViewModel.firePropertyChanged();
     }
 
     @Override

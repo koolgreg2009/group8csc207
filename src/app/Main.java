@@ -17,6 +17,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.login_success.DisplayPetsViewModel;
 import interface_adapter.pet_bio.PetBioVIewModel;
 import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupViewModel;
@@ -49,7 +50,8 @@ public class Main {
         // be observed by the Views.
 
         LoginViewModel loginViewModel = new LoginViewModel();
-        LoggedInViewModel loggedInViewModel = new LoggedInViewModel(viewManagerModel);
+        DisplayPetsViewModel displayPetsViewModel = new DisplayPetsViewModel();
+        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         BookmarkViewModel bookmarkViewModel = new BookmarkViewModel();
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
@@ -72,12 +74,18 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDAO);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, signupViewModel, userDAO, petDAO);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, displayPetsViewModel, signupViewModel, userDAO, petDAO);
         views.add(loginView, loginView.viewName);
+        
+        DisplayPetsView displayPetsView = DisplayPetsUseCaseFactory.create(viewManagerModel, displayPetsViewModel, loggedInViewModel, userDAO, petDAO);
+        views.add(displayPetsView, displayPetsView.viewName);
 
 		LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, userDAO, petDAO, 
         		petBioViewModel);
         views.add(loggedInView, loggedInView.viewName);
+
+		PetDetailView petDetailView = PetDetailUseCaseFactory.create(viewManagerModel, petBioViewModel, loggedInViewModel, userDAO, petDAO);
+        views.add(petDetailView, petDetailView.viewName);
 
         BookmarkView bookmarkView = new BookmarkView();
         views.add(bookmarkView, bookmarkView.viewName);

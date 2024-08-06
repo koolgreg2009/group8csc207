@@ -3,10 +3,10 @@ package app;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.login_success.DisplayPetsViewModel;
 import interface_adapter.signup.SignupViewModel;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
@@ -31,16 +31,16 @@ public class LoginUseCaseFactory {
      *
      * @param viewManagerModel
      * @param loginViewModel
-     * @param loggedInViewModel
+     * @param displayPetsViewModel
      * @param userDAO
      * @param petDAO 
      * @return A LoginView instance configured with the provided dependencies.
      */
     public static LoginView create(
             ViewManagerModel viewManagerModel,
-            LoginViewModel loginViewModel, LoggedInViewModel loggedInViewModel, SignupViewModel signupViewModel,
+            LoginViewModel loginViewModel, DisplayPetsViewModel displayPetsViewModel, SignupViewModel signupViewModel,
             UserDAOInterface userDAO, PetDAOInterface petDAO) {
-            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDAO, petDAO);
+            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, displayPetsViewModel, userDAO, petDAO);
             return new LoginView(loginViewModel, loginController, viewManagerModel, signupViewModel);
 
         }
@@ -49,7 +49,7 @@ public class LoginUseCaseFactory {
      *
      * @param viewManagerModel
      * @param loginViewModel
-     * @param loggedInViewModel
+     * @param displayPetsViewModel
      * @param userDAO
      * @param petDAO 
      * @return A LoginController instance configured with the provided dependencies.
@@ -58,10 +58,10 @@ public class LoginUseCaseFactory {
     private static LoginController createLoginUseCase(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
-            LoggedInViewModel loggedInViewModel,
+            DisplayPetsViewModel displayPetsViewModel,
             UserDAOInterface userDAO, PetDAOInterface petDAO){
 
-        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
+        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, displayPetsViewModel, loginViewModel);
 
 
         LoginInputBoundary loginInteractor = new LoginInteractor(
