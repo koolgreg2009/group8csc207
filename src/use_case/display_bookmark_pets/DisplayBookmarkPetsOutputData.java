@@ -1,4 +1,4 @@
-package use_case.display;
+package use_case.display_bookmark_pets;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import dto.pet.PetDTO;
  * <p>
  * This class stores a list of pets and provides a method to access this list.
  */
-public class DisplayPetsOutputData {
+public class DisplayBookmarkPetsOutputData {
     private final List<PetDTO> pets;
 
     /**
@@ -17,7 +17,7 @@ public class DisplayPetsOutputData {
      *
      * @param pets the list of pets to be displayed
      */
-    public DisplayPetsOutputData(List<PetDTO> pets) {
+    public DisplayBookmarkPetsOutputData(List<PetDTO> pets) {
         this.pets = pets;
     }
 

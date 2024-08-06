@@ -5,9 +5,9 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JPanel;
 
-import interface_adapter.login_success.DisplayPetsController;
-import interface_adapter.login_success.DisplayPetsState;
-import interface_adapter.login_success.DisplayPetsViewModel;
+import interface_adapter.display_pets.DisplayPetsController;
+import interface_adapter.display_pets.DisplayPetsState;
+import interface_adapter.display_pets.DisplayPetsViewModel;
 
 public class DisplayPetsView extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = 1L;

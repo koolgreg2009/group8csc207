@@ -1,4 +1,4 @@
-package interface_adapter.login_success;
+package interface_adapter.display_pets;
 
 public class DisplayPetsState {
     private String username = "";
