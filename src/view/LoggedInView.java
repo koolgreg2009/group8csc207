@@ -17,8 +17,11 @@ import dto.pet.PetDTO;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.adopt.AdoptController;
 import interface_adapter.adopt.AdoptViewModel;
+import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
+import interface_adapter.bookmark.RemoveBookmarkController;
 import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -47,15 +50,27 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
     private final JButton bookmark;
     private final JButton notifications;
     private final JPanel petListingPanel;
-	private PetBioController petBioController;
-    private DisplayAllPetsController displayAllPetsController;
+	private final PetBioController petBioController;
+    private final DisplayAllPetsController displayAllPetsController;
+    private final AdoptController adoptController;
+    private final AddBookmarkController addBookmarkController;
+    private final RemoveBookmarkController removeBookmarkController;
 
     /**
      * A window with a title and a JButton.
      */
-	public LoggedInView(PetBioController petBioController, DisplayAllPetsController displayAllPetsController, LoggedInViewModel loggedInViewModel,
-			BookmarkViewModel bookmarkViewModel, PreferenceViewModel preferenceViewModel, LoginViewModel loginViewModel,
-			ProfileViewModel profileViewModel, AdoptViewModel adoptViewModel, ViewManagerModel viewManagerModel) {
+	public LoggedInView(PetBioController petBioController,
+                        DisplayAllPetsController displayAllPetsController,
+                        LoggedInViewModel loggedInViewModel,
+                        BookmarkViewModel bookmarkViewModel,
+                        PreferenceViewModel preferenceViewModel,
+                        LoginViewModel loginViewModel,
+                        ProfileViewModel profileViewModel,
+                        AdoptViewModel adoptViewModel,
+                        ViewManagerModel viewManagerModel,
+                        AdoptController adoptController,
+                        AddBookmarkController addBookmarkController,
+                        RemoveBookmarkController removeBookmarkController) {
 		this.petBioController = petBioController;
         this.displayAllPetsController = displayAllPetsController;
         this.loggedInViewModel = loggedInViewModel;
@@ -65,6 +80,9 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.profileViewModel = profileViewModel;
         this.adoptViewModel = adoptViewModel;
         this.loginViewModel = loginViewModel;
+        this.adoptController = adoptController;
+        this.addBookmarkController = addBookmarkController;
+        this.removeBookmarkController = removeBookmarkController;
         this.loggedInViewModel.addPropertyChangeListener(this);
         this.viewManagerModel.addPropertyChangeListener(this);
 
@@ -158,7 +176,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
 
 	@Override
 	public void adopt(int petID) {
-		// TODO Auto-generated method stub
+		adoptController.execute(petID);
 		
 	}
 }
