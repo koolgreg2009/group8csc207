@@ -2,6 +2,9 @@ package app;
 
 import data_access.FileUserDAO;
 import data_access.UserDAOInterface;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.login.LoginViewModel;
 import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferencePresenter;
 import use_case.preference.PreferenceInputBoundary;
@@ -21,17 +24,13 @@ public class PreferenceUsecaseFactory {
      *
      * @return the new preference controller or null if IOException is caught
      */
-    public static PreferenceController createPreferenceUsecase() {
-        try {
-            UserDAOInterface userDAO = new FileUserDAO("./users.json");
-            PreferenceOutputBoundary preferencePresenter = new PreferencePresenter();
+    public static PreferenceController createPreferenceUsecase(ViewManagerModel viewManagerModel,
+                                                               LoggedInViewModel loggedInViewModel) {
+
+            PreferenceOutputBoundary preferencePresenter = new PreferencePresenter(viewManagerModel, loggedInViewModel);
             PreferenceInputBoundary preferenceInteractor = new PreferenceInteractor(userDAO,preferencePresenter);
             return new PreferenceController(preferenceInteractor);
-
-        }
-        catch (IOException e) {
-            System.out.println("Could not open user data file");
-            return null;
-        }
     }
+
+
 }
