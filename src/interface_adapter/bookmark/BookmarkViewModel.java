@@ -1,9 +1,7 @@
 package interface_adapter.bookmark;
 
 import dto.PetDTO;
-import interface_adapter.ViewManagerModel;
 import interface_adapter.ViewModel;
-import view.ViewManager;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

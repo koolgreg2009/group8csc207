@@ -1,10 +1,7 @@
 package interface_adapter.bookmark;
 
-import dto.BookmarkDTO;  // honestly not sure if we need BookmarkDTO...
 import dto.PetDTO;
-
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
