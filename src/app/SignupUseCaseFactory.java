@@ -8,6 +8,7 @@ import data_access.UserDAOInterface;
 import entity.user.AdopterUserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -39,11 +40,12 @@ public class SignupUseCaseFactory {
      * @return A SignupView instance configured with the provided dependencies.
      */
     public static SignupView create(
-            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, UserDAOInterface userDataAccessObject) {
+            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel,
+            PreferenceViewModel preferenceViewModel, UserDAOInterface userDataAccessObject) {
 
         try {
             SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
-            return new SignupView(signupController, signupViewModel, viewManagerModel, loginViewModel);
+            return new SignupView(signupController, signupViewModel, viewManagerModel, loginViewModel, preferenceViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }

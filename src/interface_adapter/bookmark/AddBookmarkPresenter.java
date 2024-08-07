@@ -1,5 +1,6 @@
 package interface_adapter.bookmark;
 
+import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.bookmarks.AddBookmarkOutputBoundary;
 import use_case.bookmarks.BookmarkOutputData;
 
@@ -7,7 +8,11 @@ import use_case.bookmarks.BookmarkOutputData;
  * Presenter for handling the output of bookmark addition operations.
  */
 public class AddBookmarkPresenter implements AddBookmarkOutputBoundary {
+    private final LoggedInViewModel loggedInViewModel;
 
+    public AddBookmarkPresenter(LoggedInViewModel loggedInViewModel) {
+        this.loggedInViewModel = loggedInViewModel;
+    }
     /**
      * Prepares the view when a bookmark is successfully added.
      *
@@ -15,8 +20,7 @@ public class AddBookmarkPresenter implements AddBookmarkOutputBoundary {
      *                   bookmarks associated with the user.
      */
     public void prepareSuccessView(BookmarkOutputData outputData){
-        System.out.println(outputData.getBookmark()+" has been added. Here are all your bookmarks: "
-                + outputData.getAllBookmarks());
+        loggedInViewModel.setNotification("Added bookmark", true);
     }
 
     /** Prepares the view to display an error message when the addition of bookmark is not successful.
@@ -24,6 +28,7 @@ public class AddBookmarkPresenter implements AddBookmarkOutputBoundary {
      * @param errormsg the error message that will be displayed to the user.
      */
     public void prepareErrorView(String errormsg){
-        System.out.println(errormsg);
+        loggedInViewModel.setNotification("Bookmark already exists", true);
+
     }
 }

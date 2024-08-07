@@ -36,7 +36,7 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
 
         userDataAccessObject.save(user);
         PreferenceOutputData outputData = new PreferenceOutputData(((AdopterUser) user).getPreferences());
-        userPresenter.preparePreferenceView(outputData);
+        userPresenter.prepareSuccessView();
     }
 
 }

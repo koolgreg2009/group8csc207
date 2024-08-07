@@ -26,8 +26,7 @@ public class RemoveBookmarkController {
      * Prompts the user to enter the ID of the pet they want to remove the bookmark and processes the input.
      *
      */
-    public void execute(String username, int petID){
-        BookmarkInputData bookmarkInputData = new BookmarkInputData(username, petID);
-        this.removeBookmarkInteractor.execute(bookmarkInputData);
+    public void execute(int petID){
+        this.removeBookmarkInteractor.execute(new BookmarkInputData(SessionManager.getCurrentUser(), petID));
     }
 }

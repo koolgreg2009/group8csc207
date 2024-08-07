@@ -1,11 +1,8 @@
 package interface_adapter.logged_in;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import interface_adapter.SessionManager;
-import interface_adapter.ViewManagerModel;
 import interface_adapter.ViewModel;
 
 /**
@@ -21,8 +18,8 @@ public class LoggedInViewModel extends ViewModel {
     /** The title label for the logged-in view. */
     public final String TITLE_LABEL = "Logged In View";
 
-    /** The current state of the logged-in user. */
-    private NotificationState notState = new NotificationState();
+    /** The notification state of the logged-in user. */
+    private NotificationState notifState = new NotificationState();
     
     private LoggedInState state = new LoggedInState();
 
@@ -38,17 +35,14 @@ public class LoggedInViewModel extends ViewModel {
     /** The label for the logout button. */
     public final String LOGOUT_BUTTON_LABEL = "Log out";
 
-    /** The username of the currently logged-in user. */
-
+    /** The label for notification button. */
     public String NOTIF_BUTTON= "Notifications";
 
-    public final ViewManagerModel viewManagerModel;
     /**
      * Constructs a new LoggedInViewModel with a predefined view name.
      */
-    public LoggedInViewModel(ViewManagerModel viewManagerModel) {
+    public LoggedInViewModel() {
         super("logged in");
-        this.viewManagerModel = viewManagerModel;
     }
 
 //    /**
@@ -71,6 +65,10 @@ public class LoggedInViewModel extends ViewModel {
         support.firePropertyChange("state", null, this.state);
     }
 
+    public void fireNotificationChanged() {
+        support.firePropertyChange("notification", null, this.state);
+        // firePropertyChanged();
+    }
     /**
      * Adds a listener for property change events.
      *
@@ -97,6 +95,17 @@ public class LoggedInViewModel extends ViewModel {
      */
     public String getLoggedInUser() {
         return state.getUsername();
+    }
+    /**
+     * Setter for notification popup in state
+     *
+     * @param message msg to user to be displayed
+     * @param isSuccess whether if user action was successful
+     */
+    public void setNotification(String message, boolean isSuccess) {
+        this.state.setNotificationMessage(message);
+        this.state.setNotificationSuccess(isSuccess);
+        fireNotificationChanged();
     }
 
 

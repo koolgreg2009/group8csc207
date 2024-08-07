@@ -1,14 +1,7 @@
 package use_case.login;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
-import dto.PetDTO;
-import entity.Pet;
-import entity.user.AdopterUser;
 import entity.user.User;
 
 /**
@@ -55,14 +48,6 @@ public class LoginInteractor implements LoginInputBoundary {
             if (!password.equals(pwd)) {
                 loginPresenter.prepareFailView("Incorrect password for " + username + ".");
             } else {
-				ArrayList<Pet> pets = petDAO.getPreferencePets(((AdopterUser)user).getPreferences());
-				List<PetDTO> petDtoList = pets == null ? new ArrayList<PetDTO>()
-						: pets.stream()
-								.map(pet -> new PetDTO(pet.getPetID(), pet.getName(), pet.getBreed(), pet.getGender(),
-										pet.getSpecies(), pet.getPetAge(), pet.getBio(), pet.getOwner(), pet.getEmail(),
-										pet.getPhoneNum(), pet.getActivityLevel(), pet.getLocation(), pet.getImgUrl()))
-								.collect(Collectors.toList());
-				petDtoList.sort((p1, p2) -> p1.getPetID() - p2.getPetID());
 				LoginOutputData loginOutputData = new LoginOutputData(user.getUsername());
 				loginPresenter.prepareSuccessView(loginOutputData);
             }

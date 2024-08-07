@@ -78,28 +78,13 @@ public class FilePetDAO implements PetDAOInterface {
 
     @Override
     public boolean matchesPreference(Pet pet, UserPreference userPreference) {
-        if (!isMatching(userPreference.getSpecies(), pet.getSpecies())) {
-            return false;
-        }
-        if (!isMatching(userPreference.getBreeds(), pet.getBreed())) {
-            return false;
-        }
-        if (!isInRange(userPreference.getMinAge(), userPreference.getMaxAge(), pet.getPetAge())) {
-            return false;
-        }
-        if (!isMatching(userPreference.getActivityLevel(), pet.getActivityLevel())) {
-            return false;
-        }
-        if (!isMatching(userPreference.getLocation(), pet.getLocation())) {
-            return false;
-        }
-        if (!isMatching(userPreference.getGender(), pet.getGender())) {
-            return false;
-        }
-        if(!pet.isAvailable()){
-            return false;
-        }
-        return true;
+        return isMatching(userPreference.getSpecies(), pet.getSpecies()) &&
+                isMatching(userPreference.getBreeds(), pet.getBreed()) &&
+                isInRange(userPreference.getMinAge(), userPreference.getMaxAge(), pet.getPetAge()) &&
+                isMatching(userPreference.getActivityLevel(), pet.getActivityLevel()) &&
+                isMatching(userPreference.getLocation(), pet.getLocation()) &&
+                isMatching(userPreference.getGender(), pet.getGender()) &&
+                pet.isAvailable();
     }
 
     private boolean isMatching(String preference, String attribute) {

@@ -2,7 +2,6 @@ package app;
 
 import data_access.CatBreedDAO;
 import data_access.CatDAOInterface;
-import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.get_breed.GetBreedPresenter;
 import use_case.get_breed_info.GetBreedInputBoundary;

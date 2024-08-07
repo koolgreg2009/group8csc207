@@ -8,18 +8,18 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import dto.PetDTO;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.adopt.AdoptViewModel;
+import interface_adapter.adopt.AdoptController;
+import interface_adapter.adopt.NotifViewModel;
+import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
-import interface_adapter.display_all_pets.DisplayAllPetsController;
+import interface_adapter.bookmark.RemoveBookmarkController;
+//import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -37,7 +37,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
     private final ProfileViewModel profileViewModel;
     private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
-    private final AdoptViewModel adoptViewModel;
+    private final NotifViewModel notifViewModel;
 
 
     JLabel username;
@@ -47,24 +47,37 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
     private final JButton bookmark;
     private final JButton notifications;
     private final JPanel petListingPanel;
-	private PetBioController petBioController;
-    private DisplayAllPetsController displayAllPetsController;
+	private final PetBioController petBioController;
+    //private final DisplayAllPetsController displayAllPetsController;
+    private final AdoptController adoptController;
+    private final AddBookmarkController addBookmarkController;
+    private final RemoveBookmarkController removeBookmarkController;
 
     /**
      * A window with a title and a JButton.
      */
-	public LoggedInView(PetBioController petBioController, DisplayAllPetsController displayAllPetsController, LoggedInViewModel loggedInViewModel,
-			BookmarkViewModel bookmarkViewModel, PreferenceViewModel preferenceViewModel, LoginViewModel loginViewModel,
-			ProfileViewModel profileViewModel, AdoptViewModel adoptViewModel, ViewManagerModel viewManagerModel) {
+	public LoggedInView(PetBioController petBioController,
+                        LoggedInViewModel loggedInViewModel,
+                        BookmarkViewModel bookmarkViewModel,
+                        PreferenceViewModel preferenceViewModel,
+                        LoginViewModel loginViewModel,
+                        ProfileViewModel profileViewModel,
+                        NotifViewModel notifViewModel,
+                        ViewManagerModel viewManagerModel,
+                        AdoptController adoptController,
+                        AddBookmarkController addBookmarkController,
+                        RemoveBookmarkController removeBookmarkController) {
 		this.petBioController = petBioController;
-        this.displayAllPetsController = displayAllPetsController;
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
         this.bookmarkViewModel = bookmarkViewModel;
         this.preferenceViewModel = preferenceViewModel;
         this.profileViewModel = profileViewModel;
-        this.adoptViewModel = adoptViewModel;
+        this.notifViewModel = notifViewModel;
         this.loginViewModel = loginViewModel;
+        this.adoptController = adoptController;
+        this.addBookmarkController = addBookmarkController;
+        this.removeBookmarkController = removeBookmarkController;
         this.loggedInViewModel.addPropertyChangeListener(this);
         this.viewManagerModel.addPropertyChangeListener(this);
 
@@ -94,7 +107,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.add(petListingPanel);
         notifications.addActionListener(
                 evt -> {
-                    viewManagerModel.setActiveView(adoptViewModel.getViewName());
+                    viewManagerModel.setActiveView(notifViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
         );
@@ -126,6 +139,14 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
 	public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
+    private void showNotification() {
+        LoggedInState state = loggedInViewModel.getState();
+        if (state.isNotificationSuccess()) {
+            JOptionPane.showMessageDialog(this, state.getNotificationMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, state.getNotificationMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -135,30 +156,37 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
             List<PetDTO> pets = state.getPets();
             petListingPanel.removeAll();
             for (PetDTO pet : pets) {
-                petListingPanel.add(new PetListingPanel(this, pet));
+                petListingPanel.add(new PetListingPanel(this, pet, true));
             }
-        } else if (evt.getPropertyName().equals("view") && evt.getNewValue().equals("logged in")){
-            displayAllPetsController.execute();
+//        } else if (evt.getPropertyName().equals("view") && evt.getNewValue().equals("logged in")){
+//            displayAllPetsController.execute();
+        }
+        else if ("notification".equals(evt.getPropertyName())) {
+            showNotification();
         }
 
         
         // add method here
     }
 
-	@Override
-	public void save(int petID) {
-		// TODO Auto-generated method stub
 
+	@Override
+	public void add(int petID) {
+        addBookmarkController.execute(petID);
 	}
+    @Override
+    public void remove(int petID){
+        removeBookmarkController.execute(petID);
+    }
 
 	@Override
 	public void goDetail(int petID) {
-		petBioController.execute(petID);
+		petBioController.execute(username.getText(), petID);
 	}
 
 	@Override
 	public void adopt(int petID) {
-		// TODO Auto-generated method stub
-
+		adoptController.execute(petID);
+		
 	}
 }

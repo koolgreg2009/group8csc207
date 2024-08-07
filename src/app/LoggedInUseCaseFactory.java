@@ -4,8 +4,11 @@ import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.adopt.AdoptController;
+import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
-import interface_adapter.display_all_pets.DisplayAllPetsController;
+import interface_adapter.bookmark.RemoveBookmarkController;
+//import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.pet_bio.PetBioController;
@@ -32,24 +35,22 @@ public class LoggedInUseCaseFactory {
 
     /**
      * Creates a LoggedInView instance, setting up the login use case and its dependencies.
-     * @param petBioViewModel 
+     * @param petBioViewModel
      *
      * @return A LoggedInView instance configured with the provided dependencies.
      */
-	public static LoggedInView create(ViewManagerModel viewManagerModel,
-                                      LoggedInViewModel loggedInViewModel,
-                                      BookmarkViewModel bookmarkViewModel,
-                                      PreferenceViewModel preferenceViewModel,
-                                      LoginViewModel loginViewModel,
-                                      ProfileViewModel profileViewModel,
-                                      UserDAOInterface userDAO, PetDAOInterface petDAO,
-                                      PetBioViewModel petBioViewModel) {
+	public static LoggedInView create(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
+			BookmarkViewModel bookmarkViewModel, PreferenceViewModel preferenceViewModel, LoginViewModel loginViewModel,
+			ProfileViewModel profileViewModel, UserDAOInterface userDAO, PetDAOInterface petDAO,
+			PetBioViewModel petBioViewModel) {
 		PetBioController petBioController = createPetBioUseCase(viewManagerModel, petBioViewModel, loggedInViewModel,
                                                                 petDAO);
-        DisplayAllPetsController displayAllPetsController =
-                DisplayAllPetsUseCaseFactory.createDisplayAllPetsUseCase(userDAO, petDAO, loggedInViewModel);
-		return new LoggedInView(petBioController, displayAllPetsController, loggedInViewModel, bookmarkViewModel,
-				preferenceViewModel, loginViewModel, profileViewModel, null, viewManagerModel);
+        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO);
+        AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO, loggedInViewModel);
+        RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase(userDAO);
+		return new LoggedInView(petBioController, loggedInViewModel, bookmarkViewModel,
+				preferenceViewModel, loginViewModel, profileViewModel, null, viewManagerModel,
+                adoptController, addBookmarkController, removeBookmarkController);
 
 	}
     /**

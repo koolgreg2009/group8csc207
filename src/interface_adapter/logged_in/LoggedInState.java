@@ -15,7 +15,8 @@ import dto.PetDTO;
 public class LoggedInState {
     private String username = "";
     private List<PetDTO> pets = new ArrayList<>();
-
+    private String notificationMessage;
+    private boolean notificationSuccess;
     /**
      * Constructs a new LoggedInState object by copying the state from another LoggedInState instance.
      *
@@ -44,6 +45,7 @@ public class LoggedInState {
      *
      * @param username
      */
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -55,4 +57,20 @@ public class LoggedInState {
 	public void setPets(List<PetDTO> pets) {
 		this.pets = pets;
 	}
+
+    public String getNotificationMessage() {
+        return notificationMessage;
+    }
+
+    public void setNotificationMessage(String notificationMessage) {
+        this.notificationMessage = notificationMessage;
+    }
+
+    public boolean isNotificationSuccess() {
+        return notificationSuccess;
+    }
+
+    public void setNotificationSuccess(boolean notificationSuccess) {
+        this.notificationSuccess = notificationSuccess;
+    }
 }
