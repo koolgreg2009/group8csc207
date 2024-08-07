@@ -108,7 +108,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.add(petScrollPanel);
         notifications.addActionListener(
                 evt -> {
-                    viewManagerModel.setActiveView(notifViewModel.getViewName());
+                     viewManagerModel.setActiveView(notifViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
         );
