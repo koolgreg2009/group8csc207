@@ -3,7 +3,7 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-import dto.pet.PetDTO;
+import dto.PetDTO;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

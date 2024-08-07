@@ -1,9 +1,12 @@
-package use_case.display_bookmark_pets;
+package use_case.display.display_bookmark_pets;
 
 import data_access.PetDAOInterface;
+import data_access.UserDAOInterface;
 import dto.pet.PetDTO;
 import entity.Bookmark;
 import entity.Pet;
+import use_case.display.DisplayPetsOutputBoundary;
+import use_case.display.DisplayPetsOutputData;
 
 import java.util.ArrayList;
 import java.util.List;

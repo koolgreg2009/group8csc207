@@ -13,8 +13,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 public class Bookmark {
-	private int petID;
-	private LocalDateTime bookmarkedDate;
+	private final int petID;
+	private final LocalDateTime bookmarkedDate;
 
 	/**
 	 * Constructs a {@code Bookmark} object with the specified pet ID and bookmark creation time.
@@ -47,13 +47,4 @@ public class Bookmark {
 		return bookmarkedDate;
 	}
 
-	/**
-	 * Returns a string representation of this bookmark.
-	 *
-	 * @return a string containing the pet ID and the bookmark creation date and time
-	 */
-	@Override
-	public String toString() {
-		return "Bookmark: Pet id:" + petID + "Bookmarked Date: " + bookmarkedDate;
-	}
 }

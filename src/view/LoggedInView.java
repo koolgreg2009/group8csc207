@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-import dto.pet.PetDTO;
+import dto.PetDTO;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
@@ -79,6 +79,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.addBookmarkController = addBookmarkController;
         this.removeBookmarkController = removeBookmarkController;
         this.loggedInViewModel.addPropertyChangeListener(this);
+        this.viewManagerModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Home Page Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -164,6 +165,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
             showNotification();
         }
 
+        
         // add method here
     }
 

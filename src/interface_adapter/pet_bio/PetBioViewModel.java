@@ -5,10 +5,10 @@ import java.beans.PropertyChangeSupport;
 
 import interface_adapter.ViewModel;
 
-public class PetBioVIewModel extends ViewModel {
+public class PetBioViewModel extends ViewModel {
 	private PetBioState state = new PetBioState();
 
-	public PetBioVIewModel() {
+	public PetBioViewModel() {
 		super("Pet Bio");
 	}
 

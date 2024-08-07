@@ -1,4 +1,4 @@
-package dto.pet;
+package dto;
 
 public class PetDTO {
 	private final String activityLevel;
