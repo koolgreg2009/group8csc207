@@ -10,10 +10,10 @@ import use_case.pet_bio.PetBioOutputData;
  */
 public class PetBioPresenter implements PetBioOutputBoundary {
 
-	private PetBioVIewModel petBioViewModel;
+	private PetBioViewModel petBioViewModel;
 	private ViewManagerModel viewManagerModel;
 
-	public PetBioPresenter(ViewManagerModel viewManagerModel, PetBioVIewModel petBioViewModel) {
+	public PetBioPresenter(ViewManagerModel viewManagerModel, PetBioViewModel petBioViewModel) {
 		this.viewManagerModel = viewManagerModel;
 		this.petBioViewModel = petBioViewModel;
 	}

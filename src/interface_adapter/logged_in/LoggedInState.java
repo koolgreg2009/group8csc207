@@ -3,7 +3,7 @@ package interface_adapter.logged_in;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.pet.PetDTO;
+import dto.PetDTO;
 
 /**
  * The LoggedInState class represents the state of a logged-in user.

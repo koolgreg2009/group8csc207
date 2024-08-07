@@ -2,7 +2,7 @@ package use_case.display.display_all_available_pets;
 
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
-import dto.pet.PetDTO;
+import dto.PetDTO;
 import entity.Pet;
 import entity.user.AdopterUser;
 import entity.user.User;

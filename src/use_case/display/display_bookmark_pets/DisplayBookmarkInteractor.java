@@ -1,8 +1,7 @@
 package use_case.display.display_bookmark_pets;
 
 import data_access.PetDAOInterface;
-import data_access.UserDAOInterface;
-import dto.pet.PetDTO;
+import dto.PetDTO;
 import entity.Bookmark;
 import entity.Pet;
 import use_case.display.DisplayPetsOutputBoundary;

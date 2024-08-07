@@ -1,6 +1,6 @@
 package use_case.pet_bio;
 
-import dto.pet.PetDTO;
+import dto.PetDTO;
 
 /**
  * The PetBioOutputData class encapsulates the output data of the pet bio use case.

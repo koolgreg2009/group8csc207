@@ -1,6 +1,6 @@
 package interface_adapter.pet_bio;
 
-import dto.pet.PetDTO;
+import dto.PetDTO;
 
 public class PetBioState {
 	private PetDTO pet;

@@ -2,7 +2,7 @@ package use_case.pet_bio;
 
 
 import data_access.PetDAOInterface;
-import dto.pet.PetDTO;
+import dto.PetDTO;
 import entity.Pet;
 
 /**

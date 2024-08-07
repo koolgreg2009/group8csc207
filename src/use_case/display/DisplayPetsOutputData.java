@@ -2,7 +2,7 @@ package use_case.display;
 
 import java.util.List;
 
-import dto.pet.PetDTO;
+import dto.PetDTO;
 
 /**
  * Encapsulates the output data required to display all pets.

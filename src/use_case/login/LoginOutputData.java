@@ -1,9 +1,5 @@
 package use_case.login;
 
-import java.util.List;
-
-import dto.pet.PetDTO;
-
 /**
  * The LoginOutputData class encapsulates the output data of the login process.
  * It includes fields for the username and a flag indicating if the login attempt failed.
