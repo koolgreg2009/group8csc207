@@ -1,5 +1,6 @@
 package interface_adapter.bookmark;
 
+import dto.BookmarkDTO;
 import dto.PetDTO;
 import interface_adapter.ViewModel;
 
@@ -68,7 +69,7 @@ public class BookmarkViewModel extends ViewModel {
      *
      * @return a list of all bookmarked pets
      */
-    public List<PetDTO> getAllBookmarks(){
+    public List<BookmarkDTO> getAllBookmarks(){
         return bookmarkState.getAllBookmarks();
     }
 
@@ -110,5 +111,14 @@ public class BookmarkViewModel extends ViewModel {
      */
     public LocalDateTime getBookmarkTime(PetDTO pet){
         return bookmarkState.getBookmarkTime(pet);
+    }
+
+    /**
+     * Gets the username of the logged-in user.
+     *
+     * @return the username of the logged-in user
+     */
+    public String getLoggedInUser(){
+        return bookmarkState.getUsername();
     }
 }

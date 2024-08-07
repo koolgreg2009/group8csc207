@@ -1,17 +1,16 @@
 package interface_adapter.bookmark;
 
+import dto.BookmarkDTO;
 import dto.PetDTO;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Manages the state of bookmarked pets.
  */
 public class BookmarkState {
-    private List<PetDTO> bookmarkedPets;
-
-    //displayallbookmarks usecase presenter returns petID and time.
+    private List<BookmarkDTO> bookmarks;
+    private String username;
 
     /**
      * Default constructor initializes an empty list of bookmarked pets.
@@ -25,7 +24,7 @@ public class BookmarkState {
      * @param copy the BookmarkState to copy
      */
     public BookmarkState(BookmarkState copy) {
-        bookmarkedPets = copy.bookmarkedPets;
+        bookmarks = copy.bookmarks;
     }
 
     /**
@@ -34,7 +33,7 @@ public class BookmarkState {
      * @param petID the ID of the pet to remove
      */
     public void removeBookmark(int petID){
-        bookmarkedPets.removeIf(pet -> pet.getPetID() == petID);
+        bookmarks.removeIf(bookmark -> petID == bookmark.getPetID());
     }
 
     /**
@@ -43,8 +42,8 @@ public class BookmarkState {
      * @param pet the PetDTO to add
      */
     public void addBookmark(PetDTO pet){
-        if (!bookmarkedPets.contains(pet)) {
-            bookmarkedPets.add(pet);
+        if (!isBookmarked(pet)) {
+            bookmarks.add(new BookmarkDTO(pet, LocalDateTime.now()));
         }
     }
 
@@ -55,17 +54,12 @@ public class BookmarkState {
      * @return true if the pet is bookmarked, false otherwise
      */
     public boolean isBookmarked(PetDTO pet){
-        return bookmarkedPets.contains(pet);
-    }
-
-    /**
-     * Gets the current date and time when the pet was bookmarked.
-     *
-     * @param pet the PetDTO to get the bookmark time for
-     * @return the current date and time as a LocalDateTime instance
-     */
-    public LocalDateTime getBookmarkTime(PetDTO pet){  // Should we get time from BookmarkDTO?
-        return LocalDateTime.now();
+        for (BookmarkDTO bookmark : bookmarks) {
+            if (bookmark.getPet().equals(pet)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -73,7 +67,32 @@ public class BookmarkState {
      *
      * @return a list of all bookmarked pets
      */
-    public List<PetDTO> getAllBookmarks(){
-        return new ArrayList<>(bookmarkedPets);
+    public List<BookmarkDTO> getAllBookmarks(){
+        return bookmarks;
+    }
+
+    /**
+     * Retrieves the bookmark time of a specified pet.
+     *
+     * @param pet the PetDTO for which to get the bookmark time
+     * @return the date and time when the pet was bookmarked
+     * @throws IllegalArgumentException if the pet is not bookmarked
+     */
+    public LocalDateTime getBookmarkTime(PetDTO pet){
+        for (BookmarkDTO bookmark : bookmarks) {
+            if (bookmark.getPet().equals(pet)) {
+                return bookmark.getBookmarkedDate();
+            }
+        }
+        throw new IllegalArgumentException("Pet was not bookmarked");
+    }
+
+    /**
+     * Retrieves the username of the logged-in user that has the bookmarks
+     *
+     * @return the username
+     */
+    public String getUsername() {
+        return username;
     }
 }
