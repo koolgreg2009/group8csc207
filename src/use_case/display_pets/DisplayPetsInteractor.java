@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
-import dto.pet.PetDTO;
+import dto.PetDTO;
 import entity.Pet;
 import entity.user.User;
 
