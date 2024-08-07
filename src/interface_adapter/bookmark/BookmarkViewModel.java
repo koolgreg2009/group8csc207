@@ -3,6 +3,7 @@ package interface_adapter.bookmark;
 import dto.BookmarkDTO;
 import dto.PetDTO;
 import interface_adapter.ViewModel;
+import interface_adapter.logged_in.NotificationState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -31,10 +32,14 @@ public class BookmarkViewModel extends ViewModel {
     /**
      * Sets a new BookmarkState.
      *
-     * @param newState the new BookmarkState
+     * @param newBookmarkState the new BookmarkState
      */
-    public void setState(BookmarkState newState){
-        this.bookmarkState = newState;
+    public void setBookmarkState(BookmarkState newBookmarkState){
+        this.bookmarkState = newBookmarkState;
+    }
+
+    public BookmarkState getBookmarkState(){
+        return bookmarkState;
     }
 
     /**
@@ -42,7 +47,11 @@ public class BookmarkViewModel extends ViewModel {
      */
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("Bookmark State", null,this.bookmarkState);
+        support.firePropertyChange("Bookmark State", null, this.bookmarkState);
+    }
+
+    public void fireNotificationChanged() {
+        support.firePropertyChange("Notification", null, this.bookmarkState);
     }
 
     /**
@@ -120,5 +129,11 @@ public class BookmarkViewModel extends ViewModel {
      */
     public String getLoggedInUser(){
         return bookmarkState.getUsername();
+    }
+
+    public void setNotification(String message, boolean isSuccess) {
+        this.bookmarkState.setNotifMessage(message);
+        this.bookmarkState.setNotifSuccess(isSuccess);
+        fireNotificationChanged();
     }
 }

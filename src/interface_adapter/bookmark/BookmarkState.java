@@ -11,6 +11,8 @@ import java.util.List;
 public class BookmarkState {
     private List<BookmarkDTO> bookmarks;
     private String username;
+    private String notifMessage;
+    private boolean notifSuccess;
 
     /**
      * Default constructor initializes an empty list of bookmarked pets.
@@ -25,6 +27,7 @@ public class BookmarkState {
      */
     public BookmarkState(BookmarkState copy) {
         bookmarks = copy.bookmarks;
+        username = copy.username;
     }
 
     /**
@@ -94,5 +97,21 @@ public class BookmarkState {
      */
     public String getUsername() {
         return username;
+    }
+
+    public String getNotificationMessage() {
+        return notifMessage;
+    }
+
+    public void setNotifMessage(String notifMessage) {
+        this.notifMessage = notifMessage;
+    }
+
+    public boolean isNotificationSuccess() {
+        return notifSuccess;
+    }
+
+    public void setNotifSuccess(boolean notifSuccess) {
+        this.notifSuccess = notifSuccess;
     }
 }

@@ -1,9 +1,12 @@
 package view;
 
+import dto.BookmarkDTO;
 import dto.PetDTO;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.adopt.AdoptController;
+import interface_adapter.adopt.NotifViewModel;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkState;
 import interface_adapter.bookmark.BookmarkViewModel;
@@ -11,6 +14,7 @@ import interface_adapter.bookmark.RemoveBookmarkController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.pet_bio.PetBioController;
 import interface_adapter.preference.PreferenceViewModel;
 
 import javax.swing.*;
@@ -25,17 +29,23 @@ import java.util.List;
 public class BookmarkView extends JPanel implements PropertyChangeListener, PetActionView, ActionListener {
 
     public final String viewName = "Bookmark View";
+
+
     private final LoggedInViewModel loggedInViewModel;
-    private final NotifView notifView;
     private final BookmarkViewModel bookmarkViewModel;
     private final PreferenceViewModel preferenceViewModel;
     private final LoginViewModel loginViewModel;
     private final ProfileViewModel profileViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final NotifViewModel notifViewModel;
+
+    private final PetBioController petBioController;
+    private final AdoptController adoptController;
     private final AddBookmarkController addBookmarkController;
     private final RemoveBookmarkController removeBookmarkController;
 
     JPanel pageBody = new JPanel();
+
     final JButton notifs = new JButton();
     final JButton myPreferences = new JButton();
     final JButton logout = new JButton();
@@ -49,26 +59,31 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
     final Font SIDE_BUTTON_FONT = new Font("Microsoft JhengHei UI", Font.BOLD, 12);
 
     @SuppressWarnings("unchecked")     
-    private BookmarkView (LoggedInViewModel loggedInViewModel,
-                          NotifView notifView,
+    private BookmarkView (NotifView notifView,
                           BookmarkViewModel bookmarkViewModel,
+                          LoggedInViewModel loggedInViewModel,
                           PreferenceViewModel preferenceViewModel,
                           LoginViewModel loginViewModel,
                           ProfileViewModel profileViewModel,
                           ViewManagerModel viewManagerModel,
+                          PetBioController petBioController,
+                          AdoptController adoptController,
                           RemoveBookmarkController removeBookmarkController,
                           AddBookmarkController addBookmarkController) {
 
-        this.loggedInViewModel = loggedInViewModel;
         this.notifView = notifView;
         this.bookmarkViewModel = bookmarkViewModel;
-        this.bookmarkViewModel.addPropertyChangeListener(this);
+        this.loggedInViewModel = loggedInViewModel;
         this.preferenceViewModel = preferenceViewModel;
         this.loginViewModel = loginViewModel;
         this.profileViewModel = profileViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.petBioController = petBioController;
+        this.adoptController = adoptController;
         this.removeBookmarkController = removeBookmarkController;
         this.addBookmarkController = addBookmarkController;
+
+        bookmarkViewModel.addPropertyChangeListener(this);
 
         setBackground(HEADER_COLOR);
 
@@ -171,33 +186,38 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
     }
 
     private void notifsActionPerformed(ActionEvent evt) {
-        viewManagerModel.setActiveView(notifView.getName());
+        viewManagerModel.setActiveView(notifViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+        bookmarkViewModel.removePropertyChangeListener(this);
     }
 
     private void myPreferencesActionPerformed(ActionEvent evt) {
-        viewManagerModel.setActiveView(myPreferences.getName());
+        viewManagerModel.setActiveView(preferenceViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+        bookmarkViewModel.removePropertyChangeListener(this);
     }
 
     private void logoutActionPerformed(ActionEvent evt) {
         SessionManager.logout();
         viewManagerModel.setActiveView(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-        // bookmarkViewModel.removePropertyChangeListener(this);
+        bookmarkViewModel.removePropertyChangeListener(this);
     }
 
     private void homeActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
-        // Go back to Home page
+        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+        bookmarkViewModel.removePropertyChangeListener(this);
     }
 
     private void showNotification() {
-        LoggedInState state = loggedInViewModel.getState();
-        if (state.isNotificationSuccess()) {
-            JOptionPane.showMessageDialog(this, state.getNotificationMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+        BookmarkState bookmarkState = bookmarkViewModel.getBookmarkState();
+        if (bookmarkState.isNotificationSuccess()) {
+            JOptionPane.showMessageDialog(this, bookmarkState.getNotificationMessage(),
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, state.getNotificationMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, bookmarkState.getNotificationMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -205,19 +225,15 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("Bookmark State")) {
             BookmarkState bookmarkState = (BookmarkState) evt.getNewValue();
-            username.setText(bookmarkState.getUsername()); // need username somehow since username is used as an args.
-            List<PetDTO> pets = bookmarkState.getPets(); // get all bookmarked pets
-            petListingPanel.removeAll(); // not petListingPanel, but probably bodyPanel
-            for (PetDTO pet : pets) {
-                petListingPanel.add(new PetListingPanel(this, pet, true));
+            List<BookmarkDTO> bookmarks = bookmarkState.getAllBookmarks();
+            pageBody.removeAll();
+            for (BookmarkDTO bookmark: bookmarks) {
+                pageBody.add(new PetListingPanel(this, bookmark.getPet(), false));
             }
         }
         else if ("notification".equals(evt.getPropertyName())) {
             showNotification();
         }
-
-
-        // add method here
     }
 
 
@@ -225,6 +241,7 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
     public void add(int petID) {
         addBookmarkController.execute(petID);
     }
+
     @Override
     public void remove(int petID){
         removeBookmarkController.execute(petID);
@@ -232,13 +249,12 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
 
     @Override
     public void goDetail(int petID) {
-        petBioController.execute(username.getText(), petID);
+        petBioController.execute(bookmarkViewModel.getLoggedInUser(), petID);
     }
 
     @Override
     public void adopt(int petID) {
         adoptController.execute(petID);
-
     }
 
 }
