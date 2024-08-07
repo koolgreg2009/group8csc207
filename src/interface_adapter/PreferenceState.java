@@ -26,13 +26,11 @@ public class PreferenceState {
     private String gender = "";
 
 
-    //    /** Error message related to the password, if any. */
-//    private String passwordError = null;
     private String error = "";
     /**
      * Constructs a new PreferenceState as a copy of the provided PreferenceState.
      *
-     * @param copy
+     * @param copy to create a copy of the preferences
      */
     public PreferenceState(PreferenceState copy) {
         species = copy.species;
@@ -188,14 +186,6 @@ public class PreferenceState {
     }
 
 
-    //    /**
-//     * Sets the error message related to the password.
-//     *
-//     * @param passwordError
-//     */
-//    public void setPasswordError(String passwordError) {
-//        this.passwordError = passwordError;
-//    }
     public String getError() {
         return error;
     }

@@ -1,6 +1,5 @@
 package use_case.preference;
 
-import java.util.List;
 import entity.preference.UserPreference;
 
 /** The InitialPreferenceData class bundles user input data for their Preference profile

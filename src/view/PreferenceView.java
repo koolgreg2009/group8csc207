@@ -5,7 +5,6 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferenceViewModel;
-import interface_adapter.signup.SignupState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +17,16 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+/**
+ * The PreferenceView class represents the preference screen where users can input and save their preferences.
+ * It extends {@code JPanel} and implements {@code ActionListener} and {@code PropertyChangeListener}.
+ */
 public class PreferenceView extends JPanel implements ActionListener, PropertyChangeListener {
+
+    /**
+     * The name of this view
+     */
     public final String viewName = "preference";
     private final PreferenceViewModel preferenceViewModel;
     private final ViewManagerModel viewManagerModel;
@@ -48,6 +56,15 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     final JButton save;
     private final PreferenceController preferenceController;
 
+
+    /**
+     * Constructs a PreferenceView object.
+     *
+     * @param preferenceViewModel The PreferenceViewModel associated with this view.
+     * @param controller The PreferenceController for handling user actions.
+     * @param viewManagerModel The ViewManagerModel for managing views.
+     * @param loggedInViewModel The LoggedInViewModel to switch to after saving preferences.
+     */
     public PreferenceView(PreferenceViewModel preferenceViewModel, PreferenceController controller,
                           ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel) {
 
@@ -268,7 +285,6 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         this.add(buttons);
     }
 
-    //species, breeds, minAge, maxAge, activityLevel, location, gender
     @Override
     public void actionPerformed(ActionEvent evt) {
     }
