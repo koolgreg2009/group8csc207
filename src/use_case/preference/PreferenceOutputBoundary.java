@@ -1,6 +1,5 @@
 package use_case.preference;
 
-import use_case.login.LoginOutputData;
 
 /**
  * This interface defines the contract for presenting user preferences.
@@ -16,5 +15,4 @@ public interface PreferenceOutputBoundary {
 
     void prepareSuccessView();
 
-//    void prepareFailView(String error);
 }

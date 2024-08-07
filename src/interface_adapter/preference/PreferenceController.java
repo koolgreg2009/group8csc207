@@ -28,7 +28,17 @@ public class PreferenceController {
         this.preferenceInteractor = preferenceInteractor;
     }
 
-
+    /**
+     * The execution for the preference use case
+     *
+     * @param species the indicated species preference as a String
+     * @param breeds the indicated breeds preferences stored as a List
+     * @param minAge an Integer for the minimum age preferences
+     * @param maxAge an Integer for the maximum age preference
+     * @param activityLevel a String indicated either a high, medium or low preferred activity level
+     * @param location a String that shows location preference
+     * @param gender a String of either 'M' or 'F' to indicate which gender they would prefer
+     */
     public void execute(String species, List<String> breeds, Integer minAge, Integer maxAge, String activityLevel, String location, String gender){
 
         UserPreference preferences = new UserPreference(species, breeds, minAge, maxAge, activityLevel, location, gender);

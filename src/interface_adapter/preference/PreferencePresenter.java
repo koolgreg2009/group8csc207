@@ -1,17 +1,12 @@
 package interface_adapter.preference;
 
-import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.login.LoginState;
-import use_case.login.LoginOutputData;
 import use_case.preference.PreferenceOutputBoundary;
-import use_case.preference.PreferenceOutputData;
 
 public class PreferencePresenter implements PreferenceOutputBoundary {
 
-    // need logged in view model (tell view manager what page to switch to) and view manager model (switch pages)
     /**
      * The view manager model used to switch between views.
      */
@@ -23,12 +18,22 @@ public class PreferencePresenter implements PreferenceOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;
     private final DisplayPetsViewModel displayPetsViewModel;
 
+    /**
+     * The presenter for the preference use case.
+     *
+     * @param viewManagerModel the view Manager for our program to manage the change in views
+     * @param loggedInViewModel the logged in view model that is previously and afterward displayed
+     * @param displayPetsViewModel the Pets view model which is in charge of changing the pet listings after
+     */
     public PreferencePresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, DisplayPetsViewModel displayPetsViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.displayPetsViewModel = displayPetsViewModel;
     }
 
+    /**
+     * Preperation for the preferences to be executed successfully
+     */
     @Override
     public void prepareSuccessView() {
         viewManagerModel.setActiveView(loggedInViewModel.getViewName());
@@ -37,11 +42,3 @@ public class PreferencePresenter implements PreferenceOutputBoundary {
     }
 }
 
-//    @Override
-//    public void prepareFailView(String error) {
-//        // preparing for error pop up
-//        LoginState loginState = PreferenceViewModel.getState();
-//        loginState.setError(error);
-//        loginViewModel.firePropertyChanged();
-//    }
-//}
