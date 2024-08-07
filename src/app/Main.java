@@ -18,7 +18,7 @@ import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.display_pets.DisplayPetsViewModel;
-import interface_adapter.pet_bio.PetBioVIewModel;
+import interface_adapter.pet_bio.PetBioViewModel;
 import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupViewModel;
 import view.*;
@@ -56,7 +56,7 @@ public class Main {
         BookmarkViewModel bookmarkViewModel = new BookmarkViewModel();
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
         ProfileViewModel profileViewModel = new ProfileViewModel();
-        PetBioVIewModel petBioViewModel = new PetBioVIewModel();
+        PetBioViewModel petBioViewModel = new PetBioViewModel();
         // creating user and pet DAO to be used for all use cases. declared outside so compiler doesnt cry
         UserDAOInterface userDAO = null;
         PetDAOInterface petDAO = null;
@@ -76,7 +76,7 @@ public class Main {
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, displayPetsViewModel, signupViewModel, userDAO, petDAO);
         views.add(loginView, loginView.viewName);
-        
+
         DisplayPetsView displayPetsView = DisplayPetsUseCaseFactory.create(viewManagerModel, displayPetsViewModel, loggedInViewModel, userDAO, petDAO);
         views.add(displayPetsView, displayPetsView.viewName);
 

@@ -13,7 +13,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.pet_bio.PetBioController;
 import interface_adapter.pet_bio.PetBioPresenter;
-import interface_adapter.pet_bio.PetBioVIewModel;
+import interface_adapter.pet_bio.PetBioViewModel;
 import interface_adapter.preference.PreferenceViewModel;
 import use_case.pet_bio.PetBioInputBoundary;
 import use_case.pet_bio.PetBioInteractor;
@@ -42,7 +42,7 @@ public class LoggedInUseCaseFactory {
 	public static LoggedInView create(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
 			BookmarkViewModel bookmarkViewModel, PreferenceViewModel preferenceViewModel, LoginViewModel loginViewModel,
 			ProfileViewModel profileViewModel, UserDAOInterface userDAO, PetDAOInterface petDAO,
-			PetBioVIewModel petBioViewModel) {
+			PetBioViewModel petBioViewModel) {
 		PetBioController petBioController = createPetBioUseCase(viewManagerModel, petBioViewModel, loggedInViewModel,
                                                                 petDAO);
         AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO);
@@ -60,7 +60,7 @@ public class LoggedInUseCaseFactory {
 
     private static PetBioController createPetBioUseCase(
             ViewManagerModel viewManagerModel,
-            PetBioVIewModel petBioViewModel,
+            PetBioViewModel petBioViewModel,
             LoggedInViewModel loggedInViewModel,
             PetDAOInterface petDAO){
 
