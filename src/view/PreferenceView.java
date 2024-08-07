@@ -58,15 +58,15 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel speciesInfo = new LabelTextPanel(
-                new JLabel("Species"), speciesInputField);
+                new JLabel("Species, type only one"), speciesInputField);
         LabelTextPanel breedsInfo = new LabelTextPanel(
-                new JLabel("Breeds"), breedInputField);
+                new JLabel("Breeds, seperate each breed with a comma and a single space"), breedInputField);
         LabelTextPanel minAgeInfo = new LabelTextPanel(
-                new JLabel("Minimum Age"), minAgeInputField);
+                new JLabel("Minimum Age, enter a whole number"), minAgeInputField);
         LabelTextPanel maxAgeInfo = new LabelTextPanel(
-                new JLabel("Maximum Age"), maxAgeInputField);
+                new JLabel("Maximum Age, enter a whole number"), maxAgeInputField);
         LabelTextPanel activityLevelInfo = new LabelTextPanel(
-                new JLabel("Activity Level"), activityLevelInputField);
+                new JLabel("Activity Level, low, medium, or high"), activityLevelInputField);
         LabelTextPanel locationInfo = new LabelTextPanel(
                 new JLabel("Location"), locationInputField);
         LabelTextPanel genderInfo = new LabelTextPanel(
@@ -82,7 +82,29 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
         save.addActionListener(
                 evt -> {
-                    preferenceController.execute(speciesInputField.getText(), null, 0, 0, activityLevelInputField.getText(), locationInputField.getText(), genderInputField.getText());
+                    int minAgeNum;
+
+                    if (minAgeInputField.getText() == null || minAgeInputField.getText().isEmpty()) {
+                        minAgeNum = 0; // Set to 0 if the string is null or empty
+                    } else {
+                        try {
+                            minAgeNum = Integer.parseInt(minAgeInputField.getText()); // Convert the string to an integer
+                        } catch (NumberFormatException e) {
+                            minAgeNum = 0; // Set to 0 if the string cannot be parsed as an integer
+                        }
+                    }
+                    int maxAgeNum;
+
+                    if (maxAgeInputField.getText() == null || maxAgeInputField.getText().isEmpty()) {
+                        maxAgeNum = 100; // Set to 100 if the string is null or empty
+                    } else {
+                        try {
+                            maxAgeNum = Integer.parseInt(maxAgeInputField.getText()); // Convert the string to an integer
+                        } catch (NumberFormatException e) {
+                            maxAgeNum = 100; // Set to 100 if the string cannot be parsed as an integer
+                        }
+                    }
+                    preferenceController.execute(speciesInputField.getText(), null, minAgeNum, maxAgeNum, activityLevelInputField.getText(), locationInputField.getText(), genderInputField.getText());
                     viewManagerModel.setActiveView(loggedInViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                     // to do: add displayallpet usecase
