@@ -46,7 +46,7 @@ public class DisplayBookmarkInteractor implements DisplayBookmarkInputBoundary {
         petDtoList.sort((p1, p2) -> p1.getPetID() - p2.getPetID());
         List<BookmarkDTO> bookmarkDTOs = new ArrayList<>();
         for(int i=0; i<pets.size(); i++){
-            bookmarkDTOs.add(new BookmarkDTO(pets.get(i), times.get(i)));
+            //bookmarkDTOs.add(new BookmarkDTO(pets.get(i), times.get(i)));
         }
         displayBookmarkPresenter.displayPetsOutput(new DisplayBookmarkPetsOutputData(bookmarkDTOs));
     }
