@@ -16,9 +16,9 @@ public class PetListing extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
- 
+
         setBackground(new java.awt.Color(223, 241, 249));
- 
+
         jButton1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jButton1.setText("Adopt");
         jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(103, 153, 242), new java.awt.Color(163, 205, 243)));
@@ -28,10 +28,10 @@ public class PetListing extends javax.swing.JPanel {
         jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(103, 153, 242), new java.awt.Color(163, 205, 243)));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                   jButton2ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-        
+
         jButton3.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jButton3.setText("More Information");
         jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(103, 153, 242), new java.awt.Color(163, 205, 243)));
@@ -40,25 +40,25 @@ public class PetListing extends javax.swing.JPanel {
                 jButton3ActionPerformed(evt);
             }
         });
- 
+
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel1.setText("Name: Bella");
- 
+
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel2.setText("Pet ID: 001");
- 
+
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel3.setText("Age: 5");
- 
+
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel4.setText("Breed: German Shepard");
- 
+
         jLabel5.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel5.setText("Species: Dog");
- 
+
         jLabel6.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel6.setText("Gender: Female");
- 
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,11 +86,11 @@ public class PetListing extends javax.swing.JPanel {
                                                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(0, 0, Short.MAX_VALUE))
         );
- 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel4, jLabel5, jLabel6});
- 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
- 
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{jLabel1, jLabel4, jLabel5, jLabel6});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{jButton1, jButton2});
+
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -114,24 +114,25 @@ public class PetListing extends javax.swing.JPanel {
                                         .addComponent(jButton2)))
         );
     }// </editor-fold>
- 
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-          // TODO add your handling code here:
+        // TODO add your handling code here:
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-          // TODO add your handling code here:
+        // TODO add your handling code here:
     }
- 
- 
+
+
     // Variables declaration - do not modify                     
-      private javax.swing.JButton jButton1;
-      private javax.swing.JButton jButton2;
-      private javax.swing.JButton jButton3;
-      private javax.swing.JLabel jLabel1;
-      private javax.swing.JLabel jLabel2;
-      private javax.swing.JLabel jLabel3;
-      private javax.swing.JLabel jLabel4;
-      private javax.swing.JLabel jLabel5;
-      private javax.swing.JLabel jLabel6;
-      // End of variables declaration                   
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    // End of variables declaration
+}

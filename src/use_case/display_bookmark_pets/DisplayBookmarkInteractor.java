@@ -2,17 +2,19 @@ package use_case.display.display_bookmark_pets;
 
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
-import dto.pet.PetDTO;
+import dto.PetDTO;
 import entity.Bookmark;
 import entity.Pet;
-import use_case.display.DisplayPetsOutputBoundary;
-import use_case.display.DisplayPetsOutputData;
+import use_case.display_bookmark_pets.DisplayBookmarkInputBoundary;
+import use_case.display_bookmark_pets.DisplayBookmarkInputData;
+import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputBoundary;
+import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputData;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DisplayBookmarkInteractor implements DisplayBookmarkInputBoundary{
+public class DisplayBookmarkInteractor implements DisplayBookmarkInputBoundary {
     private final PetDAOInterface filePetDAO;
     private final DisplayBookmarkPetsOutputBoundary displayBookmarkPresenter;
 

@@ -5,17 +5,17 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JPanel;
 
-import dto.pet.PetDTO;
+import dto.PetDTO;
 import interface_adapter.display_pets.DisplayPetsController;
 import interface_adapter.pet_bio.PetBioState;
-import interface_adapter.pet_bio.PetBioVIewModel;
+import interface_adapter.pet_bio.PetBioViewModel;
 
 public class PetDetailView extends JPanel implements PropertyChangeListener {
  	private static final long serialVersionUID = 1L;
 	public static final String viewName = "Pet Bio";
 	private DisplayPetsController displayPetsController;
 
-	public PetDetailView(PetBioVIewModel petDetailViewModel, DisplayPetsController displayPetsController) {
+	public PetDetailView(PetBioViewModel petDetailViewModel, DisplayPetsController displayPetsController) {
         initComponents();
         this.displayPetsController = displayPetsController;
         petDetailViewModel.addPropertyChangeListener(this);
@@ -142,7 +142,7 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
 		if (evt.getNewValue() instanceof PetBioState) {
 			PetBioState state = (PetBioState) evt.getNewValue();
 			this.viewUser = state.getViewUser();
-			PetDTO pet = state.getPet();
+            PetDTO pet = state.getPet();
 			nameText.setText(pet.getName());
 			petIDText.setText("" + pet.getPetID());
 			breedText.setText(pet.getBreed());

@@ -21,6 +21,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     private final PreferenceViewModel preferenceViewModel;
     private final ViewManagerModel viewManagerModel;
 
+
     final JTextField speciesInputField = new JTextField(15);
     private final JLabel speciesErrorField = new JLabel();
 
@@ -84,6 +85,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                     preferenceController.execute(speciesInputField.getText(), null, 0, 0, activityLevelInputField.getText(), locationInputField.getText(), genderInputField.getText());
                     viewManagerModel.setActiveView(loggedInViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
+                    // to do: add displayallpet usecase
                 }
         );
 
