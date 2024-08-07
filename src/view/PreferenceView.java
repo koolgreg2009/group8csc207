@@ -79,17 +79,17 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         LabelTextPanel speciesInfo = new LabelTextPanel(
                 new JLabel("Species: type only one"), speciesInputField);
         LabelTextPanel breedsInfo = new LabelTextPanel(
-                new JLabel("Breeds: seperate each breed with a comma and a single space"), breedInputField);
+                new JLabel("Breeds: separate each breed with a comma and a single space"), breedInputField);
         LabelTextPanel minAgeInfo = new LabelTextPanel(
                 new JLabel("Minimum Age: enter number"), minAgeInputField);
         LabelTextPanel maxAgeInfo = new LabelTextPanel(
                 new JLabel("Maximum Age: enter number"), maxAgeInputField);
         LabelTextPanel activityLevelInfo = new LabelTextPanel(
-                new JLabel("Activity Level: low, medium, or high"), activityLevelInputField);
+                new JLabel("Activity Level: Not Active, Slightly Active, Moderately Active, Highly Active"), activityLevelInputField);
         LabelTextPanel locationInfo = new LabelTextPanel(
                 new JLabel("Location"), locationInputField);
         LabelTextPanel genderInfo = new LabelTextPanel(
-                new JLabel("Select Gender: enter M or F"), genderInputField);
+                new JLabel("Select Gender: enter Male or Female"), genderInputField);
 
         JPanel buttons = new JPanel();
         save = new JButton(preferenceViewModel.SAVE_BUTTON_LABEL);
