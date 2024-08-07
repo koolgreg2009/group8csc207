@@ -117,7 +117,11 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                         breedsList = new ArrayList<>(Arrays.asList(wordsArray));
                     }
 
-                    preferenceController.execute(speciesInputField.getText(), breedsList, minAgeNum, maxAgeNum, activityLevelInputField.getText(), locationInputField.getText(), genderInputField.getText());
+                    preferenceController.execute(speciesInputField.getText(), breedsList, minAgeNum, maxAgeNum,
+                            activityLevelInputField.getText(), locationInputField.getText(),
+                            genderInputField.getText());
+
+
                     viewManagerModel.setActiveView(loggedInViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                     // to do: add displayallpet usecase

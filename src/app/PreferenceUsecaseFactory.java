@@ -4,6 +4,7 @@ import data_access.FileUserDAO;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
@@ -31,9 +32,9 @@ public class PreferenceUsecaseFactory {
      * @return the new preference controller or null if IOException is caught
      */
     public static PreferenceController createPreferenceUseCase(ViewManagerModel viewManagerModel,
-                                                               LoggedInViewModel loggedInViewModel, UserDAOInterface userDAO) {
+                                                               LoggedInViewModel loggedInViewModel, UserDAOInterface userDAO, DisplayPetsViewModel displayPetsViewModel) {
 
-            PreferenceOutputBoundary preferencePresenter = new PreferencePresenter(viewManagerModel, loggedInViewModel);
+            PreferenceOutputBoundary preferencePresenter = new PreferencePresenter(viewManagerModel, loggedInViewModel, displayPetsViewModel);
             PreferenceInputBoundary preferenceInteractor = new PreferenceInteractor(userDAO, preferencePresenter);
             return new PreferenceController(preferenceInteractor);
     }
@@ -42,8 +43,9 @@ public class PreferenceUsecaseFactory {
             ViewManagerModel viewManagerModel,
             LoggedInViewModel loggedInViewModel,
             PreferenceViewModel preferenceViewModel,
-            UserDAOInterface userDAO) {
-        PreferenceController preferenceController = createPreferenceUseCase(viewManagerModel, loggedInViewModel, userDAO);
+            UserDAOInterface userDAO,
+            DisplayPetsViewModel displayPetsViewModel) {
+        PreferenceController preferenceController = createPreferenceUseCase(viewManagerModel, loggedInViewModel, userDAO, displayPetsViewModel);
         return new PreferenceView(preferenceViewModel, preferenceController, viewManagerModel, loggedInViewModel);
 
     }
