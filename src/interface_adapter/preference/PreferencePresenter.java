@@ -33,6 +33,7 @@ public class PreferencePresenter implements PreferenceOutputBoundary {
     public void prepareSuccessView() {
         viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+        displayPetsViewModel.firePropertyChanged();
     }
 }
 
