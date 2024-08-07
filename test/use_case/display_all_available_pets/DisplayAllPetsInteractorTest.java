@@ -60,6 +60,6 @@
 //        verify(mockPresenter).displayAllPetsOutput(captor.capture());
 //
 //        DisplayAllPetsOutputData output = captor.getValue();
-//        assertEquals(pet, output.getPets().get(0));
+//        assertEquals(pet, output.getBookmarks().get(0));
 //    }
 //}
