@@ -81,7 +81,7 @@ public class Main {
         views.add(displayPetsView, displayPetsView.viewName);
 
 		LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, userDAO, petDAO, 
-        		petBioViewModel);
+        		petBioViewModel, displayPetsViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
 		PetDetailView petDetailView = PetDetailUseCaseFactory.create(viewManagerModel, petBioViewModel, loggedInViewModel, userDAO, petDAO);

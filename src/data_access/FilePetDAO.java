@@ -54,9 +54,10 @@ public class FilePetDAO implements PetDAOInterface {
     @Override
     public void save(Pet pet) {
         pets.put(String.valueOf(pet.getPetID()), pet);
+        save();
     }
 
-    private void save() {
+    private void save(){
         try {
             objectMapper.writeValue(jsonFile, pets);
         } catch (Exception ex) {

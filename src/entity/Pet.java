@@ -43,7 +43,7 @@ public class Pet {
      * @param activityLevel the activity level of the pet
      * @param bio a brief biography of the pet
      * @param location the location of the pet
-     * @param available the availability status of the pet
+     * @param isAvailable the availability status of the pet
      * @param name name of pet
      * @param imgUrl url img of pet
      */
@@ -58,7 +58,7 @@ public class Pet {
                @JsonProperty("activityLevel") String activityLevel,
                @JsonProperty("bio") String bio,
                @JsonProperty("location") String location,
-               @JsonProperty("available") boolean available,
+               @JsonProperty("isAvailable") boolean isAvailable,
                @JsonProperty("name") String name,
                @JsonProperty("imgUrl") String imgUrl){
         this.owner = owner;
@@ -72,7 +72,7 @@ public class Pet {
         this.gender = gender;
         this.activityLevel = activityLevel;
         this.location = location;
-        this.isAvailable = available;
+        this.isAvailable = isAvailable;
         this.name = name;
         this.imgUrl = imgUrl;
     }
@@ -181,10 +181,10 @@ public class Pet {
      *
      * @return {@code true} if the pet is available, {@code false} otherwise
      */
-    public boolean isAvailable(){
+    @JsonProperty("isAvailable")
+    public boolean isAvailable() {
         return isAvailable;
     }
-
     public String getName(){
         return name;
     }
