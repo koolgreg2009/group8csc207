@@ -1,9 +1,10 @@
 package interface_adapter.logged_in;
 
+import interface_adapter.ViewModel;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import interface_adapter.ViewModel;
 
 /**
  * The LoggedInViewModel class represents the view model for the logged-in state of the application.

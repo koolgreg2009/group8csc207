@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 
 public class BookmarkView extends JPanel {
 
+    public final String viewName = "Bookmark View";
     private final LoggedInViewModel loggedInViewModel;
     private final BookmarkViewModel bookmarkViewModel;
     private final PreferenceViewModel preferenceViewModel;

@@ -87,8 +87,8 @@ public class Main {
 		PetDetailView petDetailView = PetDetailUseCaseFactory.create(viewManagerModel, petBioViewModel, loggedInViewModel, userDAO, petDAO);
         views.add(petDetailView, petDetailView.viewName);
 
-        BookmarkView bookmarkView = new BookmarkView();
-        views.add(bookmarkView, bookmarkView.viewName);
+//        BookmarkView bookmarkView = new BookmarkView();
+//        views.add(bookmarkView, bookmarkView.viewName);
 
         ProfileView profileView = new ProfileView();
         views.add(profileView, profileView.viewName);
