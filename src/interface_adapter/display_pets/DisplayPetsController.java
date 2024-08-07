@@ -1,7 +1,7 @@
-package interface_adapter.login_success;
+package interface_adapter.display_pets;
 
-import use_case.login_success.DisplayPetsInputBoundary;
-import use_case.login_success.DisplayPetsInputData;
+import use_case.display_pets.DisplayPetsInputBoundary;
+import use_case.display_pets.DisplayPetsInputData;
 
 public class DisplayPetsController {
 	private final DisplayPetsInputBoundary loginSuccessInteractor;

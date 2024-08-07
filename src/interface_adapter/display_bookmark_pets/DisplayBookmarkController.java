@@ -1,8 +1,8 @@
 package interface_adapter.display_bookmark_pets;
 
 import entity.Bookmark;
-import use_case.display.display_bookmark_pets.DisplayBookmarkInputBoundary;
-import use_case.display.display_bookmark_pets.DisplayBookmarkInputData;
+import use_case.display_bookmark_pets.DisplayBookmarkInputBoundary;
+import use_case.display_bookmark_pets.DisplayBookmarkInputData;
 
 import java.util.List;
 

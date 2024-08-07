@@ -1,9 +1,9 @@
-package interface_adapter.login_success;
+package interface_adapter.display_pets;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
-import use_case.login_success.DisplayPetsOutputBoundary;
-import use_case.login_success.DisplayPetsOutputData;
+import use_case.display_pets.DisplayPetsOutputBoundary;
+import use_case.display_pets.DisplayPetsOutputData;
 
 public class DisplayPetsPresenter implements DisplayPetsOutputBoundary {
 

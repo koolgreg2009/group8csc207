@@ -6,7 +6,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.login_success.DisplayPetsViewModel;
+import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.signup.SignupViewModel;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;

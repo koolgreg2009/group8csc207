@@ -2,8 +2,8 @@ package interface_adapter.login;
 
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.login_success.DisplayPetsState;
-import interface_adapter.login_success.DisplayPetsViewModel;
+import interface_adapter.display_pets.DisplayPetsState;
+import interface_adapter.display_pets.DisplayPetsViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
