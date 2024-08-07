@@ -104,7 +104,8 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.add(usernameInfo);
         this.add(username);
         this.add(buttons);
-        this.add(petListingPanel);
+        JScrollPane petScrollPanel = new JScrollPane(petListingPanel);
+        this.add(petScrollPanel);
         notifications.addActionListener(
                 evt -> {
                     viewManagerModel.setActiveView(notifViewModel.getViewName());
@@ -159,6 +160,8 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
             for (PetDTO pet : pets) {
                 petListingPanel.add(new PetListingPanel(this, pet, true));
             }
+            petListingPanel.revalidate();
+            petListingPanel.repaint();
 //        } else if (evt.getPropertyName().equals("view") && evt.getNewValue().equals("logged in")){
 //            displayAllPetsController.execute();
         }

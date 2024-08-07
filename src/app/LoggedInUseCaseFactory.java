@@ -9,6 +9,7 @@ import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
 //import interface_adapter.display_all_pets.DisplayAllPetsController;
+import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.pet_bio.PetBioController;
@@ -39,13 +40,19 @@ public class LoggedInUseCaseFactory {
      *
      * @return A LoggedInView instance configured with the provided dependencies.
      */
-	public static LoggedInView create(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
-			BookmarkViewModel bookmarkViewModel, PreferenceViewModel preferenceViewModel, LoginViewModel loginViewModel,
-			ProfileViewModel profileViewModel, UserDAOInterface userDAO, PetDAOInterface petDAO,
-			PetBioViewModel petBioViewModel) {
+	public static LoggedInView create(ViewManagerModel viewManagerModel,
+                                      LoggedInViewModel loggedInViewModel,
+                                      BookmarkViewModel bookmarkViewModel,
+                                      PreferenceViewModel preferenceViewModel,
+                                      LoginViewModel loginViewModel,
+                                      ProfileViewModel profileViewModel,
+                                      UserDAOInterface userDAO,
+                                      PetDAOInterface petDAO,
+                                      PetBioViewModel petBioViewModel,
+                                      DisplayPetsViewModel displayPetsViewModel) {
 		PetBioController petBioController = createPetBioUseCase(viewManagerModel, petBioViewModel, loggedInViewModel,
                                                                 petDAO);
-        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO);
+        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO, loggedInViewModel, displayPetsViewModel);
         AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO, loggedInViewModel);
         RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase(userDAO);
 		return new LoggedInView(petBioController, loggedInViewModel, bookmarkViewModel,

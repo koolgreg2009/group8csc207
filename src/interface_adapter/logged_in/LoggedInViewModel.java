@@ -68,7 +68,6 @@ public class LoggedInViewModel extends ViewModel {
 
     public void fireNotificationChanged() {
         support.firePropertyChange("notification", null, this.state);
-        // firePropertyChanged();
     }
     /**
      * Adds a listener for property change events.

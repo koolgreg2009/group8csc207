@@ -1,10 +1,5 @@
 package use_case.adopt;
 
-import entity.Pet;
-import entity.user.User;
-
-import java.util.List;
-
 /**
  * Data class for holding information about a pet adoption output.
  *
@@ -15,7 +10,7 @@ public class AdoptOutputData {
     private final String petOwner;
     private final String ownerEmail;
     private final String ownerPhone;
-    private final String petID;
+    private final String petName;
 
     /**
      * Constructs an {@code AdoptOutputData} object with the specified details.
@@ -23,13 +18,13 @@ public class AdoptOutputData {
      * @param petOwner the name of the pet owner
      * @param ownerEmail the email address of the pet owner
      * @param ownerPhone the phone number of the pet owner
-     * @param petID the ID of the pet
+     * @param petName the ID of the pet
      */
-    public AdoptOutputData(String petOwner, String ownerEmail, String ownerPhone, String petID){
+    public AdoptOutputData(String petOwner, String ownerEmail, String ownerPhone, String petName){
         this.petOwner = petOwner;
         this.ownerEmail = ownerEmail;
         this.ownerPhone = ownerPhone;
-        this.petID = petID;
+        this.petName = petName;
 
     }
 
@@ -66,6 +61,6 @@ public class AdoptOutputData {
      * @return the pet's ID
      */
     public String getID() {
-        return petID;
+        return petName;
     }
 }

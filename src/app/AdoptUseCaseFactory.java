@@ -6,6 +6,8 @@ import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.adopt.AdoptController;
 import interface_adapter.adopt.AdoptPresenter;
+import interface_adapter.display_pets.DisplayPetsViewModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.adopt.Adopt;
 import use_case.adopt.AdoptInputBoundary;
 import use_case.adopt.AdoptOutputBoundary;
@@ -30,8 +32,8 @@ public class AdoptUseCaseFactory {
      *
      * @return an instance of {@link AdoptController}, or {@code null} if an {@link IOException} occurs.
      */
-    public static AdoptController createAdoptUseCase(PetDAOInterface petDAO, UserDAOInterface userDAO){
-            AdoptOutputBoundary adoptPresenter = new AdoptPresenter();
+    public static AdoptController createAdoptUseCase(PetDAOInterface petDAO, UserDAOInterface userDAO, LoggedInViewModel loggedInViewModel, DisplayPetsViewModel displayPetsViewModel){
+            AdoptOutputBoundary adoptPresenter = new AdoptPresenter(loggedInViewModel, displayPetsViewModel);
             AdoptInputBoundary adoptInteractor = new Adopt(petDAO, adoptPresenter, userDAO);
             return new AdoptController(adoptInteractor);
 
