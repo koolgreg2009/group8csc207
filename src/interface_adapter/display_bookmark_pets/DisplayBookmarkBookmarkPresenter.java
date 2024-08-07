@@ -1,19 +1,22 @@
 package interface_adapter.display_bookmark_pets;
 
+import interface_adapter.bookmark.BookmarkState;
+import interface_adapter.bookmark.BookmarkViewModel;
 import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputBoundary;
 import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputData;
 
 public class DisplayBookmarkBookmarkPresenter implements DisplayBookmarkPetsOutputBoundary {
 
-    //private final BookmarkViewModel bookmarkViewModel;
+    private final BookmarkViewModel bookmarkViewModel;
 
+    public DisplayBookmarkBookmarkPresenter(BookmarkViewModel bookmarkViewModel) {
+        this.bookmarkViewModel = bookmarkViewModel;
+    }
 
     @Override
     public void displayPetsOutput(DisplayBookmarkPetsOutputData displayBookmarkPetsOutputData) {
-//        LoggedInState state = loggedInViewModel.getState();
-//        state.setPets(displayBookmarkPetsOutputData.getBookmarks());
-//        state.setUsername(SessionManager.getCurrentUser());
-//        loggedInViewModel.firePropertyChanged();
-        // do this but for bookmark state etc...
+        BookmarkState bookmarkState = bookmarkViewModel.getBookmarkState();
+        bookmarkState.setBookmarkDTO(displayBookmarkPetsOutputData.getBookmarks());
+        bookmarkViewModel.firePropertyChanged();
     }
 }

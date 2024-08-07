@@ -1,12 +1,20 @@
 package app;
 
+import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
-import data_access.FileUserDAO;
-import interface_adapter.bookmark.RemoveBookmarkController;
-import interface_adapter.bookmark.RemoveBookmarkPresenter;
-import use_case.bookmarks.BookmarkInputBoundary;
-import use_case.bookmarks.RemoveBookmarkInteractor;
-import use_case.bookmarks.RemoveBookmarkOutputBoundary;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.adopt.AdoptController;
+import interface_adapter.adopt.NotifViewModel;
+import interface_adapter.bookmark.*;
+import interface_adapter.display_pets.DisplayPetsViewModel;
+import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.pet_bio.PetBioController;
+import interface_adapter.pet_bio.PetBioViewModel;
+import interface_adapter.preference.PreferenceViewModel;
+import use_case.bookmarks.*;
+import view.BookmarkView;
+
 import java.io.IOException;
 
 /**
@@ -27,11 +35,33 @@ public class RemoveBookmarkUseCaseFactory {
      *
      * @return an instance of {@link RemoveBookmarkController}, or {@code null} if an {@link IOException} occurs.
      */
-    public static RemoveBookmarkController removeBookmarkUseCase(UserDAOInterface userDAO){
+    public static RemoveBookmarkController removeBookmarkUseCase(UserDAOInterface userDAO,
+                                                                 BookmarkViewModel bookmarkViewModel){
 
-        RemoveBookmarkOutputBoundary bookmarkPresenter = new RemoveBookmarkPresenter();
+        RemoveBookmarkOutputBoundary bookmarkPresenter = new RemoveBookmarkPresenter(bookmarkViewModel);
         BookmarkInputBoundary removeBookmarkInteractor = new RemoveBookmarkInteractor(userDAO, bookmarkPresenter);
         return new RemoveBookmarkController(removeBookmarkInteractor);
+    }
 
+    public static BookmarkView create(BookmarkViewModel bookmarkViewModel,
+                                      LoggedInViewModel loggedInViewModel,
+                                      PreferenceViewModel preferenceViewModel,
+                                      LoginViewModel loginViewModel,
+                                      PetBioViewModel petBioViewModel,
+                                      ViewManagerModel viewManagerModel,
+                                      NotifViewModel notifViewModel,
+                                      DisplayPetsViewModel displayPetsViewModel,
+                                      UserDAOInterface userDAO,
+                                      PetDAOInterface petDAO) {
+        RemoveBookmarkController removeBookmarkController = removeBookmarkUseCase(userDAO, bookmarkViewModel);
+        AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO,
+                loggedInViewModel);
+        PetBioController petBioController = LoggedInUseCaseFactory.createPetBioUseCase(viewManagerModel,petBioViewModel,
+                loggedInViewModel,petDAO);
+        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO,
+                loggedInViewModel, displayPetsViewModel);
+        return new BookmarkView(bookmarkViewModel, loggedInViewModel, preferenceViewModel, loginViewModel,
+                viewManagerModel, notifViewModel, petBioController, adoptController, removeBookmarkController, addBookmarkController);
     }
 }
+

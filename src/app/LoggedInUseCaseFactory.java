@@ -55,7 +55,7 @@ public class LoggedInUseCaseFactory {
                 petDAO);
         AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO, loggedInViewModel, displayPetsViewModel);
         AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO, loggedInViewModel);
-        RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase(userDAO);
+        RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase(userDAO, bookmarkViewModel);
         return new LoggedInView(petBioController, loggedInViewModel, bookmarkViewModel,
                 preferenceViewModel, loginViewModel, profileViewModel, notifViewModel, viewManagerModel,
                 adoptController, addBookmarkController, removeBookmarkController);
@@ -66,14 +66,13 @@ public class LoggedInUseCaseFactory {
      * @return A PetBioController instance configured with the provided dependencies.
      */
 
-    private static PetBioController createPetBioUseCase(
+    public static PetBioController createPetBioUseCase(
             ViewManagerModel viewManagerModel,
             PetBioViewModel petBioViewModel,
             LoggedInViewModel loggedInViewModel,
             PetDAOInterface petDAO){
 
         PetBioOutputBoundary petBioOutputBoundary = new PetBioPresenter(viewManagerModel, petBioViewModel);
-
 
         PetBioInputBoundary petBioInteractor = new PetBioInteractor(petBioOutputBoundary, petDAO);
 
