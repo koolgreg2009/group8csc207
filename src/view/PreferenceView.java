@@ -56,23 +56,23 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         this.preferenceViewModel.addPropertyChangeListener(this);
         this.viewManagerModel = viewManagerModel;
 
-        JLabel title = new JLabel("Preference Screen");
+        JLabel title = new JLabel("Preference Screen: If no preference leave blank");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel speciesInfo = new LabelTextPanel(
-                new JLabel("Species, type only one"), speciesInputField);
+                new JLabel("Species: type only one"), speciesInputField);
         LabelTextPanel breedsInfo = new LabelTextPanel(
-                new JLabel("Breeds, seperate each breed with a comma and a single space"), breedInputField);
+                new JLabel("Breeds: seperate each breed with a comma and a single space"), breedInputField);
         LabelTextPanel minAgeInfo = new LabelTextPanel(
-                new JLabel("Minimum Age, enter a whole number"), minAgeInputField);
+                new JLabel("Minimum Age: enter number"), minAgeInputField);
         LabelTextPanel maxAgeInfo = new LabelTextPanel(
-                new JLabel("Maximum Age, enter a whole number"), maxAgeInputField);
+                new JLabel("Maximum Age: enter number"), maxAgeInputField);
         LabelTextPanel activityLevelInfo = new LabelTextPanel(
-                new JLabel("Activity Level, low, medium, or high"), activityLevelInputField);
+                new JLabel("Activity Level: low, medium, or high"), activityLevelInputField);
         LabelTextPanel locationInfo = new LabelTextPanel(
                 new JLabel("Location"), locationInputField);
         LabelTextPanel genderInfo = new LabelTextPanel(
-                new JLabel("Select Gender, Enter M or F"), genderInputField);
+                new JLabel("Select Gender: enter M or F"), genderInputField);
 
 
 
@@ -87,23 +87,23 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                     int minAgeNum;
 
                     if (minAgeInputField.getText() == null || minAgeInputField.getText().isEmpty()) {
-                        minAgeNum = 0; // Set to 0 if the string is null or empty
+                        minAgeNum = 0;
                     } else {
                         try {
                             minAgeNum = Integer.parseInt(minAgeInputField.getText()); // Convert the string to an integer
                         } catch (NumberFormatException e) {
-                            minAgeNum = 0; // Set to 0 if the string cannot be parsed as an integer
+                            minAgeNum = 0;
                         }
                     }
                     int maxAgeNum;
 
                     if (maxAgeInputField.getText() == null || maxAgeInputField.getText().isEmpty()) {
-                        maxAgeNum = 100; // Set to 100 if the string is null or empty
+                        maxAgeNum = 0;
                     } else {
                         try {
-                            maxAgeNum = Integer.parseInt(maxAgeInputField.getText()); // Convert the string to an integer
+                            maxAgeNum = Integer.parseInt(maxAgeInputField.getText());
                         } catch (NumberFormatException e) {
-                            maxAgeNum = 100; // Set to 100 if the string cannot be parsed as an integer
+                            maxAgeNum = 0;
                         }
                     }
 
@@ -111,13 +111,12 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                     ArrayList<String> breedsList;
 
                     if (breeds == null || breeds.isEmpty()) {
-                        // If the string is empty, set wordsList to an empty ArrayList
                         breedsList = new ArrayList<>();
                     } else {
-                        // Split the string by the delimiter ", " and convert to an ArrayList
                         String[] wordsArray = breeds.split(", ");
                         breedsList = new ArrayList<>(Arrays.asList(wordsArray));
                     }
+
                     preferenceController.execute(speciesInputField.getText(), breedsList, minAgeNum, maxAgeNum, activityLevelInputField.getText(), locationInputField.getText(), genderInputField.getText());
                     viewManagerModel.setActiveView(loggedInViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
