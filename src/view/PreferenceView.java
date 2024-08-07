@@ -5,6 +5,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferenceViewModel;
+import interface_adapter.signup.SignupState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,8 +78,10 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         buttons.add(save);
 
 
+
         save.addActionListener(
                 evt -> {
+                    preferenceController.execute(speciesInputField.getText(), null, 0, 0, activityLevelInputField.getText(), locationInputField.getText(), genderInputField.getText());
                     viewManagerModel.setActiveView(loggedInViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
@@ -228,13 +231,14 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         this.add(buttons);
     }
 
+    //species, breeds, minAge, maxAge, activityLevel, location, gender
     @Override
-    public void actionPerformed(ActionEvent e) {
-
+    public void actionPerformed(ActionEvent evt) {
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        }
 
     }
-}
+
