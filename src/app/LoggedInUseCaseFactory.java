@@ -5,6 +5,7 @@ import data_access.UserDAOInterface;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
+import interface_adapter.adopt.NotifViewModel;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
@@ -44,7 +45,7 @@ public class LoggedInUseCaseFactory {
                                       BookmarkViewModel bookmarkViewModel,
                                       PreferenceViewModel preferenceViewModel,
                                       LoginViewModel loginViewModel,
-                                      ProfileViewModel profileViewModel,
+                                      ProfileViewModel profileViewModel, NotifViewModel notifViewModel,
                                       UserDAOInterface userDAO, PetDAOInterface petDAO,
                                       PetBioVIewModel petBioViewModel) {
 		PetBioController petBioController = createPetBioUseCase(viewManagerModel, petBioViewModel, loggedInViewModel,
@@ -55,7 +56,7 @@ public class LoggedInUseCaseFactory {
         AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO, loggedInViewModel);
         RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase(userDAO);
 		return new LoggedInView(petBioController, displayAllPetsController, loggedInViewModel, bookmarkViewModel,
-				preferenceViewModel, loginViewModel, profileViewModel, null, viewManagerModel,
+				preferenceViewModel, loginViewModel, profileViewModel, notifViewModel, viewManagerModel,
                 adoptController, addBookmarkController, removeBookmarkController);
 
 	}

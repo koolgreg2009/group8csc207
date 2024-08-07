@@ -14,6 +14,7 @@ import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.adopt.NotifViewModel;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -55,6 +56,7 @@ public class Main {
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
         ProfileViewModel profileViewModel = new ProfileViewModel();
         PetBioVIewModel petBioViewModel = new PetBioVIewModel();
+        NotifViewModel notifViewModel = new NotifViewModel();
         // creating user and pet DAO to be used for all use cases. declared outside so compiler doesnt cry
         UserDAOInterface userDAO = null;
         PetDAOInterface petDAO = null;
@@ -75,12 +77,15 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, signupViewModel, userDAO, petDAO);
         views.add(loginView, loginView.viewName);
 
-		LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, userDAO, petDAO, 
+		LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, notifViewModel, userDAO, petDAO,
         		petBioViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
         BookmarkView bookmarkView = new BookmarkView();
         views.add(bookmarkView, bookmarkView.viewName);
+
+        NotifView notifView = new NotifView(loggedInViewModel,viewManagerModel,notifViewModel);
+        views.add(notifView, notifView.viewName);
 
         ProfileView profileView = new ProfileView();
         views.add(profileView, profileView.viewName);
