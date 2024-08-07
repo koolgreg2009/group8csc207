@@ -29,35 +29,7 @@ public class PreferenceController {
     }
 
 
-    public void execute(){
-        System.out.println("Executing set preference use case. If you have no preference for species, breeds, activity level, location and or gender, press enter without having anything typed in. For min and max age, enter 0.");
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter species: ");
-        String species = scanner.nextLine();
-        System.out.print("Enter breeds (comma-separated, no space in between): ");
-        String breedsInput = scanner.nextLine();
-        List<String> breeds = new ArrayList<>();
-        if (!breedsInput.isEmpty()) {
-            for (String breed : breedsInput.split(",")) {
-                breeds.add(breed.trim());
-            }
-        }
-
-        System.out.print("Enter minimum age: ");
-        int minAge = scanner.nextInt();
-
-        System.out.print("Enter maximum age: ");
-        int maxAge = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
-
-        System.out.print("Enter activity level: ");
-        String activityLevel = scanner.nextLine();
-
-        System.out.print("Enter location: ");
-        String location = scanner.nextLine();
-
-        System.out.print("Enter gender: ");
-        String gender = scanner.nextLine();
+    public void execute(String species, List<String> breeds, Integer minAge, Integer maxAge, String activityLevel, String location, String gender){
 
         UserPreference preferences = new UserPreference(species, breeds, minAge, maxAge, activityLevel, location, gender);
         PreferenceData initialPreferences = new PreferenceData(SessionManager.getCurrentUser(), preferences);
