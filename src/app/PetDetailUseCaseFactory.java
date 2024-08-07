@@ -6,7 +6,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.display_pets.DisplayPetsController;
 import interface_adapter.display_pets.DisplayPetsPresenter;
-import interface_adapter.pet_bio.PetBioVIewModel;
+import interface_adapter.pet_bio.PetBioViewModel;
 import use_case.display_pets.DisplayPetsInputBoundary;
 import use_case.display_pets.DisplayPetsInteractor;
 import use_case.display_pets.DisplayPetsOutputBoundary;
@@ -18,8 +18,8 @@ public class PetDetailUseCaseFactory {
     }
 
 	public static PetDetailView create(ViewManagerModel viewManagerModel,
-			PetBioVIewModel petDetailViewModel, LoggedInViewModel loggedInViewModel, UserDAOInterface userDAO,
-			PetDAOInterface petDAO) {
+									   PetBioViewModel petDetailViewModel, LoggedInViewModel loggedInViewModel, UserDAOInterface userDAO,
+									   PetDAOInterface petDAO) {
 		DisplayPetsController displayPetsController = createLoginSuccessUseCase(viewManagerModel, loggedInViewModel,
 				userDAO, petDAO);
 		return new PetDetailView(petDetailViewModel, displayPetsController);

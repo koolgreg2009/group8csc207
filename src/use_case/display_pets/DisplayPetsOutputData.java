@@ -2,7 +2,7 @@ package use_case.display_pets;
 
 import java.util.List;
 
-import dto.pet.PetDTO;
+import dto.PetDTO;
 
 public class DisplayPetsOutputData {
 	private final String username;
