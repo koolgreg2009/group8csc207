@@ -15,6 +15,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PreferenceView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "preference";
@@ -104,7 +106,19 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                             maxAgeNum = 100; // Set to 100 if the string cannot be parsed as an integer
                         }
                     }
-                    preferenceController.execute(speciesInputField.getText(), null, minAgeNum, maxAgeNum, activityLevelInputField.getText(), locationInputField.getText(), genderInputField.getText());
+
+                    String breeds = breedInputField.getText();
+                    ArrayList<String> breedsList;
+
+                    if (breeds == null || breeds.isEmpty()) {
+                        // If the string is empty, set wordsList to an empty ArrayList
+                        breedsList = new ArrayList<>();
+                    } else {
+                        // Split the string by the delimiter ", " and convert to an ArrayList
+                        String[] wordsArray = breeds.split(", ");
+                        breedsList = new ArrayList<>(Arrays.asList(wordsArray));
+                    }
+                    preferenceController.execute(speciesInputField.getText(), breedsList, minAgeNum, maxAgeNum, activityLevelInputField.getText(), locationInputField.getText(), genderInputField.getText());
                     viewManagerModel.setActiveView(loggedInViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                     // to do: add displayallpet usecase
