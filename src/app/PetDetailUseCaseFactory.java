@@ -18,6 +18,8 @@ public class PetDetailUseCaseFactory {
     }
 
 	public static PetDetailView create(ViewManagerModel viewManagerModel,
+									   PetBioViewModel petDetailViewModel, LoggedInViewModel loggedInViewModel, UserDAOInterface userDAO,
+									   PetDAOInterface petDAO) {
 			PetBioViewModel petDetailViewModel, LoggedInViewModel loggedInViewModel, UserDAOInterface userDAO,
 			PetDAOInterface petDAO) {
 		DisplayPetsController displayPetsController = createLoginSuccessUseCase(viewManagerModel, loggedInViewModel,

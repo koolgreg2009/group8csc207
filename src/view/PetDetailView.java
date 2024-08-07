@@ -142,7 +142,7 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
 		if (evt.getNewValue() instanceof PetBioState) {
 			PetBioState state = (PetBioState) evt.getNewValue();
 			this.viewUser = state.getViewUser();
-			PetDTO pet = state.getPet();
+            PetDTO pet = state.getPet();
 			nameText.setText(pet.getName());
 			petIDText.setText("" + pet.getPetID());
 			breedText.setText(pet.getBreed());

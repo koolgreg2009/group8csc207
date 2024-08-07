@@ -9,8 +9,6 @@ import use_case.display_bookmark_pets.DisplayBookmarkInputBoundary;
 import use_case.display_bookmark_pets.DisplayBookmarkInputData;
 import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputBoundary;
 import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputData;
-import use_case.display_pets.DisplayPetsOutputBoundary;
-import use_case.display_pets.DisplayPetsOutputData;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -97,7 +97,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         logOut = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
         buttons.add(logOut);
         petListingPanel = new JPanel();
-        petListingPanel.setLayout(new GridLayout(3, 3));
+        petListingPanel.setLayout(new GridLayout(0, 3));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
