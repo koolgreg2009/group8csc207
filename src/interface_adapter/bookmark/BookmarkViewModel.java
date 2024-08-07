@@ -38,6 +38,11 @@ public class BookmarkViewModel extends ViewModel {
         this.bookmarkState = newBookmarkState;
     }
 
+    /**
+     * Retrieves the current state of bookmarks.
+     *
+     * @return the current BookmarkState instance
+     */
     public BookmarkState getBookmarkState(){
         return bookmarkState;
     }
@@ -50,6 +55,9 @@ public class BookmarkViewModel extends ViewModel {
         support.firePropertyChange("Bookmark State", null, this.bookmarkState);
     }
 
+    /**
+     * Notifies listeners that the notification state has changed.
+     */
     public void fireNotificationChanged() {
         support.firePropertyChange("Notification", null, this.bookmarkState);
     }
@@ -131,6 +139,12 @@ public class BookmarkViewModel extends ViewModel {
         return bookmarkState.getUsername();
     }
 
+    /**
+     * Sets the notification message and success status, then notifies listeners of the change.
+     *
+     * @param message the notification message
+     * @param isSuccess the success status of the notification
+     */
     public void setNotification(String message, boolean isSuccess) {
         this.bookmarkState.setNotifMessage(message);
         this.bookmarkState.setNotifSuccess(isSuccess);

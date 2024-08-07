@@ -1,8 +1,6 @@
 package view;
 
 import dto.BookmarkDTO;
-import dto.PetDTO;
-import interface_adapter.ProfileViewModel;
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
@@ -11,7 +9,6 @@ import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkState;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
-import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.pet_bio.PetBioController;
@@ -26,58 +23,78 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-public class BookmarkView extends JPanel implements PropertyChangeListener, PetActionView, ActionListener {
+/**
+ * Represents a view that holds all the bookmarks the user has in the application.
+ * This view displays all the user's bookmarks that they can interact with.
+ * It implements {@link PropertyChangeListener} to respond to property changes in the
+ * {@link BookmarkViewModel}, {@link PetActionView} for handling pet-related actions,
+ * and {@link ActionListener} for button click events.
+ */
+public class BookmarkView extends JPanel implements PropertyChangeListener, PetActionView {
 
+    /** The name of this view */
     public final String viewName = "Bookmark View";
 
-
+    /** The view models used by this view. */
     private final LoggedInViewModel loggedInViewModel;
     private final BookmarkViewModel bookmarkViewModel;
     private final PreferenceViewModel preferenceViewModel;
     private final LoginViewModel loginViewModel;
-    private final ProfileViewModel profileViewModel;
     private final ViewManagerModel viewManagerModel;
     private final NotifViewModel notifViewModel;
 
+    /** Controllers for handling various actions. */
     private final PetBioController petBioController;
     private final AdoptController adoptController;
     private final AddBookmarkController addBookmarkController;
     private final RemoveBookmarkController removeBookmarkController;
 
+    /** UI components and layout. */
     JPanel pageBody = new JPanel();
-
     final JButton notifs = new JButton();
     final JButton myPreferences = new JButton();
     final JButton logout = new JButton();
     final JButton home = new JButton();
-
     GroupLayout layout = new GroupLayout(this);
 
+    /** Colors and fonts used in the UI. */
     final Color SIDE_BUTTON_COLOR = new Color(255, 189, 65);
     final Color HEADER_COLOR = new Color(255,242,206);
     final Color BACKGROUND_COLOR = new Color (249,249,249);
     final Font SIDE_BUTTON_FONT = new Font("Microsoft JhengHei UI", Font.BOLD, 12);
 
-    @SuppressWarnings("unchecked")     
-    private BookmarkView (NotifView notifView,
-                          BookmarkViewModel bookmarkViewModel,
+    /**
+     * Constructs a {@code BookmarkView} with the specified view models and controllers.
+     *
+     * @param bookmarkViewModel the view model for bookmarks
+     * @param loggedInViewModel the view model for logged-in user
+     * @param preferenceViewModel the view model for user preferences
+     * @param loginViewModel the view model for login
+     * @param viewManagerModel the view manager model
+     * @param notifViewModel the view model for notifications
+     * @param petBioController the controller for pet biographies
+     * @param adoptController the controller for pet adoption
+     * @param removeBookmarkController the controller for removing bookmarks
+     * @param addBookmarkController the controller for adding bookmarks
+     */
+    @SuppressWarnings("unchecked")
+    private BookmarkView (BookmarkViewModel bookmarkViewModel,
                           LoggedInViewModel loggedInViewModel,
                           PreferenceViewModel preferenceViewModel,
                           LoginViewModel loginViewModel,
-                          ProfileViewModel profileViewModel,
                           ViewManagerModel viewManagerModel,
+                          NotifViewModel notifViewModel,
                           PetBioController petBioController,
                           AdoptController adoptController,
                           RemoveBookmarkController removeBookmarkController,
                           AddBookmarkController addBookmarkController) {
 
-        this.notifView = notifView;
         this.bookmarkViewModel = bookmarkViewModel;
         this.loggedInViewModel = loggedInViewModel;
         this.preferenceViewModel = preferenceViewModel;
         this.loginViewModel = loginViewModel;
-        this.profileViewModel = profileViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.notifViewModel = notifViewModel;
         this.petBioController = petBioController;
         this.adoptController = adoptController;
         this.removeBookmarkController = removeBookmarkController;
@@ -86,7 +103,101 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
         bookmarkViewModel.addPropertyChangeListener(this);
 
         setBackground(HEADER_COLOR);
+        setupButtons();
+        setupLayout();
+    }
 
+    /**
+     * Configures the design of the notifications button.
+     */
+    private void notifsButtonDesign(){
+        notifs.setBackground(SIDE_BUTTON_COLOR);
+        notifs.setFont(SIDE_BUTTON_FONT); // NOI18N
+        notifs.setText(bookmarkViewModel.NOTIF_BUTTON_LABEL);
+        notifs.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+    }
+
+    /**
+     * Handles the action performed when the notifications button is clicked.
+     *
+     * @param evt the action event
+     */
+    private void notifsActionPerformed(ActionEvent evt) {
+        viewManagerModel.setActiveView(notifViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+        bookmarkViewModel.removePropertyChangeListener(this);
+    }
+
+    /**
+     * Configures the design of the preferences button.
+     */
+    private void preferenceButtonDesign(){
+        myPreferences.setBackground(SIDE_BUTTON_COLOR);
+        myPreferences.setFont(SIDE_BUTTON_FONT); // NOI18N
+        myPreferences.setText(bookmarkViewModel.PREF_BUTTON_LABEL);
+        myPreferences.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+    }
+
+    /**
+     * Handles the action performed when the preferences button is clicked.
+     *
+     * @param evt the action event
+     */
+    private void myPreferencesActionPerformed(ActionEvent evt) {
+        viewManagerModel.setActiveView(preferenceViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+        bookmarkViewModel.removePropertyChangeListener(this);
+    }
+
+    /**
+     * Configures the design of the logout button.
+     */
+    private void logoutButtonDesign(){
+        logout.setBackground(SIDE_BUTTON_COLOR);
+        logout.setFont(SIDE_BUTTON_FONT); // NOI18N
+        logout.setText(bookmarkViewModel.LOGOUT_BUTTON_LABEL);
+        logout.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+    }
+
+    /**
+     * Handles the action performed when the logout button is clicked.
+     *
+     * @param evt the action event
+     */
+    private void logoutActionPerformed(ActionEvent evt) {
+        SessionManager.logout();
+        viewManagerModel.setActiveView(loginViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+        bookmarkViewModel.removePropertyChangeListener(this);
+    }
+
+    /**
+     * Configures the design of the home button.
+     */
+    private void homeButtonDesign(){
+        home.setBackground(new Color(255, 153, 153));
+        home.setFont(new Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        home.setText(bookmarkViewModel.HOME_BUTTON_LABEL);
+        home.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+    }
+
+    /**
+     * Handles the action performed when the home button is clicked.
+     *
+     * @param evt the action event
+     */
+    private void homeActionPerformed(ActionEvent evt) {
+        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+        bookmarkViewModel.removePropertyChangeListener(this);
+    }
+
+    /**
+     * Sets up action listeners for all buttons in the view.
+     *
+     * This method assigns action listeners to the buttons to handle user interactions.
+     */
+    private void setupButtons(){
         notifsButtonDesign();
         notifs.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -114,46 +225,13 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
                 homeActionPerformed(evt);
             }
         });
-
-        pageBody.setBackground(BACKGROUND_COLOR);
-        pageBody.setAutoscrolls(true);
-        pageBody.setLayout(new GridLayout(5, 4));
-
-        this.setLayout(layout);
-        layout.setHorizontalGroup(horizontalGroup());
-        layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {notifs, myPreferences, logout});
-        layout.setVerticalGroup(verticalGroup());
-        layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {notifs, myPreferences, logout});
-    }
-    
-    private void notifsButtonDesign(){
-        notifs.setBackground(SIDE_BUTTON_COLOR);
-        notifs.setFont(SIDE_BUTTON_FONT); // NOI18N
-        notifs.setText(bookmarkViewModel.NOTIF_BUTTON_LABEL);
-        notifs.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-    }
-    
-    private void preferenceButtonDesign(){
-        myPreferences.setBackground(SIDE_BUTTON_COLOR);
-        myPreferences.setFont(SIDE_BUTTON_FONT); // NOI18N
-        myPreferences.setText(bookmarkViewModel.PREF_BUTTON_LABEL);
-        myPreferences.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-    }
-    
-    private void logoutButtonDesign(){
-        logout.setBackground(SIDE_BUTTON_COLOR);
-        logout.setFont(SIDE_BUTTON_FONT); // NOI18N
-        logout.setText(bookmarkViewModel.LOGOUT_BUTTON_LABEL);
-        logout.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-    }
-    
-    private void homeButtonDesign(){
-        home.setBackground(new Color(255, 153, 153));
-        home.setFont(new Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
-        home.setText(bookmarkViewModel.HOME_BUTTON_LABEL);
-        home.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
 
+    /**
+     * Creates the horizontal group for the layout.
+     *
+     * @return the horizontal group
+     */
     private GroupLayout.Group horizontalGroup(){
         return layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addComponent(pageBody, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -168,6 +246,11 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
                         .addContainerGap());
     }
 
+    /**
+     * Creates the vertical group for the layout.
+     *
+     * @return the vertical group
+     */
     private GroupLayout.Group verticalGroup(){
         return layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -185,31 +268,28 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
                         .addContainerGap());
     }
 
-    private void notifsActionPerformed(ActionEvent evt) {
-        viewManagerModel.setActiveView(notifViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-        bookmarkViewModel.removePropertyChangeListener(this);
+    /**
+     * Configures the layout of the view.
+     *
+     * This method sets up the layout of the components within the view, including
+     * the page body and button arrangements.
+     */
+    private void setupLayout(){
+        pageBody.setBackground(BACKGROUND_COLOR);
+        pageBody.setAutoscrolls(true);
+        pageBody.setLayout(new GridLayout(5, 4));
+
+        this.setLayout(layout);
+        layout.setHorizontalGroup(horizontalGroup());
+        layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {notifs, myPreferences, logout});
+        layout.setVerticalGroup(verticalGroup());
+        layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {notifs, myPreferences, logout});
     }
 
-    private void myPreferencesActionPerformed(ActionEvent evt) {
-        viewManagerModel.setActiveView(preferenceViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-        bookmarkViewModel.removePropertyChangeListener(this);
-    }
 
-    private void logoutActionPerformed(ActionEvent evt) {
-        SessionManager.logout();
-        viewManagerModel.setActiveView(loginViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-        bookmarkViewModel.removePropertyChangeListener(this);
-    }
-
-    private void homeActionPerformed(ActionEvent evt) {
-        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-        bookmarkViewModel.removePropertyChangeListener(this);
-    }
-
+    /**
+     * Displays a notification message based on the current bookmark state.
+     */
     private void showNotification() {
         BookmarkState bookmarkState = bookmarkViewModel.getBookmarkState();
         if (bookmarkState.isNotificationSuccess()) {
@@ -221,6 +301,15 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
         }
     }
 
+    /**
+     * Called when a property change event occurs. This method updates the view based on the property change.
+     *
+     * <p>If the property name is "Bookmark State", it updates the bookmark listings in the view by
+     * retrieving the updated list of bookmarks and displaying them. If the property name is "notification",
+     * it shows a notification message to the user.</p>
+     *
+     * @param evt the property change event containing details of the change
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("Bookmark State")) {
@@ -236,25 +325,51 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
         }
     }
 
-
+    /**
+     * Adds a bookmark for the specified pet.
+     *
+     * <p>This method delegates the task of adding a bookmark to the {@link AddBookmarkController}.</p>
+     *
+     * @param petID the ID of the pet to be bookmarked
+     */
     @Override
     public void add(int petID) {
         addBookmarkController.execute(petID);
     }
 
+    /**
+     * Removes a bookmark for the specified pet.
+     *
+     * <p>This method delegates the task of removing a bookmark to the {@link RemoveBookmarkController}.</p>
+     *
+     * @param petID the ID of the pet whose bookmark is to be removed
+     */
     @Override
     public void remove(int petID){
         removeBookmarkController.execute(petID);
     }
 
+    /**
+     * Displays the details of a pet.
+     *
+     * <p>This method delegates the task of showing pet details to the {@link PetBioController}.</p>
+     *
+     * @param petID the ID of the pet whose details are to be displayed
+     */
     @Override
     public void goDetail(int petID) {
         petBioController.execute(bookmarkViewModel.getLoggedInUser(), petID);
     }
 
+    /**
+     * Initiates the adoption process for a specified pet.
+     *
+     * <p>This method delegates the task of adopting a pet to the {@link AdoptController}.</p>
+     *
+     * @param petID the ID of the pet to be adopted
+     */
     @Override
     public void adopt(int petID) {
         adoptController.execute(petID);
     }
-
 }

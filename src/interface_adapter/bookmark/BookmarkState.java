@@ -99,18 +99,38 @@ public class BookmarkState {
         return username;
     }
 
+    /**
+     * Retrieves the notification message.
+     *
+     * @return the notification message
+     */
     public String getNotificationMessage() {
         return notifMessage;
     }
 
+    /**
+     * Sets the notification message.
+     *
+     * @param notifMessage the notification message to set
+     */
     public void setNotifMessage(String notifMessage) {
         this.notifMessage = notifMessage;
     }
 
+    /**
+     * Checks if the notification was successful.
+     *
+     * @return true if the notification was successful, false otherwise
+     */
     public boolean isNotificationSuccess() {
         return notifSuccess;
     }
 
+    /**
+     * Sets the notification success status.
+     *
+     * @param notifSuccess the notification success status to set
+     */
     public void setNotifSuccess(boolean notifSuccess) {
         this.notifSuccess = notifSuccess;
     }
