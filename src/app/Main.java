@@ -14,6 +14,7 @@ import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.adopt.NotifViewModel;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -54,6 +55,7 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         BookmarkViewModel bookmarkViewModel = new BookmarkViewModel();
+        NotifViewModel notifViewModel = new NotifViewModel();
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
         ProfileViewModel profileViewModel = new ProfileViewModel();
         PetBioViewModel petBioViewModel = new PetBioViewModel();
@@ -80,15 +82,18 @@ public class Main {
         DisplayPetsView displayPetsView = DisplayPetsUseCaseFactory.create(viewManagerModel, displayPetsViewModel, loggedInViewModel, userDAO, petDAO);
         views.add(displayPetsView, displayPetsView.viewName);
 
-		LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, userDAO, petDAO, 
-        		petBioViewModel, displayPetsViewModel);
+        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, notifViewModel, userDAO, petDAO,
+                petBioViewModel, displayPetsViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-		PetDetailView petDetailView = PetDetailUseCaseFactory.create(viewManagerModel, petBioViewModel, loggedInViewModel, userDAO, petDAO);
+        PetDetailView petDetailView = PetDetailUseCaseFactory.create(viewManagerModel, petBioViewModel, loggedInViewModel, userDAO, petDAO);
         views.add(petDetailView, petDetailView.viewName);
 
 //        BookmarkView bookmarkView = new BookmarkView();
 //        views.add(bookmarkView, bookmarkView.viewName);
+
+        NotifView notifView = new NotifView(loggedInViewModel,viewManagerModel,notifViewModel);
+        views.add(notifView, notifView.viewName);
 
         ProfileView profileView = new ProfileView();
         views.add(profileView, profileView.viewName);
@@ -104,4 +109,3 @@ public class Main {
         application.setVisible(true);
     }
 }
-

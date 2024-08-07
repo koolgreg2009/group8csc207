@@ -11,7 +11,7 @@ public class DisplayBookmarkBookmarkPresenter implements DisplayBookmarkPetsOutp
     @Override
     public void displayPetsOutput(DisplayBookmarkPetsOutputData displayBookmarkPetsOutputData) {
 //        LoggedInState state = loggedInViewModel.getState();
-//        state.setPets(displayBookmarkPetsOutputData.getPets());
+//        state.setPets(displayBookmarkPetsOutputData.getBookmarks());
 //        state.setUsername(SessionManager.getCurrentUser());
 //        loggedInViewModel.firePropertyChanged();
         // do this but for bookmark state etc...

@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.NotifViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 
@@ -11,16 +12,17 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class NotifView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final ViewManager viewManager; // yto switch page
-    private final LoggedInViewModel LoggedInViewModel;  // ogo back to loggedpage
-    private final NotifViewModel nvm;
+    private final ViewManagerModel viewManagerModel;
+    private final LoggedInViewModel loggedInViewModel;
+    private final NotifViewModel notifViewModel;
+    public String viewName = "notification";
     private DefaultListModel<String> notifList;
 
-    public NotifView(LoggedInViewModel loggedInViewModel, ViewManager viewManager, NotifViewModel nvm) {
-        this.LoggedInViewModel = loggedInViewModel;
-        this.viewManager = viewManager;
-        this.nvm = nvm;
-        this.nvm.addPropertyChangeListener(this);
+    public NotifView(LoggedInViewModel loggedInViewModel, ViewManagerModel viewManagerModel, NotifViewModel notifViewModel) {
+        this.loggedInViewModel = loggedInViewModel;
+        this.viewManagerModel = viewManagerModel;
+        this.notifViewModel = notifViewModel;
+        this.notifViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(loggedInViewModel.NOTIF_BUTTON);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -50,8 +52,16 @@ public class NotifView extends JPanel implements ActionListener, PropertyChangeL
         String command = e.getActionCommand();
         if ("You have a new notification!".equals(command)) {
             addNotification("Pet has been adopted");
+            JButton back = new JButton(notifViewModel.BACK_BUTTON_LABEL);
+            this.add(back, BorderLayout.WEST);
+            back.addActionListener(
+                    evt -> {
+                        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+                        viewManagerModel.firePropertyChanged();
+                    }
+            );
             remove((Component) e.getSource()); // Remove the button from the panel after user has seen the notification
-            revalidate(); // Revalidate the panel to refresh the layout
+            revalidate();
             repaint(); // Repaint the panel to ensure the changes are visible
         }
     }
