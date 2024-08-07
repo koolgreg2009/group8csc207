@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 
 import dto.pet.PetDTO;
 
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -28,12 +29,11 @@ public class PetListingPanel extends javax.swing.JPanel {
 	}
 
 	private void loadData() {
-		jLabel1.setText("Name: " + this.pet.getName());
-		jLabel2.setText("Pet ID: " + this.pet.getPetID());
-		jLabel3.setText("Age: " + pet.getPetAge());
-		jLabel4.setText("Breed: " + pet.getBreed());
-		jLabel5.setText("Species: " + pet.getSpecies());
-		jLabel6.setText("Gender: " + pet.getGender());
+		jLabelName.setText("Name: " + this.pet.getName());
+		jLabelAge.setText("Age: " + pet.getPetAge());
+		jLabelBreed.setText("Breed: " + pet.getBreed());
+		jLabelSpecies.setText("Species: " + pet.getSpecies());
+		jLabelGender.setText("Gender: " + pet.getGender());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,18 +44,16 @@ public class PetListingPanel extends javax.swing.JPanel {
         adoptButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         bookmarkButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         moreInfoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-		jLabel1.setText("Name: ");
-		jLabel2.setText("Pet ID: ");
-		jLabel3.setText("Age: ");
-		jLabel4.setText("Breed: ");
-		jLabel5.setText("Species: ");
-		jLabel6.setText("Gender: ");
+        jLabelName = new javax.swing.JLabel();
+        jLabelAge = new javax.swing.JLabel();
+        jLabelBreed = new javax.swing.JLabel();
+        jLabelSpecies = new javax.swing.JLabel();
+        jLabelGender = new javax.swing.JLabel();
+		jLabelName.setText("Name: ");
+		jLabelAge.setText("Age: ");
+		jLabelBreed.setText("Breed: ");
+		jLabelSpecies.setText("Species: ");
+		jLabelGender.setText("Gender: ");
 
         setBackground(new java.awt.Color(223, 241, 249));
 
@@ -98,17 +96,16 @@ public class PetListingPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
- 
-        jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabelName.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
- 
-        jLabel4.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabelAge.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabelBreed.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabelSpecies.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+
+        jLabelGender.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -117,28 +114,27 @@ public class PetListingPanel extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel5)
+                                        .addComponent(jLabelBreed)
+                                        .addComponent(jLabelSpecies)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel6)
+                                                .addComponent(jLabelGender)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel3))
+                                                .addComponent(jLabelAge))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel2)))
+                                                .addComponent(jLabelName)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, true)
-                                        .addComponent(moreInfoButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, true)
+                                        .addComponent(moreInfoButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, 228)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addComponent(bookmarkButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(adoptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(3, 3, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{jLabel1, jLabel4, jLabel5, jLabel6});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{jLabelName, jLabelBreed, jLabelSpecies, jLabelGender});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{adoptButton, bookmarkButton});
 
@@ -147,16 +143,15 @@ public class PetListingPanel extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(5, 128, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel1)
-                                        .addComponent(jLabel2))
+                                        .addComponent(jLabelName))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel3))
+                                        .addComponent(jLabelGender)
+                                        .addComponent(jLabelAge))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5)
+                                .addComponent(jLabelSpecies)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4)
+                                .addComponent(jLabelBreed)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(moreInfoButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -184,10 +179,9 @@ public class PetListingPanel extends javax.swing.JPanel {
 	private javax.swing.JButton adoptButton;
 	private javax.swing.JButton bookmarkButton;
 	private javax.swing.JButton moreInfoButton;
-	private javax.swing.JLabel jLabel1;
-	private javax.swing.JLabel jLabel2;
-	private javax.swing.JLabel jLabel3;
-	private javax.swing.JLabel jLabel4;
-	private javax.swing.JLabel jLabel5;
-	private javax.swing.JLabel jLabel6;
+	private javax.swing.JLabel jLabelName;
+	private javax.swing.JLabel jLabelAge;
+	private javax.swing.JLabel jLabelBreed;
+	private javax.swing.JLabel jLabelSpecies;
+	private javax.swing.JLabel jLabelGender;
 }
