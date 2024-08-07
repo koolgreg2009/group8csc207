@@ -5,11 +5,11 @@ import entity.Bookmark;
 import java.util.List;
 
 public class DisplayBookmarkInputData {
-    private final List<Bookmark> bookmarks;
-    public DisplayBookmarkInputData(List<Bookmark> bookmarks) {
-        this.bookmarks = bookmarks;
+    private final String username;
+    public DisplayBookmarkInputData(String username) {
+        this.username = username;
     }
-    public List<Bookmark> getBookmarks() {
-        return bookmarks;
+    public String getUsername() {
+        return username;
     }
 }
