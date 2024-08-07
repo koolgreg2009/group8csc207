@@ -69,7 +69,8 @@ public class FilePetDAO implements PetDAOInterface {
     @Override
     public ArrayList<Pet> getPreferencePets(UserPreference userPreference) {
         ArrayList<Pet> matchingPets = new ArrayList<>();
-        for (Pet pet : pets.values()) {
+        List<Pet> availablePets = getAvailablePets();
+        for (Pet pet : availablePets) {
             if (matchesPreference(pet, userPreference)) {
                 matchingPets.add(pet);
             }
@@ -79,21 +80,43 @@ public class FilePetDAO implements PetDAOInterface {
 
     @Override
     public boolean matchesPreference(Pet pet, UserPreference userPreference) {
-        return isMatching(userPreference.getSpecies(), pet.getSpecies()) &&
-                isMatching(userPreference.getBreeds(), pet.getBreed()) &&
-                isInRange(userPreference.getMinAge(), userPreference.getMaxAge(), pet.getPetAge()) &&
-                isMatching(userPreference.getActivityLevel(), pet.getActivityLevel()) &&
-                isMatching(userPreference.getLocation(), pet.getLocation()) &&
-                isMatching(userPreference.getGender(), pet.getGender()) &&
-                pet.isAvailable();
+//        return isMatching(userPreference.getSpecies(), pet.getSpecies()) &&
+//                isMatching(userPreference.getBreeds(), pet.getBreed()) &&
+//                isInRange(userPreference.getMinAge(), userPreference.getMaxAge(), pet.getPetAge()) &&
+//                isMatching(userPreference.getActivityLevel(), pet.getActivityLevel()) &&
+//                isMatching(userPreference.getLocation(), pet.getLocation()) &&
+//                isMatching(userPreference.getGender(), pet.getGender()) &&
+//                pet.isAvailable();
+        if (!isMatching(userPreference.getSpecies(), pet.getSpecies())) {
+            return false;
+        }
+        if (!isMatching(userPreference.getBreeds(), pet.getBreed())) {
+            return false;
+        }
+        if (!isInRange(userPreference.getMinAge(), userPreference.getMaxAge(), pet.getPetAge())) {
+            return false;
+        }
+        if (!isMatching(userPreference.getActivityLevel(), pet.getActivityLevel())) {
+            return false;
+        }
+        if (!isMatching(userPreference.getLocation(), pet.getLocation())) {
+            return false;
+        }
+        if (!isMatching(userPreference.getGender(), pet.getGender())) {
+            return false;
+        }
+        if(!pet.isAvailable()){
+            return false;
+        }
+        return true;
     }
 
     private boolean isMatching(String preference, String attribute) {
-        return preference == null || !preference.isEmpty() || Objects.equals(preference, attribute);
+        return preference == null || preference.isEmpty() || Objects.equals(preference, attribute);
     }
 
     private boolean isMatching(List<String> preferences, String attribute) {
-        return preferences == null || !preferences.isEmpty() || preferences.contains(attribute);
+        return preferences == null || preferences.isEmpty() || preferences.contains(attribute);
     }
 
     private boolean isInRange(int min, int max, int value) {
@@ -191,7 +214,7 @@ public class FilePetDAO implements PetDAOInterface {
     private int parseAgeString(String ageString) {
         String[] split =  ageString.split(" ");
 
-        return split.length == 4 ? Integer.parseInt(split[0])*12+Integer.parseInt(split[2]) : Integer.parseInt(split[0])*12;
+        return Integer.parseInt(split[0]);
     }
 
 	@Override
