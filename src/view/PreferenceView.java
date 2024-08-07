@@ -72,13 +72,9 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         LabelTextPanel genderInfo = new LabelTextPanel(
                 new JLabel("Select Gender, Enter M or F"), genderInputField);
 
-
-
         JPanel buttons = new JPanel();
         save = new JButton(preferenceViewModel.SAVE_BUTTON_LABEL);
         buttons.add(save);
-
-
 
         save.addActionListener(
                 evt -> {

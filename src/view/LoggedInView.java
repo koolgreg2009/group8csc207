@@ -139,6 +139,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
 	public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
+
     private void showNotification() {
         LoggedInState state = loggedInViewModel.getState();
         if (state.isNotificationSuccess()) {

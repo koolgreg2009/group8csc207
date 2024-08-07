@@ -11,6 +11,8 @@ import java.util.List;
 public class BookmarkState {
     private List<PetDTO> bookmarkedPets;
 
+    //displayallbookmarks usecase presenter returns petID and time.
+
     /**
      * Default constructor initializes an empty list of bookmarked pets.
      */

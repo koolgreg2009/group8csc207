@@ -1,10 +1,14 @@
 package view;
 
+import dto.PetDTO;
 import interface_adapter.ProfileViewModel;
+import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.bookmark.AddBookmarkController;
+import interface_adapter.bookmark.BookmarkState;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
+import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.preference.PreferenceViewModel;
@@ -14,11 +18,15 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
 
-public class BookmarkView extends JPanel {
+public class BookmarkView extends JPanel implements PropertyChangeListener, PetActionView, ActionListener {
 
     public final String viewName = "Bookmark View";
     private final LoggedInViewModel loggedInViewModel;
+    private final NotifView notifView;
     private final BookmarkViewModel bookmarkViewModel;
     private final PreferenceViewModel preferenceViewModel;
     private final LoginViewModel loginViewModel;
@@ -42,6 +50,7 @@ public class BookmarkView extends JPanel {
 
     @SuppressWarnings("unchecked")     
     private BookmarkView (LoggedInViewModel loggedInViewModel,
+                          NotifView notifView,
                           BookmarkViewModel bookmarkViewModel,
                           PreferenceViewModel preferenceViewModel,
                           LoginViewModel loginViewModel,
@@ -51,7 +60,9 @@ public class BookmarkView extends JPanel {
                           AddBookmarkController addBookmarkController) {
 
         this.loggedInViewModel = loggedInViewModel;
+        this.notifView = notifView;
         this.bookmarkViewModel = bookmarkViewModel;
+        this.bookmarkViewModel.addPropertyChangeListener(this);
         this.preferenceViewModel = preferenceViewModel;
         this.loginViewModel = loginViewModel;
         this.profileViewModel = profileViewModel;
@@ -160,23 +171,74 @@ public class BookmarkView extends JPanel {
     }
 
     private void notifsActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
-        // Basically want to display a popup of notifications
+        viewManagerModel.setActiveView(notifView.getName());
+        viewManagerModel.firePropertyChanged();
     }
 
     private void myPreferencesActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
-        // Display Preferences Page
+        viewManagerModel.setActiveView(myPreferences.getName());
+        viewManagerModel.firePropertyChanged();
     }
 
     private void logoutActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
-        // Display Logout page
+        SessionManager.logout();
+        viewManagerModel.setActiveView(loginViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+        // bookmarkViewModel.removePropertyChangeListener(this);
     }
 
     private void homeActionPerformed(ActionEvent evt) {
         // TODO add your handling code here:
         // Go back to Home page
+    }
+
+    private void showNotification() {
+        LoggedInState state = loggedInViewModel.getState();
+        if (state.isNotificationSuccess()) {
+            JOptionPane.showMessageDialog(this, state.getNotificationMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, state.getNotificationMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("Bookmark State")) {
+            BookmarkState bookmarkState = (BookmarkState) evt.getNewValue();
+            username.setText(bookmarkState.getUsername()); // need username somehow since username is used as an args.
+            List<PetDTO> pets = bookmarkState.getPets(); // get all bookmarked pets
+            petListingPanel.removeAll(); // not petListingPanel, but probably bodyPanel
+            for (PetDTO pet : pets) {
+                petListingPanel.add(new PetListingPanel(this, pet, true));
+            }
+        }
+        else if ("notification".equals(evt.getPropertyName())) {
+            showNotification();
+        }
+
+
+        // add method here
+    }
+
+
+    @Override
+    public void add(int petID) {
+        addBookmarkController.execute(petID);
+    }
+    @Override
+    public void remove(int petID){
+        removeBookmarkController.execute(petID);
+    }
+
+    @Override
+    public void goDetail(int petID) {
+        petBioController.execute(username.getText(), petID);
+    }
+
+    @Override
+    public void adopt(int petID) {
+        adoptController.execute(petID);
+
     }
 
 }
