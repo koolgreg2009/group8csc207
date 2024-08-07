@@ -1,6 +1,5 @@
 package app;
 
-import data_access.FileUserDAO;
 import data_access.UserDAOInterface;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.AddBookmarkPresenter;
@@ -26,7 +25,8 @@ public class AddBookmarkUseCaseFactory {
      *
      * @return an instance of {@link AddBookmarkController}, or {@code null} if an {@link IOException} occurs.
      */
-    public static AddBookmarkController createAddBookmarkUseCase(UserDAOInterface userDAO, LoggedInViewModel loggedInViewModel) {
+    public static AddBookmarkController createAddBookmarkUseCase(UserDAOInterface userDAO, LoggedInViewModel
+            loggedInViewModel) {
         AddBookmarkOutputBoundary bookmarkPresenter = new AddBookmarkPresenter(loggedInViewModel);
         BookmarkInputBoundary addBookmarkInteractor = new AddBookmarkInteractor(bookmarkPresenter, userDAO);
         return new AddBookmarkController(addBookmarkInteractor);

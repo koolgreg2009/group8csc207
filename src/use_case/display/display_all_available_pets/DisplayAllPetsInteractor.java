@@ -6,8 +6,8 @@ import dto.PetDTO;
 import entity.Pet;
 import entity.user.AdopterUser;
 import entity.user.User;
-import use_case.display.DisplayPetsOutputBoundary;
-import use_case.display.DisplayPetsOutputData;
+import use_case.display_pets.DisplayPetsOutputBoundary;
+import use_case.display_pets.DisplayPetsOutputData;
 
 import java.util.ArrayList;
 import java.util.List;
