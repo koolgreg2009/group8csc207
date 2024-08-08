@@ -21,6 +21,8 @@ public class RemoveBookmarkPresenter implements RemoveBookmarkOutputBoundary {
      */
     @Override
     public void prepareSuccessView(BookmarkOutputData outputData) {
+        BookmarkState bookmarkState = bookmarkViewModel.getBookmarkState();
+        bookmarkState.setBookmarkDTO(outputData.getBookmarkDTO());
         bookmarkViewModel.setNotification("Bookmark successfully removed!", true);
     }
 }

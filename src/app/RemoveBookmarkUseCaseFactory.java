@@ -36,10 +36,10 @@ public class RemoveBookmarkUseCaseFactory {
      * @return an instance of {@link RemoveBookmarkController}, or {@code null} if an {@link IOException} occurs.
      */
     public static RemoveBookmarkController removeBookmarkUseCase(UserDAOInterface userDAO,
-                                                                 BookmarkViewModel bookmarkViewModel){
+                                                                 BookmarkViewModel bookmarkViewModel, PetDAOInterface petDAOInterface){
 
         RemoveBookmarkOutputBoundary bookmarkPresenter = new RemoveBookmarkPresenter(bookmarkViewModel);
-        BookmarkInputBoundary removeBookmarkInteractor = new RemoveBookmarkInteractor(userDAO, bookmarkPresenter);
+        BookmarkInputBoundary removeBookmarkInteractor = new RemoveBookmarkInteractor(userDAO, bookmarkPresenter, petDAOInterface);
         return new RemoveBookmarkController(removeBookmarkInteractor);
     }
 
@@ -53,7 +53,7 @@ public class RemoveBookmarkUseCaseFactory {
                                       DisplayPetsViewModel displayPetsViewModel,
                                       UserDAOInterface userDAO,
                                       PetDAOInterface petDAO) {
-        RemoveBookmarkController removeBookmarkController = removeBookmarkUseCase(userDAO, bookmarkViewModel);
+        RemoveBookmarkController removeBookmarkController = removeBookmarkUseCase(userDAO, bookmarkViewModel, petDAO);
         AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO,
                 loggedInViewModel);
         PetBioController petBioController = LoggedInUseCaseFactory.createPetBioUseCase(viewManagerModel,petBioViewModel,
