@@ -13,6 +13,7 @@
 //import org.mockito.junit.jupiter.MockitoExtension;
 //
 //import java.io.IOException;
+//import java.util.HashMap;
 //
 //import static org.junit.jupiter.api.Assertions.assertEquals;
 //import static org.mockito.ArgumentMatchers.any;
@@ -47,6 +48,16 @@
 //        // Given
 //        String breedName = "American Shorthair";
 //        String jsonResponse = "[{\"weight\":{\"imperial\":\"8 - 15\",\"metric\":\"4 - 7\"},\"id\":\"asho\",\"name\":\"American Shorthair\",\"cfa_url\":\"http://cfa.org/Breeds/BreedsAB/AmericanShorthair.aspx\",\"vetstreet_url\":\"http://www.vetstreet.com/cats/american-shorthair\",\"vcahospitals_url\":\"https://vcahospitals.com/know-your-pet/cat-breeds/american-shorthair\",\"temperament\":\"Active, Curious, Easy Going, Playful, Calm\",\"origin\":\"United States\",\"country_codes\":\"US\",\"country_code\":\"US\",\"description\":\"The American Shorthair is known for its longevity, robust health, good looks, sweet personality, and amiability with children, dogs, and other pets.\",\"life_span\":\"15 - 17\",\"indoor\":0,\"lap\":1,\"alt_names\":\"Domestic Shorthair\",\"adaptability\":5,\"affection_level\":5,\"child_friendly\":4,\"dog_friendly\":5,\"energy_level\":3,\"grooming\":1,\"health_issues\":3,\"intelligence\":3,\"shedding_level\":3,\"social_needs\":4,\"stranger_friendly\":3,\"vocalisation\":3,\"experimental\":0,\"hairless\":0,\"natural\":1,\"rare\":0,\"rex\":0,\"suppressed_tail\":0,\"short_legs\":0,\"wikipedia_url\":\"https://en.wikipedia.org/wiki/American_Shorthair\",\"hypoallergenic\":0,\"reference_image_id\":\"JFPROfGtQ\",\"image\":{\"id\":\"JFPROfGtQ\",\"width\":1600,\"height\":1200,\"url\":\"https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg\"}}]";
+//        HashMap<String, Object> expectedMap = new HashMap<>();
+//        expectedMap.put("name", "American Shorthair");
+//        expectedMap.put("description", "The American Shorthair is known for its longevity, robust health, good looks, sweet personality, and amiability with children, dogs, and other pets.");
+//        expectedMap.put("adaptability", 5);
+//        expectedMap.put("affection_level", 5);
+//        expectedMap.put("child_friendly", 4);
+//        expectedMap.put("dog_friendly", 5);
+//        expectedMap.put("energy_level", 3);
+//        expectedMap.put("image_url", "https://cdn2.thecatapi.com/images/JFPROfGtQ.jpg");
+//
 //        when(mockClient.newCall(any(Request.class))).thenReturn(mockCall);
 //        when(mockCall.execute()).thenReturn(mockResponse);
 //        when(mockResponse.isSuccessful()).thenReturn(true);
@@ -54,10 +65,10 @@
 //        when(mockResponseBody.string()).thenReturn(jsonResponse);
 //
 //        // When
-//        String result = catBreedDAO.getBreedInformation(breedName);
+//        HashMap<String, Object> result = catBreedDAO.getBreedInformation(breedName);
 //
 //        // Then
-//        assertEquals(jsonResponse, result);
+//        assertEquals(expectedMap, result);
 //        verify(mockClient).newCall(any(Request.class));
 //        verify(mockCall).execute();
 //    }
@@ -71,7 +82,7 @@
 //        when(mockResponse.isSuccessful()).thenReturn(false);
 //
 //        // When
-//        String result = catBreedDAO.getBreedInformation(breedName);
+//        HashMap<String, Object> result = catBreedDAO.getBreedInformation(breedName);
 //
 //        // Then
 //        assertEquals(null, result);
@@ -87,7 +98,7 @@
 //        when(mockCall.execute()).thenThrow(new IOException("Network error"));
 //
 //        // When
-//        String result = catBreedDAO.getBreedInformation(breedName);
+//        HashMap<String, Object> result = catBreedDAO.getBreedInformation(breedName);
 //
 //        // Then
 //        assertEquals(null, result);
