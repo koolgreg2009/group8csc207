@@ -40,17 +40,17 @@ public class SignupOutputData {
      *
      * @return The creation time.
      */
-    public String getCreationTime() {
-        return creationTime;
-    }
-
-    /**
-     * Sets the time when the user account was created.
-     *
-     * @param creationTime The new creation time.
-     */
-    public void setCreationTime(String creationTime) {
-        this.creationTime = creationTime;
-    }
+//    public String getCreationTime() {
+//        return creationTime;
+//    }
+//
+//    /**
+//     * Sets the time when the user account was created.
+//     *
+//     * @param creationTime The new creation time.
+//     */
+//    public void setCreationTime(String creationTime) {
+//        this.creationTime = creationTime;
+//    }
 
 }

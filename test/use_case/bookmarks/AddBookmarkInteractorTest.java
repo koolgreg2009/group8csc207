@@ -1,62 +1,60 @@
-//package use_case.bookmarks;
-//
-//import data_access.FileUserDAO;
-//import entity.user.AdopterUser;
-//import interface_adapter.bookmark.AddBookmarkPresenter;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import java.io.File;
-//import java.io.IOException;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//
-///**
-// * Unit test class for AddBookmarkInteractor.
-// * This class tests the functionality of the AddBookmarkInteractor using JUnit 5.
-// */
-//class AddBookmarkInteractorTest {
-//
-//    private FileUserDAO fileUserDAO;
-//    private AddBookmarkPresenter presenter;
-//    private AddBookmarkInteractor interactor;
-//    private String testFilePath = "testUserData.json";
-//
-//    /**
-//     * Sets up the necessary objects before each test is run.
-//     *
-//     * @throws IOException if an I/O error occurs during setup.
-//     */
-//    @BeforeEach
-//    void setUp() throws IOException {
-//        // Create a new FileUserDAO with a temporary file path
-//        fileUserDAO = new FileUserDAO(testFilePath);
-//        presenter = new AddBookmarkPresenter();
-//        interactor = new AddBookmarkInteractor(presenter, fileUserDAO);
-//
-//        AdopterUser user = new AdopterUser("testUser", "password", "Test Name", "test@example.com", "1234567890");
-//        fileUserDAO.save(user);
-//    }
-//
-//    /**
-//     * Tests the success scenario of adding a bookmark.
-//     * Verifies that the bookmark is correctly added to the user's list of bookmarks.
-//     */
-//    @Test
-//    void testAddBookmarkSuccess() {
-//        BookmarkInputData inputData = new BookmarkInputData("testUser", 1);  // Assuming petID is an int
-//
-//        interactor.execute(inputData);
-//
-//        AdopterUser user = (AdopterUser) fileUserDAO.get("testUser");
-//        assertTrue(user.getBookmarks().stream().anyMatch(b -> b.getPetID() == 1));
-//    }
-//
-//    /**
-//     * Cleans up the test environment after each test is run.
-//     * Deletes the temporary file used for testing.
-//     */
-//    @AfterEach
-//    void tearDown() {
-//        new File(testFilePath).delete();
-//    }
-//}
+package use_case.bookmarks;
+
+import data_access.UserDAOInterface;
+import entity.Bookmark;
+import entity.user.AdopterUser;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
+
+class AddBookmarkInteractorTest {
+    private UserDAOInterface userDAO;
+    private AddBookmarkOutputBoundary presenter;
+    private AddBookmarkInteractor interactor;
+
+    @BeforeEach
+    void setUp() {
+        userDAO = Mockito.mock(UserDAOInterface.class);
+        presenter = Mockito.mock(AddBookmarkOutputBoundary.class);
+        interactor = new AddBookmarkInteractor(presenter, userDAO);
+    }
+
+    @Test
+    void testExecuteBookmarkAlreadyExists() {
+        when(userDAO.userHasBookmark("user1", 1)).thenReturn(true);
+
+        BookmarkInputData inputData = new BookmarkInputData("user1", 1);
+        interactor.execute(inputData);
+
+        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+        verify(presenter).prepareErrorView(argumentCaptor.capture());
+
+        String errorMessage = argumentCaptor.getValue();
+        assertEquals("Bookmark already exists", errorMessage);
+    }
+
+    @Test
+    void testExecuteBookmarkAddedSuccessfully() {
+        when(userDAO.userHasBookmark("user1", 1)).thenReturn(false);
+
+        AdopterUser user = new AdopterUser("user1", "password", "User One", "email1@example.com", "123");
+        when(userDAO.get("user1")).thenReturn(user);
+
+        BookmarkInputData inputData = new BookmarkInputData("user1", 1);
+        interactor.execute(inputData);
+
+        ArgumentCaptor<BookmarkOutputData> argumentCaptor = ArgumentCaptor.forClass(BookmarkOutputData.class);
+        verify(presenter).prepareSuccessView(argumentCaptor.capture());
+
+        BookmarkOutputData outputData = argumentCaptor.getValue();
+        assertEquals("user1", outputData.getUsername());
+        assertTrue(outputData.getAllBookmarks().stream().anyMatch(bookmark -> bookmark.getPetID() == 1));
+    }
+}
