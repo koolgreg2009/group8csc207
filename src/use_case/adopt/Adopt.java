@@ -49,7 +49,7 @@ public class Adopt implements AdoptInputBoundary {
             List<String> users = userDAO.removePetFromAllUserBookmarks(pet.getPetID());
             petDAO.save(pet);
             for (String u : users) {
-                userDAO.get(u).addNotif("This pet has found a home");
+                userDAO.get(u).addNotif(pet.getName() + " has found a home.");
             }
             AdoptOutputData outputData = new AdoptOutputData(pet.getOwner(), pet.getEmail(), pet.getPhoneNum(),
                     String.valueOf(pet.getName()));

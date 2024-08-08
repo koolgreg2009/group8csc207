@@ -1,8 +1,11 @@
 package view;
 
+import java.util.List;
+
 import interface_adapter.ViewManagerModel;
-import interface_adapter.adopt.NotifViewModel;
+import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.logged_in.NotificationState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
 
 public class NotifView extends JPanel implements ActionListener, PropertyChangeListener {
     private final ViewManagerModel viewManagerModel;
@@ -38,39 +42,35 @@ public class NotifView extends JPanel implements ActionListener, PropertyChangeL
         JScrollPane listScrollPane = new JScrollPane(notificationList);
         this.add(listScrollPane, BorderLayout.CENTER);
 
-        JButton addButton = new JButton("You have a new notification!");
-        addButton.addActionListener(this); // Attach the action listener to the button
-        this.add(addButton, BorderLayout.SOUTH);
+        JButton back = new JButton(notifViewModel.BACK_BUTTON_LABEL);
+        this.add(back, BorderLayout.WEST);
+        back.addActionListener(
+                evt -> {
+                    viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                }
+        );
     }
 
-    private void addNotification(String message) {
-        notifList.addElement(message);
+    private void addNotification(List<String> message) {
+        if (notifList != null) {
+            for (String msg : message) {
+                notifList.addElement(msg);
+            }
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        if ("You have a new notification!".equals(command)) {
-            addNotification("Pet has been adopted");
-            JButton back = new JButton(notifViewModel.BACK_BUTTON_LABEL);
-            this.add(back, BorderLayout.WEST);
-            back.addActionListener(
-                    evt -> {
-                        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
-                        viewManagerModel.firePropertyChanged();
-                    }
-            );
-            remove((Component) e.getSource()); // Remove the button from the panel after user has seen the notification
-            revalidate();
-            repaint(); // Repaint the panel to ensure the changes are visible
         }
-    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if ("newNotification".equals(evt.getPropertyName())) {
-            String newNotification = (String) evt.getNewValue();
-            addNotification(newNotification);
+        if ("state".equals(evt.getPropertyName())) {
+            NotificationState newNotification = (NotificationState) evt.getNewValue();
+            notifList.removeAllElements();
+            addNotification(newNotification.getNotif());
         }
     }
 }

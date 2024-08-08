@@ -5,7 +5,8 @@ import data_access.UserDAOInterface;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
-import interface_adapter.adopt.NotifViewModel;
+import interface_adapter.get_notifis.GetNotifController;
+import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
@@ -47,23 +48,27 @@ public class LoggedInUseCaseFactory {
                                       BookmarkViewModel bookmarkViewModel,
                                       PreferenceViewModel preferenceViewModel,
                                       LoginViewModel loginViewModel,
-                                      ProfileViewModel profileViewModel, NotifViewModel notifViewModel,
+                                      ProfileViewModel profileViewModel,
+                                      NotifViewModel notifViewModel,
                                       UserDAOInterface userDAO,
                                       PetDAOInterface petDAO,
                                       PetBioViewModel petBioViewModel,
                                       DisplayPetsViewModel displayPetsViewModel) {
-        PetBioController petBioController = createPetBioUseCase(viewManagerModel, petBioViewModel, petDAO);
+        PetBioController petBioController = createPetBioUseCase(viewManagerModel, petBioViewModel, loggedInViewModel,
+                petDAO);
         AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO, loggedInViewModel,
                 displayPetsViewModel);
         AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO,
                 loggedInViewModel);
         RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase(userDAO,
                 bookmarkViewModel);
+        GetNotifController getNotifController = GetNotifControllerUseCase.creatUpdateNotifUseCase(notifViewModel, userDAO);
         DisplayBookmarkController displayBookmarkController = DisplayBookmarkUseCaseFactory.displayBookmarkUseCase(
                 viewManagerModel, loggedInViewModel,bookmarkViewModel, userDAO, petDAO);
         return new LoggedInView(petBioController, loggedInViewModel, bookmarkViewModel,
                 preferenceViewModel, loginViewModel, profileViewModel, notifViewModel, viewManagerModel,
-                adoptController, addBookmarkController, displayBookmarkController, removeBookmarkController);
+                adoptController, addBookmarkController, displayBookmarkController, removeBookmarkController,
+                getNotifController);
 
     }
     /**
