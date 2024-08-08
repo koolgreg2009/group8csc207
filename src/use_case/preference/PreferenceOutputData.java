@@ -19,12 +19,5 @@ public class PreferenceOutputData {
         this.userPreference = userPreference;
     }
 
-    /**
-     * Returns the user preferences.
-     *
-     * @return the user preferences
-     */
-    public UserPreference getUserPreference() {
-        return userPreference;
-    }
+
 }
