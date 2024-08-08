@@ -3,6 +3,8 @@ package use_case.bookmarks;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+
+import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.Bookmark;
 import entity.user.AdopterUser;
@@ -26,6 +28,7 @@ public class RemoveBookmarkInteractorTest {
     private int petID;
     private LocalDateTime time;
     private String username;
+    private PetDAOInterface petDAO;
 
     /**
      * Sets up the necessary objects before each test is run.
@@ -41,8 +44,9 @@ public class RemoveBookmarkInteractorTest {
 
         userDAO = mock(UserDAOInterface.class);
         user = mock(AdopterUser.class);
+        petDAO = mock(PetDAOInterface.class);
         removeOutputBoundary = mock(RemoveBookmarkOutputBoundary.class);
-        removeBookmarkInteractor = new RemoveBookmarkInteractor(userDAO, removeOutputBoundary);
+        removeBookmarkInteractor = new RemoveBookmarkInteractor(userDAO, removeOutputBoundary, petDAO);
 
         when(userDAO.get(username)).thenReturn(user);
         when(user.getBookmarks()).thenReturn(allBookmarks);

@@ -1,5 +1,6 @@
 package use_case.bookmarks;
 
+import dto.BookmarkDTO;
 import entity.Bookmark;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,8 +42,9 @@ class BookmarkOutputDataTest {
         allBookmarks.add(bookmark1);
         allBookmarks.add(bookmark2);
 
+
         // Create a BookmarkOutputData object
-        testInput = new BookmarkOutputData(allBookmarks, removedBookmark);
+        testInput = new BookmarkOutputData(allBookmarks, removedBookmark, null);
     }
 
     /**

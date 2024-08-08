@@ -15,6 +15,7 @@ import javax.swing.border.LineBorder;
  */
 public class PetListingPanel extends javax.swing.JPanel {
 	private PetActionView petActionView;
+    private BookmarkView bookmarkView;
 	private PetDTO pet;
     private boolean isAdd;
 
