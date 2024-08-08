@@ -102,6 +102,29 @@ public class FileUserDAO implements UserDAOInterface {
 	}
 
 	/**
+	 * Checks if a user with the specified email exists in the system.
+	 *
+	 * @param email the email address to check.
+	 * @return true if a user with the specified email exists; false otherwise.
+	 */
+	@Override
+	public boolean existsByEmail(String email) {
+		return accounts.values().stream().anyMatch(user -> user.getEmail().equals(email));
+	}
+
+	/**
+	 * Checks if a user with the specified phone number exists in the system.
+	 *
+	 * @param phone the phone number to check.
+	 * @return true if a user with the specified phone number exists; false otherwise.
+	 */
+	@Override
+	public boolean existsByPhone(String phone) {
+		return accounts.values().stream().anyMatch(user -> user.getPhone().equals(phone));
+	}
+
+
+	/**
 	 * Clears all user data from the JSON file and the in-memory user map.
 	 * <p>
 	 * This method truncates the file to remove all existing user data and clears the in-memory user map.
