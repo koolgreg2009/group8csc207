@@ -19,6 +19,10 @@ public class PetBioViewModel extends ViewModel {
 		support.firePropertyChange("state", null, this.state);
 	}
 
+	public void fireNotificationChanged() {
+		support.firePropertyChange("notification", null, this.state);
+	}
+
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		support.addPropertyChangeListener(listener);

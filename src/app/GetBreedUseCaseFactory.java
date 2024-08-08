@@ -4,6 +4,7 @@ import data_access.CatBreedDAO;
 import data_access.CatDAOInterface;
 import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.get_breed.GetBreedPresenter;
+import interface_adapter.pet_bio.PetBioViewModel;
 import use_case.get_breed_info.GetBreedInputBoundary;
 import use_case.get_breed_info.GetBreedInteractor;
 import use_case.get_breed_info.GetBreedOutputBoundary;
@@ -28,12 +29,10 @@ public class GetBreedUseCaseFactory {
      *
      * @return an instance of {@link GetBreedController}.
      */
-    public static GetBreedController createGetBreedUseCase() {
+    public static GetBreedController createGetBreedUseCase(PetBioViewModel petBioViewModel) {
         CatDAOInterface catDao = new CatBreedDAO();
-        // atm this doesn't have anything else
-        GetBreedOutputBoundary getBreedPresenter = new GetBreedPresenter();
-        // Creating the interactor
+        GetBreedOutputBoundary getBreedPresenter = new GetBreedPresenter(petBioViewModel);
         GetBreedInputBoundary getBreedInteractor = new GetBreedInteractor(catDao, getBreedPresenter);
-        return new GetBreedController(getBreedInteractor); // creating controller
+        return new GetBreedController(getBreedInteractor);
     }
 }

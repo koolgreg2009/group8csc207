@@ -1,8 +1,11 @@
 package interface_adapter.signup;
 
 import interface_adapter.*;
+import interface_adapter.display_pets.DisplayPetsState;
+import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.preference.PreferenceViewModel;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupOutputData;
 
@@ -19,28 +22,28 @@ import java.time.format.DateTimeFormatter;
  */
 public class SignupPresenter implements SignupOutputBoundary {
 
-    /** The view model for the signup view. */
-    private final SignupViewModel signupViewModel;
 
-    /** The view model for the login view. */
-    private final LoginViewModel loginViewModel;
 
     /** The model for managing views and switching between them. */
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
+    private final PreferenceViewModel preferenceViewModel;
+
+    private final SignupViewModel signupViewModel;
+
+    private final DisplayPetsViewModel displayPetsViewModel;
     /**
      * Constructs a new SignupPresenter with the given view models and view manager model.
      *
      * @param viewManagerModel
      * @param signupViewModel
-     * @param loginViewModel
+     * @param preferenceViewModel
      */
-    public SignupPresenter(ViewManagerModel viewManagerModel,
-                           SignupViewModel signupViewModel,
-                           LoginViewModel loginViewModel) {
+    public SignupPresenter(ViewManagerModel viewManagerModel, PreferenceViewModel preferenceViewModel, SignupViewModel signupViewModel, DisplayPetsViewModel displayPetsViewModel) {
         this.viewManagerModel = viewManagerModel;
+        this.preferenceViewModel = preferenceViewModel;
         this.signupViewModel = signupViewModel;
-        this.loginViewModel = loginViewModel;
+        this.displayPetsViewModel = displayPetsViewModel;
     }
 
     /**
@@ -51,17 +54,12 @@ public class SignupPresenter implements SignupOutputBoundary {
      */
     @Override
     public void prepareSuccessView(SignupOutputData response) {
-        // On success, switch to the login view.
-        LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
-        response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
-
-        SignupState signupState = signupViewModel.getState();
-        LoginState loginState = loginViewModel.getState();
-        loginState.setUsername(response.getUsername());
-        this.loginViewModel.setState(loginState);
-        loginViewModel.firePropertyChanged();
-        viewManagerModel.setActiveView(loginViewModel.getViewName());
+        SessionManager.login(response.getUsername());
+        DisplayPetsState state = displayPetsViewModel.getState();
+        state.setUsername(SessionManager.getCurrentUser());
+        viewManagerModel.setActiveView(preferenceViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+
     }
 
     /**
