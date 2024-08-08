@@ -44,6 +44,6 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
         userDAO.save(user);
 
         BookmarkOutputData bookmarkOutputData = new BookmarkOutputData(userBookmarks, bookmarkToRemove);
-        this.removeOutputBoundary.successMessage(bookmarkOutputData);
+        this.removeOutputBoundary.prepareSuccessView(bookmarkOutputData);
     }
 }
