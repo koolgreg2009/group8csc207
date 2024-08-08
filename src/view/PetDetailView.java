@@ -15,7 +15,7 @@ import interface_adapter.pet_bio.PetBioViewModel;
 
 public class PetDetailView extends JPanel implements PropertyChangeListener {
     private static final long serialVersionUID = 1L;
-    public static final String viewName = "Pet Information";
+    public static final String viewName = "Pet Bio";
     private final DisplayPetsController displayPetsController;
     private final GetBreedController getBreedController;
 
@@ -36,8 +36,6 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
         breedText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         ageText = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        petIDText = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         speciesesText = new javax.swing.JTextField();
         backButton = new javax.swing.JButton();
@@ -51,6 +49,7 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
 
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         imageLabel.setVerticalAlignment(SwingConstants.CENTER);
+        breedText.setEditable(false);
         breedButton.setText("Breed:");
         breedButton.setBorderPainted(false);
         breedButton.setBorder(null);
@@ -68,10 +67,6 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
         jLabel3.setText("Age:");
 
         ageText.setEditable(false);
-
-        jLabel4.setText("Pet ID");
-
-        petIDText.setEditable(false);
 
         jLabel5.setText("Species:");
 
@@ -98,14 +93,12 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
                                                         .addComponent(jLabel1)
                                                         .addComponent(breedButton)
                                                         .addComponent(jLabel3)
-                                                        .addComponent(jLabel4)
                                                         .addComponent(jLabel5))
                                                 .addGap(38, 38, 38)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(nameText)
                                                         .addComponent(breedText)
                                                         .addComponent(ageText)
-                                                        .addComponent(petIDText)
                                                         .addComponent(speciesesText, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))))
                                 .addContainerGap(18, Short.MAX_VALUE))
                         .addComponent(imageLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
@@ -126,10 +119,6 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel3)
                                         .addComponent(ageText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel4)
-                                        .addComponent(petIDText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel5)
@@ -157,10 +146,8 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
     private javax.swing.JTextField breedText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField nameText;
-    private javax.swing.JTextField petIDText;
     private javax.swing.JTextField speciesesText;
     private JLabel imageLabel;
 
@@ -173,7 +160,6 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
             this.viewUser = state.getViewUser();
             PetDTO pet = state.getPet();
             nameText.setText(pet.getName());
-            petIDText.setText("" + pet.getPetID());
             breedText.setText(pet.getBreed());
             ageText.setText("" + pet.getPetAge());
             speciesesText.setText(pet.getSpecies());
