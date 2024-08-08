@@ -23,6 +23,14 @@ import interface_adapter.signup.SignupViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.preference.PreferenceViewModel;
 
+/**
+ * The SignupView class represents the UI for user sign-up.
+ * It includes input fields for username, password, repeated password, name, email, and phone.
+ * It also includes buttons to sign up or cancel the operation.
+ *
+ * @version 1.0
+ * @since 2024-08-08
+ */
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "sign up";
@@ -43,6 +51,15 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JButton signUp;
     private final JButton cancel;
 
+    /**
+     * Constructs a new SignupView with the specified controller and view models.
+     *
+     * @param controller
+     * @param signupViewModel
+     * @param viewManagerModel
+     * @param loginViewModel
+     * @param preferenceViewModel
+     */
     public SignupView(SignupController controller, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel,
                       LoginViewModel loginViewModel, PreferenceViewModel preferenceViewModel) {
 
@@ -227,7 +244,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
 
     /**
-     * React to a button click that results in evt.
+     * React to a button click that results in an action event.
+     *
+     * @param evt
      */
     @Override
 	public void actionPerformed(ActionEvent evt) {
@@ -237,6 +256,11 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 usernameInputField.getText());
     }
 
+    /**
+     * Respond to property change events to update the view based on the new state.
+     *
+     * @param evt
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SignupState state = (SignupState) evt.getNewValue();
