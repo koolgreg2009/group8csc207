@@ -37,4 +37,3 @@ personality to help find the perfect fit for the pet and the new owner.
 # Technical Problems and Notes
 N/A (Feel free to fill it out or check currently ongoing issues)
 * [Issues](https://github.com/koolgreg2009/group8csc207/issues)
-
