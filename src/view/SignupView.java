@@ -90,6 +90,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getEmail(),
                                     currentState.getPhone()
                             );
+
                         }
                     }
                 }
