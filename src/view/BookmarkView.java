@@ -291,7 +291,14 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
                 pageBody.add(new PetListingPanel(this, bookmark.getPet(), false));
             }
         }
-        else if ("notification".equals(evt.getPropertyName())) {
+        else if ("Notification".equals(evt.getPropertyName())) {
+            BookmarkState bookmarkState = (BookmarkState) evt.getNewValue();
+            List<BookmarkDTO> bookmarks = bookmarkState.getAllBookmarks();
+            pageBody.removeAll();
+            for (BookmarkDTO bookmark: bookmarks) {
+                pageBody.add(new PetListingPanel(this, bookmark.getPet(), false));
+            }
+            this.revalidate();
             showNotification();
         }
     }
