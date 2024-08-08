@@ -1,7 +1,9 @@
 package view;
 
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.URL;
 
 import javax.swing.*;
 
@@ -43,8 +45,12 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
         jLabel1.setText("Name:");
 
         nameText.setEditable(false);
+        imageLabel = new JLabel();
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        imageLabel.setBorder(BorderFactory.createTitledBorder("Pet Image"));
 
-
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        imageLabel.setVerticalAlignment(SwingConstants.CENTER);
         breedButton.setText("breed");
         breedButton.setBorderPainted(false);
         breedButton.setContentAreaFilled(false);
@@ -101,7 +107,9 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
                                                         .addComponent(petIDText)
                                                         .addComponent(speciesesText, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))))
                                 .addContainerGap(18, Short.MAX_VALUE))
+                        .addComponent(imageLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
+
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -125,6 +133,8 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel5)
                                         .addComponent(speciesesText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(backButton)
                                 .addContainerGap(95, Short.MAX_VALUE))
@@ -151,6 +161,8 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
     private javax.swing.JTextField nameText;
     private javax.swing.JTextField petIDText;
     private javax.swing.JTextField speciesesText;
+    private JLabel imageLabel;
+
     private String viewUser;
 
     @Override
@@ -164,7 +176,36 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
             breedText.setText(pet.getBreed());
             ageText.setText("" + pet.getPetAge());
             speciesesText.setText(pet.getSpecies());
+
+            try {
+                URL url = new URL(pet.getImgUrl());
+                ImageIcon imageIcon = new ImageIcon(url);
+                Image image = imageIcon.getImage();
+                int originalWidth = image.getWidth(null);
+                int originalHeight = image.getHeight(null);
+
+                int labelWidth = imageLabel.getWidth();
+                int labelHeight = imageLabel.getHeight();
+
+                double widthRatio = (double) labelWidth / originalWidth;
+                double heightRatio = (double) labelHeight / originalHeight;
+                double scalingFactor = Math.min(widthRatio, heightRatio);
+
+                int newWidth = (int) (originalWidth * scalingFactor);
+                int newHeight = (int) (originalHeight * scalingFactor);
+
+                Image scaledImage = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+                imageIcon = new ImageIcon(scaledImage);
+
+                imageLabel.setIcon(imageIcon);
+                imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                imageLabel.setVerticalAlignment(SwingConstants.CENTER);
+            } catch (Exception e) {
+                e.printStackTrace();
+                imageLabel.setText("Image not available");
+            }
         }
+
         if ("notification".equals(evt.getPropertyName())){
             PetBioState state = (PetBioState) evt.getNewValue();
             JOptionPane.showMessageDialog(this, state.getNotification());
