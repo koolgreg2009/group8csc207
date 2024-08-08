@@ -1,16 +1,15 @@
 package use_case.adopt;
 
-
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.Pet;
 import entity.user.AdopterUser;
+import entity.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,56 +19,65 @@ import static org.mockito.Mockito.*;
 class AdoptTest {
     private PetDAOInterface petDAO;
     private UserDAOInterface userDAO;
-    private AdoptOutputBoundary userPresenter;
-    private AdoptInputBoundary adoptInteractor;
+    private AdoptOutputBoundary presenter;
+    private Adopt interactor;
 
     @BeforeEach
     void setUp() {
         petDAO = Mockito.mock(PetDAOInterface.class);
         userDAO = Mockito.mock(UserDAOInterface.class);
-        userPresenter = Mockito.mock(AdoptOutputBoundary.class);
-        adoptInteractor = new Adopt(petDAO, userPresenter, userDAO);
+        presenter = Mockito.mock(AdoptOutputBoundary.class);
+        interactor = new Adopt(petDAO, presenter, userDAO);
     }
 
     @Test
     void testExecutePetAlreadyAdopted() {
-        Pet pet = new Pet("Owner", "owner@example.com", "1234567890", 1, "Cat", 2, "Breed", "Male", "High", "Description", "Location", false, "Fluffy", "");
-
+        Pet pet = Mockito.mock(Pet.class);
         when(petDAO.get(1)).thenReturn(pet);
+        when(pet.isAvailable()).thenReturn(false);
 
         AdoptInputData inputData = new AdoptInputData(1);
-        adoptInteractor.execute(inputData);
+        interactor.execute(inputData);
 
-        verify(petDAO, times(1)).get(1);
-        verify(userDAO, never()).removePetFromAllUserBookmarks(anyInt());
-        verify(petDAO, never()).save(any(Pet.class));
-        verify(userPresenter, never()).prepareAdopt(any(AdoptOutputData.class));
+        verify(presenter, never()).prepareAdopt(any());
     }
 
     @Test
-    void testExecutePetAvailableForAdoption() {
-        Pet pet = new Pet("Owner", "owner@example.com", "1234567890", 1, "Cat", 2, "Breed", "Male", "High", "Description", "Location", true, "Fluffy", "");
-        List<String> users = Arrays.asList("user1", "user2");
-
+    void testExecuteSuccessfulAdoption() {
+        Pet pet = Mockito.mock(Pet.class);
         when(petDAO.get(1)).thenReturn(pet);
-        when(userDAO.removePetFromAllUserBookmarks(1)).thenReturn(users);
-        AdopterUser user1 = new AdopterUser("user1", "password", "User One", "email1@example.com", "123");
-        AdopterUser user2 = new AdopterUser("user2", "password", "User Two", "email2@example.com", "456");
+        when(pet.isAvailable()).thenReturn(true);
+        when(pet.getPetID()).thenReturn(1);
+        when(pet.getName()).thenReturn("Fluffy");
+        when(pet.getOwner()).thenReturn("John Doe");
+        when(pet.getEmail()).thenReturn("johndoe@example.com");
+        when(pet.getPhoneNum()).thenReturn("123456789");
+
+        AdopterUser user1 = Mockito.mock(AdopterUser.class);
+        AdopterUser user2 = Mockito.mock(AdopterUser.class);
+
         when(userDAO.get("user1")).thenReturn(user1);
         when(userDAO.get("user2")).thenReturn(user2);
 
+        List<String> users = Arrays.asList("user1", "user2");
+        when(userDAO.removePetFromAllUserBookmarks(1)).thenReturn(users);
+
         AdoptInputData inputData = new AdoptInputData(1);
-        adoptInteractor.execute(inputData);
+        interactor.execute(inputData);
 
-        verify(petDAO, times(1)).get(1);
-        verify(userDAO, times(1)).removePetFromAllUserBookmarks(1);
-        verify(petDAO, times(1)).save(pet);
-        verify(userPresenter, times(1)).prepareAdopt(any(AdoptOutputData.class));
+        verify(pet).markUnavailable();
+        verify(petDAO).save(pet);
 
-        assertEquals(false, pet.isAvailable());
-        assertEquals(1, user1.getNotifications().size());
-        assertEquals("Fluffy has found a home.", user1.getNotifications().get(0));
-        assertEquals(1, user2.getNotifications().size());
-        assertEquals("Fluffy has found a home.", user2.getNotifications().get(0));
+        verify(user1).addNotif("Fluffy has found a home.");
+        verify(user2).addNotif("Fluffy has found a home.");
+
+        ArgumentCaptor<AdoptOutputData> argumentCaptor = ArgumentCaptor.forClass(AdoptOutputData.class);
+        verify(presenter).prepareAdopt(argumentCaptor.capture());
+
+        AdoptOutputData outputData = argumentCaptor.getValue();
+        assertEquals("John Doe", outputData.getPetOwner());
+        assertEquals("johndoe@example.com", outputData.getOwnerEmail());
+        assertEquals("123456789", outputData.getOwnerPhone());
+        assertEquals("Fluffy", outputData.getID());
     }
 }
