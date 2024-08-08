@@ -58,7 +58,7 @@ public class RemoveBookmarkInteractorTest {
 
         verify(user).getBookmarks();
         verify(userDAO).save(user);
-        verify(removeOutputBoundary).successMessage(any(BookmarkOutputData.class));
+        verify(removeOutputBoundary).prepareSuccessView(any(BookmarkOutputData.class));
         assertTrue(allBookmarks.isEmpty(), "Bookmark list should be empty after removal");
     }
 }

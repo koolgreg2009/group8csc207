@@ -39,7 +39,7 @@ class LoginInteractorTest {
         loginInteractor.execute(inputData);
 
         // Assert
-        verify(loginPresenter).prepareFailView("nonexistentUser: Account does not exist.");
+        verify(loginPresenter).prepareFailView("The account 'nonexistentUser' does not exist.");
     }
 
     @Test
