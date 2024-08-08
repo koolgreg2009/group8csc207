@@ -15,7 +15,7 @@ import interface_adapter.pet_bio.PetBioViewModel;
 
 public class PetDetailView extends JPanel implements PropertyChangeListener {
     private static final long serialVersionUID = 1L;
-    public static final String viewName = "Pet Bio";
+    public static final String viewName = "Pet Information";
     private final DisplayPetsController displayPetsController;
     private final GetBreedController getBreedController;
 
@@ -51,8 +51,9 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
 
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         imageLabel.setVerticalAlignment(SwingConstants.CENTER);
-        breedButton.setText("breed");
+        breedButton.setText("Breed:");
         breedButton.setBorderPainted(false);
+        breedButton.setBorder(null);
         breedButton.setContentAreaFilled(false);
         breedButton.setFocusPainted(false);
         breedButton.setOpaque(false);
@@ -72,7 +73,7 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
 
         petIDText.setEditable(false);
 
-        jLabel5.setText("Species");
+        jLabel5.setText("Species:");
 
         speciesesText.setEditable(false);
 
