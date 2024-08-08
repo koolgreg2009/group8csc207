@@ -42,7 +42,7 @@ class BookmarkOutputDataTest {
         allBookmarks.add(bookmark2);
 
         // Create a BookmarkOutputData object
-        testInput = new BookmarkOutputData(allBookmarks, removedBookmark);
+        testInput = new BookmarkOutputData(allBookmarks, removedBookmark, bookmarkDTO);
     }
 
     /**
