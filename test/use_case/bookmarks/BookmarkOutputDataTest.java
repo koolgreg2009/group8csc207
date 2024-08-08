@@ -44,7 +44,7 @@ class BookmarkOutputDataTest {
 
 
         // Create a BookmarkOutputData object
-        testInput = new BookmarkOutputData(allBookmarks, removedBookmark, null);
+        testInput = new BookmarkOutputData(allBookmarks, removedBookmark, null, "");
     }
 
     /**
