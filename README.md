@@ -38,9 +38,8 @@ personality to help find the perfect fit for the pet and the new owner.
 * [TheCATAPI](https://documenter.getpostman.com/view/5578104/RWgqUxxh#intro): API that returns cat information.
 
 # Technical Problems and Notes
-1. When creating an account, our database does not restrict an existing phone number or email address. 
-As we are aiming for a precise functionality of the program first, we will focus on all these details once we are
-finalized with the program.
+N/A (Feel free to fill it out or check currently ongoing issues)
+* [Issues](https://github.com/koolgreg2009/group8csc207/issues)
 
 # Documents
 * [UML Diagram](https://lucid.app/lucidchart/5fb0ce87-45b4-4f2e-9527-57cff33bf035/edit?viewport_loc=1226%2C-948%2C4386%2C2030%2C0_0&invitationId=inv_282f4d82-22a6-4b58-b2ca-4a74da2ebeb9)
