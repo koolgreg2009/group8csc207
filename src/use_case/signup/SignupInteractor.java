@@ -68,6 +68,16 @@ public class SignupInteractor implements SignupInputBoundary {
             return;
         }
 
+        if (userDataAccessObject.existsByEmail(signupInputData.getEmail())) {
+            userPresenter.prepareFailView("Email already in use.");
+            return;
+        }
+
+        if (userDataAccessObject.existsByPhone(signupInputData.getPhone())) {
+            userPresenter.prepareFailView("Phone number already in use.");
+            return;
+        }
+
         if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
             userPresenter.prepareFailView("Passwords don't match.");
             return;
