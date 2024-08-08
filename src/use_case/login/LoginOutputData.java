@@ -10,17 +10,14 @@ package use_case.login;
 public class LoginOutputData {
 
     private final String username;
-    private boolean useCaseFailed;
 
     /**
      * Constructs a new LoginOutputData object with the specified details.
      *
-     * @param username
-     * @param useCaseFailed
+     * @param username the username for the new login
      */
-    public LoginOutputData(String username, boolean useCaseFailed) {
+    public LoginOutputData(String username) {
         this.username = username;
-        this.useCaseFailed = useCaseFailed;
     }
 
     /**

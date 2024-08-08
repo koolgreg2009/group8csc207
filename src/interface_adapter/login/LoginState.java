@@ -13,15 +13,15 @@ public class LoginState {
     /** The username input by the user. */
     private String username = "";
 
-    /** Error message related to the username, if any. */
-    private String usernameError = null;
+//    /** Error message related to the username, if any. */
+//    private String usernameError = null;
 
     /** The password input by the user. */
     private String password = "";
 
-    /** Error message related to the password, if any. */
-    private String passwordError = null;
-
+//    /** Error message related to the password, if any. */
+//    private String passwordError = null;
+    private String error = "";
     /**
      * Constructs a new LoginState as a copy of the provided LoginState.
      *
@@ -29,9 +29,10 @@ public class LoginState {
      */
     public LoginState(LoginState copy) {
         username = copy.username;
-        usernameError = copy.usernameError;
+//        usernameError = copy.usernameError;
         password = copy.password;
-        passwordError = copy.passwordError;
+//        passwordError = copy.passwordError;
+        error = copy.error;
     }
 
     /**
@@ -53,9 +54,9 @@ public class LoginState {
      *
      * @return The username error message, or null if there is no error.
      */
-    public String getUsernameError() {
-        return usernameError;
-    }
+//    public String getUsernameError() {
+//        return usernameError;
+//    }
 
     /**
      * Gets the password input by the user.
@@ -71,9 +72,9 @@ public class LoginState {
      *
      * @return The password error message, or null if there is no error.
      */
-    public String getPasswordError() {
-        return passwordError;
-    }
+//    public String getPasswordError() {
+//        return passwordError;
+//    }
 
     /**
      * Sets the username input by the user.
@@ -89,9 +90,9 @@ public class LoginState {
      *
      * @param usernameError
      */
-    public void setUsernameError(String usernameError) {
-        this.usernameError = usernameError;
-    }
+//    public void setUsernameError(String usernameError) {
+//        this.usernameError = usernameError;
+//    }
 
     /**
      * Sets the password input by the user.
@@ -102,12 +103,18 @@ public class LoginState {
         this.password = password;
     }
 
-    /**
-     * Sets the error message related to the password.
-     *
-     * @param passwordError
-     */
-    public void setPasswordError(String passwordError) {
-        this.passwordError = passwordError;
+//    /**
+//     * Sets the error message related to the password.
+//     *
+//     * @param passwordError
+//     */
+//    public void setPasswordError(String passwordError) {
+//        this.passwordError = passwordError;
+//    }
+    public String getError() {
+        return error;
+    }
+    public void setError(String error) {
+        this.error = error;
     }
 }

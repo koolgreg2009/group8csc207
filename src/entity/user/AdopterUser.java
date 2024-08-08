@@ -30,14 +30,19 @@ public class AdopterUser extends CommonUser{
 	private UserPreference preferences;
 
 	/**
-	 * Constructs a new AdopterUser with these parameters.
+	 * Constructs an {@code AdopterUser} object using the specified JSON properties.
+	 *
+	 * <p>This constructor is used for deserialization from JSON. It initializes an `AdopterUser`
+	 * with the provided username, password, name, email, phone number, a list of bookmarks,
+	 * and user preferences.
 	 *
 	 * @param username the username of the adopter user
 	 * @param password the password of the adopter user
-	 * @param name     the name of the person who the adopter user belongs too
-	 * @param email    the email of the adopter user
-	 * @param phone    the phone number of the adopter user
-	 *
+	 * @param name the full name of the adopter user
+	 * @param email the email address of the adopter user
+	 * @param phone the phone number of the adopter user
+	 * @param bookmarks a list of bookmarks associated with the adopter user
+	 * @param preferences the user preferences associated with the adopter user
 	 */
 	@JsonCreator()
 	public AdopterUser(@JsonProperty("username") String username,
@@ -50,6 +55,19 @@ public class AdopterUser extends CommonUser{
 		this.preferences = preferences;
 	}
 
+	/**
+	 * Constructs an {@code AdopterUser} object with the specified details.
+	 *
+	 * <p>This constructor initializes an `AdopterUser` with the provided username, password,
+	 * name, email, and phone number. It also initializes an empty list of bookmarks and
+	 * a new `UserPreference` object with default values.
+	 *
+	 * @param username the username of the adopter user
+	 * @param password the password of the adopter user
+	 * @param name the full name of the adopter user
+	 * @param email the email address of the adopter user
+	 * @param phone the phone number of the adopter user
+	 */
 	public AdopterUser(String username, String password, String name, String email, String phone) {
 		super(username, password, name, email, phone);
 		this.bookmarks = new ArrayList<>();
@@ -80,15 +98,6 @@ public class AdopterUser extends CommonUser{
 	 * @param bookmark the bookmark being added to the adopter user
 	 */
 	public void addBookmark(Bookmark bookmark) {
-//		LocalDateTime now = LocalDateTime.now();
-//		BookmarkFactory bookmarkFactory = new BookmarkFactory();
-//		bookmarks.add(bookmarkFactory.create(pet, now));
-		// the core entity (User or Pet, depending on the context) should not be
-		// responsible for creating new objects
-		// (e.g., via a factory) or knowing about the current time
-		// addBookmark(Pet pet) should be in the use case layer, as it involves
-		// application-specific logic and
-		// dependencies that should not be part of the core business entitie
 		bookmarks.add(bookmark);
 	}
 
@@ -108,5 +117,21 @@ public class AdopterUser extends CommonUser{
 	 */
 	public List<Bookmark> getBookmarks() {
 		return this.bookmarks;
+	}
+
+	/**
+	 * Returns a string representation of the current object.
+	 * <p>
+	 * This method provides a string that includes the class name,
+	 * the result of the superclass's `toString` method, and details about
+	 * the bookmarks and preferences associated with this object.
+	 *
+	 * @return a string representation of the object, including class name,
+	 *         superclass's string representation, and the bookmarks and
+	 *         preferences
+	 */
+	@Override
+	public String toString(){
+		return this.getClass()+": " + super.toString() + "\nBookmarks: " + bookmarks + "\nPreferences: " + preferences;
 	}
 }

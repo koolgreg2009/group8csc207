@@ -28,7 +28,7 @@ public class LoginViewModel extends ViewModel {
     public final String LOGIN_BUTTON_LABEL = "Log in";
 
     /** The label for the cancel button. */
-    public final String CANCEL_BUTTON_LABEL = "Cancel";
+    public final String SIGNUP_BUTTON_LABEL = "Sign Up";
 
     /** The current state of the login view. */
     private LoginState state = new LoginState();

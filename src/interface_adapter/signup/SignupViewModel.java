@@ -14,10 +14,13 @@ import java.beans.PropertyChangeSupport;
  */
 public class SignupViewModel extends ViewModel {
 
-    public final String TITLE_LABEL = "Sign Up View";
+    public final String TITLE_LABEL = "Signup View";
     public final String USERNAME_LABEL = "Choose username";
     public final String PASSWORD_LABEL = "Choose password";
     public final String REPEAT_PASSWORD_LABEL = "Enter password again";
+    public final String NAME_LABEL = "Enter your name";
+    public final String EMAIL_LABEL = "Enter your email (ex. johndoe@gmail.com)";
+    public final String PHONE_LABEL = "Enter your phone number (ex. 1234567890)";
 
     public final String SIGNUP_BUTTON_LABEL = "Sign up";
     public final String CANCEL_BUTTON_LABEL = "Cancel";

@@ -10,20 +10,20 @@ import java.time.LocalDateTime;
  */
 public class AddBookmarkInteractor implements BookmarkInputBoundary{
 
-    final AddBookmarkOutputBoundary bookmarkPresenter;
-    final UserDAOInterface fileUserDAO;
+            final AddBookmarkOutputBoundary bookmarkPresenter;
+            final UserDAOInterface fileUserDAO;
 
-    /**
-     * Constructor for AddBookmarkInteractor, which includes the bookmark output boundary, bookmark factory and
-     * the file data access object for users.
-     *
-     * @param outputBoundary the output boundary to send results to presenter
-     * @param fileUserDAO the data access object for the user data
-     */
+            /**
+             * Constructor for AddBookmarkInteractor, which includes the bookmark output boundary, bookmark factory and
+             * the file data access object for users.
+             *
+             * @param outputBoundary the output boundary to send results to presenter
+             * @param fileUserDAO the data access object for the user data
+             */
 
-    public AddBookmarkInteractor(AddBookmarkOutputBoundary outputBoundary,
-                                 UserDAOInterface fileUserDAO) {
-        this.bookmarkPresenter = outputBoundary;
+            public AddBookmarkInteractor(AddBookmarkOutputBoundary outputBoundary,
+                                         UserDAOInterface fileUserDAO) {
+                this.bookmarkPresenter = outputBoundary;
         this.fileUserDAO = fileUserDAO;
     }
 
@@ -32,14 +32,11 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
      * @param inputData the input data containing the username and pet ID.
      */
     public void execute(BookmarkInputData inputData) {
-        // check for if duplicate. if duplicate, send present failed else:
         if (fileUserDAO.userHasBookmark(inputData.getUsername(), inputData.getPetID())) {
-            // prepare fail view
             this.bookmarkPresenter.prepareErrorView("Bookmark already exists");
         } else{
             LocalDateTime now = LocalDateTime.now();
             Bookmark bookmark = new Bookmark(inputData.getPetID(), now);
-            // get adapter use, append into array list
             AdopterUser user = ((AdopterUser) fileUserDAO.get(inputData.getUsername()));
             user.addBookmark(bookmark);
             fileUserDAO.save(user);

@@ -1,10 +1,10 @@
 package interface_adapter.logged_in;
 
 import interface_adapter.ViewModel;
-import interface_adapter.login.LoginState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+
 
 /**
  * The LoggedInViewModel class represents the view model for the logged-in state of the application.
@@ -19,14 +19,25 @@ public class LoggedInViewModel extends ViewModel {
     /** The title label for the logged-in view. */
     public final String TITLE_LABEL = "Logged In View";
 
-    /** The current state of the logged-in user. */
+    /** The notification state of the logged-in user. */
+    private NotificationState notifState = new NotificationState();
+    
     private LoggedInState state = new LoggedInState();
 
-    /** The label for the logout button. */
-    public static final String LOGOUT_BUTTON_LABEL = "Log out";
+    /** Label for Profile button */
+    public final String PROFILE_BUTTON_LABEL = "Profile";
 
-    /** The username of the currently logged-in user. */
-    private String loggedInUser;
+    /** Label for Preference button */
+    public final String PREFERENCE_BUTTON_LABEL = "My Preferences";
+
+    /** Label for Bookmark button */
+    public final String BOOKMARK_BUTTON_LABEL = "My Bookmarks";
+
+    /** The label for the logout button. */
+    public final String LOGOUT_BUTTON_LABEL = "Log out";
+
+    /** The label for notification button. */
+    public String NOTIF_BUTTON= "Notifications";
 
     /**
      * Constructs a new LoggedInViewModel with a predefined view name.
@@ -35,14 +46,14 @@ public class LoggedInViewModel extends ViewModel {
         super("logged in");
     }
 
-    /**
-     * Sets the state of the logged-in user.
-     *
-     * @param state
-     */
-    public void setState(LoggedInState state) {
-        this.state = state;
-    }
+//    /**
+//     * Sets the state of the logged-in user.
+//     *
+//     * @param state
+//     */
+//    public void setState(LoggedInState state) {
+//        this.state = state;
+//    }
 
     /** Support for firing property change events. */
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -50,16 +61,21 @@ public class LoggedInViewModel extends ViewModel {
     /**
      * Fires a property change event to notify listeners of a change in the state.
      */
-    public void firePropertyChanged() {
+    @Override
+	public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
 
+    public void fireNotificationChanged() {
+        support.firePropertyChange("notification", null, this.state);
+    }
     /**
      * Adds a listener for property change events.
      *
      * @param listener
      */
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
 
@@ -78,15 +94,20 @@ public class LoggedInViewModel extends ViewModel {
      * @return The username of the logged-in user.
      */
     public String getLoggedInUser() {
-        return loggedInUser;
+        return state.getUsername();
+    }
+    /**
+     * Setter for notification popup in state
+     *
+     * @param message msg to user to be displayed
+     * @param isSuccess whether if user action was successful
+     */
+    public void setNotification(String message, boolean isSuccess) {
+        this.state.setNotificationMessage(message);
+        this.state.setNotificationSuccess(isSuccess);
+        fireNotificationChanged();
     }
 
-    /**
-     * Sets the username of the currently logged-in user.
-     *
-     * @param loggedInUser
-     */
-    public void setLoggedInUser(String loggedInUser) {
-        this.loggedInUser = loggedInUser;
-    }
+
+
 }

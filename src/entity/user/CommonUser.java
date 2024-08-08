@@ -1,47 +1,24 @@
 package entity.user;
 
-import java.util.LinkedList;
+import utils.IdCounter;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents a common user with attributes such as a user ID, username, password, name, email, and phone.
  * This class implements the {@link User} interface.
- *
- * @version 1.0
- * @since 2024-07-12
  */
 
 public class CommonUser implements User {
-
-
-	/**
-	 * Username of the user.
-	 */
 	private String username;
-
-	/**
-	 * Password of the user.
-	 */
 	private String password;
-
-	/**
-	 * The name of the person the user belongs to.
-	 */
 	private String name;
-
-	/**
-	 * The email of the user.
-	 */
 	private String email;
-
-	/**
-	 * The phone number of the user
-	 */
 	private String phone;
-
 	private List<String> notifications;
+
 	/**
-	 *
 	 *
 	 * @param username the username of the user
 	 * @param password the password of the user
@@ -55,9 +32,14 @@ public class CommonUser implements User {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
-		this.notifications = new LinkedList<>();
+		this.notifications = new ArrayList<String>();
 	}
 
+	/**
+	 * Gets the username of the user.
+	 *
+	 * @return the username of the user
+	 */
 	@Override
 	public String getUsername() {
 		return username;
@@ -94,9 +76,9 @@ public class CommonUser implements User {
 	}
 
 	/**
-	 * Gets the username of the user.
+	 * Gets the name of the person associated with the user.
 	 *
-	 * @return name the name of person the user belongs to
+	 * @return the name of the user.
 	 */
 	@Override
 	public String getName() {
@@ -106,7 +88,7 @@ public class CommonUser implements User {
 	/**
 	 * Sets the name of the user.
 	 *
-	 * @param name the name of the user
+	 * @param name the name of the user.
 	 */
 	@Override
 	public void setName(String name) {
@@ -114,9 +96,9 @@ public class CommonUser implements User {
 	}
 
 	/**
-	 * Gets the username of the user.
+	 * Gets the email address of the user.
 	 *
-	 * @return email the email of the user
+	 * @return the email address of the user
 	 */
 	@Override
 	public String getEmail() {
@@ -134,7 +116,7 @@ public class CommonUser implements User {
 	}
 
 	/**
-	 * Gets the phone of the user.
+	 * Gets the phone number of the user.
 	 *
 	 * @return phone the phone number of the user
 	 */
@@ -144,7 +126,7 @@ public class CommonUser implements User {
 	}
 
 	/**
-	 * Sets the phone of the user.
+	 * Sets the phone number of the user.
 	 *
 	 * @param num the phone number of the user
 	 */
@@ -153,10 +135,33 @@ public class CommonUser implements User {
 		this.phone = num;
 	}
 
-
+	/**
+	 * Adds a notification to the user's list of notifications.
+	 *
+	 * @param notif the notification to be added
+	 */
 	@Override
-	public void addNotif(String notification) {
-		this.notifications.add(notification);
+	public void addNotif(String notif) {
+		notifications.add(notif);
+	}
+
+	/**
+	 * Gets the list of notifications for the user.
+	 *
+	 * @return a list of notifications
+	 */
+	public List<String> getNotifications() {
+		return notifications;
+	}
+
+	/**
+	 * Returns a string representation of the user, including class name, username, password, name, and email.
+	 *
+	 * @return a string representation of the user
+	 */
+	@Override
+	public String toString(){
+		return this.getClass() + "username: " + this.getUsername()+"\npassword: " + this.getPassword()+"\nname: " + this.getName()+"\nemail: " + this.getEmail();
 	}
 
 }

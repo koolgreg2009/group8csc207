@@ -1,5 +1,7 @@
 package use_case.login;
 
+import data_access.PetDAOInterface;
+import data_access.UserDAOInterface;
 import entity.user.User;
 
 /**
@@ -10,19 +12,22 @@ import entity.user.User;
  * @since 2024-07-19
  */
 public class LoginInteractor implements LoginInputBoundary {
-    final LoginUserDataAccessInterface userDataAccessObject;
+    final UserDAOInterface userDataAccessObject;
     final LoginOutputBoundary loginPresenter;
+	final private PetDAOInterface petDAO;
 
     /**
      * Constructs a new LoginInteractor with the specified dependencies.
      *
      * @param userDataAccessInterface
+     * @param petDAO 
      * @param loginOutputBoundary
      */
-    public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
-                           LoginOutputBoundary loginOutputBoundary) {
+    public LoginInteractor(UserDAOInterface userDataAccessInterface,
+                           PetDAOInterface petDAO, LoginOutputBoundary loginOutputBoundary) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;
+        this.petDAO = petDAO;
     }
 
     /**
@@ -36,17 +41,15 @@ public class LoginInteractor implements LoginInputBoundary {
         String username = loginInputData.getUsername();
         String password = loginInputData.getPassword();
         if (!userDataAccessObject.existsByName(username)) {
-            loginPresenter.prepareFailView(username + ": Account does not exist.");
+            loginPresenter.prepareFailView("The account '" + username+"' does not exist.");
         } else {
-            String pwd = userDataAccessObject.get(username).getPassword();
+            User user = userDataAccessObject.get(username);
+			String pwd = user.getPassword();
             if (!password.equals(pwd)) {
                 loginPresenter.prepareFailView("Incorrect password for " + username + ".");
             } else {
-
-                User user = userDataAccessObject.get(loginInputData.getUsername());
-
-                LoginOutputData loginOutputData = new LoginOutputData(user.getName(), false);
-                loginPresenter.prepareSuccessView(loginOutputData);
+				LoginOutputData loginOutputData = new LoginOutputData(user.getUsername());
+				loginPresenter.prepareSuccessView(loginOutputData);
             }
         }
     }

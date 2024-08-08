@@ -1,20 +1,21 @@
 package app;
 
 import java.io.IOException;
+
 import javax.swing.JOptionPane;
 
-import data_access.FileUserDAO;
 import data_access.UserDAOInterface;
 import entity.user.AdopterUserFactory;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import interface_adapter.ViewManagerModel;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import use_case.signup.SignupUserDataAccessInterface;
 import view.SignupView;
 
 /**
@@ -22,8 +23,6 @@ import view.SignupView;
  * required for the signup use case, including the view, controller, and interactor.
  * It sets up the necessary dependencies and wiring for the signup functionality.
  *
- * @version 1.0
- * @since 2024-07-19
  */
 public class SignupUseCaseFactory {
 
@@ -41,11 +40,13 @@ public class SignupUseCaseFactory {
      * @param userDataAccessObject
      * @return A SignupView instance configured with the provided dependencies.
      */
-    public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, UserDAOInterface userDataAccessObject) {
+    public static SignupView create(
+            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel,
+            PreferenceViewModel preferenceViewModel, UserDAOInterface userDataAccessObject, DisplayPetsViewModel displayPetsViewModel) {
 
         try {
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel);
-            return new SignupView(signupController, signupViewModel);
+            SignupController signupController = createUserSignupUseCase(viewManagerModel, preferenceViewModel, userDataAccessObject, signupViewModel, displayPetsViewModel);
+            return new SignupView(signupController, signupViewModel, viewManagerModel, loginViewModel, preferenceViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
@@ -57,15 +58,14 @@ public class SignupUseCaseFactory {
      * Creates a SignupController instance and sets up the signup interactor and presenter.
      *
      * @param viewManagerModel
-     * @param signupViewModel
-     * @param loginViewModel
+     * @param preferenceViewModel
+     * @param userDataAccessObject 
      * @return A SignupController instance configured with the provided dependencies.
      */
-    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel) throws IOException {
-    	FileUserDAO userDataAccessObject = new FileUserDAO("./users.json");
+    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, PreferenceViewModel preferenceViewModel, UserDAOInterface userDataAccessObject, SignupViewModel signupViewModel, DisplayPetsViewModel displayPetsViewModel) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
-        SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
+        SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, preferenceViewModel, signupViewModel, displayPetsViewModel);
 
         AdopterUserFactory userFactory = new AdopterUserFactory();
 
@@ -74,4 +74,5 @@ public class SignupUseCaseFactory {
 
         return new SignupController(userSignupInteractor);
     }
+
 }
