@@ -9,27 +9,36 @@ import java.util.List;
  * Data Transfer Object (DTO) representing a bookmarked pet.
  */
 public class BookmarkDTO {
-    private final List<PetDTO> pets;
+    private final PetDTO pet;
     private final LocalDateTime bookmarkedDate;
 
     /**
      * Constructs a new BookmarkDTO with the specified pet ID and bookmarked date.
      *
-     * @param pets           the pets that are bookmarked
+     * @param pet           the pet that is bookmarked
      * @param bookmarkedDate  the date and time when the pet was bookmarked
      */
-    public BookmarkDTO(List<PetDTO> pets, LocalDateTime bookmarkedDate) {
-        this.pets = pets;
+    public BookmarkDTO(PetDTO pet, LocalDateTime bookmarkedDate) {
+        this.pet = pet;
         this.bookmarkedDate = bookmarkedDate;
     }
 
     /**
-     * Returns the ID of the pet.
+     * Returns the ID of the bookmarked Pet
      *
-     * @return the pet ID
+     * @return the ID of the bookmarked Pet.
      */
-    public List<PetDTO> getPets() {
-        return pets;
+    public int getPetID() {
+        return pet.getPetID();
+    }
+
+    /**
+     * Returns the bookmarked Pet
+     *
+     * @return the bookmarked pet
+     */
+    public PetDTO getPet() {
+        return pet;
     }
 
     /**

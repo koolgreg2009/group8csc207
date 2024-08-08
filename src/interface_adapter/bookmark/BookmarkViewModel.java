@@ -1,9 +1,9 @@
 package interface_adapter.bookmark;
 
+import dto.BookmarkDTO;
 import dto.PetDTO;
-import interface_adapter.ViewManagerModel;
 import interface_adapter.ViewModel;
-import view.ViewManager;
+import interface_adapter.logged_in.NotificationState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -29,13 +29,22 @@ public class BookmarkViewModel extends ViewModel {
         super("bookmark");
     }
 
+//    /**
+//     * Sets a new BookmarkState.
+//     *
+//     * @param newBookmarkState the new BookmarkState
+//     */
+//    public void setBookmarkState(BookmarkState newBookmarkState){
+//        this.bookmarkState = newBookmarkState;
+//    }
+
     /**
-     * Sets a new BookmarkState.
+     * Retrieves the current state of bookmarks.
      *
-     * @param newState the new BookmarkState
+     * @return the current BookmarkState instance
      */
-    public void setState(BookmarkState newState){
-        this.bookmarkState = newState;
+    public BookmarkState getBookmarkState(){
+        return bookmarkState;
     }
 
     /**
@@ -43,7 +52,16 @@ public class BookmarkViewModel extends ViewModel {
      */
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("Bookmark State", null,this.bookmarkState);
+        support.firePropertyChange("bookmark",
+                null, this.bookmarkState);
+    }
+
+    /**
+     * Notifies listeners that the notification state has changed.
+     */
+    public void fireNotificationChanged() {
+        support.firePropertyChange("Notification",
+                null, this.bookmarkState);
     }
 
     /**
@@ -70,47 +88,68 @@ public class BookmarkViewModel extends ViewModel {
      *
      * @return a list of all bookmarked pets
      */
-    public List<PetDTO> getAllBookmarks(){
+    public List<BookmarkDTO> getAllBookmarks(){
         return bookmarkState.getAllBookmarks();
     }
 
+//    /**
+//     * Adds a new pet to the list of bookmarked pets if it is not already present.
+//     *
+//     * @param pet the PetDTO to add
+//     */
+//    public void addBookmark(PetDTO pet){
+//        bookmarkState.addBookmark(pet);
+//        firePropertyChanged();
+//    }
+//
+//    /**
+//     * Removes a pet from the list of bookmarked pets.
+//     *
+//     * @param pet the PetDTO to remove
+//     */
+//    public void removeBookmark(PetDTO pet){
+//        bookmarkState.removeBookmark(pet.getPetID());
+//        firePropertyChanged();
+//    }
+//
+//    /**
+//     * Checks if a pet is already bookmarked.
+//     *
+//     * @param pet the PetDTO to check
+//     * @return true if the pet is bookmarked, false otherwise
+//     */
+//    public boolean isBookmarked(PetDTO pet){
+//        return bookmarkState.isBookmarked(pet);
+//    }
+//
+//    /**
+//     * Gets the current date and time when the pet was bookmarked.
+//     *
+//     * @param pet the PetDTO to get the bookmark time for
+//     * @return the current date and time as a LocalDateTime instance
+//     */
+//    public LocalDateTime getBookmarkTime(PetDTO pet){
+//        return bookmarkState.getBookmarkTime(pet);
+//    }
+
     /**
-     * Adds a new pet to the list of bookmarked pets if it is not already present.
+     * Gets the username of the logged-in user.
      *
-     * @param pet the PetDTO to add
+     * @return the username of the logged-in user
      */
-    public void addBookmark(PetDTO pet){
-        bookmarkState.addBookmark(pet);
-        firePropertyChanged();
+    public String getLoggedInUser(){
+        return bookmarkState.getUsername();
     }
 
     /**
-     * Removes a pet from the list of bookmarked pets.
+     * Sets the notification message and success status, then notifies listeners of the change.
      *
-     * @param pet the PetDTO to remove
+     * @param message the notification message
+     * @param isSuccess the success status of the notification
      */
-    public void removeBookmark(PetDTO pet){
-        bookmarkState.removeBookmark(pet.getPetID());
-        firePropertyChanged();
-    }
-
-    /**
-     * Checks if a pet is already bookmarked.
-     *
-     * @param pet the PetDTO to check
-     * @return true if the pet is bookmarked, false otherwise
-     */
-    public boolean isBookmarked(PetDTO pet){
-        return bookmarkState.isBookmarked(pet);
-    }
-
-    /**
-     * Gets the current date and time when the pet was bookmarked.
-     *
-     * @param pet the PetDTO to get the bookmark time for
-     * @return the current date and time as a LocalDateTime instance
-     */
-    public LocalDateTime getBookmarkTime(PetDTO pet){
-        return bookmarkState.getBookmarkTime(pet);
+    public void setNotification(String message, boolean isSuccess) {
+        this.bookmarkState.setNotifMessage(message);
+        this.bookmarkState.setNotifSuccess(isSuccess);
+        fireNotificationChanged();
     }
 }

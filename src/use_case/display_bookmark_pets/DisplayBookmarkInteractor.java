@@ -1,4 +1,4 @@
-package use_case.display.display_bookmark_pets;
+package use_case.display_bookmark_pets;
 
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
@@ -6,11 +6,6 @@ import dto.PetDTO;
 import entity.Bookmark;
 import entity.Pet;
 import entity.user.AdopterUser;
-import entity.user.User;
-import use_case.display_bookmark_pets.DisplayBookmarkInputBoundary;
-import use_case.display_bookmark_pets.DisplayBookmarkInputData;
-import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputBoundary;
-import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputData;
 import dto.BookmarkDTO;
 
 import java.time.LocalDateTime;
@@ -23,7 +18,8 @@ public class DisplayBookmarkInteractor implements DisplayBookmarkInputBoundary {
     private final DisplayBookmarkPetsOutputBoundary displayBookmarkPresenter;
     private final UserDAOInterface userDAO;
 
-    public DisplayBookmarkInteractor(UserDAOInterface userDAO, PetDAOInterface filepetDAO, DisplayBookmarkPetsOutputBoundary displayBookmarkPresenter) {
+    public DisplayBookmarkInteractor(UserDAOInterface userDAO, PetDAOInterface filepetDAO,
+                                     DisplayBookmarkPetsOutputBoundary displayBookmarkPresenter) {
         this.filePetDAO = filepetDAO;
         this.displayBookmarkPresenter = displayBookmarkPresenter;
         this.userDAO = userDAO;
@@ -44,10 +40,10 @@ public class DisplayBookmarkInteractor implements DisplayBookmarkInputBoundary {
                         pet.getPhoneNum(), pet.getActivityLevel(), pet.getLocation(), pet.getImgUrl()))
                 .collect(Collectors.toList());
         petDtoList.sort((p1, p2) -> p1.getPetID() - p2.getPetID());
-        List<BookmarkDTO> bookmarkDTOs = new ArrayList<>();
+        List<BookmarkDTO> bookmarkDTO = new ArrayList<>();
         for(int i=0; i<pets.size(); i++){
-            //bookmarkDTOs.add(new BookmarkDTO(pets.get(i), times.get(i)));
+            bookmarkDTO.add(new BookmarkDTO(petDtoList.get(i), times.get(i)));
         }
-        displayBookmarkPresenter.displayPetsOutput(new DisplayBookmarkPetsOutputData(bookmarkDTOs));
+        displayBookmarkPresenter.displayPetsOutput(new DisplayBookmarkPetsOutputData(bookmarkDTO));
     }
 }
