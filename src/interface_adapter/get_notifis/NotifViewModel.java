@@ -1,4 +1,4 @@
-package interface_adapter.adopt;
+package interface_adapter.get_notifis;
 
 import interface_adapter.ViewModel;
 import interface_adapter.logged_in.NotificationState;

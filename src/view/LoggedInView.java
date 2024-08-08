@@ -15,7 +15,8 @@ import interface_adapter.ProfileViewModel;
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
-import interface_adapter.adopt.NotifViewModel;
+import interface_adapter.get_notifis.GetNotifController;
+import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
@@ -52,6 +53,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
     private final AdoptController adoptController;
     private final AddBookmarkController addBookmarkController;
     private final RemoveBookmarkController removeBookmarkController;
+    private final GetNotifController getNotifController;
 
     /**
      * A window with a title and a JButton.
@@ -66,7 +68,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
                         ViewManagerModel viewManagerModel,
                         AdoptController adoptController,
                         AddBookmarkController addBookmarkController,
-                        RemoveBookmarkController removeBookmarkController) {
+                        RemoveBookmarkController removeBookmarkController, GetNotifController getNotifController) {
 		this.petBioController = petBioController;
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
@@ -78,6 +80,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.adoptController = adoptController;
         this.addBookmarkController = addBookmarkController;
         this.removeBookmarkController = removeBookmarkController;
+        this.getNotifController = getNotifController;
         this.loggedInViewModel.addPropertyChangeListener(this);
         this.viewManagerModel.addPropertyChangeListener(this);
 
@@ -108,7 +111,8 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.add(petScrollPanel);
         notifications.addActionListener(
                 evt -> {
-                     viewManagerModel.setActiveView(notifViewModel.getViewName());
+                    getNotifController.execute(loggedInViewModel.getLoggedInUser());
+                    viewManagerModel.setActiveView(notifViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
         );

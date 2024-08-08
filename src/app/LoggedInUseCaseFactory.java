@@ -5,7 +5,8 @@ import data_access.UserDAOInterface;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
-import interface_adapter.adopt.NotifViewModel;
+import interface_adapter.get_notifis.GetNotifController;
+import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
@@ -56,9 +57,10 @@ public class LoggedInUseCaseFactory {
         AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO, loggedInViewModel, displayPetsViewModel);
         AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO, loggedInViewModel);
         RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase(userDAO);
+        GetNotifController getNotifController = GetNotifControllerUseCase.creatUpdateNotifUseCase(notifViewModel, userDAO);
         return new LoggedInView(petBioController, loggedInViewModel, bookmarkViewModel,
                 preferenceViewModel, loginViewModel, profileViewModel, notifViewModel, viewManagerModel,
-                adoptController, addBookmarkController, removeBookmarkController);
+                adoptController, addBookmarkController, removeBookmarkController, getNotifController);
 
     }
     /**

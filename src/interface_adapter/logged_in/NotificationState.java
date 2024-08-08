@@ -12,5 +12,7 @@ public class NotificationState {
     public List<String> getNotif() {
         return notifications;
     }
-    public void addNotif(String notif) {notifications.add(notif);}
+    public void setNotif(List<String> notif) {
+        this.notifications = notif;
+    }
 }
