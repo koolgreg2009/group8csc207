@@ -28,7 +28,7 @@ public class AddBookmarkPresenter implements AddBookmarkOutputBoundary {
      * @param errormsg the error message that will be displayed to the user.
      */
     public void prepareErrorView(String errormsg){
-        loggedInViewModel.setNotification("Bookmark already exists", true);
+        loggedInViewModel.setNotification("Bookmark already exists", false);
 
     }
 }

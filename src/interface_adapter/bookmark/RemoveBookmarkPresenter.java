@@ -1,5 +1,6 @@
 package interface_adapter.bookmark;
 
+import interface_adapter.display_bookmark_pets.DisplayBookmarkController;
 import use_case.bookmarks.BookmarkOutputData;
 import use_case.bookmarks.RemoveBookmarkOutputBoundary;
 
@@ -8,9 +9,11 @@ import use_case.bookmarks.RemoveBookmarkOutputBoundary;
  */
 public class RemoveBookmarkPresenter implements RemoveBookmarkOutputBoundary {
     private final BookmarkViewModel bookmarkViewModel;
+    private final DisplayBookmarkController displayBookmarkController;
 
-    public RemoveBookmarkPresenter(BookmarkViewModel bookmarkViewModel) {
+    public RemoveBookmarkPresenter(BookmarkViewModel bookmarkViewModel, DisplayBookmarkController displayBookmarkController) {
         this.bookmarkViewModel = bookmarkViewModel;
+        this.displayBookmarkController = displayBookmarkController;
     }
 
     /**
@@ -21,6 +24,11 @@ public class RemoveBookmarkPresenter implements RemoveBookmarkOutputBoundary {
      */
     @Override
     public void prepareSuccessView(BookmarkOutputData outputData) {
+        BookmarkState bookmarkState = bookmarkViewModel.getBookmarkState();
+        bookmarkState.setBookmarkDTO(outputData.getBookmarkDTO());
+        displayBookmarkController.execute(outputData.getUsername());
+
         bookmarkViewModel.setNotification("Bookmark successfully removed!", true);
+        // displaybookmark usecase
     }
 }

@@ -15,6 +15,7 @@ import javax.swing.border.LineBorder;
  */
 public class PetListingPanel extends javax.swing.JPanel {
 	private PetActionView petActionView;
+    private BookmarkView bookmarkView;
 	private PetDTO pet;
     private boolean isAdd;
 
@@ -30,7 +31,7 @@ public class PetListingPanel extends javax.swing.JPanel {
 
 	private void loadData() {
 		jLabelName.setText("Name: " + this.pet.getName());
-		jLabelAge.setText("Age: " + pet.getPetAge());
+        jLabelAge.setText("Age: " + pet.getPetAge()+" year(s) old");
 		jLabelBreed.setText("Breed: " + pet.getBreed());
 		jLabelSpecies.setText("Species: " + pet.getSpecies());
 		jLabelGender.setText("Gender: " + pet.getGender());

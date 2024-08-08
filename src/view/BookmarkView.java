@@ -255,7 +255,7 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
     private void homeActionPerformed(ActionEvent evt) {
         viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-        bookmarkViewModel.removePropertyChangeListener(this);
+//        bookmarkViewModel.removePropertyChangeListener(this);
     }
 
     /**
@@ -290,8 +290,17 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
             for (BookmarkDTO bookmark: bookmarks) {
                 pageBody.add(new PetListingPanel(this, bookmark.getPet(), false));
             }
+            pageBody.revalidate();
+            pageBody.repaint();
         }
-        else if ("notification".equals(evt.getPropertyName())) {
+        else if ("Notification".equals(evt.getPropertyName())) {
+            BookmarkState bookmarkState = (BookmarkState) evt.getNewValue();
+            List<BookmarkDTO> bookmarks = bookmarkState.getAllBookmarks();
+            pageBody.removeAll();
+            for (BookmarkDTO bookmark: bookmarks) {
+                pageBody.add(new PetListingPanel(this, bookmark.getPet(), false));
+            }
+            this.revalidate();
             showNotification();
         }
     }
