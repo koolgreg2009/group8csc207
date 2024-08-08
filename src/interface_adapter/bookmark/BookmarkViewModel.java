@@ -52,7 +52,7 @@ public class BookmarkViewModel extends ViewModel {
      */
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("Bookmark State",
+        support.firePropertyChange("bookmark",
                 null, this.bookmarkState);
     }
 

@@ -20,6 +20,8 @@ import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
 //import interface_adapter.display_all_pets.DisplayAllPetsController;
+import interface_adapter.display_bookmark_pets.DisplayBookmarkController;
+import interface_adapter.display_pets.DisplayPetsController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -50,6 +52,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
 	private final PetBioController petBioController;
     //private final DisplayAllPetsController displayAllPetsController;
     private final AdoptController adoptController;
+    private final DisplayBookmarkController displayBookmarkController;
     private final AddBookmarkController addBookmarkController;
     private final RemoveBookmarkController removeBookmarkController;
 
@@ -66,6 +69,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
                         ViewManagerModel viewManagerModel,
                         AdoptController adoptController,
                         AddBookmarkController addBookmarkController,
+                        DisplayBookmarkController displayBookmarkController,
                         RemoveBookmarkController removeBookmarkController) {
 		this.petBioController = petBioController;
         this.loggedInViewModel = loggedInViewModel;
@@ -77,6 +81,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.loginViewModel = loginViewModel;
         this.adoptController = adoptController;
         this.addBookmarkController = addBookmarkController;
+        this.displayBookmarkController = displayBookmarkController;
         this.removeBookmarkController = removeBookmarkController;
         this.loggedInViewModel.addPropertyChangeListener(this);
         this.viewManagerModel.addPropertyChangeListener(this);
@@ -108,7 +113,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.add(petScrollPanel);
         notifications.addActionListener(
                 evt -> {
-                     viewManagerModel.setActiveView(notifViewModel.getViewName());
+                    viewManagerModel.setActiveView(notifViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
         );
@@ -120,6 +125,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         );
         bookmark.addActionListener(
                 evt -> {
+                    displayBookmarkController.execute(loggedInViewModel.getLoggedInUser());
                     viewManagerModel.setActiveView(bookmarkViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }

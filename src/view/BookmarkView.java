@@ -33,7 +33,7 @@ import java.util.List;
 public class BookmarkView extends JPanel implements PropertyChangeListener, PetActionView {
 
     /** The name of this view */
-    public final String viewName = "Bookmark View";
+    public final String viewName = "bookmark";
 
     /** The view models used by this view. */
     private final LoggedInViewModel loggedInViewModel;
@@ -259,127 +259,6 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
     }
 
     /**
-     * Sets up action listeners for all buttons in the view.
-     *
-     * This method assigns action listeners to the buttons to handle user interactions.
-     */
-    private void setupButtons(){
-        notifsButtonDesign();
-        notifs.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                notifsActionPerformed(evt);
-            }
-        });
-
-        preferenceButtonDesign();
-        myPreferences.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                myPreferencesActionPerformed(evt);
-            }
-        });
-
-        logoutButtonDesign();
-        logout.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                logoutActionPerformed(evt);
-            }
-        });
-
-        homeButtonDesign();
-        home.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                homeActionPerformed(evt);
-            }
-        });
-    }
-
-//    /**
-//     * Creates the horizontal group for the layout.
-//     *
-//     * @return the horizontal group
-//     */
-//    private GroupLayout.Group horizontalGroup(){
-//        return layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                .addComponent(pageBody, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-//                        .addContainerGap()
-//                        .addComponent(logout, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
-//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 604, Short.MAX_VALUE)
-//                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                                .addComponent(notifs, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-//                                .addComponent(myPreferences, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-//                                .addComponent(logout, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
-//                        .addContainerGap());
-//    }
-//
-//    /**
-//     * Creates the vertical group for the layout.
-//     *
-//     * @return the vertical group
-//     */
-//    private GroupLayout.Group verticalGroup(){
-//        return layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-//                        .addContainerGap()
-//                        .addComponent(notifs, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-//                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-//                                .addComponent(myPreferences)
-//                                .addComponent(home, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
-//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE,
-//                                Short.MAX_VALUE)
-//                        .addComponent(logout)
-//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-//                        .addComponent(pageBody, GroupLayout.PREFERRED_SIZE, 485, GroupLayout.PREFERRED_SIZE)
-//                        .addContainerGap());
-//    }
-//
-//    /**
-//     * Configures the layout of the view.
-//     *
-//     * This method sets up the layout of the components within the view, including
-//     * the page body and button arrangements.
-//     */
-//    private void setupLayout(){
-//        pageBody.setBackground(BACKGROUND_COLOR);
-//        pageBody.setAutoscrolls(true);
-//        pageBody.setLayout(new GridLayout(5, 4));
-//
-//        this.setLayout(layout);
-//
-//        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                .addComponent(pageBody, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-//                        .addContainerGap()
-//                        .addComponent(logout, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
-//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 604, Short.MAX_VALUE)
-//                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                                .addComponent(notifs, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-//                                .addComponent(myPreferences, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-//                                .addComponent(logout, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
-//                        .addContainerGap()));
-//
-//        layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {notifs, myPreferences, logout});
-//
-//        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-//                        .addContainerGap()
-//                        .addComponent(notifs, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-//                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-//                                .addComponent(myPreferences)
-//                                .addComponent(home, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
-//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE,
-//                                Short.MAX_VALUE)
-//                        .addComponent(logout)
-//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-//                        .addComponent(pageBody, GroupLayout.PREFERRED_SIZE, 485, GroupLayout.PREFERRED_SIZE)
-//                        .addContainerGap()));
-//        layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {notifs, myPreferences, logout});
-//    }
-
-
-    /**
      * Displays a notification message based on the current bookmark state.
      */
     private void showNotification() {
@@ -404,7 +283,7 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("Bookmark State")) {
+        if (evt.getPropertyName().equals("bookmark")) {
             BookmarkState bookmarkState = (BookmarkState) evt.getNewValue();
             List<BookmarkDTO> bookmarks = bookmarkState.getAllBookmarks();
             pageBody.removeAll();

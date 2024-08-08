@@ -10,6 +10,7 @@ import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
 //import interface_adapter.display_all_pets.DisplayAllPetsController;
+import interface_adapter.display_bookmark_pets.DisplayBookmarkController;
 import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -51,14 +52,18 @@ public class LoggedInUseCaseFactory {
                                       PetDAOInterface petDAO,
                                       PetBioViewModel petBioViewModel,
                                       DisplayPetsViewModel displayPetsViewModel) {
-        PetBioController petBioController = createPetBioUseCase(viewManagerModel, petBioViewModel, loggedInViewModel,
-                petDAO);
-        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO, loggedInViewModel, displayPetsViewModel);
-        AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO, loggedInViewModel);
-        RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase(userDAO, bookmarkViewModel);
+        PetBioController petBioController = createPetBioUseCase(viewManagerModel, petBioViewModel, petDAO);
+        AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO, loggedInViewModel,
+                displayPetsViewModel);
+        AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO,
+                loggedInViewModel);
+        RemoveBookmarkController removeBookmarkController = RemoveBookmarkUseCaseFactory.removeBookmarkUseCase(userDAO,
+                bookmarkViewModel);
+        DisplayBookmarkController displayBookmarkController = DisplayBookmarkUseCaseFactory.displayBookmarkUseCase(
+                viewManagerModel, loggedInViewModel,bookmarkViewModel, userDAO, petDAO);
         return new LoggedInView(petBioController, loggedInViewModel, bookmarkViewModel,
                 preferenceViewModel, loginViewModel, profileViewModel, notifViewModel, viewManagerModel,
-                adoptController, addBookmarkController, removeBookmarkController);
+                adoptController, addBookmarkController, displayBookmarkController, removeBookmarkController);
 
     }
     /**
@@ -69,7 +74,6 @@ public class LoggedInUseCaseFactory {
     public static PetBioController createPetBioUseCase(
             ViewManagerModel viewManagerModel,
             PetBioViewModel petBioViewModel,
-            LoggedInViewModel loggedInViewModel,
             PetDAOInterface petDAO){
 
         PetBioOutputBoundary petBioOutputBoundary = new PetBioPresenter(viewManagerModel, petBioViewModel);

@@ -6,11 +6,6 @@ import dto.PetDTO;
 import entity.Bookmark;
 import entity.Pet;
 import entity.user.AdopterUser;
-import entity.user.User;
-import use_case.display_bookmark_pets.DisplayBookmarkInputBoundary;
-import use_case.display_bookmark_pets.DisplayBookmarkInputData;
-import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputBoundary;
-import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputData;
 import dto.BookmarkDTO;
 
 import java.time.LocalDateTime;
@@ -23,7 +18,8 @@ public class DisplayBookmarkInteractor implements DisplayBookmarkInputBoundary {
     private final DisplayBookmarkPetsOutputBoundary displayBookmarkPresenter;
     private final UserDAOInterface userDAO;
 
-    public DisplayBookmarkInteractor(UserDAOInterface userDAO, PetDAOInterface filepetDAO, DisplayBookmarkPetsOutputBoundary displayBookmarkPresenter) {
+    public DisplayBookmarkInteractor(UserDAOInterface userDAO, PetDAOInterface filepetDAO,
+                                     DisplayBookmarkPetsOutputBoundary displayBookmarkPresenter) {
         this.filePetDAO = filepetDAO;
         this.displayBookmarkPresenter = displayBookmarkPresenter;
         this.userDAO = userDAO;

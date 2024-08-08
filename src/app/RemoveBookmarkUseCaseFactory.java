@@ -57,7 +57,7 @@ public class RemoveBookmarkUseCaseFactory {
         AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO,
                 loggedInViewModel);
         PetBioController petBioController = LoggedInUseCaseFactory.createPetBioUseCase(viewManagerModel,petBioViewModel,
-                loggedInViewModel,petDAO);
+                petDAO);
         AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO,
                 loggedInViewModel, displayPetsViewModel);
         return new BookmarkView(bookmarkViewModel, loggedInViewModel, preferenceViewModel, loginViewModel,

@@ -5,11 +5,11 @@ import interface_adapter.bookmark.BookmarkViewModel;
 import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputBoundary;
 import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputData;
 
-public class DisplayBookmarkBookmarkPresenter implements DisplayBookmarkPetsOutputBoundary {
+public class DisplayBookmarkPresenter implements DisplayBookmarkPetsOutputBoundary {
 
     private final BookmarkViewModel bookmarkViewModel;
 
-    public DisplayBookmarkBookmarkPresenter(BookmarkViewModel bookmarkViewModel) {
+    public DisplayBookmarkPresenter(BookmarkViewModel bookmarkViewModel) {
         this.bookmarkViewModel = bookmarkViewModel;
     }
 
