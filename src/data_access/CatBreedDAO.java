@@ -71,9 +71,5 @@ public class CatBreedDAO implements CatDAOInterface {
         return breedInfo;
     }
 
-    public static void main(String[] args) {
-        CatBreedDAO catBreedDAO = new CatBreedDAO();
-
-    }
 }
 

@@ -5,6 +5,8 @@ import dto.PetDTO;
 public class PetBioState {
 	private PetDTO pet;
 	private String viewUser;
+	private String notification;
+
 
 	public PetDTO getPet() {
 		return pet;
@@ -22,4 +24,10 @@ public class PetBioState {
 		this.viewUser = viewUser;
 	}
 
+	public void setNotification(String notification) {
+		this.notification = notification;
+	}
+	public String getNotification() {
+		return notification;
+	}
 }
