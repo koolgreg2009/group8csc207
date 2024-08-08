@@ -62,7 +62,7 @@ public class LoggedInUseCaseFactory {
                 bookmarkViewModel, petDAO);
         GetNotifController getNotifController = GetNotifControllerUseCase.creatUpdateNotifUseCase(notifViewModel, userDAO);
         DisplayBookmarkController displayBookmarkController = DisplayBookmarkUseCaseFactory.displayBookmarkUseCase(
-                viewManagerModel, loggedInViewModel,bookmarkViewModel, userDAO, petDAO);
+                bookmarkViewModel, userDAO, petDAO);
         return new LoggedInView(petBioController, loggedInViewModel, bookmarkViewModel,
                 preferenceViewModel, loginViewModel, profileViewModel, notifViewModel, viewManagerModel,
                 adoptController, addBookmarkController, displayBookmarkController, removeBookmarkController,

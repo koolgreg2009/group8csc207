@@ -30,8 +30,11 @@ public class DisplayBookmarkInteractor implements DisplayBookmarkInputBoundary {
         List<Pet> pets = new ArrayList<>();
         List<LocalDateTime> times = new ArrayList<>();
         for(Bookmark bookmark: bookmarks){
-            pets.add(filePetDAO.get(bookmark.getPetID()));
-            times.add(bookmark.getBookmarkedDate());
+            Pet pet = filePetDAO.get(bookmark.getPetID());
+            if (pet.isAvailable()) {
+                pets.add(filePetDAO.get(bookmark.getPetID()));
+                times.add(bookmark.getBookmarkedDate());
+            }
         }
         List<PetDTO> petDtoList = pets == null ? new ArrayList<>()
                 : pets.stream()

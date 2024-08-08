@@ -19,9 +19,7 @@ public class DisplayBookmarkUseCaseFactory {
 //                userDAO, petDAO);
 //        return new DisplayPetsView(displayPetsViewModel, displayPetsController);
 
-    public static DisplayBookmarkController displayBookmarkUseCase(ViewManagerModel viewManagerModel,
-                                                                    LoggedInViewModel loggedInViewModel,
-                                                                    BookmarkViewModel bookmarkViewModel,
+    public static DisplayBookmarkController displayBookmarkUseCase(BookmarkViewModel bookmarkViewModel,
                                                                     UserDAOInterface userDAO,
                                                                     PetDAOInterface petDAO) {
 

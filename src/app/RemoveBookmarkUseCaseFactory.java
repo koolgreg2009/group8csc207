@@ -4,6 +4,7 @@ import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
+import interface_adapter.display_bookmark_pets.DisplayBookmarkController;
 import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.bookmark.*;
 import interface_adapter.display_pets.DisplayPetsViewModel;
@@ -36,10 +37,10 @@ public class RemoveBookmarkUseCaseFactory {
      * @return an instance of {@link RemoveBookmarkController}, or {@code null} if an {@link IOException} occurs.
      */
     public static RemoveBookmarkController removeBookmarkUseCase(UserDAOInterface userDAO,
-                                                                 BookmarkViewModel bookmarkViewModel, PetDAOInterface petDAOInterface){
-
-        RemoveBookmarkOutputBoundary bookmarkPresenter = new RemoveBookmarkPresenter(bookmarkViewModel);
-        BookmarkInputBoundary removeBookmarkInteractor = new RemoveBookmarkInteractor(userDAO, bookmarkPresenter, petDAOInterface);
+                                                                 BookmarkViewModel bookmarkViewModel, PetDAOInterface petDAO){
+        DisplayBookmarkController displayBookmarkController = DisplayBookmarkUseCaseFactory.displayBookmarkUseCase(bookmarkViewModel, userDAO, petDAO);
+        RemoveBookmarkOutputBoundary bookmarkPresenter = new RemoveBookmarkPresenter(bookmarkViewModel, displayBookmarkController);
+        BookmarkInputBoundary removeBookmarkInteractor = new RemoveBookmarkInteractor(userDAO, bookmarkPresenter, petDAO);
         return new RemoveBookmarkController(removeBookmarkInteractor);
     }
 

@@ -71,7 +71,7 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
         }
 
 
-        BookmarkOutputData bookmarkOutputData = new BookmarkOutputData(userBookmarks, bookmarkToRemove, bookmarkDTO);
+        BookmarkOutputData bookmarkOutputData = new BookmarkOutputData(userBookmarks, bookmarkToRemove, bookmarkDTO, user.getUsername());
         this.removeOutputBoundary.prepareSuccessView(bookmarkOutputData);
     }
 }

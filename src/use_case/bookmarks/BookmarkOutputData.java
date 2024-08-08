@@ -12,6 +12,7 @@ public class BookmarkOutputData {
     private final List<Bookmark> allBookmarks;
     private final Bookmark bookmark;
     private final List<BookmarkDTO> bookmarkDTO;
+    private final String username;
 
     /**
      * Constructs a BookmarkOutputData object with the specified list of all bookmarks
@@ -21,10 +22,11 @@ public class BookmarkOutputData {
      * @param bookmark     the specific bookmark that was removed
      * @param bookmarkDTO
      */
-    public BookmarkOutputData(List<Bookmark> allBookmarks, Bookmark bookmark, List<BookmarkDTO> bookmarkDTO) {
+    public BookmarkOutputData(List<Bookmark> allBookmarks, Bookmark bookmark, List<BookmarkDTO> bookmarkDTO, String username) {
         this.allBookmarks = allBookmarks;
         this.bookmark = bookmark;
         this.bookmarkDTO = bookmarkDTO;
+        this.username = username;
     }
 
     /**
@@ -48,4 +50,7 @@ public class BookmarkOutputData {
      * @return the bookmarkDTO
      */
     public List<BookmarkDTO> getBookmarkDTO() {return bookmarkDTO;}
+    public String getUsername() {
+        return username;
+    }
 }
