@@ -4,7 +4,6 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
-
 import javax.swing.*;
 
 import dto.PetDTO;
@@ -47,6 +46,8 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
         phoneNumText = new javax.swing.JTextField();
         jLabelEmail = new JLabel();
         emailText = new javax.swing.JTextField();
+        jLabelActivityLevel = new JLabel();
+        activityLevelText = new javax.swing.JTextField();
 
         jLabel1.setText("Name:");
 
@@ -95,6 +96,9 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
         bioText.setBackground(Color.white);
         bioText.setBorder(null);
         bioText.setLineWrap(true);
+        bioText.setWrapStyleWord(true);
+        JScrollPane bioScrollPane = new JScrollPane(bioText);
+        bioScrollPane.setBorder(null);
 
         jLabelLocation.setText("Location:");
         locationText.setEditable(false);
@@ -110,6 +114,11 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
         emailText.setEditable(false);
         emailText.setBackground(Color.white);
         emailText.setBorder(null);
+
+        jLabelActivityLevel.setText("Activity Level:");
+        activityLevelText.setEditable(false);
+        activityLevelText.setBackground(Color.white);
+        activityLevelText.setBorder(null);
 
         backButton.setText("<Back");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -136,7 +145,8 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
                                                         .addComponent(jLabelLocation)
                                                         .addComponent(jLabelBio)
                                                         .addComponent(jLabelEmail)
-                                                        .addComponent(jLabelPhoneNum))
+                                                        .addComponent(jLabelPhoneNum)
+                                                        .addComponent(jLabelActivityLevel))
                                                 .addGap(38, 38, 38)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(nameText)
@@ -144,9 +154,10 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
                                                         .addComponent(ageText)
                                                         .addComponent(speciesesText, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                                                         .addComponent(locationText)
-                                                        .addComponent(bioText, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+                                                        .addComponent(bioScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
                                                         .addComponent(emailText)
-                                                        .addComponent(phoneNumText))))
+                                                        .addComponent(phoneNumText)
+                                                        .addComponent(activityLevelText))))
                                 .addContainerGap(18, Short.MAX_VALUE))
                         .addComponent(imageLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
@@ -177,7 +188,11 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabelBio)
-                                        .addComponent(bioText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(bioScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabelActivityLevel)
+                                        .addComponent(activityLevelText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabelEmail)
@@ -186,8 +201,6 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabelPhoneNum)
                                         .addComponent(phoneNumText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -202,7 +215,6 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
     private void breedButtonActionPerformed(java.awt.event.ActionEvent evt) {
         getBreedController.execute(breedText.getText());
     }
-
 
     // Variables declaration - do not modify
     private javax.swing.JTextField ageText;
@@ -223,6 +235,9 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
     private JTextField emailText;
     private JLabel jLabelPhoneNum;
     private JTextField phoneNumText;
+    private JLabel jLabelActivityLevel;
+    private JTextField activityLevelText;
+    private JScrollPane bioScrollPane;
 
     private String viewUser;
 
@@ -234,12 +249,13 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
             PetDTO pet = state.getPet();
             nameText.setText(pet.getName());
             breedText.setText(pet.getBreed());
-            ageText.setText("" + pet.getPetAge());
+            ageText.setText("" + pet.getPetAge() + " year(s) old");
             speciesesText.setText(pet.getSpecies());
             bioText.setText(pet.getBio());
             locationText.setText(pet.getLocation());
             emailText.setText(pet.getEmail());
             phoneNumText.setText(pet.getPhoneNum());
+            activityLevelText.setText(pet.getActivityLevel());
 
             try {
                 URL url = new URL(pet.getImgUrl());
@@ -275,5 +291,4 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
             JOptionPane.showMessageDialog(this, state.getNotification());
         }
     }
-
 }
