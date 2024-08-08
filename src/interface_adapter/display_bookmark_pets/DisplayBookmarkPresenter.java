@@ -1,5 +1,6 @@
 package interface_adapter.display_bookmark_pets;
 
+import interface_adapter.SessionManager;
 import interface_adapter.bookmark.BookmarkState;
 import interface_adapter.bookmark.BookmarkViewModel;
 import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputBoundary;
@@ -17,6 +18,7 @@ public class DisplayBookmarkPresenter implements DisplayBookmarkPetsOutputBounda
     public void displayPetsOutput(DisplayBookmarkPetsOutputData displayBookmarkPetsOutputData) {
         BookmarkState bookmarkState = bookmarkViewModel.getBookmarkState();
         bookmarkState.setBookmarkDTO(displayBookmarkPetsOutputData.getBookmarks());
+        bookmarkState.setUsername(SessionManager.getCurrentUser());
         bookmarkViewModel.firePropertyChanged();
     }
 }
