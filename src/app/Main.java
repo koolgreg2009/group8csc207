@@ -1,6 +1,5 @@
 package app;
 
-
 import java.awt.CardLayout;
 import java.io.IOException;
 
@@ -76,21 +75,27 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, preferenceViewModel, userDAO, displayPetsViewModel);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, displayPetsViewModel, signupViewModel, userDAO, petDAO);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, displayPetsViewModel,
+                signupViewModel, userDAO, petDAO);
         views.add(loginView, loginView.viewName);
 
-        DisplayPetsView displayPetsView = DisplayPetsUseCaseFactory.create(viewManagerModel, displayPetsViewModel, loggedInViewModel, userDAO, petDAO);
+        DisplayPetsView displayPetsView = DisplayPetsUseCaseFactory.create(viewManagerModel, displayPetsViewModel,
+                loggedInViewModel, userDAO, petDAO);
         views.add(displayPetsView, displayPetsView.viewName);
 
-        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel, bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, notifViewModel, userDAO, petDAO,
-                petBioViewModel, displayPetsViewModel);
+        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
+                bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, notifViewModel,
+                userDAO, petDAO, petBioViewModel, displayPetsViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-        PetDetailView petDetailView = PetDetailUseCaseFactory.create(viewManagerModel, petBioViewModel, loggedInViewModel, userDAO, petDAO);
+        PetDetailView petDetailView = PetDetailUseCaseFactory.create(viewManagerModel, petBioViewModel,
+                loggedInViewModel, userDAO, petDAO);
         views.add(petDetailView, petDetailView.viewName);
 
-//        BookmarkView bookmarkView = new BookmarkView();
-//        views.add(bookmarkView, bookmarkView.viewName);
+        BookmarkView bookmarkView = RemoveBookmarkUseCaseFactory.create(bookmarkViewModel, loggedInViewModel,
+                preferenceViewModel, loginViewModel, petBioViewModel, viewManagerModel, notifViewModel,
+                displayPetsViewModel, userDAO,petDAO);
+        views.add(bookmarkView, bookmarkView.viewName);
 
         NotifView notifView = new NotifView(loggedInViewModel,viewManagerModel,notifViewModel);
         views.add(notifView, notifView.viewName);
@@ -98,7 +103,8 @@ public class Main {
         ProfileView profileView = new ProfileView();
         views.add(profileView, profileView.viewName);
 
-        PreferenceView preferenceView = PreferenceUsecaseFactory.create(viewManagerModel, loggedInViewModel, preferenceViewModel, userDAO, displayPetsViewModel);
+        PreferenceView preferenceView = PreferenceUsecaseFactory.create(viewManagerModel, loggedInViewModel,
+                preferenceViewModel, userDAO, displayPetsViewModel);
         views.add(preferenceView, preferenceView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);
