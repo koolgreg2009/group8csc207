@@ -1,4 +1,4 @@
-# Pet Adoption Website
+# Pet Adoption App
 
 ### Contributors
 * [Alex Lambermon](https://github.com/lamberm2)
@@ -6,7 +6,7 @@
 * [Jenny Yang](https://github.com/yangje02)
 * [Joy Cai](https://github.com/Joyce12345678)
 * [Justin Yoon](https://github.com/justinyoon95)
-* [Kevin Hu](https://github.com/koolgreg2009)
+* [Kevin Hu](https://github.com/koolgreg2009) 
 
 <hr>
 
@@ -24,17 +24,25 @@ personality to help find the perfect fit for the pet and the new owner.
 * Java Swing was used for the GUI.
 * This project strictly adheres to the Clean Architecture and SOLID design principles.
 
-## Getting Started (For later)
-1. Clone the repository.
+## Getting Started
+1. Clone the repository to your local machine.
 2. You will need an IDE for Java (IntelliJ IDEA is recommended).
-3. Run the project by running the `main` method in `Main.java`.
-4. (Start guide to be updated)
+3. Initialize the database by emptying `users.json` and `pets.json`, locally. (Optional)
+4. Run the project by running the `main` method in `Main.java`.
+5. Begin by creating an account. You can do this by clicking `Sign Up`.
+6. After filling in your information, you will be prompted to fill out your preferences for pets. You may skip this part by pressing `Save Preferences` without filling information in.
+7. Now, the program will display the list of available pets, and you may adopt, or bookmark listed pets, as desired.
 
 ## APIs Used
 * [RescueGroups.org](https://rescuegroups.org/services/adoptable-pet-data-api/): API that provides us adoptable pet data.
 * [TheCATAPI](https://documenter.getpostman.com/view/5578104/RWgqUxxh#intro): API that returns cat information.
 
 # Technical Problems and Notes
-Since our GUI is not yet fully functional. Currently working on functionality and GUI.
+1. When creating an account, our database does not restrict an existing phone number or email address. 
+As we are aiming for a precise functionality of the program first, we will focus on all these details once we are
+finalized with the program.
 
-
+# Documents
+* [UML Diagram](https://lucid.app/lucidchart/5fb0ce87-45b4-4f2e-9527-57cff33bf035/edit?viewport_loc=1226%2C-948%2C4386%2C2030%2C0_0&invitationId=inv_282f4d82-22a6-4b58-b2ca-4a74da2ebeb9)
+* [Flow Chart](https://lucid.app/lucidchart/d2f8b40e-59de-49e9-9eeb-e733e1e2a166/edit?invitationId=inv_4ff0dbca-a473-4dc7-8d1f-96b53d3bb54a&page=0_0#)
+* [Professor Paul Gries's CA Example](https://github.com/paulgries/LoginCleanArchitecture) (Our program is inspired by Paul Gries's user/password manager program example. Thank you!)
