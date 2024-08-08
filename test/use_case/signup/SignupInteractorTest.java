@@ -1,20 +1,22 @@
 package use_case.signup;
 
-import data_access.UserDAOInterface;
-import entity.user.AdopterUser;
-import entity.user.UserFactory;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDateTime;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import data_access.UserDAOInterface;
+import entity.user.AdopterUser;
+import entity.user.UserFactory;
 
 class SignupInteractorTest {
 
@@ -62,19 +64,38 @@ class SignupInteractorTest {
     }
 
     @Test
-    void testSuccessfulSignup() {
+    void testPhoneWrongFormat() {
         // Arrange
         when(userDAO.existsByName(anyString())).thenReturn(false);
         AdopterUser newUser = new AdopterUser("newUser", "password", "John Doe", "john.doe@example.com", "123-456-7890");
         when(adopterUserFactory.createAdopter(anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(newUser);
-        LocalDateTime now = LocalDateTime.now();
         SignupInputData inputData = new SignupInputData("newUser", "password", "password", "John Doe", "john.doe@example.com", "123-456-7890");
 
         // Act
         signupInteractor.execute(inputData);
 
         // Assert
+        verify(signupPresenter).prepareFailView("Invalid phone number.");
+    }
+
+    @Test
+    void testSuccessfulSignup() {
+        // Arrange
+        when(userDAO.existsByName(anyString())).thenReturn(false);
+        AdopterUser newUser = new AdopterUser("newUser", "password", "John Doe", "john.doe@example.com", "1234567890");
+        when(adopterUserFactory.createAdopter(anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(newUser);
+        LocalDateTime now = LocalDateTime.now();
+        SignupInputData inputData = new SignupInputData("newUser", "password", "password", "John Doe", "john.doe@example.com", "1234567890");
+
+        // Act
+        signupInteractor.execute(inputData);
+		ArgumentCaptor<SignupOutputData> outputCaptor = ArgumentCaptor.forClass(SignupOutputData.class);
+		verify(signupPresenter).prepareSuccessView(outputCaptor.capture());
+
+
+        // Assert
         verify(userDAO).save(newUser);
-        verify(signupPresenter).prepareSuccessView(new SignupOutputData(newUser.getName(), now.toString(), false));
+		SignupOutputData output = outputCaptor.getValue();
+		assertEquals("newUser", output.getUsername());
     }
 }
