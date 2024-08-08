@@ -255,7 +255,7 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
     private void homeActionPerformed(ActionEvent evt) {
         viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-        bookmarkViewModel.removePropertyChangeListener(this);
+//        bookmarkViewModel.removePropertyChangeListener(this);
     }
 
     /**
