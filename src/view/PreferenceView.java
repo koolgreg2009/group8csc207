@@ -141,7 +141,6 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
                     viewManagerModel.setActiveView(loggedInViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
-                    // to do: add displayallpet usecase
                 }
         );
 

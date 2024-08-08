@@ -73,7 +73,7 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, preferenceViewModel, userDAO);
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, preferenceViewModel, userDAO, displayPetsViewModel);
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, displayPetsViewModel, signupViewModel, userDAO, petDAO);

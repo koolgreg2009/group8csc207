@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import data_access.UserDAOInterface;
 import entity.user.AdopterUserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupController;
@@ -41,10 +42,10 @@ public class SignupUseCaseFactory {
      */
     public static SignupView create(
             ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel,
-            PreferenceViewModel preferenceViewModel, UserDAOInterface userDataAccessObject) {
+            PreferenceViewModel preferenceViewModel, UserDAOInterface userDataAccessObject, DisplayPetsViewModel displayPetsViewModel) {
 
         try {
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
+            SignupController signupController = createUserSignupUseCase(viewManagerModel, preferenceViewModel, userDataAccessObject, signupViewModel, displayPetsViewModel);
             return new SignupView(signupController, signupViewModel, viewManagerModel, loginViewModel, preferenceViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -57,15 +58,14 @@ public class SignupUseCaseFactory {
      * Creates a SignupController instance and sets up the signup interactor and presenter.
      *
      * @param viewManagerModel
-     * @param signupViewModel
-     * @param loginViewModel
+     * @param preferenceViewModel
      * @param userDataAccessObject 
      * @return A SignupController instance configured with the provided dependencies.
      */
-    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, UserDAOInterface userDataAccessObject) throws IOException {
+    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, PreferenceViewModel preferenceViewModel, UserDAOInterface userDataAccessObject, SignupViewModel signupViewModel, DisplayPetsViewModel displayPetsViewModel) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
-        SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
+        SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, preferenceViewModel, signupViewModel, displayPetsViewModel);
 
         AdopterUserFactory userFactory = new AdopterUserFactory();
 
