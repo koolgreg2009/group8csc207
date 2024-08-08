@@ -29,7 +29,7 @@ personality to help find the perfect fit for the pet and the new owner.
 2. You will need an IDE for Java (IntelliJ IDEA is recommended).
 3. Initialize the database by emptying `users.json` and `pets.json`, locally. (Optional)
 4. Run the project by running the `main` method in `Main.java`.
-5. Begin by creating an account. You can do this by clicking `Sign Up`.
+5. Begin by creating an account. You can do this by clicking `Sign Up`. Or, if you would like to skip user creation, you can log in using the default account. `username: johndoe` `password: apple123`
 6. After filling in your information, you will be prompted to fill out your preferences for pets. You may skip this part by pressing `Save Preferences` without filling information in.
 7. Now, the program will display the list of available pets, and you may adopt, or bookmark listed pets, as desired.
 

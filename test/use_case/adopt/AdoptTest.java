@@ -1,49 +1,83 @@
-//package use_case.adopt;
-//
-//import data_access.FilePetDAO;
-//import data_access.FileUserDAO;
-//import entity.user.AdopterUser;
-//import interface_adapter.adopt.AdoptPresenter;
-//import interface_adapter.bookmark.AddBookmarkPresenter;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import use_case.bookmarks.AddBookmarkInteractor;
-//import use_case.bookmarks.BookmarkInputData;
-//
-//import java.io.File;
-//import java.io.IOException;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//class AdoptTest{
-//    private FileUserDAO userDAO;
-//    private FilePetDAO petDAO;
-//    private AdoptPresenter adoptPresenter;
-//    private Adopt adoptInteractor;
-//    private String testFilePath = "testUserData.json";
-//
-//    @BeforeEach
-//    void setUp() throws IOException {
-//        // Create a new FileUserDAO and FilePetDAO with a temporary file path
-//        userDAO = new FileUserDAO(testFilePath);
-//        petDAO = new FilePetDAO(testFilePath);
-//        adoptPresenter = new AdoptPresenter();
-//        adoptInteractor = new Adopt(petDAO, adoptPresenter, userDAO);
-//
-//        AdopterUser user = new AdopterUser("testUser", "password", "Test Name", "test@example.com", "1234567890");
-//        userDAO.save(user);
-//    }
-//
-//    @Test
-//    void testAdopt() {
-//        AdoptInputData adpData = new AdoptInputData(123);  // Assuming petID is an int
-//
-//        adoptInteractor.execute(adpData);
-//    }
-//
-//    @AfterEach
-//    void tearDown() {
-//        new File(testFilePath).delete();
-//    }
-//}
+package use_case.adopt;
+
+import data_access.PetDAOInterface;
+import data_access.UserDAOInterface;
+import entity.Pet;
+import entity.user.AdopterUser;
+import entity.user.User;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+class AdoptTest {
+    private PetDAOInterface petDAO;
+    private UserDAOInterface userDAO;
+    private AdoptOutputBoundary presenter;
+    private Adopt interactor;
+
+    @BeforeEach
+    void setUp() {
+        petDAO = Mockito.mock(PetDAOInterface.class);
+        userDAO = Mockito.mock(UserDAOInterface.class);
+        presenter = Mockito.mock(AdoptOutputBoundary.class);
+        interactor = new Adopt(petDAO, presenter, userDAO);
+    }
+
+    @Test
+    void testExecutePetAlreadyAdopted() {
+        Pet pet = Mockito.mock(Pet.class);
+        when(petDAO.get(1)).thenReturn(pet);
+        when(pet.isAvailable()).thenReturn(false);
+
+        AdoptInputData inputData = new AdoptInputData(1);
+        interactor.execute(inputData);
+
+        verify(presenter, never()).prepareAdopt(any());
+    }
+
+    @Test
+    void testExecuteSuccessfulAdoption() {
+        Pet pet = Mockito.mock(Pet.class);
+        when(petDAO.get(1)).thenReturn(pet);
+        when(pet.isAvailable()).thenReturn(true);
+        when(pet.getPetID()).thenReturn(1);
+        when(pet.getName()).thenReturn("Fluffy");
+        when(pet.getOwner()).thenReturn("John Doe");
+        when(pet.getEmail()).thenReturn("johndoe@example.com");
+        when(pet.getPhoneNum()).thenReturn("123456789");
+
+        AdopterUser user1 = Mockito.mock(AdopterUser.class);
+        AdopterUser user2 = Mockito.mock(AdopterUser.class);
+
+        when(userDAO.get("user1")).thenReturn(user1);
+        when(userDAO.get("user2")).thenReturn(user2);
+
+        List<String> users = Arrays.asList("user1", "user2");
+        when(userDAO.removePetFromAllUserBookmarks(1)).thenReturn(users);
+
+        AdoptInputData inputData = new AdoptInputData(1);
+        interactor.execute(inputData);
+
+        verify(pet).markUnavailable();
+        verify(petDAO).save(pet);
+
+        verify(user1).addNotif("Fluffy has found a home.");
+        verify(user2).addNotif("Fluffy has found a home.");
+
+        ArgumentCaptor<AdoptOutputData> argumentCaptor = ArgumentCaptor.forClass(AdoptOutputData.class);
+        verify(presenter).prepareAdopt(argumentCaptor.capture());
+
+        AdoptOutputData outputData = argumentCaptor.getValue();
+        assertEquals("John Doe", outputData.getPetOwner());
+        assertEquals("johndoe@example.com", outputData.getOwnerEmail());
+        assertEquals("123456789", outputData.getOwnerPhone());
+        assertEquals("Fluffy", outputData.getID());
+    }
+}
