@@ -43,22 +43,71 @@ public class SignupInteractor implements SignupInputBoundary {
     public void execute(SignupInputData signupInputData) {
         Pattern emailRegex = Pattern.compile("^[\\w.%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
         Pattern phoneRegex = Pattern.compile("^[0-9]{10,15}$");
-        if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
-            userPresenter.prepareFailView("User already exists.");
-        } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
-            userPresenter.prepareFailView("Passwords don't match.");
-        } else if (!emailRegex.matcher(signupInputData.getEmail()).matches()){
-            userPresenter.prepareFailView("Invalid email address.");
-        } else if (!phoneRegex.matcher(signupInputData.getPhone()).matches()){
-            userPresenter.prepareFailView("Invalid phone number.");
-        } else {
-            LocalDateTime now = LocalDateTime.now();
-            AdopterUser user = adopterUserFactory.createAdopter(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getName(), signupInputData.getEmail(), signupInputData.getPhone());
-            userDataAccessObject.save(user);
-            SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), now.toString(), false);
-            userPresenter.prepareSuccessView(signupOutputData);
+
+        if (signupInputData.getUsername().isEmpty()) {
+            userPresenter.prepareFailView("Username cannot be empty.");
+            return;
+
         }
 
+        if (signupInputData.getPassword().isEmpty()) {
+            userPresenter.prepareFailView("Password cannot be empty.");
+            return;
+
+        }
+
+        if (signupInputData.getRepeatPassword().isEmpty()) {
+            userPresenter.prepareFailView("Repeat Password cannot be empty.");
+            return;
+
+        }
+
+        if (signupInputData.getName().isEmpty()) {
+            userPresenter.prepareFailView("Your name cannot be empty.");
+            return;
+
+        }
+
+        if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
+            userPresenter.prepareFailView("Username already exists.");
+            return;
+
+        }
+
+        if (userDataAccessObject.existsByEmail(signupInputData.getEmail())) {
+            userPresenter.prepareFailView("Email already in use.");
+            return;
+
+        }
+
+        if (userDataAccessObject.existsByPhone(signupInputData.getPhone())) {
+            userPresenter.prepareFailView("Phone number already in use.");
+            return;
+
+        }
+
+        if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
+            userPresenter.prepareFailView("Passwords don't match.");
+            return;
+
+        }
+
+        if (!emailRegex.matcher(signupInputData.getEmail()).matches()) {
+            userPresenter.prepareFailView("Invalid email address.");
+            return;
+
+        }
+
+        if (!phoneRegex.matcher(signupInputData.getPhone()).matches()) {
+            userPresenter.prepareFailView("Invalid phone number.");
+            return;
+
+        }
+        LocalDateTime now = LocalDateTime.now();
+        AdopterUser user = adopterUserFactory.createAdopter(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getName(), signupInputData.getEmail(), signupInputData.getPhone());
+        userDataAccessObject.save(user);
+        SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), now.toString(), false);
+        userPresenter.prepareSuccessView(signupOutputData);
 
     }
 
