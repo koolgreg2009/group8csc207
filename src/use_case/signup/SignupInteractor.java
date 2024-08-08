@@ -1,12 +1,11 @@
 package use_case.signup;
 
-import data_access.UserDAOInterface;
-import entity.user.AdopterUser;
-import entity.user.AdopterUserFactory;
-import entity.user.UserFactory;
-
 import java.time.LocalDateTime;
 import java.util.regex.Pattern;
+
+import data_access.UserDAOInterface;
+import entity.user.AdopterUser;
+import entity.user.UserFactory;
 
 /**
  * The SignupInteractor class implements the SignupInputBoundary interface and handles the signup process.
@@ -56,7 +55,7 @@ public class SignupInteractor implements SignupInputBoundary {
             LocalDateTime now = LocalDateTime.now();
             AdopterUser user = adopterUserFactory.createAdopter(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getName(), signupInputData.getEmail(), signupInputData.getPhone());
             userDataAccessObject.save(user);
-            SignupOutputData signupOutputData = new SignupOutputData(user.getName(), now.toString(), false);
+            SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), now.toString(), false);
             userPresenter.prepareSuccessView(signupOutputData);
         }
 
