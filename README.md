@@ -35,6 +35,6 @@ personality to help find the perfect fit for the pet and the new owner.
 * [TheCATAPI](https://documenter.getpostman.com/view/5578104/RWgqUxxh#intro): API that returns cat information.
 
 # Technical Problems and Notes
-Since our GUI is not yet fully functional. Currently working on functionality and GUI.
-
+N/A (Feel free to fill it out or check currently ongoing issues)
+* [Issues](https://github.com/koolgreg2009/group8csc207/issues)
 
