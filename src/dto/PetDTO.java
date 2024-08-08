@@ -1,6 +1,7 @@
 package dto;
 
 public class PetDTO {
+
 	private final String activityLevel;
 	private final String bio;
 	private final String breed;

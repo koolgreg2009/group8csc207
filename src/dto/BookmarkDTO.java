@@ -9,6 +9,7 @@ import java.util.List;
  * Data Transfer Object (DTO) representing a bookmarked pet.
  */
 public class BookmarkDTO {
+
     private final PetDTO pet;
     private final LocalDateTime bookmarkedDate;
 
