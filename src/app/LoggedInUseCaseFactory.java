@@ -10,7 +10,6 @@ import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
-//import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.display_bookmark_pets.DisplayBookmarkController;
 import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -54,8 +53,7 @@ public class LoggedInUseCaseFactory {
                                       PetDAOInterface petDAO,
                                       PetBioViewModel petBioViewModel,
                                       DisplayPetsViewModel displayPetsViewModel) {
-        PetBioController petBioController = createPetBioUseCase(viewManagerModel, petBioViewModel, loggedInViewModel,
-                petDAO);
+        PetBioController petBioController = createPetBioUseCase(viewManagerModel, petBioViewModel, petDAO);
         AdoptController adoptController = AdoptUseCaseFactory.createAdoptUseCase(petDAO, userDAO, loggedInViewModel,
                 displayPetsViewModel);
         AddBookmarkController addBookmarkController = AddBookmarkUseCaseFactory.createAddBookmarkUseCase(userDAO,

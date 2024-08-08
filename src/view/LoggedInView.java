@@ -72,7 +72,8 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
                         AdoptController adoptController,
                         AddBookmarkController addBookmarkController,
                         DisplayBookmarkController displayBookmarkController,
-                         etNotifController getNotifController) {
+                        RemoveBookmarkController removeBookmarkController,
+                        GetNotifController getNotifController) {
 		this.petBioController = petBioController;
         this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;

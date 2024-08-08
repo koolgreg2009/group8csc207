@@ -4,7 +4,7 @@ import dto.BookmarkDTO;
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
-import interface_adapter.adopt.NotifViewModel;
+import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkState;
 import interface_adapter.bookmark.BookmarkViewModel;

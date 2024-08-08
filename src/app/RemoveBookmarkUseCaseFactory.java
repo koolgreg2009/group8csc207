@@ -4,7 +4,7 @@ import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
-import interface_adapter.adopt.NotifViewModel;
+import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.bookmark.*;
 import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
