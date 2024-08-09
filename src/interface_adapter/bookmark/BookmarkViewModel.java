@@ -74,14 +74,6 @@ public class BookmarkViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    /**
-     * Removes a PropertyChangeListener.
-     *
-     * @param listener the PropertyChangeListener to remove
-     */
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        support.removePropertyChangeListener(listener);
-    }
 
     /**
      * Retrieves all bookmarked pets.
