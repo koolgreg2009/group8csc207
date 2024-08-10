@@ -41,7 +41,7 @@ public class PreferenceViewModel extends ViewModel {
      * login state.
      */
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("clear", null, this.state);
     }
 
     /**
@@ -62,7 +62,9 @@ public class PreferenceViewModel extends ViewModel {
     public PreferenceState getState() {
         return state;
     }
-
+    public void clearState(){
+        state = new PreferenceState();
+    }
     public List<String> getSpeciesOptions() {
         return speciesOptions;
     }
@@ -162,18 +164,6 @@ public class PreferenceViewModel extends ViewModel {
     }
 
 
-//    private boolean validateLocation() {
-//        if (state.getLocation().isEmpty()) {
-//            state.setLocationError("Location cannot be empty");
-//            return false;
-//        } else {
-//            state.setLocationError("");
-//            return true;
-//        }
-//    }
-    public void initFields(){
-        //capitalizeFirstLetter((breedInputField.getText()).split(","))
-    }
     /**
      * makes strings properly formatted for dao to work. taking into account of spaces between words like domestic short
      * hair

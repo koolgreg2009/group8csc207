@@ -111,8 +111,6 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                     preferenceState.setActivityLevel(selectedActivityLevel);
                     preferenceState.setLocation(locationInputField.getText());
                     preferenceState.setGender(selectedGender);
-                    List<String> a = preferenceViewModel.capitalizeFirstLetter((preferenceState.getBreed()).split(", "));
-
                     if (preferenceViewModel.validatePreferences()){
                         preferenceController.execute(
                         preferenceState.getSpecies(),
@@ -120,7 +118,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                                 Integer.parseInt(preferenceState.getMinAge()),
                                 Integer.parseInt(preferenceState.getMaxAge()),
                                 preferenceState.getActivityLevel(),
-                                preferenceViewModel.capitalizeFirstLetter(locationInputField.getText()),
+                                preferenceViewModel.capitalizeFirstLetter(preferenceState.getLocation()),
                                 preferenceState.getGender());
 
                         displayPetsController.execute(SessionManager.getCurrentUser());
@@ -132,13 +130,8 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         );
         clear.addActionListener(
                 evt -> {
-                    speciesComboBox.setSelectedItem("");
-                    breedInputField.setText("");
-                    minAgeInputField.setText("");
-                    maxAgeInputField.setText("");
-                    locationInputField.setText("");
-                    genderComboBox.setSelectedItem("");
-                    activityLevelComboBox.setSelectedItem("");
+                    preferenceViewModel.clearState();
+                    preferenceViewModel.firePropertyChanged();
                 }
         );
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -196,24 +189,6 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                     public void keyReleased(KeyEvent e) {
                     }
                 });
-
-//        activityLevelInputField.addKeyListener(
-//                new KeyListener() {
-//                    @Override
-//                    public void keyTyped(KeyEvent e) {
-//                        PreferenceState currentState = preferenceViewModel.getState();
-//                        currentState.setActivityLevel(activityLevelInputField.getText() + e.getKeyChar());
-//                        preferenceViewModel.setState(currentState);
-//                    }
-//
-//                    @Override
-//                    public void keyPressed(KeyEvent e) {
-//                    }
-//
-//                    @Override
-//                    public void keyReleased(KeyEvent e) {
-//                    }
-//                });
 
         locationInputField.addKeyListener(
                 new KeyListener() {
@@ -274,14 +249,25 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         }
 
         @Override
-        public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(PropertyChangeEvent evt) {
+            if ("clear".equals(evt.getPropertyName())) {
+                PreferenceState state = (PreferenceState) evt.getNewValue();
+                speciesComboBox.setSelectedItem(state.getSpecies());
+                breedInputField.setText(state.getBreed());
+                minAgeInputField.setText(state.getMinAge());
+                maxAgeInputField.setText(state.getMaxAge());
+                locationInputField.setText(state.getLocation());
+                genderComboBox.setSelectedItem(state.getGender());
+                activityLevelComboBox.setSelectedItem(state.getActivityLevel());
             }
+        }
     private void updateErrorView() {
         PreferenceState state = preferenceViewModel.getState();
         minAgeErrorField.setText(state.getMinAgeError());
         maxAgeErrorField.setText(state.getMaxAgeError());
         breedErrorField.setText(state.getBreedError());
         locationErrorField.setText(state.getLocationError());
+
     }
 
 }
