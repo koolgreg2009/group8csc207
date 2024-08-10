@@ -25,36 +25,16 @@ public class PreferenceState {
 
     private String gender = "";
 
-
-    private String error = "";
-    /**
-     * Constructs a new PreferenceState as a copy of the provided PreferenceState.
-     *
-     * @param copy to create a copy of the preferences
-     */
-    public PreferenceState(PreferenceState copy) {
-        species = copy.species;
-//        usernameError = copy.usernameError;
-        breed = copy.breed;
-//        passwordError = copy.passwordError;
-        minAge = copy.minAge;
-//        passwordError = copy.passwordError;
-        maxAge = copy.maxAge;
-//        passwordError = copy.passwordError;
-        activityLevel = copy.activityLevel;
-//        passwordError = copy.passwordError;
-        location = copy.location;
-//        passwordError = copy.passwordError;
-        gender = copy.gender;
-//        passwordError = copy.passwordError;
-        error = copy.error;
-    }
-
+    private String speciesError = "";
+    private String breedError = "";
+    private String minAgeError = "";
+    private String maxAgeError = "";
+    private String activityLevelError = "";
+    private String locationError = "";
+    private String genderError = "";
     /**
      * Constructs a new LoginState with default values.
      */
-    public PreferenceState() {} // Because of the previous copy constructor, the default constructor must be explicit.
-
     /**
      * Gets the username input by the user.
      *
@@ -118,7 +98,6 @@ public class PreferenceState {
     public String getGender() {
         return gender;
     }
-
 
 
     /**
@@ -185,11 +164,47 @@ public class PreferenceState {
         this.gender = gender;
     }
 
+    public String getSpeciesError() {
+        return speciesError;
+    }
+    public String getBreedError() {
+        return breedError;
+    }
+    public String getMinAgeError() {
+        return minAgeError;
+    }
+    public String getMaxAgeError() {
+        return maxAgeError;
+    }
+    public String getActivityLevelError() {
+        return activityLevelError;
+    }
+    public String getLocationError() {
+        return locationError;
+    }
+    public String getGenderError() {
+        return genderError;
+    }
+    public void setSpeciesError(String speciesError) {
+        this.speciesError = speciesError;
+    }
+    public void setBreedError(String breedError) {
+        this.breedError = breedError;
+    }
+    public void setMinAgeError(String minAgeError) {
+        this.minAgeError = minAgeError;
+    }
+    public void setMaxAgeError(String maxAgeError) {
+        this.maxAgeError = maxAgeError;
+    }
+    public void setActivityLevelError(String activityLevelError) {
+        this.activityLevelError = activityLevelError;
+    }
+    public void setLocationError(String locationError) {
+        this.locationError = locationError;
+    }
+    public void setGenderError(String genderError) {
+        this.genderError = genderError;
+    }
 
-    public String getError() {
-        return error;
-    }
-    public void setError(String error) {
-        this.error = error;
-    }
 }
