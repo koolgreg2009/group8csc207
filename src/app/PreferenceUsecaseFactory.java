@@ -1,7 +1,9 @@
 package app;
 
+import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.display_pets.DisplayPetsController;
 import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.preference.PreferenceController;
@@ -11,6 +13,8 @@ import use_case.preference.PreferenceInputBoundary;
 import use_case.preference.PreferenceInteractor;
 import use_case.preference.PreferenceOutputBoundary;
 import view.PreferenceView;
+
+import static app.DisplayPetsUseCaseFactory.createDisplayPetsUseCase;
 
 
 /**
@@ -49,9 +53,11 @@ public class PreferenceUsecaseFactory {
             LoggedInViewModel loggedInViewModel,
             PreferenceViewModel preferenceViewModel,
             UserDAOInterface userDAO,
-            DisplayPetsViewModel displayPetsViewModel) {
+            DisplayPetsViewModel displayPetsViewModel,
+            PetDAOInterface petDAO) {
         PreferenceController preferenceController = createPreferenceUseCase(viewManagerModel, loggedInViewModel, userDAO, displayPetsViewModel);
-        return new PreferenceView(preferenceViewModel, preferenceController, viewManagerModel, loggedInViewModel);
+        DisplayPetsController displayPetsController = createDisplayPetsUseCase(viewManagerModel, loggedInViewModel, userDAO, petDAO);
+        return new PreferenceView(preferenceViewModel, preferenceController, viewManagerModel, displayPetsController);
 
     }
 

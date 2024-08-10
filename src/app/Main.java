@@ -104,7 +104,7 @@ public class Main {
         views.add(profileView, profileView.viewName);
 
         PreferenceView preferenceView = PreferenceUsecaseFactory.create(viewManagerModel, loggedInViewModel,
-                preferenceViewModel, userDAO, displayPetsViewModel);
+                preferenceViewModel, userDAO, displayPetsViewModel, petDAO);
         views.add(preferenceView, preferenceView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);
