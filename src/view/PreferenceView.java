@@ -146,21 +146,16 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                         PreferenceState currentState = preferenceViewModel.getState();
                         currentState.setBreed(breedInputField.getText() + e.getKeyChar());
                         preferenceViewModel.setState(currentState);
-                        resetTimer();
+                        preferenceViewModel.createDelay();
 
                     }
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        resetTimer();
-
                     }
 
                     @Override
                     public void keyReleased(KeyEvent e) {
-                    }
-                    private void resetTimer(){
-                        preferenceViewModel.resetTimer();
                     }
                 });
 

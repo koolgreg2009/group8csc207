@@ -27,7 +27,6 @@ public class PreferenceViewModel extends ViewModel {
     public PreferenceViewModel() {
         super("preference");
     }
-    Timer breedTimer = new Timer(DELAY_MS, e -> fireTimePropertyChanged());
     // execute controller
     /**
      * Sets the state of the preference view model.
@@ -203,8 +202,10 @@ public class PreferenceViewModel extends ViewModel {
         }
         return newList;
     }
-    public void resetTimer(){
-        breedTimer.restart();
+    public void createDelay(){
+        Timer timer = new Timer(DELAY_MS, e -> fireTimePropertyChanged());
+        timer.setRepeats(false); // Make sure the timer only runs once
+        timer.start();
     }
 
 
