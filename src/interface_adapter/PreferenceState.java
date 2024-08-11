@@ -35,6 +35,7 @@ public class PreferenceState {
     private String activityLevelError = "";
     private String locationError = "";
     private String genderError = "";
+    private boolean interaction;
     private List<String> matchingStrings = new ArrayList<>();
     /**
      * Constructs a new LoginState with default values.
@@ -215,6 +216,12 @@ public class PreferenceState {
     }
     public void setMatchingStrings(List<String> matchingStrings) {
         this.matchingStrings = matchingStrings;
+    }
+    public void setInteraction(boolean interaction) {
+        this.interaction = interaction;
+    }
+    public boolean isInteraction() {
+        return interaction;
     }
 
 }

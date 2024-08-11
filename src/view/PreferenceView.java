@@ -147,6 +147,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                         currentState.setBreed(breedInputField.getText() + e.getKeyChar());
                         preferenceViewModel.setState(currentState);
                         preferenceViewModel.createDelay();
+                        preferenceViewModel.userInteracted();
 
                     }
 
@@ -238,8 +239,8 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
         @Override
     public void propertyChange(PropertyChangeEvent evt) {
+            PreferenceState state = (PreferenceState) evt.getNewValue();
             if ("clear".equals(evt.getPropertyName())) {
-                PreferenceState state = (PreferenceState) evt.getNewValue();
                 speciesComboBox.setSelectedItem(state.getSpecies());
                 breedInputField.setText(state.getBreed());
                 minAgeInputField.setText(state.getMinAge());
@@ -250,7 +251,8 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
             } else if ("matches".equals(evt.getPropertyName())) {
                 updateBreedPopup(breedInputField, breedPopupMenu);
             } else if("time".equals(evt.getPropertyName())) {
-                getMatchingController.execute(preferenceViewModel.BREED_KEY, breedInputField.getText());
+                if(state.isInteraction()){
+                    getMatchingController.execute(preferenceViewModel.BREED_KEY, breedInputField.getText());}
             }
         }
     private void updateErrorView() {

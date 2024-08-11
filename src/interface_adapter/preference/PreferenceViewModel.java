@@ -204,10 +204,15 @@ public class PreferenceViewModel extends ViewModel {
     }
     public void createDelay(){
         Timer timer = new Timer(DELAY_MS, e -> fireTimePropertyChanged());
-        timer.setRepeats(false); // Make sure the timer only runs once
+        timer.setRepeats(false);
         timer.start();
     }
-
+    public void userInteracted(){
+        state.setInteraction(true);
+        Timer timer = new Timer(DELAY_MS, e -> state.setInteraction(false));
+        timer.setRepeats(false);
+        timer.start();
+    }
 
 }
 
