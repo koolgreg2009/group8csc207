@@ -4,6 +4,7 @@ import interface_adapter.PreferenceState;
 import interface_adapter.SessionManager;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.display_pets.DisplayPetsController;
+import interface_adapter.get_matching.GetMatchingController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferenceViewModel;
@@ -16,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
@@ -26,13 +28,10 @@ import java.util.Arrays;
  */
 public class PreferenceView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    /**
-     * The name of this view
-     */
     public final String viewName = "preference";
     private final PreferenceViewModel preferenceViewModel;
     private final DisplayPetsController displayPetsController;
-
+    private final GetMatchingController getMatchingController;
 
     private final JComboBox<String> speciesComboBox;
     private final JComboBox<String> activityLevelComboBox;
@@ -54,22 +53,26 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     private final JButton clear;
     private final PreferenceController preferenceController;
 
+    private static final int DELAY_MS = 700;
+    private final JPopupMenu breedPopupMenu = new JPopupMenu();
+
 
     /**
      * Constructs a PreferenceView object.
      *
      * @param preferenceViewModel The PreferenceViewModel associated with this view.
      * @param controller The PreferenceController for handling user actions.
-     * @param viewManagerModel The ViewManagerModel for managing views.
+     * @param getMatchingController controller for finding matching strings.
      * @param displayPetsController The displayPetsController to refresh pets.
      */
     public PreferenceView(PreferenceViewModel preferenceViewModel, PreferenceController controller,
-                          ViewManagerModel viewManagerModel, DisplayPetsController displayPetsController) {
+                          GetMatchingController getMatchingController, DisplayPetsController displayPetsController) {
 
         this.preferenceController = controller;
         this.preferenceViewModel = preferenceViewModel;
         this.preferenceViewModel.addPropertyChangeListener(this);
         this.displayPetsController = displayPetsController;
+        this.getMatchingController = getMatchingController;
 
         JLabel title = new JLabel("Preference Screen: If no preference leave blank");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -78,10 +81,10 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         speciesComboBox = new JComboBox<>(preferenceViewModel.getSpeciesOptions().toArray(new String[0]));
         activityLevelComboBox = new JComboBox<>(preferenceViewModel.getActivityLevelOptions().toArray(new String[0]));
         genderComboBox = new JComboBox<>(preferenceViewModel.getGenderOptions().toArray(new String[0]));
-
+        breedPopupMenu.setInvoker(breedInputField);
         LabelTextPanel speciesInfo = new LabelTextPanel(new JLabel("Species:"), speciesComboBox);
         LabelTextPanel breedsInfo = new LabelTextPanel(
-                new JLabel("Breeds: separate each breed with a comma and a single space"), breedInputField);
+                new JLabel("Breed: "), breedInputField);
         LabelTextPanel minAgeInfo = new LabelTextPanel(
                 new JLabel("Minimum Age: enter number"), minAgeInputField);
         LabelTextPanel maxAgeInfo = new LabelTextPanel(
@@ -143,14 +146,21 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                         PreferenceState currentState = preferenceViewModel.getState();
                         currentState.setBreed(breedInputField.getText() + e.getKeyChar());
                         preferenceViewModel.setState(currentState);
+                        resetTimer();
+
                     }
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        resetTimer();
+
                     }
 
                     @Override
                     public void keyReleased(KeyEvent e) {
+                    }
+                    private void resetTimer(){
+                        preferenceViewModel.resetTimer();
                     }
                 });
 
@@ -208,23 +218,6 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                     }
                 });
 
-//        genderInputField.addKeyListener(
-//                new KeyListener() {
-//                    @Override
-//                    public void keyTyped(KeyEvent e) {
-//                        PreferenceState currentState = preferenceViewModel.getState();
-//                        currentState.setGender(genderInputField.getText() + e.getKeyChar());
-//                        preferenceViewModel.setState(currentState);
-//                    }
-//
-//                    @Override
-//                    public void keyPressed(KeyEvent e) {
-//                    }
-//
-//                    @Override
-//                    public void keyReleased(KeyEvent e) {
-//                    }
-//                });
 
         this.add(title);
         this.add(speciesInfo);
@@ -259,6 +252,10 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                 locationInputField.setText(state.getLocation());
                 genderComboBox.setSelectedItem(state.getGender());
                 activityLevelComboBox.setSelectedItem(state.getActivityLevel());
+            } else if ("matches".equals(evt.getPropertyName())) {
+                updateBreedPopup(breedInputField, breedPopupMenu);
+            } else if("time".equals(evt.getPropertyName())) {
+                getMatchingController.execute(preferenceViewModel.BREED_KEY, breedInputField.getText());
             }
         }
     private void updateErrorView() {
@@ -268,6 +265,34 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         breedErrorField.setText(state.getBreedError());
         locationErrorField.setText(state.getLocationError());
 
+    }
+    private void updateBreedPopup(JTextField textField, JPopupMenu popupMenu) {
+        popupMenu.removeAll();
+        String input = textField.getText();
+        if (input.isEmpty()) {
+            popupMenu.setVisible(false);
+        } else {
+            PreferenceState state = preferenceViewModel.getState();
+            List<String> matchingStrings = state.getMatchingStrings();
+            if (!matchingStrings.isEmpty()) {
+                for (String option : matchingStrings) {
+                    JMenuItem item = new JMenuItem(option);
+                    item.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            SwingUtilities.invokeLater(() -> {
+                                textField.setText(option);
+                                popupMenu.setVisible(false);
+                            });
+                        }
+                    });
+                    popupMenu.add(item);
+                }
+                popupMenu.show(textField, 0, textField.getHeight());
+            } else {
+                popupMenu.setVisible(false);
+            }
+        }
     }
 
 }
