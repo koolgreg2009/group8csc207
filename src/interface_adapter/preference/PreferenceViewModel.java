@@ -24,6 +24,9 @@ public class PreferenceViewModel extends ViewModel {
     private final List<String> speciesOptions = Arrays.asList("","Cat");
     private final List<String> activityLevelOptions = Arrays.asList("","Not Active", "Slightly Active", "Moderately Active", "Highly Active");
     private final List<String> genderOptions = Arrays.asList("","Male", "Female");
+    private Timer delayTimer;
+    private Timer interactionTimer;
+
     public PreferenceViewModel() {
         super("preference");
     }
@@ -202,17 +205,27 @@ public class PreferenceViewModel extends ViewModel {
         }
         return newList;
     }
-    public void createDelay(){
-        Timer timer = new Timer(DELAY_MS, e -> fireTimePropertyChanged());
-        timer.setRepeats(false);
-        timer.start();
+    public void createDelay() {
+        if (delayTimer != null && delayTimer.isRunning()) {
+            delayTimer.stop();
+        }
+        delayTimer = new Timer(DELAY_MS, e -> fireTimePropertyChanged());
+        delayTimer.setRepeats(false);
+        delayTimer.start();
     }
-    public void userInteracted(){
+
+    public void userInteracted() {
         state.setInteraction(true);
-        Timer timer = new Timer(DELAY_MS, e -> state.setInteraction(false));
-        timer.setRepeats(false);
-        timer.start();
+
+        if (interactionTimer != null && interactionTimer.isRunning()) {
+            interactionTimer.stop();
+        }
+
+        interactionTimer = new Timer(DELAY_MS, e -> state.setInteraction(false));
+        interactionTimer.setRepeats(false);
+        interactionTimer.start();
     }
+
 
 }
 
