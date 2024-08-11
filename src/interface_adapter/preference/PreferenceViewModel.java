@@ -2,9 +2,9 @@ package interface_adapter.preference;
 
 import interface_adapter.PreferenceState;
 import interface_adapter.ViewModel;
-import interface_adapter.login.LoginState;
 
 
+import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -16,6 +16,8 @@ public class PreferenceViewModel extends ViewModel {
     /** The label for the login button. */
     public final String SAVE_BUTTON_LABEL = "Save Preferences";
     public final String CLEAR_BUTTON_LABEL = "Clear Preferences";
+    public final String BREED_KEY = "breeds";
+    private static final int DELAY_MS = 1000;
     /** The current state of the login view. */
     private PreferenceState state = new PreferenceState();
 
@@ -44,6 +46,12 @@ public class PreferenceViewModel extends ViewModel {
         support.firePropertyChange("clear", null, this.state);
     }
 
+    public void fireMatchPropertyChanged() {
+        support.firePropertyChange("matches", null, this.state);
+    }
+    public void fireTimePropertyChanged() {
+        support.firePropertyChange("time", null, this.state);
+    }
     /**
      * Adds a property change listener to be notified of changes in the preference
      * state.
@@ -195,6 +203,24 @@ public class PreferenceViewModel extends ViewModel {
         return newList;
     }
 
+    /**
+     * Timer to track fixed time interval of DELAY_MS between user input
+     */
+    public void createDelay(){
+        Timer timer = new Timer(DELAY_MS, e -> fireTimePropertyChanged());
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    /**
+     * Timer to track time interval between each user interaction
+     */
+    public void userInteracted(){
+        state.setInteraction(true);
+        Timer timer = new Timer(DELAY_MS, e -> state.setInteraction(false));
+        timer.setRepeats(false);
+        timer.start();
+    }
 
 }
 
