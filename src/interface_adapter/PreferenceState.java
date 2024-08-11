@@ -1,5 +1,8 @@
 package interface_adapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents the state of the login view model, including user credentials
  * and any associated errors. This class encapsulates the data needed for
@@ -32,6 +35,8 @@ public class PreferenceState {
     private String activityLevelError = "";
     private String locationError = "";
     private String genderError = "";
+    private boolean interaction;
+    private List<String> matchingStrings = new ArrayList<>();
     /**
      * Constructs a new LoginState with default values.
      */
@@ -205,6 +210,18 @@ public class PreferenceState {
     }
     public void setGenderError(String genderError) {
         this.genderError = genderError;
+    }
+    public List<String> getMatchingStrings() {
+        return matchingStrings;
+    }
+    public void setMatchingStrings(List<String> matchingStrings) {
+        this.matchingStrings = matchingStrings;
+    }
+    public void setInteraction(boolean interaction) {
+        this.interaction = interaction;
+    }
+    public boolean isInteraction() {
+        return interaction;
     }
 
 }

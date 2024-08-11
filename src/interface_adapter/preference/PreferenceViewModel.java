@@ -27,7 +27,7 @@ public class PreferenceViewModel extends ViewModel {
     public PreferenceViewModel() {
         super("preference");
     }
-
+    // execute controller
     /**
      * Sets the state of the preference view model.
      *
@@ -202,19 +202,11 @@ public class PreferenceViewModel extends ViewModel {
         }
         return newList;
     }
-
-    /**
-     * Timer to track fixed time interval of DELAY_MS between user input
-     */
     public void createDelay(){
         Timer timer = new Timer(DELAY_MS, e -> fireTimePropertyChanged());
         timer.setRepeats(false);
         timer.start();
     }
-
-    /**
-     * Timer to track time interval between each user interaction
-     */
     public void userInteracted(){
         state.setInteraction(true);
         Timer timer = new Timer(DELAY_MS, e -> state.setInteraction(false));
