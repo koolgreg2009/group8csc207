@@ -177,7 +177,7 @@ public class FilePetDAO implements PetDAOInterface {
         String phoneNum = orgData.has("phone") ? orgData.get("phone").asText().replaceAll("\\s+", "") : "N/A";
         int age = petNode.get("attributes").has("ageString") ? parseAgeString(petNode.get("attributes").get("ageString").asText()) : 0;
         String breed = petNode.get("attributes").get("breedPrimary").asText();
-        String desc =  petNode.get("attributes").has("descriptionText") ? petNode.get("attributes").get("descriptionText").asText() : "N/A";
+        String desc =  petNode.get("attributes").has("descriptionText") ? removeHTML(petNode.get("attributes").get("descriptionText").asText()) : "N/A";
         String activityLevel = petNode.get("attributes").has("activityLevel")
                 ? petNode.get("attributes").get("activityLevel").asText()
                 : "N/A";
@@ -221,4 +221,7 @@ public class FilePetDAO implements PetDAOInterface {
 	public ArrayList<Pet> getAvailablePets() {
 		return pets.values().stream().filter(pet -> pet.isAvailable()).collect(Collectors.toCollection(ArrayList::new));
 	}
+    private String removeHTML(String text){
+        return text.replace("&nbsp;", "").replace("&#39;", "'").replace("&amp;", "&").replace("&quot;", "\"");
+    }
 }
