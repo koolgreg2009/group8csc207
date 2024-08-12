@@ -222,6 +222,6 @@ public class FilePetDAO implements PetDAOInterface {
 		return pets.values().stream().filter(pet -> pet.isAvailable()).collect(Collectors.toCollection(ArrayList::new));
 	}
     private String removeHTML(String text){
-        return text.replace("&nbsp;", "").replace("&#39;", "'").replace("&amp;", "&").replace("&quot;", "\"");
+        return text.replace("&nbsp;", " ").replace("&#39;", "'").replace("&amp;", "&").replace("&quot;", "\"");
     }
 }
