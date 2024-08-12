@@ -1,6 +1,5 @@
 package interface_adapter.preference;
 
-import interface_adapter.PreferenceState;
 import interface_adapter.ViewModel;
 
 

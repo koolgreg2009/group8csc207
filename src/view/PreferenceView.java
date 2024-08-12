@@ -1,11 +1,9 @@
 package view;
 
-import interface_adapter.PreferenceState;
+import interface_adapter.preference.PreferenceState;
 import interface_adapter.SessionManager;
-import interface_adapter.ViewManagerModel;
 import interface_adapter.display_pets.DisplayPetsController;
 import interface_adapter.get_matching.GetMatchingController;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferenceViewModel;
 
@@ -17,9 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 
 /**
@@ -52,8 +48,6 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     private final JButton save;
     private final JButton clear;
     private final PreferenceController preferenceController;
-
-    private static final int DELAY_MS = 700;
     private final JPopupMenu breedPopupMenu = new JPopupMenu();
 
 
