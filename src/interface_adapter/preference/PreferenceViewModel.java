@@ -1,7 +1,6 @@
 package interface_adapter.preference;
 
 import interface_adapter.ViewModel;
-import view.PreferenceTextView;
 
 
 import javax.swing.*;
@@ -17,7 +16,7 @@ public class PreferenceViewModel extends ViewModel {
     public final String SAVE_BUTTON_LABEL = "Save Preferences";
     public final String CLEAR_BUTTON_LABEL = "Clear Preferences";
     public final String BREED_KEY = "breeds";
-    public final String LOCATION_KEY = "location";
+    public final String LOCATION_KEY = "locations";
 
     private static final int DELAY_MS = 1000;
     /** The current state of the login view. */
@@ -55,8 +54,8 @@ public class PreferenceViewModel extends ViewModel {
     public void fireMatchPropertyChanged() {
         support.firePropertyChange("matches", null, this.state);
     }
-    public void fireTimePropertyChanged() {
-        support.firePropertyChange("time", null, this.state);
+    public void fireTimePropertyChanged(String key) {
+        support.firePropertyChange(key, null, this.state);
     }
     /**
      * Adds a property change listener to be notified of changes in the preference
@@ -151,7 +150,6 @@ public class PreferenceViewModel extends ViewModel {
         } else {
             state.setMaxAgeError("");
             state.setMaxAge("0");
-
         }
         return true;
     }
@@ -187,16 +185,34 @@ public class PreferenceViewModel extends ViewModel {
         }
         return newList;
     }
-    public void createDelay() {
+    public void handleUserInput(char keyChar, String key){
+        PreferenceState currentState = getState();
+        switch(key){
+            case BREED_KEY:
+                currentState.setBreed(currentState.getBreed() + keyChar);
+                break;
+            case LOCATION_KEY:
+                currentState.setLocation(currentState.getLocation() + keyChar);
+                break;
+        }
+        setState(currentState);
+        createDelay(key);
+        userInteracted();
+    }
+
+    private void createDelay(String key) {
         if (delayTimer != null && delayTimer.isRunning()) {
             delayTimer.stop();
         }
-        delayTimer = new Timer(DELAY_MS, e -> fireTimePropertyChanged());
-        delayTimer.setRepeats(false);
+        delayTimer = new Timer(DELAY_MS, e -> {
+            if (state.isInteraction()) {
+                fireTimePropertyChanged(key);
+            }
+        });        delayTimer.setRepeats(false);
         delayTimer.start();
     }
 
-    public void userInteracted() {
+    private void userInteracted() {
         state.setInteraction(true);
 
         if (interactionTimer != null && interactionTimer.isRunning()) {

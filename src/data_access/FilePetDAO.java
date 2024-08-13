@@ -125,7 +125,7 @@ public class FilePetDAO implements PetDAOInterface {
 
     public void fetchAndStorePets() throws IOException {
         Request request = new Request.Builder()
-                .url(BASE_URL + "/public/animals/search/available/cats")
+                .url(BASE_URL + "/public/animals/search/available/cats?limit=100")
                 .addHeader("Authorization", API_KEY)
                 .addHeader("Content-Type", "application/vnd.api+json")
                 .build();
@@ -135,8 +135,10 @@ public class FilePetDAO implements PetDAOInterface {
                 String responseBody = response.body().string();
                 JsonNode root = objectMapper.readTree(responseBody);
                 JsonNode data = root.get("data");
+                JsonNode included = root.get("included");
+                Map<String, String> locationMap = parseLocations(included);
                 for (JsonNode petNode : data) {
-                    Pet pet = parsePet(petNode);
+                    Pet pet = parsePet(petNode, locationMap);
                     if (pet != null) {
                         save(pet);
                     }
@@ -163,8 +165,26 @@ public class FilePetDAO implements PetDAOInterface {
         }
     }
 
+    private Map<String, String> parseLocations(JsonNode included) {
+        Map<String, String> locationMap = new HashMap<>();
+
+        if (included.isArray()) {
+            for (JsonNode item : included) {
+                if ("locations".equals(item.path("type").asText())) {
+                    String locationId = item.path("id").asText();
+                    String cityState = item.path("attributes").path("citystate").asText();
+                    locationMap.put(locationId, cityState);
+                }
+            }
+        }
+
+        return locationMap;
+    }
+
     @Override
-    public Pet parsePet(JsonNode petNode) throws IOException {
+    public Pet parsePet(JsonNode petNode, Map<String, String> locationMap) throws IOException {
+        String locationId = petNode.path("relationships").path("locations").path("data").get(0).path("id").asText();
+        String location = locationMap.getOrDefault(locationId, "Unknown Location");
         String orgId = petNode.get("relationships").get("orgs").get("data").get(0).get("id").asText();
         String orgUrl = BASE_URL + "/public/orgs/" + orgId;
         String orgResponseBody = fetchOrg(orgUrl);
@@ -173,7 +193,7 @@ public class FilePetDAO implements PetDAOInterface {
         JsonNode orgData = dataNode.get(0).get("attributes");
         String owner = orgData.get("name").asText();
         String email = orgData.has("email") ? orgData.get("email").asText().replaceAll("\\s+", "") : "N/A";
-        String location = orgData.get("citystate").asText();
+//        String location = orgData.get("citystate").asText(); // i want to get the actual pet location instead of the org
         String phoneNum = orgData.has("phone") ? orgData.get("phone").asText().replaceAll("\\s+", "") : "N/A";
         int age = petNode.get("attributes").has("ageString") ? parseAgeString(petNode.get("attributes").get("ageString").asText()) : 0;
         String breed = petNode.get("attributes").get("breedPrimary").asText();
@@ -197,7 +217,7 @@ public class FilePetDAO implements PetDAOInterface {
                 gender,
                 activityLevel,
                 desc,
-                location,
+                location, // want to change
                 true,
                 name,
                 parsedUrl

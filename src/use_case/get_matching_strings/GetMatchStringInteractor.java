@@ -18,7 +18,6 @@ public class GetMatchStringInteractor implements GetMatchingStringInputBoundary{
         List<String> filtered = new ArrayList<>();
         List<String> allString = infoDAO.getData(inputData.getKey());
         for (String string : allString) {
-
             if (string.toLowerCase().startsWith(inputData.getInput().toLowerCase()) && !string.equals(inputData.getInput())) {
                 filtered.add(string);
             }
