@@ -100,12 +100,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         if (evt.getSource().equals(signUp)) {
                             SignupState currentState = signupViewModel.getState();
                             signupController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword(),
-                                    currentState.getRepeatPassword(),
-                                    currentState.getName(),
-                                    currentState.getEmail(),
-                                    currentState.getPhone()
+                                    currentState.getUsername().trim(),
+                                    currentState.getPassword().trim(),
+                                    currentState.getRepeatPassword().trim(),
+                                    currentState.getName().trim(),
+                                    currentState.getEmail().trim(),
+                                    currentState.getPhone().trim()
                             );
 
                         }
