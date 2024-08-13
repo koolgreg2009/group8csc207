@@ -118,12 +118,12 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
                     if (preferenceViewModel.validatePreferences()) {
                         preferenceController.execute(
-                        preferenceState.getSpecies(),
-                                preferenceViewModel.capitalizeFirstLetter((preferenceState.getBreed()).split(", ")),
+                                preferenceState.getSpecies(),
+                                preferenceViewModel.capitalizeFirstLetter((preferenceState.getBreed().trim()).split(", ")),
                                 Integer.parseInt(preferenceState.getMinAge()),
                                 Integer.parseInt(preferenceState.getMaxAge()),
                                 preferenceState.getActivityLevel(),
-                                preferenceState.getLocation(),
+                                preferenceState.getLocation().trim(),
                                 preferenceState.getGender());
 
                         displayPetsController.execute(SessionManager.getCurrentUser());
