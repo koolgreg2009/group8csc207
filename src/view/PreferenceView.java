@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.login.LoginState;
 import interface_adapter.preference.PreferenceState;
 import interface_adapter.SessionManager;
 import interface_adapter.display_pets.DisplayPetsController;
@@ -21,6 +22,9 @@ import java.util.List;
 /**
  * The PreferenceView class represents the preference screen where users can input and save their preferences.
  * It extends {@code JPanel} and implements {@code ActionListener} and {@code PropertyChangeListener}.
+ *
+ * @version 1.0
+ * @since 2024-08-13
  */
 public class PreferenceView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -33,13 +37,13 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     private final JComboBox<String> activityLevelComboBox;
     private final JComboBox<String> genderComboBox;
 
-    final JTextField breedInputField = new JTextField(30);
+    final JTextField breedInputField = new JTextField(15);
     private final JLabel breedErrorField = new JLabel();
 
-    final JTextField minAgeInputField = new JTextField(8);
+    final JTextField minAgeInputField = new JTextField(5);
     private final JLabel minAgeErrorField = new JLabel();
 
-    final JTextField maxAgeInputField = new JTextField(8);
+    final JTextField maxAgeInputField = new JTextField(5);
     private final JLabel maxAgeErrorField = new JLabel();
 
     final JTextField locationInputField = new JTextField(15);
@@ -72,12 +76,12 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         JLabel title = new JLabel("Preference Screen: If no preference leave blank");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-
         speciesComboBox = new JComboBox<>(preferenceViewModel.getSpeciesOptions().toArray(new String[0]));
         activityLevelComboBox = new JComboBox<>(preferenceViewModel.getActivityLevelOptions().toArray(new String[0]));
         genderComboBox = new JComboBox<>(preferenceViewModel.getGenderOptions().toArray(new String[0]));
         breedPopupMenu.setInvoker(breedInputField);
         locationPopupMenu.setInvoker(locationInputField);
+
         LabelTextPanel speciesInfo = new LabelTextPanel(new JLabel("Species:"), speciesComboBox);
         LabelTextPanel breedsInfo = new LabelTextPanel(
                 new JLabel("Breed: "), breedInputField);
@@ -90,7 +94,6 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                 new JLabel("Location"), locationInputField);
         LabelTextPanel genderInfo = new LabelTextPanel(new JLabel("Gender:"), genderComboBox);
 
-
         JPanel buttons = new JPanel();
         save = new JButton(preferenceViewModel.SAVE_BUTTON_LABEL);
         clear = new JButton(preferenceViewModel.CLEAR_BUTTON_LABEL);
@@ -98,6 +101,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         buttons.add(save);
         ComponentPair breedComponents = new ComponentPair(breedInputField, breedPopupMenu);
         ComponentPair locationComponents = new ComponentPair(locationInputField, locationPopupMenu);
+
         save.addActionListener(
                 evt -> {
                     String selectedSpecies = (String) speciesComboBox.getSelectedItem();
@@ -111,7 +115,8 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                     preferenceState.setActivityLevel(selectedActivityLevel);
                     preferenceState.setLocation(locationInputField.getText());
                     preferenceState.setGender(selectedGender);
-                    if (preferenceViewModel.validatePreferences()){
+
+                    if (preferenceViewModel.validatePreferences()) {
                         preferenceController.execute(
                         preferenceState.getSpecies(),
                                 preferenceViewModel.capitalizeFirstLetter((preferenceState.getBreed()).split(", ")),
@@ -122,12 +127,13 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                                 preferenceState.getGender());
 
                         displayPetsController.execute(SessionManager.getCurrentUser());
-                    } else{
+                    } else {
                         updateErrorView();
                     }
 
                 }
         );
+
         clear.addActionListener(
                 evt -> {
                     preferenceViewModel.clearState();
@@ -135,31 +141,48 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                 }
         );
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        KeyListener commonKeyListener = new KeyListener() {
+
+        speciesComboBox.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                Object source = e.getSource();
-                String key = "";
-                if (source == breedInputField) {
-                    key = preferenceViewModel.BREED_KEY;
-                    currentComponent = breedComponents;
-                } else if (source == locationInputField) {
-                    key = preferenceViewModel.LOCATION_KEY;
-                    currentComponent = locationComponents;
-                }
-                preferenceViewModel.handleUserInput(e.getKeyChar(), key);
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {}
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    breedInputField.requestFocus();
+                }
+            }
 
             @Override
             public void keyReleased(KeyEvent e) {
             }
-        };
+        });
 
-        breedInputField.addKeyListener(commonKeyListener);
-        locationInputField.addKeyListener(commonKeyListener);
+        breedInputField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Object source = e.getSource();
+                String key = "";
+                key = preferenceViewModel.BREED_KEY;
+                currentComponent = breedComponents;
+                preferenceViewModel.handleUserInput(e.getKeyChar(), key);
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    minAgeInputField.requestFocus();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+
+        });
+
         minAgeInputField.addKeyListener(
                 new KeyListener() {
                     @Override
@@ -171,6 +194,9 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            maxAgeInputField.requestFocus();
+                        }
                     }
 
                     @Override
@@ -189,6 +215,9 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            activityLevelComboBox.requestFocus();
+                        }
                     }
 
                     @Override
@@ -196,28 +225,66 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                     }
                 });
 
-//        locationInputField.addKeyListener(
-//                new KeyListener() {
-//                    @Override
-//                    public void keyTyped(KeyEvent e) {
-//                        PreferenceState currentState = preferenceViewModel.getState();
-//                        currentState.setLocation(locationInputField.getText() + e.getKeyChar());
-//                        preferenceViewModel.setState(currentState);
-//                    }
-//
-//                    @Override
-//                    public void keyPressed(KeyEvent e) {
-//                    }
-//
-//                    @Override
-//                    public void keyReleased(KeyEvent e) {
-//                    }
-//                });
+        activityLevelComboBox.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
 
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    locationInputField.requestFocus();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        locationInputField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Object source = e.getSource();
+                String key = "";
+                key = preferenceViewModel.LOCATION_KEY;
+                currentComponent = locationComponents;
+                preferenceViewModel.handleUserInput(e.getKeyChar(), key);
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    genderComboBox.requestFocus();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+
+        });
+
+        genderComboBox.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    save.doClick();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
 
         this.add(title);
         this.add(speciesInfo);
-//        this.add(speciesErrorField);
         this.add(breedErrorField);
         this.add(breedsInfo);
         this.add(minAgeErrorField);
@@ -225,21 +292,20 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         this.add(maxAgeErrorField);
         this.add(maxAgeInfo);
         this.add(activityLevelInfo);
-//        this.add(activityLevelErrorField);
         this.add(locationErrorField);
         this.add(locationInfo);
         this.add(genderInfo);
-//        this.add(genderErrorField);
         this.add(buttons);
     }
 
     @Override
-        public void actionPerformed(ActionEvent evt) {
-        }
+    public void actionPerformed(ActionEvent evt) {
+    }
 
-        @Override
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
             PreferenceState state = (PreferenceState) evt.getNewValue();
+
             if ("clear".equals(evt.getPropertyName())) {
                 speciesComboBox.setSelectedItem(state.getSpecies());
                 breedInputField.setText(state.getBreed());
@@ -251,12 +317,13 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
             } else if ("matches".equals(evt.getPropertyName())) {
                 updateBreedPopup(currentComponent);
             } else if(preferenceViewModel.BREED_KEY.equals(evt.getPropertyName())) {
-                getMatchingController.execute(preferenceViewModel.BREED_KEY, breedInputField.getText());}
-            else if (preferenceViewModel.LOCATION_KEY.equals(evt.getPropertyName())) {
+                getMatchingController.execute(preferenceViewModel.BREED_KEY, breedInputField.getText());
+            } else if (preferenceViewModel.LOCATION_KEY.equals(evt.getPropertyName())) {
                 getMatchingController.execute(preferenceViewModel.LOCATION_KEY, locationInputField.getText());
             }
 
         }
+
     private void updateErrorView() {
         PreferenceState state = preferenceViewModel.getState();
         minAgeErrorField.setText(state.getMinAgeError());
@@ -265,6 +332,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         locationErrorField.setText(state.getLocationError());
 
     }
+
     private void updateBreedPopup(ComponentPair currentComponent) {
         JPopupMenu popupMenu = currentComponent.getPopupMenu();
         JTextField textField = currentComponent.getTextField();
