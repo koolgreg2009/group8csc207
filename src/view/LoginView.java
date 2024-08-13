@@ -16,6 +16,14 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * The LoginView class represents the UI for user login.
+ * It includes input fields for username, and password.
+ * It also includes buttons to sign up or login.
+ *
+ * @version 1.0
+ * @since 2024-08-13
+ */
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "log in";
@@ -61,7 +69,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
 
         logIn.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logIn)) {
@@ -97,11 +104,15 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
             @Override
             public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    passwordInputField.requestFocus();
+                }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
             }
+
         });
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -116,6 +127,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            logIn.doClick();
+                        }
                     }
 
                     @Override
