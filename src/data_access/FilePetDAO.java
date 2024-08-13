@@ -66,6 +66,11 @@ public class FilePetDAO implements PetDAOInterface {
         }
     }
 
+    /**
+     * Retrieves preference pets
+     * @param userPreference
+     * @return
+     */
     @Override
     public ArrayList<Pet> getPreferencePets(UserPreference userPreference) {
         ArrayList<Pet> matchingPets = new ArrayList<>();
@@ -78,37 +83,20 @@ public class FilePetDAO implements PetDAOInterface {
         return matchingPets;
     }
 
-    @Override
-    public boolean matchesPreference(Pet pet, UserPreference userPreference) {
-//        return isMatching(userPreference.getSpecies(), pet.getSpecies()) &&
-//                isMatching(userPreference.getBreeds(), pet.getBreed()) &&
-//                isInRange(userPreference.getMinAge(), userPreference.getMaxAge(), pet.getPetAge()) &&
-//                isMatching(userPreference.getActivityLevel(), pet.getActivityLevel()) &&
-//                isMatching(userPreference.getLocation(), pet.getLocation()) &&
-//                isMatching(userPreference.getGender(), pet.getGender()) &&
-//                pet.isAvailable();
-        if (!isMatching(userPreference.getSpecies(), pet.getSpecies())) {
-            return false;
-        }
-        if (!isMatching(userPreference.getBreeds(), pet.getBreed())) {
-            return false;
-        }
-        if (!isInRange(userPreference.getMinAge(), userPreference.getMaxAge(), pet.getPetAge())) {
-            return false;
-        }
-        if (!isMatching(userPreference.getActivityLevel(), pet.getActivityLevel())) {
-            return false;
-        }
-        if (!isMatching(userPreference.getLocation(), pet.getLocation())) {
-            return false;
-        }
-        if (!isMatching(userPreference.getGender(), pet.getGender())) {
-            return false;
-        }
-        if(!pet.isAvailable()){
-            return false;
-        }
-        return true;
+    /**
+     * Returns pets matching user preference
+     * @param pet
+     * @param userPreference
+     * @return
+     */
+    private boolean matchesPreference(Pet pet, UserPreference userPreference) {
+        return isMatching(userPreference.getSpecies(), pet.getSpecies()) &&
+                isMatching(userPreference.getBreeds(), pet.getBreed()) &&
+                isInRange(userPreference.getMinAge(), userPreference.getMaxAge(), pet.getPetAge()) &&
+                isMatching(userPreference.getActivityLevel(), pet.getActivityLevel()) &&
+                isMatching(userPreference.getLocation(), pet.getLocation()) &&
+                isMatching(userPreference.getGender(), pet.getGender()) &&
+                pet.isAvailable();
     }
 
     private boolean isMatching(String preference, String attribute) {
@@ -123,6 +111,10 @@ public class FilePetDAO implements PetDAOInterface {
         return (min == 0 || value >= min) && (max == 0 || value <= max);
     }
 
+    /**
+     * Calls rescuegroups API and retrieves 100 pets. Calls parsePet helper method to parse json pet and parselocations,
+     * @throws IOException
+     */
     public void fetchAndStorePets() throws IOException {
         Request request = new Request.Builder()
                 .url(BASE_URL + "/public/animals/search/available/cats?limit=100")
@@ -149,6 +141,12 @@ public class FilePetDAO implements PetDAOInterface {
         }
     }
 
+    /**
+     * Calls rescuegroups API to fetch organization details for contact information
+     * @param orgUrl
+     * @return
+     * @throws IOException
+     */
     private String fetchOrg(String orgUrl) throws IOException {
         Request orgRequest = new Request.Builder()
                 .url(orgUrl)
@@ -165,6 +163,11 @@ public class FilePetDAO implements PetDAOInterface {
         }
     }
 
+    /**
+     * Helper method for fetchAndStorePets
+     * @param included
+     * @return Map that maps ID to pet location
+     */
     private Map<String, String> parseLocations(JsonNode included) {
         Map<String, String> locationMap = new HashMap<>();
 
@@ -181,10 +184,16 @@ public class FilePetDAO implements PetDAOInterface {
         return locationMap;
     }
 
-    @Override
-    public Pet parsePet(JsonNode petNode, Map<String, String> locationMap) throws IOException {
-//        String locationId = petNode.path("relationships").path("locations").path("data").get(0).path("id").asText();
-//        String location = locationMap.getOrDefault(locationId, "Unknown Location");
+    /**
+     * Parses pet json into Pet entity following business rules
+     * @param petNode
+     * @param locationMap
+     * @return
+     * @throws IOException
+     */
+    private Pet parsePet(JsonNode petNode, Map<String, String> locationMap) throws IOException {
+        String locationId = petNode.path("relationships").path("locations").path("data").get(0).path("id").asText();
+        String location = locationMap.get(locationId).isEmpty() ? "N/A" : locationMap.get(locationId);
         String orgId = petNode.get("relationships").get("orgs").get("data").get(0).get("id").asText();
         String orgUrl = BASE_URL + "/public/orgs/" + orgId;
         String orgResponseBody = fetchOrg(orgUrl);
@@ -193,7 +202,6 @@ public class FilePetDAO implements PetDAOInterface {
         JsonNode orgData = dataNode.get(0).get("attributes");
         String owner = orgData.get("name").asText();
         String email = orgData.has("email") ? orgData.get("email").asText().replaceAll("\\s+", "") : "N/A";
-        String location = orgData.get("citystate").asText(); // i want to get the actual pet location instead of the org
         String phoneNum = orgData.has("phone") ? orgData.get("phone").asText().replaceAll("\\s+", "") : "N/A";
         int age = petNode.get("attributes").has("ageString") ? parseAgeString(petNode.get("attributes").get("ageString").asText()) : 0;
         String breed = petNode.get("attributes").get("breedPrimary").asText();
@@ -217,7 +225,7 @@ public class FilePetDAO implements PetDAOInterface {
                 gender,
                 activityLevel,
                 desc,
-                location, // want to change
+                location,
                 true,
                 name,
                 parsedUrl
@@ -237,8 +245,11 @@ public class FilePetDAO implements PetDAOInterface {
         return Integer.parseInt(split[0]);
     }
 
-	@Override
-	public ArrayList<Pet> getAvailablePets() {
+    /**
+     *
+     * @return All pets that are available
+     */
+	private ArrayList<Pet> getAvailablePets() {
 		return pets.values().stream().filter(pet -> pet.isAvailable()).collect(Collectors.toCollection(ArrayList::new));
 	}
     private String removeHTML(String text){

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import entity.Pet;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -33,18 +32,22 @@ public class FileApiInfoDAO implements APIInfoInterface{
         if (jsonFile.length() == 0) {
             getBreedInfo();
             getLocation();
-            save();
         }
-            TypeReference<HashMap<String, List<String>>> typeRef = new TypeReference<HashMap<String, List<String>>>() {};
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            objectMapper.registerModule(new JavaTimeModule());
-            data.putAll(objectMapper.readValue(jsonFile, typeRef));
+        TypeReference<HashMap<String, List<String>>> typeRef = new TypeReference<HashMap<String, List<String>>>() {};
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.registerModule(new JavaTimeModule());
+        data.putAll(objectMapper.readValue(jsonFile, typeRef));
 
     }
     @Override
-    public List<String> getData(String key){
+    public List<String> getData(String key) {
         return data.get(key);
     }
+
+    /**
+     * Retreives all breeds in rescuesAPI database
+     * @throws IOException
+     */
     @Override
     public void getBreedInfo() throws IOException {
         Request request = new Request.Builder()
@@ -70,6 +73,11 @@ public class FileApiInfoDAO implements APIInfoInterface{
 
         }
     }
+
+    /**
+     * Retrieves the 250 of cat locations in database
+     * @throws IOException
+     */
     public void getLocation() throws IOException {
         Request request = new Request.Builder()
                 .url(BASE_URL + "/public/animals/search/available/cats?limit=250")
@@ -87,7 +95,7 @@ public class FileApiInfoDAO implements APIInfoInterface{
                     for (JsonNode item : includedArray) {
                         if ("locations".equals(item.path("type").asText())) {
                             String cityState = item.path("attributes").path("citystate").asText();
-                            if (!Objects.equals(cityState, "")) {
+                            if (!Objects.equals(cityState, "") && !locations.contains(cityState)){
                                 locations.add(cityState);
                             }
                         }
@@ -104,7 +112,8 @@ public class FileApiInfoDAO implements APIInfoInterface{
         save();
 
     }
-    private void save() {
+    @Override
+    public void save() {
         try {
             objectMapper.writeValue(jsonFile, data);
         } catch (Exception ex) {
@@ -116,4 +125,3 @@ public class FileApiInfoDAO implements APIInfoInterface{
 
 
 }
-
