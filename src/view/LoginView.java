@@ -16,6 +16,14 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * The LoginView class represents the UI for user login.
+ * It includes input fields for username, and password.
+ * It also includes buttons to sign up or login.
+ *
+ * @version 1.0
+ * @since 2024-08-13
+ */
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "log in";
