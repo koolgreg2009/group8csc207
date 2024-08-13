@@ -131,6 +131,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            passwordInputField.requestFocus();
+                        }
                     }
 
                     @Override
@@ -149,7 +152,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            repeatPasswordInputField.requestFocus();
+                        }
                     }
 
                     @Override
@@ -169,6 +174,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            nameInputField.requestFocus();
+                        }
                     }
 
                     @Override
@@ -187,6 +195,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            emailInputField.requestFocus();
+                        }
                     }
 
                     @Override
@@ -205,6 +216,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            phoneInputField.requestFocus();
+                        }
                     }
 
                     @Override
@@ -223,6 +237,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            signUp.doClick();
+                        }
                     }
 
                     @Override
