@@ -11,10 +11,7 @@ import okhttp3.Response;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class FileApiInfoDAO implements APIInfoInterface{
@@ -34,22 +31,27 @@ public class FileApiInfoDAO implements APIInfoInterface{
                 .build();
         if (jsonFile.length() == 0) {
             getBreedInfo();
-            save();
+            getLocation();
         }
-            TypeReference<HashMap<String, List<String>>> typeRef = new TypeReference<HashMap<String, List<String>>>() {};
-            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            objectMapper.registerModule(new JavaTimeModule());
-            data.putAll(objectMapper.readValue(jsonFile, typeRef));
+        TypeReference<HashMap<String, List<String>>> typeRef = new TypeReference<HashMap<String, List<String>>>() {};
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.registerModule(new JavaTimeModule());
+        data.putAll(objectMapper.readValue(jsonFile, typeRef));
 
     }
     @Override
-    public List<String> getData(String key){
+    public List<String> getData(String key) {
         return data.get(key);
     }
+
+    /**
+     * Retreives all breeds in rescuesAPI database
+     * @throws IOException
+     */
     @Override
     public void getBreedInfo() throws IOException {
         Request request = new Request.Builder()
-                .url(BASE_URL + "/public/animals/breeds/search/cats?limit=77")
+                .url(BASE_URL + "/public/animals/breeds/search/cats?limit=250")
                 .addHeader("Authorization", API_KEY)
                 .addHeader("Content-Type", "application/vnd.api+json")
                 .build();
@@ -71,12 +73,47 @@ public class FileApiInfoDAO implements APIInfoInterface{
 
         }
     }
+
+    /**
+     * Retrieves the 250 of cat locations in database
+     * @throws IOException
+     */
+    public void getLocation() throws IOException {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "/public/animals/search/available/cats?limit=250")
+                .addHeader("Authorization", API_KEY)
+                .addHeader("Content-Type", "application/vnd.api+json")
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful() && response.body() != null) {
+                String responseBody = response.body().string();
+                JsonNode root = objectMapper.readTree(responseBody);
+                List<String> locations = new ArrayList<>();
+                JsonNode includedArray = root.path("included");
+                if (includedArray.isArray()) {
+                    for (JsonNode item : includedArray) {
+                        if ("locations".equals(item.path("type").asText())) {
+                            String cityState = item.path("attributes").path("citystate").asText();
+                            if (!Objects.equals(cityState, "") && !locations.contains(cityState)){
+                                locations.add(cityState);
+                            }
+                        }
+                    }
+                }
+                save("locations", locations);
+            } else {
+                throw new IOException("Animal search failed with HTTP code: " + response.code() + " and message: " + response.message());
+            }
+        }
+    }
     private void save(String key, List<String> breedNames){
         data.put(key, breedNames);
         save();
 
     }
-    private void save() {
+    @Override
+    public void save() {
         try {
             objectMapper.writeValue(jsonFile, data);
         } catch (Exception ex) {
@@ -88,4 +125,3 @@ public class FileApiInfoDAO implements APIInfoInterface{
 
 
 }
-
