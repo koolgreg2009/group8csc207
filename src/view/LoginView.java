@@ -61,7 +61,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
 
         logIn.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logIn)) {
@@ -97,11 +96,15 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
             @Override
             public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    passwordInputField.requestFocus();
+                }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
             }
+
         });
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -116,6 +119,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            logIn.doClick();
+                        }
                     }
 
                     @Override
