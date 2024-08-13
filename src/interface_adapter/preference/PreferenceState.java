@@ -37,6 +37,7 @@ public class PreferenceState {
     private String genderError = "";
     private boolean interaction;
     private List<String> matchingStrings = new ArrayList<>();
+
     /**
      * Constructs a new LoginState with default values.
      */
