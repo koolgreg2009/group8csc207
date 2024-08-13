@@ -51,10 +51,10 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
 
     /** UI components and layout. */
     JPanel pageBody = new JPanel();
-    final JButton notifs = new JButton();
-    final JButton myPreferences = new JButton();
-    final JButton logout = new JButton();
-    final JButton home = new JButton();
+    final JButton notifButton = new JButton();
+    final JButton prefButton = new JButton();
+    final JButton logoutButton = new JButton();
+    final JButton homeButton = new JButton();
     GroupLayout layout = new GroupLayout(this);
 
     /** Colors and fonts used in the UI. */
@@ -100,88 +100,109 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
         this.removeBookmarkController = removeBookmarkController;
         this.addBookmarkController = addBookmarkController;
 
-        bookmarkViewModel.addPropertyChangeListener(this);
+        // Header set up
+        JLabel title = new JLabel("Bookmark Screen");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel usernameInfo = new JLabel("Currently logged in: " + bookmarkViewModel.getLoggedInUser());
+        usernameInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel username = new JLabel();
 
-        setBackground(HEADER_COLOR);
+        // Button Panel set up
+        JPanel buttonPanel = new JPanel();
+        notifButton.setText(bookmarkViewModel.NOTIF_BUTTON_LABEL);
+        homeButton.setText(bookmarkViewModel.HOME_BUTTON_LABEL);
+        prefButton.setText(bookmarkViewModel.PREF_BUTTON_LABEL);
+        logoutButton.setText(bookmarkViewModel.LOGOUT_BUTTON_LABEL);
+        buttonPanel.add(notifButton);
+        buttonPanel.add(homeButton);
+        buttonPanel.add(prefButton);
+        buttonPanel.add(logoutButton);
 
-        notifsButtonDesign();
-        notifs.addActionListener(new ActionListener() {
+        // Overall layout set up
+        pageBody = new JPanel();
+        pageBody.setLayout(new GridLayout(0,3));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
+        this.add(usernameInfo);
+        this.add(username);
+        this.add(buttonPanel);
+        JScrollPane bodyScrollPane = new JScrollPane(pageBody);
+        this.add(bodyScrollPane);
+
+        notifButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 notifsActionPerformed(evt);
             }
         });
 
-        preferenceButtonDesign();
-        myPreferences.addActionListener(new ActionListener() {
+        prefButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 myPreferencesActionPerformed(evt);
             }
         });
 
-        logoutButtonDesign();
-        logout.addActionListener(new ActionListener() {
+        logoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 logoutActionPerformed(evt);
             }
         });
 
-        homeButtonDesign();
-        home.addActionListener(new ActionListener() {
+        homeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 homeActionPerformed(evt);
             }
         });
-
-        pageBody.setBackground(BACKGROUND_COLOR);
-        pageBody.setAutoscrolls(true);
-        pageBody.setLayout(new GridLayout(5, 4));
-
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(pageBody, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(home, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 604, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(myPreferences, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                                .addComponent(notifs, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                                .addComponent(logout, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
-                        .addContainerGap()));
-
-        layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {notifs, myPreferences, logout});
-
-        layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(notifs, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(home, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                        .addComponent(myPreferences, GroupLayout.PREFERRED_SIZE, 45,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(logout)))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pageBody, GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
-                        .addContainerGap())
-        );
-
-        layout.linkSize(SwingConstants.VERTICAL, new Component[] {notifs, myPreferences, logout});
+//
+//        pageBody.setBackground(BACKGROUND_COLOR);
+//        pageBody.setAutoscrolls(true);
+//        pageBody.setLayout(new GridLayout(5, 4));
+//
+//        this.setLayout(layout);
+//        layout.setHorizontalGroup(
+//                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                .addComponent(pageBody, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+//                        .addContainerGap()
+//                        .addComponent(home, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
+//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 604, Short.MAX_VALUE)
+//                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+//                                .addComponent(myPreferences, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+//                                .addComponent(notifs, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+//                                .addComponent(logout, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
+//                        .addContainerGap()));
+//
+//        layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {notifs, myPreferences, logout});
+//
+//        layout.setVerticalGroup(
+//                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+//                        .addContainerGap()
+//                        .addComponent(notifs, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                                .addComponent(home, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+//                                .addGroup(layout.createSequentialGroup()
+//                                        .addComponent(myPreferences, GroupLayout.PREFERRED_SIZE, 45,
+//                                                GroupLayout.PREFERRED_SIZE)
+//                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//                                        .addComponent(logout)))
+//                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//                        .addComponent(pageBody, GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+//                        .addContainerGap())
+//        );
+//
+//        layout.linkSize(SwingConstants.VERTICAL, new Component[] {notifs, myPreferences, logout});
     }
 
-    /**
-     * Configures the design of the notifications button.
-     */
-    private void notifsButtonDesign(){
-        notifs.setBackground(SIDE_BUTTON_COLOR);
-        notifs.setFont(SIDE_BUTTON_FONT); // NOI18N
-        notifs.setText(bookmarkViewModel.NOTIF_BUTTON_LABEL);
-        notifs.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-    }
+//    /**
+//     * Configures the design of the notifications button.
+//     */
+//    private void notifsButtonDesign(){
+//        notifs.setBackground(SIDE_BUTTON_COLOR);
+//        notifs.setFont(SIDE_BUTTON_FONT); // NOI18N
+//        notifs.setText(bookmarkViewModel.NOTIF_BUTTON_LABEL);
+//        notifs.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+//    }
 
     /**
      * Handles the action performed when the notifications button is clicked.
@@ -193,15 +214,15 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
         viewManagerModel.firePropertyChanged();
     }
 
-    /**
-     * Configures the design of the preferences button.
-     */
-    private void preferenceButtonDesign(){
-        myPreferences.setBackground(SIDE_BUTTON_COLOR);
-        myPreferences.setFont(SIDE_BUTTON_FONT); // NOI18N
-        myPreferences.setText(bookmarkViewModel.PREF_BUTTON_LABEL);
-        myPreferences.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-    }
+//    /**
+//     * Configures the design of the preferences button.
+//     */
+//    private void preferenceButtonDesign(){
+//        myPreferences.setBackground(SIDE_BUTTON_COLOR);
+//        myPreferences.setFont(SIDE_BUTTON_FONT); // NOI18N
+//        myPreferences.setText(bookmarkViewModel.PREF_BUTTON_LABEL);
+//        myPreferences.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+//    }
 
     /**
      * Handles the action performed when the preferences button is clicked.
@@ -212,16 +233,16 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
         viewManagerModel.setActiveView(preferenceViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
-
-    /**
-     * Configures the design of the logout button.
-     */
-    private void logoutButtonDesign(){
-        logout.setBackground(SIDE_BUTTON_COLOR);
-        logout.setFont(SIDE_BUTTON_FONT); // NOI18N
-        logout.setText(bookmarkViewModel.LOGOUT_BUTTON_LABEL);
-        logout.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-    }
+//
+//    /**
+//     * Configures the design of the logout button.
+//     */
+//    private void logoutButtonDesign(){
+//        logout.setBackground(SIDE_BUTTON_COLOR);
+//        logout.setFont(SIDE_BUTTON_FONT); // NOI18N
+//        logout.setText(bookmarkViewModel.LOGOUT_BUTTON_LABEL);
+//        logout.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+//    }
 
     /**
      * Handles the action performed when the logout button is clicked.
@@ -234,15 +255,15 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
         viewManagerModel.firePropertyChanged();
     }
 
-    /**
-     * Configures the design of the home button.
-     */
-    private void homeButtonDesign(){
-        home.setBackground(new Color(255, 153, 153));
-        home.setFont(new Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
-        home.setText(bookmarkViewModel.HOME_BUTTON_LABEL);
-        home.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-    }
+//    /**
+//     * Configures the design of the home button.
+//     */
+//    private void homeButtonDesign(){
+//        home.setBackground(new Color(255, 153, 153));
+//        home.setFont(new Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+//        home.setText(bookmarkViewModel.HOME_BUTTON_LABEL);
+//        home.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+//    }
 
     /**
      * Handles the action performed when the home button is clicked.
