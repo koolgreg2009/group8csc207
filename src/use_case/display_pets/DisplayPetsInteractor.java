@@ -9,6 +9,7 @@ import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import dto.PetDTO;
 import entity.Pet;
+import entity.preference.UserPreference;
 import entity.user.AdopterUser;
 import entity.user.User;
 
@@ -27,7 +28,8 @@ public class DisplayPetsInteractor implements DisplayPetsInputBoundary {
     public void execute(DisplayPetsInputData loggedInInputData) {
         String userName = loggedInInputData.getUserName();
         User user = userDAO.get(userName);
-		ArrayList<Pet> pets = petDAO.getPreferencePets(((AdopterUser)user).getPreferences());
+        UserPreference pref = ((AdopterUser)user).getPreferences();
+		ArrayList<Pet> pets = petDAO.getPreferencePets(pref);
 		List<PetDTO> petDtoList = pets == null ? new ArrayList<PetDTO>()
 				: pets.stream()
 						.map(pet -> new PetDTO(pet.getPetID(), pet.getName(), pet.getBreed(), pet.getGender(),

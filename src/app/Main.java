@@ -7,10 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import data_access.FilePetDAO;
-import data_access.FileUserDAO;
-import data_access.PetDAOInterface;
-import data_access.UserDAOInterface;
+import data_access.*;
 import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.get_notifis.NotifViewModel;
@@ -61,6 +58,7 @@ public class Main {
         // creating user and pet DAO to be used for all use cases. declared outside so compiler doesnt cry
         UserDAOInterface userDAO = null;
         PetDAOInterface petDAO = null;
+        APIInfoInterface infoDAO = null;
         try{
             userDAO = new FileUserDAO("./users.json");
         } catch (IOException e) {
@@ -68,6 +66,11 @@ public class Main {
         }
         try{
             petDAO = new FilePetDAO("./pets.json");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        try{
+            infoDAO = new FileApiInfoDAO("./data.json");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -104,7 +107,7 @@ public class Main {
         views.add(profileView, profileView.viewName);
 
         PreferenceView preferenceView = PreferenceUsecaseFactory.create(viewManagerModel, loggedInViewModel,
-                preferenceViewModel, userDAO, displayPetsViewModel);
+                preferenceViewModel, userDAO, displayPetsViewModel, petDAO, infoDAO);
         views.add(preferenceView, preferenceView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);

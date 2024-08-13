@@ -6,11 +6,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.display_pets.DisplayPetsController;
-import interface_adapter.display_pets.DisplayPetsPresenter;
 import interface_adapter.pet_bio.PetBioViewModel;
-import use_case.display_pets.DisplayPetsInputBoundary;
-import use_case.display_pets.DisplayPetsInteractor;
-import use_case.display_pets.DisplayPetsOutputBoundary;
 import view.PetDetailView;
 
 /**
@@ -39,7 +35,7 @@ public class PetDetailUseCaseFactory {
 									   LoggedInViewModel loggedInViewModel,
 									   UserDAOInterface userDAO,
 									   PetDAOInterface petDAO) {
-		DisplayPetsController displayPetsController = DisplayPetsUseCaseFactory.createLoginSuccessUseCase(viewManagerModel, loggedInViewModel,
+		DisplayPetsController displayPetsController = DisplayPetsUseCaseFactory.createDisplayPetsUseCase(viewManagerModel, loggedInViewModel,
 				userDAO, petDAO);
 		GetBreedController getBreedController = GetBreedUseCaseFactory.createGetBreedUseCase(petDetailViewModel);
 		return new PetDetailView(petDetailViewModel, displayPetsController, getBreedController);

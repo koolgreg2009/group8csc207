@@ -22,14 +22,14 @@ public class DisplayPetsUseCaseFactory {
 										 LoggedInViewModel loggedInViewModel,
 										 UserDAOInterface userDAO,
 										 PetDAOInterface petDAO) {
-		DisplayPetsController displayPetsController = createLoginSuccessUseCase(viewManagerModel, loggedInViewModel,
+		DisplayPetsController displayPetsController = createDisplayPetsUseCase(viewManagerModel, loggedInViewModel,
 				userDAO, petDAO);
 		return new DisplayPetsView(displayPetsViewModel, displayPetsController);
 
 	}
 
-	public static DisplayPetsController createLoginSuccessUseCase(ViewManagerModel viewManagerModel,
-																   LoggedInViewModel loggedInViewModel, UserDAOInterface userDAO, PetDAOInterface petDAO) {
+	public static DisplayPetsController createDisplayPetsUseCase(ViewManagerModel viewManagerModel,
+																 LoggedInViewModel loggedInViewModel, UserDAOInterface userDAO, PetDAOInterface petDAO) {
 
 		DisplayPetsOutputBoundary displayPetsOutputBoundary = new DisplayPetsPresenter(viewManagerModel,
 				loggedInViewModel);
