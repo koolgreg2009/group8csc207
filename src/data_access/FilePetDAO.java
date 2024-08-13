@@ -183,8 +183,8 @@ public class FilePetDAO implements PetDAOInterface {
 
     @Override
     public Pet parsePet(JsonNode petNode, Map<String, String> locationMap) throws IOException {
-        String locationId = petNode.path("relationships").path("locations").path("data").get(0).path("id").asText();
-        String location = locationMap.getOrDefault(locationId, "Unknown Location");
+//        String locationId = petNode.path("relationships").path("locations").path("data").get(0).path("id").asText();
+//        String location = locationMap.getOrDefault(locationId, "Unknown Location");
         String orgId = petNode.get("relationships").get("orgs").get("data").get(0).get("id").asText();
         String orgUrl = BASE_URL + "/public/orgs/" + orgId;
         String orgResponseBody = fetchOrg(orgUrl);
@@ -193,7 +193,7 @@ public class FilePetDAO implements PetDAOInterface {
         JsonNode orgData = dataNode.get(0).get("attributes");
         String owner = orgData.get("name").asText();
         String email = orgData.has("email") ? orgData.get("email").asText().replaceAll("\\s+", "") : "N/A";
-//        String location = orgData.get("citystate").asText(); // i want to get the actual pet location instead of the org
+        String location = orgData.get("citystate").asText(); // i want to get the actual pet location instead of the org
         String phoneNum = orgData.has("phone") ? orgData.get("phone").asText().replaceAll("\\s+", "") : "N/A";
         int age = petNode.get("attributes").has("ageString") ? parseAgeString(petNode.get("attributes").get("ageString").asText()) : 0;
         String breed = petNode.get("attributes").get("breedPrimary").asText();
