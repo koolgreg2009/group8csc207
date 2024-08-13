@@ -1,6 +1,7 @@
 package interface_adapter.preference;
 
 import interface_adapter.ViewModel;
+import view.PreferenceTextView;
 
 
 import javax.swing.*;
@@ -16,6 +17,8 @@ public class PreferenceViewModel extends ViewModel {
     public final String SAVE_BUTTON_LABEL = "Save Preferences";
     public final String CLEAR_BUTTON_LABEL = "Clear Preferences";
     public final String BREED_KEY = "breeds";
+    public final String LOCATION_KEY = "location";
+
     private static final int DELAY_MS = 1000;
     /** The current state of the login view. */
     private PreferenceState state = new PreferenceState();
@@ -29,7 +32,6 @@ public class PreferenceViewModel extends ViewModel {
     public PreferenceViewModel() {
         super("preference");
     }
-    // execute controller
     /**
      * Sets the state of the preference view model.
      *
@@ -38,6 +40,8 @@ public class PreferenceViewModel extends ViewModel {
     public void setState(PreferenceState state) {
         this.state = state;
     }
+
+
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     /**
@@ -86,12 +90,6 @@ public class PreferenceViewModel extends ViewModel {
     }
     public boolean validatePreferences() {
         boolean isValid = true;
-//
-//
-//        if (!validateBreed()) {
-//            isValid = false;
-//        }
-
         if (!validateMinAge()) {
             isValid = false;
         }
@@ -100,24 +98,9 @@ public class PreferenceViewModel extends ViewModel {
             isValid = false;
         }
 
-//        if (!validateLocation()) {
-//            isValid = false;
-//        }
-
         firePropertyChanged();
         return isValid;
     }
-
-
-//    private boolean validateBreed() {
-//        if (state.getBreed().isEmpty()) {
-//            state.setBreedError("Breed cannot be empty");
-//            return false;
-//        } else {
-//            state.setBreedError("");
-//            return true;
-//        }
-//    }
 
     /**
      * Validate min age. If empty string set minage to 0 which is no preference

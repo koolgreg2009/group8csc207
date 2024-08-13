@@ -1,5 +1,7 @@
 package interface_adapter.preference;
 
+import view.PreferenceTextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +39,8 @@ public class PreferenceState {
     private String genderError = "";
     private boolean interaction;
     private List<String> matchingStrings = new ArrayList<>();
+    private PreferenceTextView currentInputField;
+
     /**
      * Constructs a new LoginState with default values.
      */
@@ -168,7 +172,9 @@ public class PreferenceState {
     public void setGender(String gender) {
         this.gender = gender;
     }
-
+    public void setCurrentInputField(PreferenceTextView currentInputField){
+        this.currentInputField = currentInputField;
+    }
     public String getSpeciesError() {
         return speciesError;
     }
