@@ -258,6 +258,8 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
             activityLevelText.setText(pet.getActivityLevel());
 
             try {
+                imageLabel.setText("");
+                imageLabel.setIcon(null);
                 URL url = new URL(pet.getImgUrl());
                 ImageIcon imageIcon = new ImageIcon(url);
                 Image image = imageIcon.getImage();
@@ -281,7 +283,6 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
                 imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
                 imageLabel.setVerticalAlignment(SwingConstants.CENTER);
             } catch (Exception e) {
-                e.printStackTrace();
                 imageLabel.setText("Image not available");
             }
         }
