@@ -51,17 +51,18 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
 
     /** UI components and layout. */
     JPanel pageBody = new JPanel();
+    JLabel username = new JLabel();
     final JButton notifButton = new JButton();
     final JButton prefButton = new JButton();
     final JButton logoutButton = new JButton();
     final JButton homeButton = new JButton();
     GroupLayout layout = new GroupLayout(this);
 
-    /** Colors and fonts used in the UI. */
-    final Color SIDE_BUTTON_COLOR = new Color(255, 189, 65);
-    final Color HEADER_COLOR = new Color(255,242,206);
-    final Color BACKGROUND_COLOR = new Color (249,249,249);
-    final Font SIDE_BUTTON_FONT = new Font("Microsoft JhengHei UI", Font.BOLD, 12);
+//    /** Colors and fonts used in the UI. */
+//    final Color SIDE_BUTTON_COLOR = new Color(255, 189, 65);
+//    final Color HEADER_COLOR = new Color(255,242,206);
+//    final Color BACKGROUND_COLOR = new Color (249,249,249);
+//    final Font SIDE_BUTTON_FONT = new Font("Microsoft JhengHei UI", Font.BOLD, 12);
 
     /**
      * Constructs a {@code BookmarkView} with the specified view models and controllers.
@@ -99,13 +100,13 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
         this.adoptController = adoptController;
         this.removeBookmarkController = removeBookmarkController;
         this.addBookmarkController = addBookmarkController;
+        this.bookmarkViewModel.addPropertyChangeListener(this);
 
         // Header set up
         JLabel title = new JLabel("Bookmark Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         JLabel usernameInfo = new JLabel("Currently logged in: " + bookmarkViewModel.getLoggedInUser());
         usernameInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JLabel username = new JLabel();
 
         // Button Panel set up
         JPanel buttonPanel = new JPanel();
@@ -119,7 +120,6 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
         buttonPanel.add(logoutButton);
 
         // Overall layout set up
-        pageBody = new JPanel();
         pageBody.setLayout(new GridLayout(0,3));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
@@ -302,6 +302,7 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("bookmark")) {
             BookmarkState bookmarkState = (BookmarkState) evt.getNewValue();
+            username.setText(bookmarkState.getUsername());
             List<BookmarkDTO> bookmarks = bookmarkState.getAllBookmarks();
             pageBody.removeAll();
             for (BookmarkDTO bookmark: bookmarks) {
@@ -310,7 +311,7 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
             pageBody.revalidate();
             pageBody.repaint();
         }
-        else if ("Notification".equals(evt.getPropertyName())) {
+        else if ("notification".equals(evt.getPropertyName())) {
             BookmarkState bookmarkState = (BookmarkState) evt.getNewValue();
             List<BookmarkDTO> bookmarks = bookmarkState.getAllBookmarks();
             pageBody.removeAll();

@@ -51,7 +51,7 @@ public class BookmarkViewModel extends ViewModel {
      * Notifies listeners that the notification state has changed.
      */
     public void fireNotificationChanged() {
-        support.firePropertyChange("Notification",
+        support.firePropertyChange("notification",
                 null, this.bookmarkState);
     }
 
