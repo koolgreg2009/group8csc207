@@ -19,8 +19,8 @@ public class LoginInputData {
      * @param password
      */
     public LoginInputData(String username, String password) {
-        this.username = username;
-        this.password = password;
+        this.username = username.trim();
+        this.password = password.trim();
     }
 
     /**

@@ -27,12 +27,12 @@ public class SignupInputData {
      * @param phone
      */
     public SignupInputData(String username, String password, String repeatPassword, String name, String email, String phone) {
-        this.username = username;
-        this.password = password;
-        this.repeatPassword = repeatPassword;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
+        this.username = username.trim();
+        this.password = password.trim();
+        this.repeatPassword = repeatPassword.trim();
+        this.name = name.trim();
+        this.email = email.trim();
+        this.phone = phone.trim();
     }
 
     /**
