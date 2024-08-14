@@ -30,6 +30,11 @@ public class BookmarkState {
         username = copy.username;
     }
 
+    /**
+     * Sets the list of {@link BookmarkDTO} objects.
+     *
+     * @param bookmarks the list of {@link BookmarkDTO} objects to be set
+     */
     public void setBookmarkDTO(List<BookmarkDTO> bookmarks) {
         this.bookmarks = bookmarks;
     }
