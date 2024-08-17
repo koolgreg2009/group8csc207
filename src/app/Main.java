@@ -22,29 +22,18 @@ import view.*;
 
 public class Main {
     public static void main(String[] args) {
-        // From Paul Gries's example
-        // Build the main program window, the main panel containing the
-        // various cards, and the layout, and stitch them together.
 
-        // The main application window.
         JFrame application = new JFrame("Pet Adoption");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.setResizable(true);
         application.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        application.setSize(800, 500);
         CardLayout cardLayout = new CardLayout();
 
-        // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
         application.add(views);
-        // This keeps track of and manages which view is currently showing.
+
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
-
-        // The data for the views, such as username and password, are in the ViewModels.
-        // This information will be changed by a presenter object that is reporting the
-        // results from the use case. The ViewModels are observable, and will
-        // be observed by the Views.
 
         LoginViewModel loginViewModel = new LoginViewModel();
         DisplayPetsViewModel displayPetsViewModel = new DisplayPetsViewModel();
@@ -55,10 +44,11 @@ public class Main {
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
         ProfileViewModel profileViewModel = new ProfileViewModel();
         PetBioViewModel petBioViewModel = new PetBioViewModel();
-        // creating user and pet DAO to be used for all use cases. declared outside so compiler doesnt cry
+
         UserDAOInterface userDAO = null;
         PetDAOInterface petDAO = null;
         APIInfoInterface infoDAO = null;
+
         try{
             userDAO = new FileUserDAO("./users.json");
         } catch (IOException e) {
@@ -113,7 +103,6 @@ public class Main {
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        //application.pack();
         application.setLocationRelativeTo(null);
         application.setVisible(true);
     }
