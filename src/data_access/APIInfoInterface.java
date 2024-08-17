@@ -5,11 +5,28 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The APIInfoInterface defines the contract for interacting with an API to retrieve and manage data.
+ */
 public interface APIInfoInterface {
 
+    /**
+     * Retrieves a list of data associated with the specified key.
+     *
+     * @param key the key used to identify the data to retrieve.
+     * @return a list of strings representing the data associated with the specified key.
+     */
     List<String> getData(String key);
 
+    /**
+     * Fetches breed information from the API and processes it.
+     *
+     * @throws IOException if an I/O error occurs while retrieving the data.
+     */
     void getBreedInfo() throws IOException;
 
+    /**
+     * Persists or saves the data that has been retrieved or modified.
+     */
     void save();
 }

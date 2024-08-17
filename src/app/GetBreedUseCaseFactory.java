@@ -9,8 +9,6 @@ import use_case.get_breed_info.GetBreedInputBoundary;
 import use_case.get_breed_info.GetBreedInteractor;
 import use_case.get_breed_info.GetBreedOutputBoundary;
 
-import java.io.IOException;
-
 /**
  * Factory class responsible for creating instances of {@link GetBreedController}.
  */
