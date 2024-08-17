@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class BookmarkState {
     private List<BookmarkDTO> bookmarks;
-    private String username;
+    private String username = "";
     private String notifMessage;
     private boolean notifSuccess;
 
@@ -30,44 +30,14 @@ public class BookmarkState {
         username = copy.username;
     }
 
+    /**
+     * Sets the list of {@link BookmarkDTO} objects.
+     *
+     * @param bookmarks the list of {@link BookmarkDTO} objects to be set
+     */
     public void setBookmarkDTO(List<BookmarkDTO> bookmarks) {
         this.bookmarks = bookmarks;
     }
-
-//    /**
-//     * Removes a pet from the list of bookmarked pets by its ID.
-//     *
-//     * @param petID the ID of the pet to remove
-//     */
-//    public void removeBookmark(int petID){
-//        bookmarks.removeIf(bookmark -> petID == bookmark.getPetID());
-//    }
-//
-//    /**
-//     * Adds a new pet to the list of bookmarked pets if it is not already present.
-//     *
-//     * @param pet the PetDTO to add
-//     */
-//    public void addBookmark(PetDTO pet){
-//        if (!isBookmarked(pet)) {
-//            bookmarks.add(new BookmarkDTO(pet, LocalDateTime.now()));
-//        }
-//    }
-//
-//    /**
-//     * Checks if a pet is already bookmarked.
-//     *
-//     * @param pet the PetDTO to check
-//     * @return true if the pet is bookmarked, false otherwise
-//     */
-//    public boolean isBookmarked(PetDTO pet){
-//        for (BookmarkDTO bookmark : bookmarks) {
-//            if (bookmark.getPet().equals(pet)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 
     /**
      * Retrieves all bookmarked pets.

@@ -70,32 +70,3 @@ public class LoginUseCaseFactory {
         return new LoginController(loginInteractor);
     }
 }
-    /**
-     * Private constructor to prevent instantiation.
-     * This class is intended to be used as a factory for creating use case instances.
-     */
-//    private LoginUseCaseFactory() {
-//
-//    }
-//
-//    /**
-//     * Creates and returns a {@link LoginController} instance.
-//     * Sets up the necessary dependencies including the data access object and presenter.
-//     *
-//     * @return an instance of {@link LoginController}, or {@code null} if an {@link IOException} occurs.
-//     */
-//    public static LoginController createUserLoginUseCase() {
-//
-//        try{
-//            UserDAOInterface userDAO = new FileUserDAO("./users.json");
-//            LoginOutputBoundary userPresenter = new LoginPresenter();
-//            LoginInputBoundary LoginInteractor = new LoginInteractor(userDAO, userPresenter);
-//
-//            return new LoginController(LoginInteractor);
-//
-//        } catch (IOException e) {
-//            System.out.println("Could not open user data file.");
-//            return null;
-//        }
-//    }
-//}

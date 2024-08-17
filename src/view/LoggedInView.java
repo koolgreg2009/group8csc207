@@ -42,7 +42,6 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
     private final ViewManagerModel viewManagerModel;
     private final NotifViewModel notifViewModel;
 
-
     JLabel username;
 
     private final JButton logOut;
