@@ -20,6 +20,8 @@ import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupViewModel;
 import view.*;
 
+import static app.NotifViewUseCaseFactory.createNotifView;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -90,7 +92,7 @@ public class Main {
                 displayPetsViewModel, userDAO,petDAO);
         views.add(bookmarkView, bookmarkView.viewName);
 
-        NotifView notifView = new NotifView(loggedInViewModel,viewManagerModel,notifViewModel);
+        NotifView notifView = createNotifView(loggedInViewModel, viewManagerModel, notifViewModel);
         views.add(notifView, notifView.viewName);
 
         ProfileView profileView = new ProfileView();

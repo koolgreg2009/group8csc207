@@ -19,11 +19,12 @@ public interface APIInfoInterface {
     List<String> getData(String key);
 
     /**
-     * Fetches breed information from the API and processes it.
-     *
-     * @throws IOException if an I/O error occurs while retrieving the data.
+     * Parses breedInfo
      */
+
     void getBreedInfo() throws IOException;
+
+    void getLocation() throws IOException;
 
     /**
      * Persists or saves the data that has been retrieved or modified.

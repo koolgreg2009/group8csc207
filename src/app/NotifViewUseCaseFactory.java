@@ -12,9 +12,7 @@ import static app.GetNotifControllerUseCase.creatUpdateNotifUseCase;
 public class NotifViewUseCaseFactory {
     public NotifViewUseCaseFactory() {}
 
-    public static NotifView create(LoggedInViewModel loggedInViewModel, ViewManagerModel viewManagerModel, NotifViewModel notifViewModel, UserDAOInterface userDAO) {
-        GetNotifController getNotifController = creatUpdateNotifUseCase(notifViewModel, userDAO);
-        return new NotifView(loggedInViewModel, viewManagerModel,notifViewModel);
-
+    public static NotifView createNotifView(LoggedInViewModel loggedInViewModel, ViewManagerModel viewManagerModel, NotifViewModel notifViewModel) {
+        return new NotifView(loggedInViewModel, viewManagerModel, notifViewModel);
     }
 }
