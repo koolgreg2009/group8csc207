@@ -19,21 +19,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 import utils.IdCounter;
 
-public class FilePetDAO implements PetDAOInterface {
-    private final File jsonFile;
-    private final String API_KEY = "Av56m5jr";
-    private final String BASE_URL = "https://api.rescuegroups.org/v5";
+public class FilePetDAO extends RescueAPIAbstract implements PetDAOInterface {
+
     private final Map<String, Pet> pets = new HashMap<>();
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    private final OkHttpClient client;
 
     public FilePetDAO(String jsonPath) throws IOException {
-        jsonFile = new File(jsonPath);
-        client = new OkHttpClient.Builder()
-                .connectTimeout(15, TimeUnit.SECONDS)
-                .writeTimeout(15, TimeUnit.SECONDS)
-                .readTimeout(25, TimeUnit.SECONDS)
-                .build();
+        super(jsonPath);
         if (jsonFile.length() == 0) {
             fetchAndStorePets();
             save();
@@ -43,9 +34,7 @@ public class FilePetDAO implements PetDAOInterface {
             objectMapper.registerModule(new JavaTimeModule());
             pets.putAll(objectMapper.readValue(jsonFile, typeRef));
         }
-
     }
-
     @Override
     public Pet get(int petID) {
         return pets.get(String.valueOf(petID));
@@ -116,49 +105,15 @@ public class FilePetDAO implements PetDAOInterface {
      * @throws IOException
      */
     public void fetchAndStorePets() throws IOException {
-        Request request = new Request.Builder()
-                .url(BASE_URL + "/public/animals/search/available/cats?limit=100")
-                .addHeader("Authorization", API_KEY)
-                .addHeader("Content-Type", "application/vnd.api+json")
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            if (response.isSuccessful() && response.body() != null) {
-                String responseBody = response.body().string();
-                JsonNode root = objectMapper.readTree(responseBody);
-                JsonNode data = root.get("data");
-                JsonNode included = root.get("included");
-                Map<String, String> locationMap = parseLocations(included);
-                for (JsonNode petNode : data) {
-                    Pet pet = parsePet(petNode, locationMap);
-                    if (pet != null) {
-                        save(pet);
-                    }
-                }
-            } else {
-                throw new IOException("Animal search failed with HTTP code: " + response.code() + " and message: " + response.message());
-            }
-        }
-    }
-
-    /**
-     * Calls rescuegroups API to fetch organization details for contact information
-     * @param orgUrl
-     * @return
-     * @throws IOException
-     */
-    private String fetchOrg(String orgUrl) throws IOException {
-        Request orgRequest = new Request.Builder()
-                .url(orgUrl)
-                .addHeader("Authorization", API_KEY)
-                .addHeader("Content-Type", "application/vnd.api+json")
-                .get()
-                .build();
-        try (Response orgResponse = client.newCall(orgRequest).execute()) {
-            if (orgResponse.isSuccessful() && orgResponse.body() != null) {
-                return orgResponse.body().string();
-            } else {
-                throw new IOException("Failed to fetch organization details with HTTP code: " + orgResponse.code() + " and message: " + orgResponse.message());
+        String response = makeAPICall("/public/animals/search/available/cats?limit=100");
+        JsonNode root = objectMapper.readTree(response);
+        JsonNode data = root.get("data");
+        JsonNode included = root.get("included");
+        Map<String, String> locationMap = parseLocations(included);
+        for (JsonNode petNode : data) {
+            Pet pet = parsePet(petNode, locationMap);
+            if (pet != null) {
+                save(pet);
             }
         }
     }
@@ -170,7 +125,6 @@ public class FilePetDAO implements PetDAOInterface {
      */
     private Map<String, String> parseLocations(JsonNode included) {
         Map<String, String> locationMap = new HashMap<>();
-
         if (included.isArray()) {
             for (JsonNode item : included) {
                 if ("locations".equals(item.path("type").asText())) {
@@ -180,7 +134,6 @@ public class FilePetDAO implements PetDAOInterface {
                 }
             }
         }
-
         return locationMap;
     }
 
@@ -195,8 +148,8 @@ public class FilePetDAO implements PetDAOInterface {
         String locationId = petNode.path("relationships").path("locations").path("data").get(0).path("id").asText();
         String location = locationMap.get(locationId).isEmpty() ? "N/A" : locationMap.get(locationId);
         String orgId = petNode.get("relationships").get("orgs").get("data").get(0).get("id").asText();
-        String orgUrl = BASE_URL + "/public/orgs/" + orgId;
-        String orgResponseBody = fetchOrg(orgUrl);
+        String orgUrl = "/public/orgs/" + orgId;
+        String orgResponseBody = makeAPICall(orgUrl);
         JsonNode orgRoot = objectMapper.readTree(orgResponseBody);
         JsonNode dataNode = orgRoot.get("data");
         JsonNode orgData = dataNode.get(0).get("attributes");
@@ -241,10 +194,8 @@ public class FilePetDAO implements PetDAOInterface {
 
     private int parseAgeString(String ageString) {
         String[] split =  ageString.split(" ");
-
         return Integer.parseInt(split[0]);
     }
-
     /**
      *
      * @return All pets that are available
