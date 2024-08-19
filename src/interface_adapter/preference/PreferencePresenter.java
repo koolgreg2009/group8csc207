@@ -17,6 +17,7 @@ public class PreferencePresenter implements PreferenceOutputBoundary {
      */
     private final LoggedInViewModel loggedInViewModel;
     private final DisplayPetsViewModel displayPetsViewModel;
+    private final PreferenceViewModel preferenceViewModel;
 
     /**
      * The presenter for the preference use case.
@@ -25,10 +26,14 @@ public class PreferencePresenter implements PreferenceOutputBoundary {
      * @param loggedInViewModel the logged in view model that is previously and afterward displayed
      * @param displayPetsViewModel the Pets view model which is in charge of changing the pet listings after
      */
-    public PreferencePresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, DisplayPetsViewModel displayPetsViewModel) {
+    public PreferencePresenter(ViewManagerModel viewManagerModel,
+                               LoggedInViewModel loggedInViewModel,
+                               DisplayPetsViewModel displayPetsViewModel,
+                               PreferenceViewModel preferenceViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.displayPetsViewModel = displayPetsViewModel;
+        this.preferenceViewModel = preferenceViewModel;
     }
 
     /**
@@ -36,9 +41,23 @@ public class PreferencePresenter implements PreferenceOutputBoundary {
      */
     @Override
     public void prepareSuccessView() {
-        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+        preferenceViewModel.getState().clearError();
+        preferenceViewModel.firePropertyChanged("error");
         displayPetsViewModel.firePropertyChanged();
+    }
+    @Override
+    public void prepareBreedFail(){
+        PreferenceState state = preferenceViewModel.getState();
+        state.setBreedError("Invalid Breed");
+        preferenceViewModel.firePropertyChanged("error");
+    }
+    @Override
+    public void prepareLocationFail(){
+        PreferenceState state = preferenceViewModel.getState();
+        state.setLocationError("Invalid Location");
+        preferenceViewModel.firePropertyChanged("error");
+
+
     }
 }
 

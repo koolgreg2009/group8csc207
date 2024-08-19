@@ -5,9 +5,9 @@ import interface_adapter.SessionManager;
 import use_case.preference.PreferenceData;
 import use_case.preference.PreferenceInputBoundary; // no PreferenceInputBoundary yet
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 
 /**
@@ -31,18 +31,17 @@ public class PreferenceController {
     /**
      * The execution for the preference use case
      *
-     * @param species the indicated species preference as a String
-     * @param breeds the indicated breeds preferences stored as a List
-     * @param minAge an Integer for the minimum age preferences
-     * @param maxAge an Integer for the maximum age preference
+     * @param species       the indicated species preference as a String
+     * @param breeds        the indicated breed
+     * @param minAge        an Integer for the minimum age preferences
+     * @param maxAge        an Integer for the maximum age preference
      * @param activityLevel a String indicated either a high, medium or low preferred activity level
-     * @param location a String that shows location preference
-     * @param gender a String of either 'M' or 'F' to indicate which gender they would prefer
+     * @param location      a String that shows location preference
+     * @param gender        a String of either 'M' or 'F' to indicate which gender they would prefer
      */
-    public void execute(String species, List<String> breeds, Integer minAge, Integer maxAge, String activityLevel, String location, String gender){
-
+    public void execute(String species, List<String> breeds, String breedKey, Integer minAge, Integer maxAge, String activityLevel, String location, String locationKey, String gender){
         UserPreference preferences = new UserPreference(species, breeds, minAge, maxAge, activityLevel, location, gender);
-        PreferenceData initialPreferences = new PreferenceData(SessionManager.getCurrentUser(), preferences);
+        PreferenceData initialPreferences = new PreferenceData(SessionManager.getCurrentUser(), preferences, new PreferenceKeys(breedKey, locationKey));
         preferenceInteractor.execute(initialPreferences);
     }
 }

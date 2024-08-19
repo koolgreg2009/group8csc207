@@ -225,4 +225,15 @@ public class PreferenceState {
         return interaction;
     }
 
+    public void clearError(){
+        speciesError = "";
+        breedError = "";
+        minAgeError = "";
+        maxAgeError = "";
+        activityLevelError = "";
+        locationError = "";
+        genderError = "";
+    }
+
 }
+

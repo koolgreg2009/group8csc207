@@ -1,6 +1,5 @@
 package view;
 
-import interface_adapter.login.LoginState;
 import interface_adapter.preference.PreferenceState;
 import interface_adapter.SessionManager;
 import interface_adapter.display_pets.DisplayPetsController;
@@ -120,13 +119,15 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                         preferenceController.execute(
                                 preferenceState.getSpecies(),
                                 preferenceViewModel.capitalizeFirstLetter((preferenceState.getBreed().trim()).split(", ")),
+                                "breeds",
                                 Integer.parseInt(preferenceState.getMinAge()),
                                 Integer.parseInt(preferenceState.getMaxAge()),
                                 preferenceState.getActivityLevel(),
                                 preferenceState.getLocation().trim(),
+                                "locations",
                                 preferenceState.getGender());
 
-                        displayPetsController.execute(SessionManager.getCurrentUser());
+
                     } else {
                         updateErrorView();
                     }
@@ -136,8 +137,16 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
         clear.addActionListener(
                 evt -> {
+                    PreferenceState state = preferenceViewModel.getState();
                     preferenceViewModel.clearState();
-                    preferenceViewModel.firePropertyChanged();
+                    speciesComboBox.setSelectedItem(state.getSpecies());
+                    breedInputField.setText(state.getBreed());
+                    minAgeInputField.setText(state.getMinAge());
+                    maxAgeInputField.setText(state.getMaxAge());
+                    locationInputField.setText(state.getLocation());
+                    genderComboBox.setSelectedItem(state.getGender());
+                    activityLevelComboBox.setSelectedItem(state.getActivityLevel());
+
                 }
         );
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -162,7 +171,6 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         breedInputField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                Object source = e.getSource();
                 String key = "";
                 key = preferenceViewModel.BREED_KEY;
                 currentComponent = breedComponents;
@@ -306,24 +314,30 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     public void propertyChange(PropertyChangeEvent evt) {
             PreferenceState state = (PreferenceState) evt.getNewValue();
 
-            if ("clear".equals(evt.getPropertyName())) {
-                speciesComboBox.setSelectedItem(state.getSpecies());
-                breedInputField.setText(state.getBreed());
-                minAgeInputField.setText(state.getMinAge());
-                maxAgeInputField.setText(state.getMaxAge());
-                locationInputField.setText(state.getLocation());
-                genderComboBox.setSelectedItem(state.getGender());
-                activityLevelComboBox.setSelectedItem(state.getActivityLevel());
-            } else if ("matches".equals(evt.getPropertyName())) {
-                updateBreedPopup(currentComponent);
+//            if ("clear".equals(evt.getPropertyName())) {
+//                speciesComboBox.setSelectedItem(state.getSpecies());
+//                breedInputField.setText(state.getBreed());
+//                minAgeInputField.setText(state.getMinAge());
+//                maxAgeInputField.setText(state.getMaxAge());
+//                locationInputField.setText(state.getLocation());
+//                genderComboBox.setSelectedItem(state.getGender());
+//                activityLevelComboBox.setSelectedItem(state.getActivityLevel());
+//            } else
+            if ("matches".equals(evt.getPropertyName())) {
+                updatePopup(currentComponent);
             } else if(preferenceViewModel.BREED_KEY.equals(evt.getPropertyName())) {
                 getMatchingController.execute(preferenceViewModel.BREED_KEY, breedInputField.getText());
             } else if (preferenceViewModel.LOCATION_KEY.equals(evt.getPropertyName())) {
                 getMatchingController.execute(preferenceViewModel.LOCATION_KEY, locationInputField.getText());
+            } else if ("error".equals(evt.getPropertyName())) {
+                updateErrorView();
             }
 
         }
 
+    /**
+     * Updates error messages
+     */
     private void updateErrorView() {
         PreferenceState state = preferenceViewModel.getState();
         minAgeErrorField.setText(state.getMinAgeError());
@@ -333,7 +347,11 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
     }
 
-    private void updateBreedPopup(ComponentPair currentComponent) {
+    /**
+     * Updates the suggested pop up list with new list from the matching strings in state.
+     * @param currentComponent The current textfield and component box being mutated
+     */
+    private void updatePopup(ComponentPair currentComponent) {
         JPopupMenu popupMenu = currentComponent.getPopupMenu();
         JTextField textField = currentComponent.getTextField();
         popupMenu.removeAll();
@@ -357,6 +375,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                     });
                     popupMenu.add(item);
                 }
+                popupMenu.pack();
                 popupMenu.show(textField, 0, textField.getHeight());
             } else {
                 popupMenu.setVisible(false);

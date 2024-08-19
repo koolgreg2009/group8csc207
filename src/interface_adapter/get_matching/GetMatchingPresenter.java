@@ -11,10 +11,9 @@ public class GetMatchingPresenter implements GetMatchingStringOutputBoundary {
         this.preferenceViewModel = preferenceViewModel;
     }
     @Override
-    public void prepareView(GetMatchingStringOutputData data){
+    public void prepareSuccessView(GetMatchingStringOutputData data){
         PreferenceState state = preferenceViewModel.getState();
         state.setMatchingStrings(data.getMatchingStrings());
-        preferenceViewModel.fireMatchPropertyChanged();
-        // we pass argument into here instead from the input data to indicate what type is being updated
+        preferenceViewModel.firePropertyChanged("matches");
     }
 }

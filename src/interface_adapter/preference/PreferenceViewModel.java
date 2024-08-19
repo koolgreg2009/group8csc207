@@ -47,16 +47,20 @@ public class PreferenceViewModel extends ViewModel {
      * Fires a property change event to notify listeners of changes in the
      * login state.
      */
-    public void firePropertyChanged() {
-        support.firePropertyChange("clear", null, this.state);
+    public void firePropertyChanged(String propertyName) {
+        support.firePropertyChange(propertyName, null, this.state);
     }
-
-    public void fireMatchPropertyChanged() {
-        support.firePropertyChange("matches", null, this.state);
-    }
+//
+//    public void fireMatchPropertyChanged() {
+//        support.firePropertyChange("matches", null, this.state);
+//    }
     public void fireTimePropertyChanged(String key) {
         support.firePropertyChange(key, null, this.state);
     }
+
+    @Override
+    public void firePropertyChanged() {}
+
     /**
      * Adds a property change listener to be notified of changes in the preference
      * state.
@@ -78,6 +82,7 @@ public class PreferenceViewModel extends ViewModel {
     public void clearState(){
         state = new PreferenceState();
     }
+
     public List<String> getSpeciesOptions() {
         return speciesOptions;
     }

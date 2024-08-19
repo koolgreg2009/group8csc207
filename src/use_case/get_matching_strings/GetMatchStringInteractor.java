@@ -15,13 +15,15 @@ public class GetMatchStringInteractor implements GetMatchingStringInputBoundary{
     }
     @Override
     public void execute(GetMatchingStringInputData inputData){
+        String key = inputData.getKey();
         List<String> filtered = new ArrayList<>();
-        List<String> allString = infoDAO.getData(inputData.getKey());
+        List<String> allString = infoDAO.getData(key);
         for (String string : allString) {
             if (string.toLowerCase().startsWith(inputData.getInput().toLowerCase()) && !string.equals(inputData.getInput())) {
                 filtered.add(string);
             }
+
+        infoPresenter.prepareSuccessView(new GetMatchingStringOutputData(filtered));
         }
-        infoPresenter.prepareView(new GetMatchingStringOutputData(filtered));
     }
 }

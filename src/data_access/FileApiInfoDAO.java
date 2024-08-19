@@ -82,6 +82,19 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
         }
     }
 
+    @Override
+    public boolean exists(String string, String key){
+        return data.get(key).contains(string);
+    }
+
+    public boolean exists(List<String> names, String key){
+        for (String name : names){
+            if(!data.get(key).contains(name)){
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 }
