@@ -15,13 +15,18 @@ public class PreferenceViewModel extends ViewModel {
     /** The label for the login button. */
     public final String SAVE_BUTTON_LABEL = "Save Preferences";
     public final String CLEAR_BUTTON_LABEL = "Clear Preferences";
+    /** Keys for view fields */
     public final String BREED_KEY = "breeds";
     public final String LOCATION_KEY = "locations";
 
+    /** Time delay between popups */
     private static final int DELAY_MS = 1000;
     /** The current state of the login view. */
     private PreferenceState state = new PreferenceState();
 
+    /**
+     * Options for pop up menus
+     */
     private final List<String> speciesOptions = Arrays.asList("","Cat");
     private final List<String> activityLevelOptions = Arrays.asList("","Not Active", "Slightly Active", "Moderately Active", "Highly Active");
     private final List<String> genderOptions = Arrays.asList("","Male", "Female");
@@ -50,10 +55,7 @@ public class PreferenceViewModel extends ViewModel {
     public void firePropertyChanged(String propertyName) {
         support.firePropertyChange(propertyName, null, this.state);
     }
-//
-//    public void fireMatchPropertyChanged() {
-//        support.firePropertyChange("matches", null, this.state);
-//    }
+
     public void fireTimePropertyChanged(String key) {
         support.firePropertyChange(key, null, this.state);
     }
@@ -92,6 +94,11 @@ public class PreferenceViewModel extends ViewModel {
     public List<String> getGenderOptions() {
         return genderOptions;
     }
+
+    /**
+     * Validates fields that dont require DAO from state like åge
+     * @return
+     */
     public boolean validatePreferences() {
         boolean isValid = true;
         if (!validateMinAge()) {
@@ -163,8 +170,8 @@ public class PreferenceViewModel extends ViewModel {
     /**
      * makes strings properly formatted for dao to work. taking into account of spaces between words like domestic short
      * hair
-     * @param input
-     * @return
+     * @param input: string
+     * @return: capitalized string
      */
     public String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
@@ -190,6 +197,12 @@ public class PreferenceViewModel extends ViewModel {
         }
         return newList;
     }
+
+    /**
+     * Updates component input to state and starts conditions to initiate dropdown menu.
+     * @param keyChar: input key entered
+     * @param key: key to indicate what field user is interacting with
+     */
     public void handleUserInput(char keyChar, String key){
         PreferenceState currentState = getState();
         switch(key){
@@ -205,6 +218,12 @@ public class PreferenceViewModel extends ViewModel {
         userInteracted();
     }
 
+    /**
+     * Condition: dropdown only shows after DELAY_MS seconds.
+     * If there is already a timer restart timer
+     * If after DELAY_MS ifInteraction is true then trigger view observer to execute usecase
+     * @param key
+     */
     private void createDelay(String key) {
         if (delayTimer != null && delayTimer.isRunning()) {
             delayTimer.stop();
@@ -217,6 +236,11 @@ public class PreferenceViewModel extends ViewModel {
         delayTimer.start();
     }
 
+    /**
+     * Condition: dropdown only shows after DELAY_MS seconds of previous user interaction, setting boolean isInteraction
+     * to true after DELAY_MS
+     * If there is already a timer restart timer
+     */
     private void userInteracted() {
         state.setInteraction(true);
 
