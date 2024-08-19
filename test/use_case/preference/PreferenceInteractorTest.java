@@ -24,7 +24,7 @@ class PreferenceInteractorTest {
     void setUp() {
         userDataAccessObject = mock(UserDAOInterface.class);
         userPresenter = mock(PreferenceOutputBoundary.class);
-        interactor = new PreferenceInteractor(userDataAccessObject, userPresenter);
+        interactor = new PreferenceInteractor(userDataAccessObject, userPresenter, null);
     }
 
     @Test
@@ -36,7 +36,7 @@ class PreferenceInteractorTest {
         when(userDataAccessObject.get(username)).thenReturn(user);
 
         // Prepare input data
-        PreferenceData inputData = new PreferenceData(username, newPreferences);
+        PreferenceData inputData = new PreferenceData(username, newPreferences, null);
 
         // Execute the use case
         interactor.execute(inputData);

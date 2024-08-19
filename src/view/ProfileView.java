@@ -11,9 +11,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 

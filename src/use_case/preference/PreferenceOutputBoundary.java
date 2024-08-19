@@ -15,4 +15,7 @@ public interface PreferenceOutputBoundary {
 
     void prepareSuccessView();
 
+    void prepareBreedFail();
+
+    void prepareLocationFail();
 }

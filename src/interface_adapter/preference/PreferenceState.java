@@ -182,17 +182,8 @@ public class PreferenceState {
     public String getMaxAgeError() {
         return maxAgeError;
     }
-    public String getActivityLevelError() {
-        return activityLevelError;
-    }
     public String getLocationError() {
         return locationError;
-    }
-    public String getGenderError() {
-        return genderError;
-    }
-    public void setSpeciesError(String speciesError) {
-        this.speciesError = speciesError;
     }
     public void setBreedError(String breedError) {
         this.breedError = breedError;
@@ -203,14 +194,8 @@ public class PreferenceState {
     public void setMaxAgeError(String maxAgeError) {
         this.maxAgeError = maxAgeError;
     }
-    public void setActivityLevelError(String activityLevelError) {
-        this.activityLevelError = activityLevelError;
-    }
     public void setLocationError(String locationError) {
         this.locationError = locationError;
-    }
-    public void setGenderError(String genderError) {
-        this.genderError = genderError;
     }
     public List<String> getMatchingStrings() {
         return matchingStrings;
@@ -225,4 +210,15 @@ public class PreferenceState {
         return interaction;
     }
 
+    public void clearError(){
+        speciesError = "";
+        breedError = "";
+        minAgeError = "";
+        maxAgeError = "";
+        activityLevelError = "";
+        locationError = "";
+        genderError = "";
+    }
+
 }
+

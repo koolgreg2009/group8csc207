@@ -1,6 +1,5 @@
 package view;
 
-import interface_adapter.login.LoginState;
 import interface_adapter.preference.PreferenceState;
 import interface_adapter.SessionManager;
 import interface_adapter.display_pets.DisplayPetsController;
@@ -49,11 +48,23 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     final JTextField locationInputField = new JTextField(15);
     private final JLabel locationErrorField = new JLabel();
 
+    /**
+     * Saves all current user input in text fields and stores in state. Then, run validation that does not require
+     * DAO such as checking for negative numbers through validatePreference(). This method sets error if returns false.
+     * Also passes through keys of fields that needs to be validated in the DAO. If validation returns false then update
+     * error.
+     */
     private final JButton save;
+    /**
+     * Clears all inputs in UI and clears state.
+     */
     private final JButton clear;
     private final PreferenceController preferenceController;
     private final JPopupMenu breedPopupMenu = new JPopupMenu();
     private final JPopupMenu locationPopupMenu = new JPopupMenu();
+    /**
+     * Encapsulation of the current dropdown menu pair that user is interacting with.
+     */
     private ComponentPair currentComponent;
 
     /**
@@ -95,6 +106,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         LabelTextPanel genderInfo = new LabelTextPanel(new JLabel("Gender:"), genderComboBox);
 
         JPanel buttons = new JPanel();
+
         save = new JButton(preferenceViewModel.SAVE_BUTTON_LABEL);
         clear = new JButton(preferenceViewModel.CLEAR_BUTTON_LABEL);
         buttons.add(clear);
@@ -120,13 +132,15 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                         preferenceController.execute(
                                 preferenceState.getSpecies(),
                                 preferenceViewModel.capitalizeFirstLetter((preferenceState.getBreed().trim()).split(", ")),
+                                "breeds",
                                 Integer.parseInt(preferenceState.getMinAge()),
                                 Integer.parseInt(preferenceState.getMaxAge()),
                                 preferenceState.getActivityLevel(),
                                 preferenceState.getLocation().trim(),
+                                "locations",
                                 preferenceState.getGender());
 
-                        displayPetsController.execute(SessionManager.getCurrentUser());
+
                     } else {
                         updateErrorView();
                     }
@@ -136,8 +150,16 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
         clear.addActionListener(
                 evt -> {
+                    PreferenceState state = preferenceViewModel.getState();
                     preferenceViewModel.clearState();
-                    preferenceViewModel.firePropertyChanged();
+                    speciesComboBox.setSelectedItem(state.getSpecies());
+                    breedInputField.setText(state.getBreed());
+                    minAgeInputField.setText(state.getMinAge());
+                    maxAgeInputField.setText(state.getMaxAge());
+                    locationInputField.setText(state.getLocation());
+                    genderComboBox.setSelectedItem(state.getGender());
+                    activityLevelComboBox.setSelectedItem(state.getActivityLevel());
+
                 }
         );
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -162,7 +184,6 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         breedInputField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                Object source = e.getSource();
                 String key = "";
                 key = preferenceViewModel.BREED_KEY;
                 currentComponent = breedComponents;
@@ -302,28 +323,31 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     public void actionPerformed(ActionEvent evt) {
     }
 
+    /**
+     *
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     *            Possible events:
+     *              - matches: MatchingPresenter updates new matching lists to state
+     *              - error: PreferencePresenter updates new errors to state
+     *              - any key: timer from PreferenceViewModel triggers use case call
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-            PreferenceState state = (PreferenceState) evt.getNewValue();
-
-            if ("clear".equals(evt.getPropertyName())) {
-                speciesComboBox.setSelectedItem(state.getSpecies());
-                breedInputField.setText(state.getBreed());
-                minAgeInputField.setText(state.getMinAge());
-                maxAgeInputField.setText(state.getMaxAge());
-                locationInputField.setText(state.getLocation());
-                genderComboBox.setSelectedItem(state.getGender());
-                activityLevelComboBox.setSelectedItem(state.getActivityLevel());
-            } else if ("matches".equals(evt.getPropertyName())) {
-                updateBreedPopup(currentComponent);
+            if ("matches".equals(evt.getPropertyName())) {
+                updatePopup(currentComponent);
             } else if(preferenceViewModel.BREED_KEY.equals(evt.getPropertyName())) {
                 getMatchingController.execute(preferenceViewModel.BREED_KEY, breedInputField.getText());
             } else if (preferenceViewModel.LOCATION_KEY.equals(evt.getPropertyName())) {
                 getMatchingController.execute(preferenceViewModel.LOCATION_KEY, locationInputField.getText());
+            } else if ("error".equals(evt.getPropertyName())) {
+                updateErrorView();
             }
-
         }
 
+    /**
+     * Updates error messages to UI from state.
+     */
     private void updateErrorView() {
         PreferenceState state = preferenceViewModel.getState();
         minAgeErrorField.setText(state.getMinAgeError());
@@ -333,7 +357,12 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
     }
 
-    private void updateBreedPopup(ComponentPair currentComponent) {
+    /**
+     * Updates the suggested pop up list with new list from the matching strings in state.
+     * When user selects on a menuItem sets current text field stored in current component to that
+     * @param currentComponent The current textfield and component box being mutated
+     */
+    private void updatePopup(ComponentPair currentComponent) {
         JPopupMenu popupMenu = currentComponent.getPopupMenu();
         JTextField textField = currentComponent.getTextField();
         popupMenu.removeAll();
@@ -357,6 +386,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
                     });
                     popupMenu.add(item);
                 }
+                popupMenu.pack();
                 popupMenu.show(textField, 0, textField.getHeight());
             } else {
                 popupMenu.setVisible(false);

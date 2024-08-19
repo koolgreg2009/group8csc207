@@ -1,5 +1,4 @@
 package entity.preference;
-import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -31,13 +30,13 @@ public class UserPreference{
 	/**
 	 * Constructs a {@code UserPreference} object with the specified preferences.
 	 *
-	 * @param species the preferred species of the pet
-	 * @param breeds the preferred breeds of the pet
-	 * @param minAge the minimum age of the pet
-	 * @param maxAge the maximum age of the pet
+	 * @param species       the preferred species of the pet
+	 * @param breeds        the preferred breeds of the pet
+	 * @param minAge        the minimum age of the pet
+	 * @param maxAge        the maximum age of the pet
 	 * @param activityLevel the preferred activity level of the pet
-	 * @param location the preferred location of the pet
-	 * @param gender the preferred gender of the pet
+	 * @param location      the preferred location of the pet
+	 * @param gender        the preferred gender of the pet
 	 */
 	public UserPreference(String species, List<String> breeds, int minAge, int maxAge, String activityLevel, String location, String gender){
 		this.species = species;
