@@ -150,8 +150,8 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
         clear.addActionListener(
                 evt -> {
-                    PreferenceState state = preferenceViewModel.getState();
                     preferenceViewModel.clearState();
+                    PreferenceState state = preferenceViewModel.getState();
                     speciesComboBox.setSelectedItem(state.getSpecies());
                     breedInputField.setText(state.getBreed());
                     minAgeInputField.setText(state.getMinAge());
