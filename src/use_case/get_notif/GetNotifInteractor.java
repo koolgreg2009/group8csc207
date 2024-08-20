@@ -5,6 +5,10 @@ import entity.user.AdopterUser;
 
 import java.util.List;
 
+/**
+ * Gets user based on username from userDAO
+ * retrieves all user notifications, and updates to the presenter
+ */
 public class GetNotifInteractor implements GetNotifInputBoundary{
     final UserDAOInterface userDAO;
     final GetNotifOutputBoundary userPresenter;
