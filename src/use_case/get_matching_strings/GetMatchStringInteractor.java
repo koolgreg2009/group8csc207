@@ -45,7 +45,7 @@ public class GetMatchStringInteractor implements GetMatchingStringInputBoundary{
                 filtered.add(string);
             }
 
-        infoPresenter.prepareSuccessView(new GetMatchingStringOutputData(filtered));
         }
+        infoPresenter.prepareSuccessView(new GetMatchingStringOutputData(filtered));
     }
 }
