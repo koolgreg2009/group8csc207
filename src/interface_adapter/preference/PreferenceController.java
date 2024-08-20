@@ -38,6 +38,8 @@ public class PreferenceController {
      * @param activityLevel a String indicated either a high, medium or low preferred activity level
      * @param location      a String that shows location preference
      * @param gender        a String of either 'M' or 'F' to indicate which gender they would prefer
+     * @param locationKey   string to indicate to interactor what to read to validate location
+     * @param breedKey      string to indicate to interactor what to read to validate breed
      */
     public void execute(String species, List<String> breeds, String breedKey, Integer minAge, Integer maxAge, String activityLevel, String location, String locationKey, String gender){
         UserPreference preferences = new UserPreference(species, breeds, minAge, maxAge, activityLevel, location, gender);
