@@ -26,15 +26,15 @@ public class PreferenceController {
      * Executes the preference use case by creating a {@code UserPreference} object
      * and passing it along with additional data to the interactor.
      *
-     * @param species       the indicated species preference as a {@code String}.
-     * @param breeds        a {@code List<String>} of indicated breed preferences.
-     * @param breedKey      a {@code String} representing the breed key.
-     * @param minAge        an {@code Integer} specifying the minimum age preference.
-     * @param maxAge        an {@code Integer} specifying the maximum age preference.
-     * @param activityLevel a {@code String} indicating the preferred activity level (e.g., high, medium, low).
-     * @param location      a {@code String} representing the location preference.
-     * @param locationKey   a {@code String} representing the location key.
-     * @param gender        a {@code String} of either 'M' or 'F' to indicate preferred gender.
+     * @param species       the indicated species preference as a String
+     * @param breeds        the indicated breed
+     * @param minAge        an Integer for the minimum age preferences
+     * @param maxAge        an Integer for the maximum age preference
+     * @param activityLevel a String indicated either a high, medium or low preferred activity level
+     * @param location      a String that shows location preference
+     * @param gender        a String of either 'M' or 'F' to indicate which gender they would prefer
+     * @param locationKey   string to indicate to interactor what to read to validate location
+     * @param breedKey      string to indicate to interactor what to read to validate breed
      */
     public void execute(String species, List<String> breeds, String breedKey, Integer minAge, Integer maxAge, String activityLevel, String location, String locationKey, String gender){
         UserPreference preferences = new UserPreference(species, breeds, minAge, maxAge, activityLevel, location, gender);

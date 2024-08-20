@@ -19,9 +19,7 @@ public class PreferenceState {
     private String breedError = "";
     private String minAgeError = "";
     private String maxAgeError = "";
-    private String activityLevelError = "";
     private String locationError = "";
-    private String genderError = "";
     private boolean interaction;
     private List<String> matchingStrings = new ArrayList<>();
 
@@ -266,9 +264,7 @@ public class PreferenceState {
         breedError = "";
         minAgeError = "";
         maxAgeError = "";
-        activityLevelError = "";
         locationError = "";
-        genderError = "";
     }
 
 }
