@@ -10,20 +10,19 @@ import java.time.LocalDateTime;
  */
 public class AddBookmarkInteractor implements BookmarkInputBoundary{
 
-            final AddBookmarkOutputBoundary bookmarkPresenter;
-            final UserDAOInterface fileUserDAO;
+    final AddBookmarkOutputBoundary bookmarkPresenter;
+    final UserDAOInterface fileUserDAO;
 
-            /**
-             * Constructor for AddBookmarkInteractor, which includes the bookmark output boundary, bookmark factory and
-             * the file data access object for users.
-             *
-             * @param outputBoundary the output boundary to send results to presenter
-             * @param fileUserDAO the data access object for the user data
-             */
+    /**
+     * Constructor for AddBookmarkInteractor, which includes the bookmark output boundary, bookmark factory and
+     * the file data access object for users.
+     *
+     * @param outputBoundary the output boundary to send results to presenter
+     * @param fileUserDAO the data access object for the user data
+     */
 
-            public AddBookmarkInteractor(AddBookmarkOutputBoundary outputBoundary,
-                                         UserDAOInterface fileUserDAO) {
-                this.bookmarkPresenter = outputBoundary;
+    public AddBookmarkInteractor(AddBookmarkOutputBoundary outputBoundary, UserDAOInterface fileUserDAO) {
+        this.bookmarkPresenter = outputBoundary;
         this.fileUserDAO = fileUserDAO;
     }
 
@@ -40,7 +39,8 @@ public class AddBookmarkInteractor implements BookmarkInputBoundary{
             AdopterUser user = ((AdopterUser) fileUserDAO.get(inputData.getUsername()));
             user.addBookmark(bookmark);
             fileUserDAO.save(user);
-            BookmarkOutputData bookmarkOutputData = new BookmarkOutputData(user.getBookmarks(), bookmark, null, user.getUsername());
+            BookmarkOutputData bookmarkOutputData = new BookmarkOutputData(user.getBookmarks(), bookmark,
+                    null, user.getUsername());
             this.bookmarkPresenter.prepareSuccessView(bookmarkOutputData);
         }
 

@@ -7,10 +7,9 @@ import entity.user.AdopterUser;
 import entity.user.User;
 import interface_adapter.preference.PreferenceKeys;
 
-/** This is the interactor for the use case of editing an adopter user's pet preference data.
- *
- * @version 2.0
- * @since 2024-07-18
+/**
+ * {@code PreferenceInteractor} is the interactor for the use case of editing an adopter user's pet preference data.
+ * It implements the {@code PreferenceInputBoundary} interface and handles the logic for updating user preferences.
  */
 public class PreferenceInteractor implements PreferenceInputBoundary {
     final UserDAOInterface userDataAccessObject;
@@ -18,11 +17,12 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
     final APIInfoInterface infoDAO;
 
 
-    /** This is the constructor for editing preferences.
+    /**
+     * Constructs a {@code PreferenceInteractor} with the specified data access objects and presenter.
      *
-     * @param userDataAccessObject Access object for the adopter user that you are changing preferences for
-     * @param userPresenter presenter for preference use case
-     * @param infoDAO  DAO for accessing pet data info
+     * @param userDataAccessObject  the data access object for the adopter user whose preferences are being changed.
+     * @param userPresenter         the presenter for the preference use case.
+     * @param infoDAO               the data access object for accessing pet data information.
      */
     public PreferenceInteractor(UserDAOInterface userDataAccessObject,
                                 PreferenceOutputBoundary userPresenter,
@@ -32,10 +32,13 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
         this.infoDAO = infoDAO;
     }
 
-    /** Executes the use case to edit the adopter user's preferences.
+    /**
+     * Executes the use case to edit the adopter user's preferences.
+     * <p>
+     * Checks if the provided preferences are valid. If any of the fields are invalid, it prepares a failure view.
+     * If both breed and location preferences are valid, it updates the user's preferences and prepares a success view.
      *
-     * @param preferenceData is the preference data for the adopter user which is trying to edit preferences
-     * Validates every field . Then if all are true then store preference.
+     * @param preferenceData the preference data for the adopter user attempting to edit their preferences.
      */
     @Override
     public void execute(PreferenceData preferenceData){

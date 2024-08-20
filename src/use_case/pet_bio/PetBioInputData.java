@@ -1,10 +1,8 @@
 package use_case.pet_bio;
 
 /**
- * Input data for the PetBio use case and encapsulates the pet ID.
- *
- * @version 1.0
- * @since 2024-07-21
+ * Encapsulates the input data required for the PetBio use case.
+ * This includes the pet ID and the username of the user viewing the pet bio.
  */
 public class PetBioInputData {
 
@@ -12,10 +10,10 @@ public class PetBioInputData {
 	private String viewUser;
 
     /**
-     * The constructor for the PetBioInputData which is created with the pet ID.
-     * @param userName 
+     * Constructs a PetBioInputData object with the specified username and pet ID.
      *
-     * @param petID the pet ID being held by the PetBioInputData object
+     * @param userName the username of the user viewing the pet bio
+     * @param petID the ID of the pet whose bio is being accessed
      */
     public PetBioInputData(String userName, int petID) {
         this.petID = petID;
@@ -23,12 +21,17 @@ public class PetBioInputData {
     }
 
     /**
-     * Get the pet ID from the PetBioInputData ojbect.
+     * Returns the pet ID from the PetBioInputData object.
      *
      * @return the pet ID
      */
     public int getPetID() {return petID;}
 
+    /**
+     * Returns the username of the user viewing the pet bio.
+     *
+     * @return the username
+     */
 	public String getViewUser() {
 		return viewUser;
 	}

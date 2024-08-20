@@ -48,7 +48,5 @@ public class GetBreedInteractor implements GetBreedInputBoundary {
         }else{
             this.getBreedPresenter.prepareFailView("Information on " + breed+" could not be found.");
         }
-
-
     }
 }

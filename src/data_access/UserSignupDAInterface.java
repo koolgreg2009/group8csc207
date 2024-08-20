@@ -6,8 +6,6 @@ import entity.user.User;
  * The UserSignupDAInterface defines the methods for accessing user data in the context of user signup operations.
  * It provides methods to check if a user already exists and to save user data.
  *
- * @version 1.0
- * @since 2024-07-19
  */
 public interface UserSignupDAInterface {
 

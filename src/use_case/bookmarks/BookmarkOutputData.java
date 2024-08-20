@@ -2,7 +2,6 @@ package use_case.bookmarks;
 
 import dto.BookmarkDTO;
 import entity.Bookmark;
-
 import java.util.List;
 
 /**

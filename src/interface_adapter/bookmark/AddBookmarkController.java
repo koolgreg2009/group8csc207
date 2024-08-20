@@ -4,8 +4,6 @@ import interface_adapter.SessionManager;
 import use_case.bookmarks.BookmarkInputBoundary;
 import use_case.bookmarks.BookmarkInputData;
 
-import java.util.Scanner;
-
 /**
  * Controller class responsible for adding bookmarks.
  */
@@ -23,6 +21,7 @@ public class AddBookmarkController {
 
     /**
      * Executes the process of adding a bookmark for a given user.
+     * <p>
      * Prompts the user to enter the ID of the pet they want to bookmark and processes the input.
      *
      */

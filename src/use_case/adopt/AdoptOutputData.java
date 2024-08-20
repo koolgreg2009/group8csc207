@@ -25,7 +25,6 @@ public class AdoptOutputData {
         this.ownerEmail = ownerEmail;
         this.ownerPhone = ownerPhone;
         this.petName = petName;
-
     }
 
     /**

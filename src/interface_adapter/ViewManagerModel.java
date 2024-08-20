@@ -4,11 +4,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * The ViewManagerModel class manages the active view in the application and
- * supports property change notifications to listeners.
- *
- * @version 1.0
- * @since 2024-08-08
+ * Manages the currently active view in the application and supports property change notifications.
+ * <p>
+ * This class is responsible for keeping track of which view is currently active and notifying listeners
+ * when the active view changes. It utilizes property change support to handle changes and listener notifications.
  */
 public class ViewManagerModel {
 
@@ -17,8 +16,8 @@ public class ViewManagerModel {
      */
     private String activeViewName;
 
-    /**
-     * The support for managing property change listeners and firing property change events.
+     /**
+     * Manages property change listeners and firing property change events.
      */
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
@@ -34,23 +33,24 @@ public class ViewManagerModel {
     /**
      * Sets the name of the active view.
      *
-     * @param activeView
+     * @param activeView the name of the view to set as active
      */
     public void setActiveView(String activeView) {
         this.activeViewName = activeView;
     }
 
     /**
-     * Fires a property change event to notify listeners that the active view has changed.
+     * Notifies all registered listeners that the active view has changed.
+     * This method fires a property change event with the property name "view".
      */
     public void firePropertyChanged() {
         support.firePropertyChange("view", null, this.activeViewName);
     }
 
     /**
-     * Adds a property change listener to listen for changes in the active view.
+     * Adds a property change listener to be notified of changes to the active view.
      *
-     * @param listener
+     * @param listener the property change listener to add
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
