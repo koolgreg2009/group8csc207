@@ -74,8 +74,11 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         speciesComboBox = new JComboBox<>(preferenceViewModel.getSpeciesOptions().toArray(new String[0]));
+        speciesComboBox.setBackground(Color.white);
         activityLevelComboBox = new JComboBox<>(preferenceViewModel.getActivityLevelOptions().toArray(new String[0]));
+        activityLevelComboBox.setBackground(Color.white);
         genderComboBox = new JComboBox<>(preferenceViewModel.getGenderOptions().toArray(new String[0]));
+        genderComboBox.setBackground(Color.white);
         breedPopupMenu.setInvoker(breedInputField);
         locationPopupMenu.setInvoker(locationInputField);
 
