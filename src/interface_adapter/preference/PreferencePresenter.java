@@ -45,6 +45,7 @@ public class PreferencePresenter implements PreferenceOutputBoundary {
         preferenceViewModel.firePropertyChanged("error");
         displayPetsViewModel.firePropertyChanged();
     }
+
     @Override
     public void prepareBreedFail(){
         PreferenceState state = preferenceViewModel.getState();

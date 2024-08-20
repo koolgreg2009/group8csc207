@@ -1,5 +1,8 @@
 package interface_adapter.preference;
 
+/**
+ * Encapsulation of keys
+ */
 public class PreferenceKeys {
     private String breedKey;
     private String locationKey;

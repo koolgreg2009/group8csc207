@@ -5,6 +5,12 @@ import data_access.APIInfoInterface;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Uses infoDao to retrieve all strings in a data category based on key from inputData
+ * If string from dao matches input string without case sensitivity and string does exactly match input string
+ * add to filtered arraylist.
+ * Invokes presenter with filtered arraylist.
+ */
 public class GetMatchStringInteractor implements GetMatchingStringInputBoundary{
     private final APIInfoInterface infoDAO;
     private final GetMatchingStringOutputBoundary infoPresenter;

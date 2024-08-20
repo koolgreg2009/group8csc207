@@ -35,7 +35,7 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
     /** Executes the use case to edit the adopter user's preferences.
      *
      * @param preferenceData is the preference data for the adopter user which is trying to edit preferences
-     * Checks if any of the fields are invalid. Then if both are true then store preference.
+     * Validates every field . Then if all are true then store preference.
      */
     @Override
     public void execute(PreferenceData preferenceData){
@@ -47,7 +47,7 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
         if(!preference.getLocation().isEmpty() && !infoDAO.exists(preference.getLocation(), keys.getLocationKey())){
             userPresenter.prepareLocationFail();
         }
-        if (infoDAO.exists(preference.getBreeds(), keys.getBreedKey()) && !infoDAO.exists(preference.getLocation(), keys.getLocationKey())) {
+        if (infoDAO.exists(preference.getBreeds(), keys.getBreedKey()) && infoDAO.exists(preference.getLocation(), keys.getLocationKey())) {
             User user = userDataAccessObject.get(preferenceData.getUsername());
             ((AdopterUser) user).setPreferences(preference);
             userDataAccessObject.save(user);

@@ -28,13 +28,10 @@ public class PreferenceState {
 
     private String gender = "";
 
-    private String speciesError = "";
     private String breedError = "";
     private String minAgeError = "";
     private String maxAgeError = "";
-    private String activityLevelError = "";
     private String locationError = "";
-    private String genderError = "";
     private boolean interaction;
     private List<String> matchingStrings = new ArrayList<>();
 
@@ -170,9 +167,6 @@ public class PreferenceState {
         this.gender = gender;
     }
 
-    public String getSpeciesError() {
-        return speciesError;
-    }
     public String getBreedError() {
         return breedError;
     }
@@ -211,13 +205,10 @@ public class PreferenceState {
     }
 
     public void clearError(){
-        speciesError = "";
         breedError = "";
         minAgeError = "";
         maxAgeError = "";
-        activityLevelError = "";
         locationError = "";
-        genderError = "";
     }
 
 }
