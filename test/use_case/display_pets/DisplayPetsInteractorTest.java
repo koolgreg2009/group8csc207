@@ -14,12 +14,15 @@ import dto.PetDTO;
 import entity.Pet;
 import entity.preference.UserPreference;
 import entity.user.AdopterUser;
-import entity.user.User;
-import use_case.display_pets.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Unit tests for the {@link DisplayPetsInteractor} use case class.
+ * This class verifies the correct behavior of the {@link DisplayPetsInteractor} class's execute method
+ * for displaying pets based on user preferences.
+ */
 public class DisplayPetsInteractorTest {
 
     @Mock
@@ -34,11 +37,19 @@ public class DisplayPetsInteractorTest {
     @InjectMocks
     private DisplayPetsInteractor displayPetsInteractor;
 
+    /**
+     * Initializes the mock objects and the {@link DisplayPetsInteractor} instance before each test.
+     */
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Tests the {@link DisplayPetsInteractor#execute(DisplayPetsInputData)} method.
+     * Verifies that the method correctly retrieves pets based on user preferences and
+     * passes the appropriate data to the presenter.
+     */
     @Test
     public void testExecute() {
         // Setup

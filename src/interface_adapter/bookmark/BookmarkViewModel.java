@@ -1,13 +1,10 @@
 package interface_adapter.bookmark;
 
 import dto.BookmarkDTO;
-import dto.PetDTO;
 import interface_adapter.ViewModel;
-import interface_adapter.logged_in.NotificationState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**

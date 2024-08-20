@@ -11,6 +11,12 @@ public class RemoveBookmarkPresenter implements RemoveBookmarkOutputBoundary {
     private final BookmarkViewModel bookmarkViewModel;
     private final DisplayBookmarkController displayBookmarkController;
 
+    /**
+     * Constructs a {@link RemoveBookmarkPresenter} with the specified view model and controller.
+     *
+     * @param bookmarkViewModel the view model used to manage bookmark-related information and notifications
+     * @param displayBookmarkController the controller responsible for updating and displaying bookmark information
+     */
     public RemoveBookmarkPresenter(BookmarkViewModel bookmarkViewModel, DisplayBookmarkController displayBookmarkController) {
         this.bookmarkViewModel = bookmarkViewModel;
         this.displayBookmarkController = displayBookmarkController;
@@ -29,6 +35,5 @@ public class RemoveBookmarkPresenter implements RemoveBookmarkOutputBoundary {
         displayBookmarkController.execute(outputData.getUsername());
 
         bookmarkViewModel.setNotification("Bookmark successfully removed!", true);
-        // displaybookmark usecase
     }
 }

@@ -1,8 +1,6 @@
 package interface_adapter.bookmark;
 
 import dto.BookmarkDTO;
-import dto.PetDTO;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**

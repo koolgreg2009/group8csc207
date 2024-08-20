@@ -9,8 +9,6 @@ import java.util.List;
  * methods for saving users, checking for user existence, retrieving user
  * information, and managing user bookmarks.
  *
- * @version 1.0
- * @since 2024-08-08
  */
 public interface UserDAOInterface {
 
@@ -67,7 +65,6 @@ public interface UserDAOInterface {
 	 * @return A list of usernames whose bookmarks were updated.
 	 */
 	List<String> removePetFromAllUserBookmarks(int petID);
-
 
 	/**
 	 * Checks if a user has bookmarked a pet with the specified ID.

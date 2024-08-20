@@ -3,41 +3,30 @@ package interface_adapter.signup;
 import interface_adapter.*;
 import interface_adapter.display_pets.DisplayPetsState;
 import interface_adapter.display_pets.DisplayPetsViewModel;
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
 import interface_adapter.preference.PreferenceViewModel;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupOutputData;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 /**
  * The presenter for the signup process, responsible for updating the view models
  * based on the results from the signup use case. It handles success and failure
- * scenarios by interacting with the `SignupViewModel` and `LoginViewModel`.
- *
- * @version 1.0
- * @since 2024-07-20
+ * scenarios by interacting with the `SignupViewModel` and `DisplayPetsViewModel`,
+ * and manages view transitions through the `ViewManagerModel`.
  */
 public class SignupPresenter implements SignupOutputBoundary {
-
-
-
-    /** The model for managing views and switching between them. */
     private final ViewManagerModel viewManagerModel;
-
     private final PreferenceViewModel preferenceViewModel;
-
     private final SignupViewModel signupViewModel;
-
     private final DisplayPetsViewModel displayPetsViewModel;
+
     /**
      * Constructs a new SignupPresenter with the given view models and view manager model.
      *
-     * @param viewManagerModel
-     * @param signupViewModel
-     * @param preferenceViewModel
+     * @param viewManagerModel          The view manager model responsible for handling
+     *                                  view transitions.
+     * @param preferenceViewModel       The view model for managing user preferences.
+     * @param signupViewModel           The view model for managing signup-related state.
+     * @param displayPetsViewModel      The view model for displaying pet listings.
      */
     public SignupPresenter(ViewManagerModel viewManagerModel, PreferenceViewModel preferenceViewModel, SignupViewModel signupViewModel, DisplayPetsViewModel displayPetsViewModel) {
         this.viewManagerModel = viewManagerModel;
@@ -48,9 +37,9 @@ public class SignupPresenter implements SignupOutputBoundary {
 
     /**
      * Prepares the view for a successful signup by updating the login view model
-     * and switching to the login view.
+     * with the current username and transitioning to the preferences view.
      *
-     * @param response
+     * @param response The output data from the signup use case containing user details.
      */
     @Override
     public void prepareSuccessView(SignupOutputData response) {
@@ -59,14 +48,13 @@ public class SignupPresenter implements SignupOutputBoundary {
         state.setUsername(SessionManager.getCurrentUser());
         viewManagerModel.setActiveView(preferenceViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-
     }
 
     /**
      * Prepares the view for a failed signup by updating the signup view model
      * with the provided error message.
      *
-     * @param error
+     * @param error The error message to be displayed in the signup view.
      */
     @Override
     public void prepareFailView(String error) {
@@ -74,5 +62,4 @@ public class SignupPresenter implements SignupOutputBoundary {
         signupState.setUsernameError(error);
         signupViewModel.firePropertyChanged();
     }
-
 }

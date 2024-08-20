@@ -3,7 +3,6 @@ package use_case.display_bookmark_pets;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import dto.BookmarkDTO;
-import dto.PetDTO;
 import entity.Bookmark;
 import entity.Pet;
 import entity.user.AdopterUser;
@@ -11,21 +10,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import use_case.display_bookmark_pets.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link DisplayBookmarkInteractor} use case class.
+ * This class verifies the correct behavior of the {@link DisplayBookmarkInteractor} class's execute method
+ * for handling the display of bookmarked pets.
+ */
 class DisplayBookmarkInteractorTest {
     private PetDAOInterface petDAO;
     private UserDAOInterface userDAO;
     private DisplayBookmarkPetsOutputBoundary presenter;
     private DisplayBookmarkInteractor interactor;
 
+    /**
+     * Sets up the test environment before each test method is executed.
+     * Mocks dependencies for {@link DisplayBookmarkInteractor} and initializes the {@link DisplayBookmarkInteractor} instance.
+     */
     @BeforeEach
     void setUp() {
         petDAO = Mockito.mock(PetDAOInterface.class);
@@ -34,6 +39,10 @@ class DisplayBookmarkInteractorTest {
         interactor = new DisplayBookmarkInteractor(userDAO, petDAO, presenter);
     }
 
+    /**
+     * Tests the {@link DisplayBookmarkInteractor#execute(DisplayBookmarkInputData)} method when the user has no bookmarks.
+     * Verifies that the presenter’s displayPetsOutput method is called with an empty list of bookmarks.
+     */
     @Test
     void testExecuteNoBookmarks() {
         AdopterUser user = new AdopterUser("user1", "password", "User One", "email1@example.com", "123");
@@ -49,6 +58,10 @@ class DisplayBookmarkInteractorTest {
         assertEquals(0, outputData.getBookmarks().size());
     }
 
+    /**
+     * Tests the {@link DisplayBookmarkInteractor#execute(DisplayBookmarkInputData)} method when the user has bookmarks.
+     * Verifies that the presenter’s displayPetsOutput method is called with the correct bookmarks and their corresponding pet details.
+     */
     @Test
     void testExecuteWithBookmarks() {
         AdopterUser user = new AdopterUser("user1", "password", "User One", "email1@example.com", "123");

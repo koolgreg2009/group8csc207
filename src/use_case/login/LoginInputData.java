@@ -1,22 +1,21 @@
 package use_case.login;
 
 /**
- * The LoginInputData class encapsulates the data required for logging in a user.
- * It includes fields for username and password.
- *
- * @version 1.0
- * @since 2024-07-19
+ * Encapsulates the data required for logging in a user.
+ * <p>
+ * This class holds the username and password for the login process. It ensures that the provided
+ * data is properly encapsulated and can be used by the login use case.
+ * </p>
  */
 public class LoginInputData {
-
     final private String username;
     final private String password;
 
     /**
      * Constructs a new LoginInputData object with the specified username and password.
      *
-     * @param username
-     * @param password
+     * @param username the username of the user attempting to log in
+     * @param password the password of the user attempting to log in
      */
     public LoginInputData(String username, String password) {
         this.username = username.trim();
@@ -26,7 +25,7 @@ public class LoginInputData {
     /**
      * Returns the username of the user attempting to log in.
      *
-     * @return The username.
+     * @return the username
      */
     String getUsername() {
         return username;
@@ -35,7 +34,7 @@ public class LoginInputData {
     /**
      * Returns the password of the user attempting to log in.
      *
-     * @return The password.
+     * @return the password
      */
     String getPassword() {
         return password;

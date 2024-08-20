@@ -12,12 +12,48 @@ import interface_adapter.get_breed.GetBreedController;
 import interface_adapter.pet_bio.PetBioState;
 import interface_adapter.pet_bio.PetBioViewModel;
 
+/**
+ * The {@code PetDetailView} class represents a detailed view of a pet's information.
+ * It displays various details about a pet including name, breed, age, species, bio, location, contact details, and an image.
+ * This class also handles updating the pet details when the state changes and provides functionality to view the pet's breed and navigate back.
+ */
 public class PetDetailView extends JPanel implements PropertyChangeListener {
     private static final long serialVersionUID = 1L;
     public static final String viewName = "Pet Bio";
     private final DisplayPetsController displayPetsController;
     private final GetBreedController getBreedController;
 
+    private javax.swing.JTextField ageText;
+    private javax.swing.JButton backButton;
+    private javax.swing.JButton breedButton;
+    private javax.swing.JTextField breedText;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField nameText;
+    private javax.swing.JTextField speciesesText;
+    private JLabel imageLabel;
+    private JLabel jLabelBio;
+    private JTextArea bioText;
+    private JLabel jLabelLocation;
+    private JTextField locationText;
+    private JLabel jLabelEmail;
+    private JTextField emailText;
+    private JLabel jLabelPhoneNum;
+    private JTextField phoneNumText;
+    private JLabel jLabelActivityLevel;
+    private JTextField activityLevelText;
+    private JScrollPane bioScrollPane;
+
+    private String viewUser;
+
+    /**
+     * Constructs a {@code PetDetailView} with the specified {@code PetBioViewModel}, {@code DisplayPetsController}, and {@code GetBreedController}.
+     *
+     * @param petDetailViewModel the {@code PetBioViewModel} that provides the pet's details and manages state changes.
+     * @param displayPetsController the {@code DisplayPetsController} used to navigate back to the pet listings.
+     * @param getBreedController the {@code GetBreedController} used to retrieve breed information.
+     */
     public PetDetailView(PetBioViewModel petDetailViewModel, DisplayPetsController displayPetsController, GetBreedController getBreedController) {
         initComponents();
         this.displayPetsController = displayPetsController;
@@ -25,10 +61,12 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
         petDetailViewModel.addPropertyChangeListener(this);
     }
 
+    /**
+     * Initializes the UI components and layout of the {@code PetDetailView}.
+     * This method sets up labels, text fields, buttons, and the layout of the panel.
+     */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
-
         jLabel1 = new javax.swing.JLabel();
         nameText = new javax.swing.JTextField();
         breedButton = new JButton();
@@ -207,40 +245,35 @@ public class PetDetailView extends JPanel implements PropertyChangeListener {
                                 .addComponent(backButton)
                                 .addContainerGap(95, Short.MAX_VALUE))
         );
-    }// </editor-fold>
+    }
 
+    /**
+     * Handles the action event when the back button is clicked.
+     * This method triggers the {@code DisplayPetsController} to execute and navigate back to the pet listings.
+     *
+     * @param evt the action event triggered by clicking the back button.
+     */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
         displayPetsController.execute(viewUser);
     }
+
+    /**
+     * Handles the action event when the breed button is clicked.
+     * This method triggers the {@code GetBreedController} to execute and retrieve information about the pet's breed.
+     *
+     * @param evt the action event triggered by clicking the breed button.
+     */
     private void breedButtonActionPerformed(java.awt.event.ActionEvent evt) {
         getBreedController.execute(breedText.getText());
     }
 
-    // Variables declaration - do not modify
-    private javax.swing.JTextField ageText;
-    private javax.swing.JButton backButton;
-    private javax.swing.JButton breedButton;
-    private javax.swing.JTextField breedText;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField nameText;
-    private javax.swing.JTextField speciesesText;
-    private JLabel imageLabel;
-    private JLabel jLabelBio;
-    private JTextArea bioText;
-    private JLabel jLabelLocation;
-    private JTextField locationText;
-    private JLabel jLabelEmail;
-    private JTextField emailText;
-    private JLabel jLabelPhoneNum;
-    private JTextField phoneNumText;
-    private JLabel jLabelActivityLevel;
-    private JTextField activityLevelText;
-    private JScrollPane bioScrollPane;
-
-    private String viewUser;
-
+    /**
+     * Listens for property changes in the {@code PetBioViewModel}.
+     * When a property change event occurs, this method updates the pet details displayed on the panel
+     * and adjusts the pet image according to its URL.
+     *
+     * @param evt the property change event containing the updated {@code PetBioState}.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getNewValue() instanceof PetBioState) {

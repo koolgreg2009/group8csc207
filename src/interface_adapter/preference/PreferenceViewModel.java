@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Manages the state and behavior of the preference view, including user input and validation.
+ * It provides options for user preferences, manages state, handles user input, and notifies
+ * listeners of changes in the preference state.
+ */
 public class PreferenceViewModel extends ViewModel {
 
     /** The label for the login button. */
@@ -33,41 +38,58 @@ public class PreferenceViewModel extends ViewModel {
     private Timer delayTimer;
     private Timer interactionTimer;
 
+    /**
+     * Constructs a new PreferenceViewModel with default settings.
+     */
     public PreferenceViewModel() {
         super("preference");
     }
+
     /**
      * Sets the state of the preference view model.
      *
-     * @param state the state that is being set
+     * @param state The new preference state to set.
      */
     public void setState(PreferenceState state) {
         this.state = state;
     }
 
-
+    /**
+     * PropertyChangeSupport to manage property change listeners.
+     */
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     /**
-     * Fires a property change event to notify listeners of changes in the
-     * login state.
+     * Fires a property change event to notify listeners of changes in the preference state.
+     *
+     * @param propertyName The name of the property that has changed.
      */
     public void firePropertyChanged(String propertyName) {
         support.firePropertyChange(propertyName, null, this.state);
     }
 
+    /**
+     * Fires a property change event with a specific key.
+     *
+     * @param key The key for the property change event.
+     */
     public void fireTimePropertyChanged(String key) {
         support.firePropertyChange(key, null, this.state);
     }
 
+    /**
+     * This method is a placeholder for firing property change events without specifying
+     * a particular property name. It is intended to be overridden by subclasses to provide
+     * specific implementations for notifying listeners of changes. In its current form,
+     * this method does not perform any action.
+     */
     @Override
     public void firePropertyChanged() {}
 
     /**
-     * Adds a property change listener to be notified of changes in the preference
-     * state.
+     * Adds a property change listener to be notified of changes in the preference state.
      *
-     * @param listener the listener for the preference property changes
+     * @param listener The listener to add.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
@@ -81,23 +103,45 @@ public class PreferenceViewModel extends ViewModel {
     public PreferenceState getState() {
         return state;
     }
+
+    /**
+     * Clears the current state and resets it to default values.
+     */
     public void clearState(){
         state = new PreferenceState();
     }
 
+    /**
+     * Gets the list of available species options.
+     *
+     * @return The list of species options.
+     */
     public List<String> getSpeciesOptions() {
         return speciesOptions;
     }
+
+    /**
+     * Gets the list of available activity level options.
+     *
+     * @return The list of activity level options.
+     */
     public List<String> getActivityLevelOptions() {
         return activityLevelOptions;
     }
+
+    /**
+     * Gets the list of available gender options.
+     *
+     * @return The list of gender options.
+     */
     public List<String> getGenderOptions() {
         return genderOptions;
     }
 
     /**
-     * Validates fields that dont require DAO from state like åge
-     * @return
+     * Validates preference fields that do not require DAO interaction, such as age fields.
+     *
+     * @return True if all fields are valid, false otherwise.
      */
     public boolean validatePreferences() {
         boolean isValid = true;
@@ -114,8 +158,10 @@ public class PreferenceViewModel extends ViewModel {
     }
 
     /**
-     * Validate min age. If empty string set minage to 0 which is no preference
-     * @return bool whether if pass
+     * Validates the minimum age preference.
+     * If the minimum age is empty, it is set to "0" (no preference).
+     *
+     * @return True if the minimum age is valid, false otherwise.
      */
     private boolean validateMinAge() {
         if (!state.getMinAge().isEmpty()) {
@@ -138,8 +184,10 @@ public class PreferenceViewModel extends ViewModel {
     }
 
     /**
-     * Validate max age. If empty string set the default value which is 0 which means no pref
-     * @return
+     * Validates the maximum age preference.
+     * If the maximum age is empty, it is set to "0" (no preference).
+     *
+     * @return True if the maximum age is valid, false otherwise.
      */
     private boolean validateMaxAge() {
         if (!state.getMaxAge().isEmpty()) {
@@ -166,12 +214,11 @@ public class PreferenceViewModel extends ViewModel {
         return true;
     }
 
-
     /**
-     * makes strings properly formatted for dao to work. taking into account of spaces between words like domestic short
-     * hair
-     * @param input: string
-     * @return: capitalized string
+     * Capitalizes the first letter of each word in the input string.
+     *
+     * @param input The input string to format.
+     * @return The formatted string with capitalized first letters.
      */
     public String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
@@ -190,6 +237,12 @@ public class PreferenceViewModel extends ViewModel {
         return capitalizedWords.toString().trim();
     }
 
+    /**
+     * Capitalizes the first letter of each word in the input array of strings.
+     *
+     * @param input The input array of strings to format.
+     * @return A list of formatted strings with capitalized first letters.
+     */
     public List<String> capitalizeFirstLetter(String[] input) {
         List<String> newList = new ArrayList<>();
         if (input.length != 1 | !input[0].isEmpty()) {
@@ -199,9 +252,11 @@ public class PreferenceViewModel extends ViewModel {
     }
 
     /**
-     * Updates component input to state and starts conditions to initiate dropdown menu.
-     * @param keyChar: input key entered
-     * @param key: key to indicate what field user is interacting with
+     * Handles user input and updates the preference state accordingly.
+     * Initiates dropdown menu conditions based on user input.
+     *
+     * @param keyChar The character input by the user.
+     * @param key     The key indicating which field the user is interacting with.
      */
     public void handleUserInput(char keyChar, String key){
         PreferenceState currentState = getState();
@@ -219,10 +274,11 @@ public class PreferenceViewModel extends ViewModel {
     }
 
     /**
-     * Condition: dropdown only shows after DELAY_MS seconds.
-     * If there is already a timer restart timer
-     * If after DELAY_MS ifInteraction is true then trigger view observer to execute usecase
-     * @param key
+     * Creates a delay before showing the dropdown menu based on user input.
+     * If a timer is already running, it is restarted.
+     * After the delay, if interaction is true, triggers a view observer to execute use case.
+     *
+     * @param key The key indicating which field the user is interacting with.
      */
     private void createDelay(String key) {
         if (delayTimer != null && delayTimer.isRunning()) {
@@ -237,9 +293,8 @@ public class PreferenceViewModel extends ViewModel {
     }
 
     /**
-     * Condition: dropdown only shows after DELAY_MS seconds of previous user interaction, setting boolean isInteraction
-     * to true after DELAY_MS
-     * If there is already a timer restart timer
+     * Sets the interaction status to true after a delay. If a timer is already running,
+     * it is restarted.
      */
     private void userInteracted() {
         state.setInteraction(true);
@@ -252,7 +307,5 @@ public class PreferenceViewModel extends ViewModel {
         interactionTimer.setRepeats(false);
         interactionTimer.start();
     }
-
-
 }
 

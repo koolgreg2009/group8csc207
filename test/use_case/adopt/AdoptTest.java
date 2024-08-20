@@ -16,12 +16,20 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link Adopt} use case class.
+ * This class verifies the correct behavior of the {@link Adopt} class's execute method for handling pet adoption scenarios.
+ */
 class AdoptTest {
     private PetDAOInterface petDAO;
     private UserDAOInterface userDAO;
     private AdoptOutputBoundary presenter;
     private Adopt interactor;
 
+    /**
+     * Sets up the test environment before each test method is executed.
+     * Mocks dependencies for {@link Adopt} and initializes the {@link Adopt} instance.
+     */
     @BeforeEach
     void setUp() {
         petDAO = Mockito.mock(PetDAOInterface.class);
@@ -30,6 +38,10 @@ class AdoptTest {
         interactor = new Adopt(petDAO, presenter, userDAO);
     }
 
+    /**
+     * Tests the {@link Adopt#execute(AdoptInputData)} method when the pet is already adopted.
+     * Verifies that the presenter’s prepareAdopt method is not called if the pet is not available.
+     */
     @Test
     void testExecutePetAlreadyAdopted() {
         Pet pet = Mockito.mock(Pet.class);
@@ -42,6 +54,11 @@ class AdoptTest {
         verify(presenter, never()).prepareAdopt(any());
     }
 
+    /**
+     * Tests the {@link Adopt#execute(AdoptInputData)} method for a successful adoption scenario.
+     * Verifies that the pet is marked as unavailable, saved, and notifications are sent to users.
+     * Also checks that the presenter is provided with the correct adoption details.
+     */
     @Test
     void testExecuteSuccessfulAdoption() {
         Pet pet = Mockito.mock(Pet.class);

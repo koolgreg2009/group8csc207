@@ -11,11 +11,19 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link GetBreedInteractor} use case class.
+ * This class verifies the behavior of the {@link GetBreedInteractor} class's execute method
+ * for retrieving breed information from the {@link CatDAOInterface} and presenting it via the {@link GetBreedOutputBoundary}.
+ */
 class GetBreedInteractorTest {
     private CatDAOInterface catDAO;
     private GetBreedOutputBoundary presenter;
     private GetBreedInteractor interactor;
 
+    /**
+     * Initializes the mock objects and the {@link GetBreedInteractor} instance before each test.
+     */
     @BeforeEach
     void setUp() {
         catDAO = Mockito.mock(CatDAOInterface.class);
@@ -23,6 +31,10 @@ class GetBreedInteractorTest {
         interactor = new GetBreedInteractor(catDAO, presenter);
     }
 
+    /**
+     * Tests the {@link GetBreedInteractor#execute(GetBreedInputData)} method when breed information is found.
+     * Verifies that the method correctly retrieves breed information from the DAO and passes the data to the presenter.
+     */
     @Test
     void testExecuteBreedFound() {
         HashMap<String, Object> breedInfo = new HashMap<>();
@@ -55,6 +67,11 @@ class GetBreedInteractorTest {
         assertEquals("https://example.com/persian.jpg", outputData.getImgUrl());
     }
 
+    /**
+     * Tests the {@link GetBreedInteractor#execute(GetBreedInputData)} method when breed information is not found.
+     * Verifies that the method correctly handles the case where the requested breed information is unavailable
+     * and provides an appropriate error message to the presenter.
+     */
     @Test
     void testExecuteBreedNotFound() {
         when(catDAO.getBreedInformation("UnknownBreed")).thenReturn(null);

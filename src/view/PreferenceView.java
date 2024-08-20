@@ -21,9 +21,6 @@ import java.util.List;
 /**
  * The PreferenceView class represents the preference screen where users can input and save their preferences.
  * It extends {@code JPanel} and implements {@code ActionListener} and {@code PropertyChangeListener}.
- *
- * @version 1.0
- * @since 2024-08-13
  */
 public class PreferenceView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -48,32 +45,21 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
     final JTextField locationInputField = new JTextField(15);
     private final JLabel locationErrorField = new JLabel();
 
-    /**
-     * Saves all current user input in text fields and stores in state. Then, run validation that does not require
-     * DAO such as checking for negative numbers through validatePreference(). This method sets error if returns false.
-     * Also passes through keys of fields that needs to be validated in the DAO. If validation returns false then update
-     * error.
-     */
     private final JButton save;
-    /**
-     * Clears all inputs in UI and clears state.
-     */
     private final JButton clear;
     private final PreferenceController preferenceController;
     private final JPopupMenu breedPopupMenu = new JPopupMenu();
     private final JPopupMenu locationPopupMenu = new JPopupMenu();
-    /**
-     * Encapsulation of the current dropdown menu pair that user is interacting with.
-     */
+
     private ComponentPair currentComponent;
 
     /**
-     * Constructs a PreferenceView object.
+     * Constructs a PreferenceView object with the specified view model, controllers, and preferences.
      *
-     * @param preferenceViewModel The PreferenceViewModel associated with this view.
-     * @param controller The PreferenceController for handling user actions.
-     * @param getMatchingController controller for finding matching strings.
-     * @param displayPetsController The displayPetsController to refresh pets.
+     * @param preferenceViewModel The {@code PreferenceViewModel} associated with this view.
+     * @param controller The {@code PreferenceController} for handling user actions.
+     * @param getMatchingController The {@code GetMatchingController} for finding matching strings.
+     * @param displayPetsController The {@code DisplayPetsController} to refresh pet displays.
      */
     public PreferenceView(PreferenceViewModel preferenceViewModel, PreferenceController controller,
                           GetMatchingController getMatchingController, DisplayPetsController displayPetsController) {
@@ -319,18 +305,24 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         this.add(buttons);
     }
 
+    /**
+     * Handles action events for buttons and other interactive components.
+     *
+     * @param evt An {@code ActionEvent} object describing the action event.
+     */
     @Override
     public void actionPerformed(ActionEvent evt) {
     }
 
     /**
+     * Handles property change events and updates the view accordingly.
      *
-     * @param evt A PropertyChangeEvent object describing the event source
-     *          and the property that has changed.
-     *            Possible events:
-     *              - matches: MatchingPresenter updates new matching lists to state
-     *              - error: PreferencePresenter updates new errors to state
-     *              - any key: timer from PreferenceViewModel triggers use case call
+     * @param evt A {@code PropertyChangeEvent} object describing the event source
+     *            and the property that has changed. Possible events include:
+     *            - "matches": Updates the popup menu with new matching lists.
+     *            - preferenceViewModel.BREED_KEY: Updates breed matching.
+     *            - preferenceViewModel.LOCATION_KEY: Updates location matching.
+     *            - "error": Updates error messages in the view.
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -346,7 +338,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         }
 
     /**
-     * Updates error messages to UI from state.
+     * Updates error messages in the UI from the state.
      */
     private void updateErrorView() {
         PreferenceState state = preferenceViewModel.getState();
@@ -354,13 +346,13 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
         maxAgeErrorField.setText(state.getMaxAgeError());
         breedErrorField.setText(state.getBreedError());
         locationErrorField.setText(state.getLocationError());
-
     }
 
     /**
-     * Updates the suggested pop up list with new list from the matching strings in state.
-     * When user selects on a menuItem sets current text field stored in current component to that
-     * @param currentComponent The current textfield and component box being mutated
+     * Updates the suggested popup list with new matching strings from the state.
+     * When a user selects a menu item, it sets the current text field's text to the selected option.
+     *
+     * @param currentComponent The {@code ComponentPair} containing the current text field and popup menu being updated.
      */
     private void updatePopup(ComponentPair currentComponent) {
         JPopupMenu popupMenu = currentComponent.getPopupMenu();

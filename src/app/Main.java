@@ -22,15 +22,31 @@ import view.*;
 
 import static app.NotifViewUseCaseFactory.createNotifView;
 
+/**
+ * The Main class serves as the entry point to the Pet Adoption application.
+ * It initializes the application's main window, sets up the different views
+ * using a CardLayout, and creates instances of the necessary view models
+ * and data access objects.
+ * <p>
+ * The application displays a series of views to the user, including login,
+ * signup, pet display, bookmarks, notifications, and user profile.
+ * </p>
+ */
 public class Main {
+
+    /**
+     * The main method initializes and launches the Pet Adoption application.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
 
         JFrame application = new JFrame("Pet Adoption");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.setResizable(true);
         application.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        CardLayout cardLayout = new CardLayout();
 
+        CardLayout cardLayout = new CardLayout();
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
@@ -67,7 +83,8 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, preferenceViewModel, userDAO, displayPetsViewModel);
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel,
+                preferenceViewModel, userDAO, displayPetsViewModel);
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, displayPetsViewModel,

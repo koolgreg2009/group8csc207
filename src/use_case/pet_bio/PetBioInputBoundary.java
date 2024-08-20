@@ -1,17 +1,15 @@
 package use_case.pet_bio;
 
 /**
- * The PetBioInputBoundary interface is the input boundary for the pet bio use case.
- * It contains the abstract methods that will be implemented by the PetBioInteractor class.
- *
- * @version 1.0
- * @since 2024-07-21
+ * The PetBioInputBoundary interface defines the input boundary for the pet bio use case.
+ * It provides an abstract method for executing the use case with the provided input data.
  */
 public interface PetBioInputBoundary {
 
-    /** An abstract execute class that will be implemented in the PetBioInteractor class.
+    /**
+     * Executes the use case with the given input data.
      *
-     * @param petBioInputData the PetBioInputData that is being picked up through the input boundary.
+     * @param petBioInputData the input data required for the pet bio use case
      */
     void execute(PetBioInputData petBioInputData);
 }
