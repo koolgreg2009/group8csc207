@@ -9,10 +9,21 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * The {@code FileApiInfoDAO} class implements the {@link APIInfoInterface} and is responsible for handling
+ * the retrieval, parsing, and saving of API data related to cat breeds and locations.
+ * It interacts with a JSON file to store and manage the retrieved data.
+ */
 public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterface{
-
     private final Map<String, List<String>> data = new HashMap<>();
 
+    /**
+     * Constructs a {@code FileApiInfoDAO} instance and initializes it with data from the specified JSON file.
+     * If the JSON file is empty, it retrieves breed and location data from the API and saves it.
+     *
+     * @param jsonPath the path to the JSON file that will be used to store the data.
+     * @throws IOException if an I/O error occurs while reading the JSON file or interacting with the API.
+     */
     public FileApiInfoDAO(String jsonPath) throws IOException {
         super(jsonPath);
         if (jsonFile.length() == 0) {
@@ -23,8 +34,14 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new JavaTimeModule());
         data.putAll(objectMapper.readValue(jsonFile, typeRef));
-
     }
+
+    /**
+     * Retrieves a list of data associated with the specified key.
+     *
+     * @param key the key used to identify the data to retrieve.
+     * @return a list of strings representing the data associated with the specified key.
+     */
     @Override
     public List<String> getData(String key) {
         return data.get(key);
@@ -70,9 +87,21 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
     }
     public void save(String key, List<String> names){
         data.put(key, names);
-        save();
-
     }
+    /**
+     * Saves the given data to the JSON file under the specified key.
+     *
+     * @param key the key used to identify the data to save.
+     * @param breedNames a list of strings representing the breed names to save.
+     */
+    public void save(String key, List<String> breedNames){
+        data.put(key, breedNames);
+        save();
+    }
+
+    /**
+     * Persists the current state of the data to the JSON file.
+     */
     void save() {
         try {
             getObjectMapper().writeValue(jsonFile, data);
@@ -82,11 +111,25 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
         }
     }
 
+    /**
+     * Checks if a specific string exists in the data associated with the specified key.
+     *
+     * @param string the string to check for existence.
+     * @param key the key used to identify the data to check against.
+     * @return {@code true} if the string exists, {@code false} otherwise.
+     */
     @Override
     public boolean exists(String string, String key){
         return data.get(key).contains(string);
     }
 
+    /**
+     * Checks if all of the specified strings exist in the data associated with the specified key.
+     *
+     * @param names a list of strings to check for existence.
+     * @param key the key used to identify the data to check against.
+     * @return {@code true} if all the strings exist, {@code false} otherwise.
+     */
     public boolean exists(List<String> names, String key){
         for (String name : names){
             if(!data.get(key).contains(name)){

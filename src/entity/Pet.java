@@ -2,9 +2,6 @@ package entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents all the information associated with a pet.
  * <p>
@@ -205,6 +202,15 @@ public class Pet {
         return imgUrl;
     }
 
+    /**
+     * Returns a string representation of the {@link Pet} object.
+     * <p>
+     * The string representation includes the pet's owner, email, phone number, age, breed, species,
+     * biography, activity level, gender, location, and availability status.
+     * </p>
+     *
+     * @return a string representation of the {@link Pet} object, including all its key attributes
+     */
     @Override
     public String toString() {
         return "Pet [owner=" + owner + ", email=" + email + ", phoneNum=" + phoneNum + ", petAge=" + petAge +

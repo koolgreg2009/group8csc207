@@ -6,11 +6,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * ViewModel for the signup process, this handles communication between view and presenter including the state of the
- * signup process
- *
- * @version 1.0
- * @since 2024-07-20
+ * ViewModel for the signup process, handling communication between the view and presenter, including
+ * managing the state of the signup process.
  */
 public class SignupViewModel extends ViewModel {
 
@@ -27,8 +24,10 @@ public class SignupViewModel extends ViewModel {
 
     private SignupState state = new SignupState();
 
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
     /**
-     * Constructor for the Signup View Model with a default title "sign up".
+     * Constructs a new SignupViewModel with a default title "sign up".
      */
     public SignupViewModel() {
         super("sign up");
@@ -37,37 +36,34 @@ public class SignupViewModel extends ViewModel {
     /**
      * Sets the state of the signup process.
      *
-     * @param state the state that the signup process is being set to
+     * @param state the SignupState to set for the signup process
      */
     public void setState(SignupState state) {
         this.state = state;
     }
 
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-
-    // This is what the Signup Presenter will call to let the ViewModel know
-    // to alert the View
-
     /**
-     * Lets the listeners know that there has been a change in the state property.
+     * Notifies all registered listeners that the state property has changed.
+     * This method is used to propagate changes in the signup state to any
+     * listeners that are interested in the state changes.
      */
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
 
     /**
-     * Adds a listener for any property changes.
+     * Adds a PropertyChangeListener to listen for changes in the state property.
      *
-     * @param listener the listener being added
+     * @param listener the PropertyChangeListener to be added
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
 
     /**
-     * Gets the current state of the signup process.
+     * Retrieves the current state of the signup process.
      *
-     * @return the state that the signup process is in
+     * @return the SignupState representing the current state of the signup process
      */
     public SignupState getState() {
         return state;

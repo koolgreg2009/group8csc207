@@ -10,8 +10,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 /**
- *
- * // isadd is for whether this is add or remove bookmark panel
+ * {@code PetListingPanel} is a JPanel that displays information about a specific pet.
+ * It provides buttons for adopting the pet, adding or removing bookmarks, and viewing more information.
+ * This panel also displays various pet attributes including name, age, breed, species, and gender.
  */
 public class PetListingPanel extends javax.swing.JPanel {
 	private PetActionView petActionView;
@@ -19,9 +20,25 @@ public class PetListingPanel extends javax.swing.JPanel {
 	private PetDTO pet;
     private boolean isAdd;
 
+    private javax.swing.JButton adoptButton;
+    private javax.swing.JButton bookmarkButton;
+    private javax.swing.JButton moreInfoButton;
+    private javax.swing.JLabel jLabelName;
+    private javax.swing.JLabel jLabelAge;
+    private javax.swing.JLabel jLabelBreed;
+    private javax.swing.JLabel jLabelSpecies;
+    private javax.swing.JLabel jLabelGender;
+
+    /**
+     * Constructs a {@code PetListingPanel} instance with the given parameters.
+     *
+     * @param petActionView the {@code PetActionView} instance that handles actions related to pets.
+     * @param pet the {@code PetDTO} instance representing the pet to be displayed.
+     * @param isAdd a boolean indicating whether the panel should display an "Add Bookmark" button (true)
+     *              or a "Remove Bookmark" button (false).
+     */
 	public PetListingPanel(PetActionView petActionView, PetDTO pet, boolean isAdd) {
 		initComponents(isAdd);
-//		this.setPreferredSize(new Dimension(50, 50));
 		this.petActionView = petActionView;
 		this.pet = pet;
 		loadData();
@@ -29,6 +46,10 @@ public class PetListingPanel extends javax.swing.JPanel {
         this.setBorder(new LineBorder(Color.white, 10));
 	}
 
+    /**
+     * Loads the pet data into the UI components of the panel.
+     * This method sets the text of the labels to display the pet's name, age, breed, species, and gender.
+     */
 	private void loadData() {
 		jLabelName.setText("Name: " + this.pet.getName());
         jLabelAge.setText("Age: " + pet.getPetAge()+" year(s) old");
@@ -37,6 +58,12 @@ public class PetListingPanel extends javax.swing.JPanel {
 		jLabelGender.setText("Gender: " + pet.getGender());
 	}
 
+    /**
+     * Initializes the UI components and layout of the {@code PetListingPanel}.
+     * Configures buttons for adopting, bookmarking, and viewing more information about the pet.
+     *
+     * @param isAdd a boolean indicating whether to display the "Add Bookmark" or "Remove Bookmark" button.
+     */
 	@SuppressWarnings("unchecked")
     private void initComponents(boolean isAdd) {
         adoptButton = new javax.swing.JButton();
@@ -58,9 +85,11 @@ public class PetListingPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(223, 241, 249));
 
-        adoptButton.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        adoptButton.setFont(new java.awt.Font("Calibri", 1, 14));
         adoptButton.setText("Adopt");
-        adoptButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(103, 153, 242), new java.awt.Color(163, 205, 243)));
+        adoptButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
+                null, null, new java.awt.Color(103, 153, 242),
+                new java.awt.Color(163, 205, 243)));
         adoptButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,8 +97,10 @@ public class PetListingPanel extends javax.swing.JPanel {
             }
         });
 
-        bookmarkButton.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        bookmarkButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(103, 153, 242), new java.awt.Color(163, 205, 243)));
+        bookmarkButton.setFont(new java.awt.Font("Calibri", 1, 14));
+        bookmarkButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
+                null, null, new java.awt.Color(103, 153, 242),
+                new java.awt.Color(163, 205, 243)));
         if (isAdd) {
             bookmarkButton.setText("Add Bookmark");
             bookmarkButton.addActionListener(new java.awt.event.ActionListener() {
@@ -87,9 +118,11 @@ public class PetListingPanel extends javax.swing.JPanel {
                 }
             });
         }
-        moreInfoButton.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        moreInfoButton.setFont(new java.awt.Font("Calibri", 1, 14));
         moreInfoButton.setText("More Information");
-        moreInfoButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, new java.awt.Color(103, 153, 242), new java.awt.Color(163, 205, 243)));
+        moreInfoButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED,
+                null, null, new java.awt.Color(103, 153, 242),
+                new java.awt.Color(163, 205, 243)));
         moreInfoButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,15 +130,15 @@ public class PetListingPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabelName.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabelName.setFont(new java.awt.Font("Calibri", 0, 14));
 
-        jLabelAge.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabelAge.setFont(new java.awt.Font("Calibri", 0, 14));
 
-        jLabelBreed.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabelBreed.setFont(new java.awt.Font("Calibri", 0, 14));
 
-        jLabelSpecies.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabelSpecies.setFont(new java.awt.Font("Calibri", 0, 14));
 
-        jLabelGender.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabelGender.setFont(new java.awt.Font("Calibri", 0, 14));
 
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -127,15 +160,19 @@ public class PetListingPanel extends javax.swing.JPanel {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, true)
-                                        .addComponent(moreInfoButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 233, 233)
+                                        .addComponent(moreInfoButton, javax.swing.GroupLayout.Alignment.LEADING,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, 233, 233)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(bookmarkButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(bookmarkButton, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(adoptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addComponent(adoptButton, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(3, 3, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{jLabelName, jLabelBreed, jLabelSpecies, jLabelGender});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{jLabelName, jLabelBreed,
+                jLabelSpecies, jLabelGender});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[]{adoptButton, bookmarkButton});
 
@@ -160,29 +197,46 @@ public class PetListingPanel extends javax.swing.JPanel {
                                         .addComponent(adoptButton)
                                         .addComponent(bookmarkButton)))
         );
-    }// </editor-fold>
+    }
+
+    /**
+     * Handles the action event when the adopt button is clicked.
+     * This method triggers the {@code PetActionView} to adopt the pet.
+     *
+     * @param evt the action event triggered by clicking the adopt button.
+     */
 	private void onAdopt(ActionEvent evt) {
 		this.petActionView.adopt(this.pet.getPetID());
 	}
 
+    /**
+     * Handles the action event when the add bookmark button is clicked.
+     * This method triggers the {@code PetActionView} to add the pet to bookmarks.
+     *
+     * @param evt the action event triggered by clicking the add bookmark button.
+     */
 	private void onAdd(java.awt.event.ActionEvent evt) {
 		this.petActionView.add(this.pet.getPetID());
 	}
 
+    /**
+     * Handles the action event when the "More Information" button is clicked.
+     * This method triggers the {@code PetActionView} to display detailed information about the pet.
+     *
+     * @param evt the action event triggered by clicking the "More Information" button.
+     */
 	private void onMoreInfo(java.awt.event.ActionEvent evt) {
 		this.petActionView.goDetail(this.pet.getPetID());
 	}
 
+    /**
+     * Handles the action event when the "Remove Bookmark" button is clicked.
+     * This method triggers the {@code PetActionView} to remove the pet from the user's bookmarks.
+     *
+     * @param evt the action event triggered by clicking the "Remove Bookmark" button.
+     */
     private void onRemove(java.awt.event.ActionEvent evt) {
         this.petActionView.remove(this.pet.getPetID());
     }
 
-	private javax.swing.JButton adoptButton;
-	private javax.swing.JButton bookmarkButton;
-	private javax.swing.JButton moreInfoButton;
-	private javax.swing.JLabel jLabelName;
-	private javax.swing.JLabel jLabelAge;
-	private javax.swing.JLabel jLabelBreed;
-	private javax.swing.JLabel jLabelSpecies;
-	private javax.swing.JLabel jLabelGender;
 }

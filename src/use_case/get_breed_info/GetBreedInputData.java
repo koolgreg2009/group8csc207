@@ -6,15 +6,15 @@ package use_case.get_breed_info;
  * <p>This class stores the name of the breed and provides a method to access this breed name.
  */
 public class GetBreedInputData {
-    final private String breed_name;
+    final private String breedName;
 
     /**
      * Constructs a {@code GetBreedInputData} object with the specified breed name.
      *
      * @param breedName the name of the breed to be retrieved
      */
-    public GetBreedInputData(String breed_name) {
-        this.breed_name = breed_name;
+    public GetBreedInputData(String breedName) {
+        this.breedName = breedName;
     }
 
     /**
@@ -23,6 +23,6 @@ public class GetBreedInputData {
      * @return the breed name
      */
     public String getBreedName() {
-        return breed_name;
+        return breedName;
     }
 }

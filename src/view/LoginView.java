@@ -17,12 +17,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * The LoginView class represents the UI for user login.
- * It includes input fields for username, and password.
- * It also includes buttons to sign up or login.
- *
- * @version 1.0
- * @since 2024-08-13
+ * The {@code LoginView} class represents the user interface for logging in.
+ * <p>
+ * It includes input fields for the username and password, as well as buttons for logging in and signing up.
  */
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -41,6 +38,14 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     final JButton signUp;
     private final LoginController loginController;
 
+    /**
+     * Constructs a new {@code LoginView} with the specified view models, controller, and view manager.
+     *
+     * @param loginViewModel   the view model for the login view.
+     * @param controller       the controller for handling login actions.
+     * @param viewManagerModel the model for managing views.
+     * @param signupViewModel  the view model for the signup view.
+     */
     public LoginView(LoginViewModel loginViewModel, LoginController controller, ViewManagerModel viewManagerModel,
                      SignupViewModel signupViewModel) {
 
@@ -68,23 +73,18 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         buttons.add(logIn);
 
 
-        logIn.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logIn)) {
-                            LoginState currentState = loginViewModel.getState();
-
-                            loginController.execute(
-                                    currentState.getUsername().trim(),
-                                    currentState.getPassword().trim()
-                            );
-                            LoginState clear = new LoginState();
-                            loginViewModel.setState(clear);
-                            setFields(clear);
-                            loginViewModel.firePropertyChanged();
-                        }
-                    }
+        logIn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource().equals(logIn)) {
+                    LoginState currentState = loginViewModel.getState();
+                    loginController.execute(currentState.getUsername().trim(), currentState.getPassword().trim());
+                    LoginState clear = new LoginState();
+                    loginViewModel.setState(clear);
+                    setFields(clear);
+                    loginViewModel.firePropertyChanged();
                 }
+            }
+        }
         );
 
         signUp.addActionListener(
@@ -114,6 +114,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             }
 
         });
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         passwordInputField.addKeyListener(
@@ -146,10 +147,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     }
 
     /**
-     * React to a button click that results in evt.
+     * Responds to property change events, updating the UI based on the new login state.
+     *
+     * @param evt the property change event.
      */
-
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LoginState state = (LoginState) evt.getNewValue();
@@ -158,11 +159,21 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         }
     }
 
+    /**
+     * Updates the input fields with the specified login state.
+     *
+     * @param state the login state containing updated username and password.
+     */
     private void setFields(LoginState state) {
         usernameInputField.setText(state.getUsername());
         passwordInputField.setText(state.getPassword());
     }
 
+    /**
+     * Handles action events. (Currently not used but included for the ActionListener interface.)
+     *
+     * @param e the action event.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 

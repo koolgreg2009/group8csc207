@@ -8,9 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * <p>This class encapsulates various preferences that a user may have for choosing a pet, including
  * species, breeds, age range, activity level, location, and gender.
  */
-
 public class UserPreference{
-
 	private String species;
 	private List<String> breeds;
 	private int minAge;

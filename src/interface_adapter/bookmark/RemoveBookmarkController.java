@@ -4,8 +4,6 @@ import interface_adapter.SessionManager;
 import use_case.bookmarks.BookmarkInputBoundary;
 import use_case.bookmarks.BookmarkInputData;
 
-import java.util.Scanner;
-
 /**
  * Controller class responsible for removing bookmarks.
  */

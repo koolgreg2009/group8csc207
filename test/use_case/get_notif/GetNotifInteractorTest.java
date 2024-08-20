@@ -6,18 +6,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-
-import java.util.Arrays;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link GetNotifInteractor} use case class.
+ * This class verifies the behavior of the {@link GetNotifInteractor} class's execute method
+ * for retrieving notifications for a user from the {@link UserDAOInterface} and presenting them via the {@link GetNotifOutputBoundary}.
+ */
 class GetNotifInteractorTest {
     private UserDAOInterface userDAO;
     private GetNotifOutputBoundary presenter;
     private GetNotifInteractor interactor;
 
+    /**
+     * Initializes the mock objects and the {@link GetNotifInteractor} instance before each test.
+     */
     @BeforeEach
     void setUp() {
         userDAO = Mockito.mock(UserDAOInterface.class);
@@ -25,6 +30,10 @@ class GetNotifInteractorTest {
         interactor = new GetNotifInteractor(userDAO, presenter);
     }
 
+    /**
+     * Tests the {@link GetNotifInteractor#execute(GetNotifInputData)} method when the user has no notifications.
+     * Verifies that the method correctly handles the case where there are no notifications and updates the presenter with an empty list.
+     */
     @Test
     void testExecuteNoNotifications() {
         AdopterUser user = new AdopterUser("user1", "password", "User One", "email1@example.com", "123");
@@ -40,6 +49,10 @@ class GetNotifInteractorTest {
         assertEquals(0, outputData.getNotif().size());
     }
 
+    /**
+     * Tests the {@link GetNotifInteractor#execute(GetNotifInputData)} method when the user has notifications.
+     * Verifies that the method correctly retrieves and presents the list of notifications for the user.
+     */
     @Test
     void testExecuteWithNotifications() {
         AdopterUser user = new AdopterUser("user1", "password", "User One", "email1@example.com", "123");

@@ -14,12 +14,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import data_access.PetDAOInterface;
 import entity.Pet;
 
-/** Unit test for PetBioInteractor
+/**
+ * Unit test for the {@link PetBioInteractor} class.
+ * This class tests the functionality of the {@link PetBioInteractor}'s execute method
+ * which is responsible for fetching and preparing pet biography data.
  */
 @ExtendWith(MockitoExtension.class)
 public class PetBioInteractorTest {
 
-	//mocking output boundary
 	@Mock
 	private PetBioOutputBoundary mockPresenter;
 
@@ -28,11 +30,23 @@ public class PetBioInteractorTest {
 
 	private PetBioInteractor target;
 
+	/**
+	 * Sets up the test environment, initializing the {@link PetBioInteractor} instance
+	 * with mocked dependencies before each test.
+	 */
 	@BeforeEach
 	public void setup() {
 		target = new PetBioInteractor(mockPresenter, mockDao);
 	}
 
+	/**
+	 * Tests the {@link PetBioInteractor#execute(PetBioInputData)} method for a successful execution.
+	 * Verifies that the {@link PetBioOutputBoundary#preparePetBio(PetBioOutputData)} method
+	 * is called with the expected {@link PetBioOutputData} object.
+	 *
+	 * The test ensures that the pet information is correctly retrieved from the mock DAO
+	 * and passed to the presenter with accurate data.
+	 */
 	@Test
 	public void testExecute() {
 		PetBioInputData input = new PetBioInputData("testuser", 1);
@@ -45,7 +59,6 @@ public class PetBioInteractorTest {
 		ArgumentCaptor<PetBioOutputData> outputCaptor = ArgumentCaptor.forClass(PetBioOutputData.class);
 		verify(mockPresenter).preparePetBio(outputCaptor.capture());
 
-		// Verify the name property of the captured argument
 		PetBioOutputData output = outputCaptor.getValue();
 		assertEquals("test", output.getPet().getOwner());
 	}

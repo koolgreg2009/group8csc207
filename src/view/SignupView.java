@@ -27,9 +27,6 @@ import interface_adapter.preference.PreferenceViewModel;
  * The SignupView class represents the UI for user sign-up.
  * It includes input fields for username, password, repeated password, name, email, and phone.
  * It also includes buttons to sign up or cancel the operation.
- *
- * @version 1.0
- * @since 2024-08-08
  */
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -54,11 +51,11 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     /**
      * Constructs a new SignupView with the specified controller and view models.
      *
-     * @param controller
-     * @param signupViewModel
-     * @param viewManagerModel
-     * @param loginViewModel
-     * @param preferenceViewModel
+     * @param controller The SignupController for handling sign-up actions.
+     * @param signupViewModel The SignupViewModel containing the view's state and labels.
+     * @param viewManagerModel The ViewManagerModel for managing views.
+     * @param loginViewModel The LoginViewModel for managing login views.
+     * @param preferenceViewModel The PreferenceViewModel for managing preferences.
      */
     public SignupView(SignupController controller, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel,
                       LoginViewModel loginViewModel, PreferenceViewModel preferenceViewModel) {
@@ -259,11 +256,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(buttons);
     }
 
-
     /**
-     * React to a button click that results in an action event.
+     * Reacts to a button click that results in an action event.
      *
-     * @param evt
+     * @param evt The {@code ActionEvent} object describing the action event.
      */
     @Override
 	public void actionPerformed(ActionEvent evt) {
@@ -274,9 +270,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     }
 
     /**
-     * Respond to property change events to update the view based on the new state.
+     * Responds to property change events to update the view based on the new state.
      *
-     * @param evt
+     * @param evt The {@code PropertyChangeEvent} object describing the event source
+     *            and the property that has changed.
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

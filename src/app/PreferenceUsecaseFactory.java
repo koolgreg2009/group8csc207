@@ -21,9 +21,19 @@ import static app.GetMatchingStringUseCaseFactory.createMatchingUseCase;
 
 
 /**
- * Preference Usecase factory which takes all the data and returns a Preference controller
+ * Factory class for creating instances of use cases related to user preferences.
+ * This class is used to centralize the creation of various controllers and view models
+ * that manage user preference functionality within the application.
  */
 public class PreferenceUsecaseFactory {
+
+    /**
+     * Private constructor to prevent instantiation of the {@link PreferenceUsecaseFactory}.
+     * This class is intended to be used as a factory for creating use case instances.
+     */
+    private PreferenceUsecaseFactory(){
+
+    }
 
     /**
      * Constructor for Preference usecase factory which takes all the info the json path and gives a new preference

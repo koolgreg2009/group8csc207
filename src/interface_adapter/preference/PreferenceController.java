@@ -3,33 +3,28 @@ package interface_adapter.preference;
 import entity.preference.UserPreference;
 import interface_adapter.SessionManager;
 import use_case.preference.PreferenceData;
-import use_case.preference.PreferenceInputBoundary; // no PreferenceInputBoundary yet
-
+import use_case.preference.PreferenceInputBoundary;
 import java.util.*;
 
-import static java.util.stream.Collectors.toList;
-
-
 /**
- * This is the Controller for the user's preference profile.
- *
- * @version 1.0
- * @since 2024-07-16
+ * Controller for managing the user's preference profile.
+ * Handles the interaction between the user preference input and the use case logic for updating preferences.
  */
-
 public class PreferenceController {
-
     private final PreferenceInputBoundary preferenceInteractor; // ???
 
-    /** This is the initializer for PreferenceController
-     * @param preferenceInteractor The interactor
+    /**
+     * Constructs a new {@code PreferenceController} with the specified preference interactor.
+     *
+     * @param preferenceInteractor the {@code PreferenceInputBoundary} used to handle preference updates.
      */
     public PreferenceController(PreferenceInputBoundary preferenceInteractor) {
         this.preferenceInteractor = preferenceInteractor;
     }
 
     /**
-     * The execution for the preference use case
+     * Executes the preference use case by creating a {@code UserPreference} object
+     * and passing it along with additional data to the interactor.
      *
      * @param species       the indicated species preference as a String
      * @param breeds        the indicated breed

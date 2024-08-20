@@ -9,8 +9,6 @@ import java.util.Scanner;
  * The LoginController class handles user login requests and interacts with the login use case.
  * It takes user input for login and delegates the processing to the login use case interactor.
  *
- * @version 1.0
- * @since 2024-07-19
  */
 public class LoginController {
 
@@ -33,15 +31,7 @@ public class LoginController {
      * @param username
      * @param password
      */
-//    public void execute(String username, String password) {
-//        LoginInputData loginInputData = new LoginInputData(
-//                username, password);
-//
-//        loginUseCaseInteractor.execute(loginInputData);
-//    }
-    //This is a temporary execute method for Phase 1 to work around Terminals.
     public void execute(String username, String password) {
-        System.out.println("Executing login usecase");
         this.loginUseCaseInteractor.execute(new LoginInputData(username, password));
     }
 }

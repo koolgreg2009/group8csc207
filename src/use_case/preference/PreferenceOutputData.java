@@ -18,6 +18,4 @@ public class PreferenceOutputData {
     public PreferenceOutputData(UserPreference userPreference) {
         this.userPreference = userPreference;
     }
-
-
 }

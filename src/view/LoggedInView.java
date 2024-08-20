@@ -20,17 +20,19 @@ import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.bookmark.AddBookmarkController;
 import interface_adapter.bookmark.BookmarkViewModel;
 import interface_adapter.bookmark.RemoveBookmarkController;
-//import interface_adapter.display_all_pets.DisplayAllPetsController;
 import interface_adapter.display_bookmark_pets.DisplayBookmarkController;
-import interface_adapter.display_pets.DisplayPetsController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.pet_bio.PetBioController;
 import interface_adapter.preference.PreferenceViewModel;
 
-//We need to work on this. -Justin
-
+/**
+ * The {@code LoggedInView} class represents the main view for a logged-in user.
+ * <p>
+ * This panel displays user information, provides navigation buttons, and handles interactions
+ * with the pet-related features of the application.
+ */
 public class LoggedInView extends JPanel implements PetActionView, ActionListener, PropertyChangeListener {
 
     public final String viewName = "logged in";
@@ -50,15 +52,31 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
     private final JButton notifications;
     private final JPanel petListingPanel;
 	private final PetBioController petBioController;
-    //private final DisplayAllPetsController displayAllPetsController;
     private final AdoptController adoptController;
     private final DisplayBookmarkController displayBookmarkController;
     private final AddBookmarkController addBookmarkController;
     private final RemoveBookmarkController removeBookmarkController;
     private final GetNotifController getNotifController;
 
+
     /**
-     * A window with a title and a JButton.
+     * Constructs a new {@code LoggedInView} with the specified controllers and view models.
+     * <p>
+     * Initializes the view with buttons and panels, and sets up action listeners and property change listeners.
+     *
+     * @param petBioController the controller for pet bio actions.
+     * @param loggedInViewModel the view model for the logged-in user.
+     * @param bookmarkViewModel the view model for bookmarks.
+     * @param preferenceViewModel the view model for user preferences.
+     * @param loginViewModel the view model for login state.
+     * @param profileViewModel the view model for user profile.
+     * @param notifViewModel the view model for notifications.
+     * @param viewManagerModel the view manager model for view navigation.
+     * @param adoptController the controller for adopting pets.
+     * @param addBookmarkController the controller for adding bookmarks.
+     * @param displayBookmarkController the controller for displaying bookmarked pets.
+     * @param removeBookmarkController the controller for removing bookmarks.
+     * @param getNotifController the controller for fetching notifications.
      */
 	public LoggedInView(PetBioController petBioController,
                         LoggedInViewModel loggedInViewModel,
@@ -144,13 +162,22 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
     }
 
     /**
-     * React to a button click that results in evt.
+     * Handles action events triggered by user interaction.
+     * <p>
+     * Currently, this method prints the action command to the console.
+     *
+     * @param evt the action event triggered by the user.
      */
     @Override
 	public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
 
+    /**
+     * Displays notifications based on the current state.
+     * <p>
+     * Shows a success or error message depending on the notification's status.
+     */
     private void showNotification() {
         LoggedInState state = loggedInViewModel.getState();
         if (state.isNotificationSuccess()) {
@@ -160,6 +187,13 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         }
     }
 
+    /**
+     * Responds to property change events.
+     * <p>
+     * Updates the username display, pet listings, and notifications based on the event.
+     *
+     * @param evt the property change event.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
@@ -172,35 +206,49 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
             }
             petListingPanel.revalidate();
             petListingPanel.repaint();
-//        } else if (evt.getPropertyName().equals("view") && evt.getNewValue().equals("logged in")){
-//            displayAllPetsController.execute();
         }
         else if ("notification".equals(evt.getPropertyName())) {
             showNotification();
         }
-
-        
-        // add method here
     }
 
-
+    /**
+     * Adds a pet to the bookmarks.
+     *
+     * @param petID the ID of the pet to be added.
+     */
 	@Override
 	public void add(int petID) {
         addBookmarkController.execute(petID);
 	}
+
+    /**
+     * Removes a pet from the bookmarks.
+     *
+     * @param petID the ID of the pet to be removed.
+     */
     @Override
     public void remove(int petID){
         removeBookmarkController.execute(petID);
     }
 
+    /**
+     * Displays the details of a pet.
+     *
+     * @param petID the ID of the pet whose details are to be displayed.
+     */
 	@Override
 	public void goDetail(int petID) {
 		petBioController.execute(username.getText(), petID);
 	}
 
+    /**
+     * Handles the adoption of a pet.
+     *
+     * @param petID the ID of the pet to be adopted.
+     */
 	@Override
 	public void adopt(int petID) {
 		adoptController.execute(petID);
-		
 	}
 }
