@@ -3,6 +3,7 @@ package data_access;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
     @Override
     public void getBreedInfo() throws IOException{
         String response = makeAPICall("/public/animals/breeds/search/cats?limit=250");
-        JsonNode root = objectMapper.readTree(response);
+        JsonNode root = getObjectMapper().readTree(response);
         JsonNode data = root.get("data");
         List<String> breedNames = new ArrayList<>();
         for (JsonNode node : data) {
@@ -52,7 +53,7 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
     @Override
     public void getLocation() throws IOException {
         String response = makeAPICall("/public/animals/search/available/cats?limit=250");
-        JsonNode root = objectMapper.readTree(response);
+        JsonNode root = getObjectMapper().readTree(response);
         List<String> locations = new ArrayList<>();
         JsonNode includedArray = root.path("included");
         if (includedArray.isArray()) {
@@ -67,15 +68,14 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
         }
         save("locations", locations);
     }
-    private void save(String key, List<String> breedNames){
+    public void save(String key, List<String> breedNames){
         data.put(key, breedNames);
         save();
 
     }
-    @Override
-    public void save() {
+    void save() {
         try {
-            objectMapper.writeValue(jsonFile, data);
+            getObjectMapper().writeValue(jsonFile, data);
         } catch (Exception ex) {
             System.out.print("Failed saving file [" + jsonFile.getName() + "]: " + ex.getMessage());
             throw new RuntimeException(ex);
@@ -95,6 +95,5 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
         }
         return true;
     }
-
 
 }

@@ -27,7 +27,7 @@ public abstract class RescueAPIAbstract {
     }
     protected String makeAPICall(String endpoint) throws IOException {
         Request request = new Request.Builder()
-                .url(BASE_URL + endpoint)
+                .url(getBaseURL() + endpoint)
                 .addHeader("Authorization", API_KEY)
                 .addHeader("Content-Type", "application/vnd.api+json")
                 .build();
@@ -40,5 +40,11 @@ public abstract class RescueAPIAbstract {
                 throw new IOException("API call failed with HTTP code: " + response.code() + " and message: " + response.message());
             }
         }
+    }
+    protected String getBaseURL(){
+        return BASE_URL;
+    }
+    protected ObjectMapper getObjectMapper() {
+        return objectMapper;
     }
 }
