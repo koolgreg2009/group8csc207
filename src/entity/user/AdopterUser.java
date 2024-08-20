@@ -117,19 +117,4 @@ public class AdopterUser extends CommonUser{
 		return this.bookmarks;
 	}
 
-	/**
-	 * Returns a string representation of the current object.
-	 * <p>
-	 * This method provides a string that includes the class name,
-	 * the result of the superclass's `toString` method, and details about
-	 * the bookmarks and preferences associated with this object.
-	 *
-	 * @return a string representation of the object, including class name,
-	 *         superclass's string representation, and the bookmarks and
-	 *         preferences
-	 */
-	@Override
-	public String toString(){
-		return this.getClass()+": " + super.toString() + "\nBookmarks: " + bookmarks + "\nPreferences: " + preferences;
-	}
 }
