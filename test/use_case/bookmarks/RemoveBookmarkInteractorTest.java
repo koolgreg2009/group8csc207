@@ -7,10 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.Bookmark;
+import entity.Pet;
 import entity.user.AdopterUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import use_case.pet_bio.PetBioOutputData;
 
+import java.awt.print.Book;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -29,6 +33,7 @@ public class RemoveBookmarkInteractorTest {
     private LocalDateTime time;
     private String username;
     private PetDAOInterface petDAO;
+    private Pet pet;
 
     /**
      * Sets up the necessary objects before each test is run.
@@ -48,8 +53,11 @@ public class RemoveBookmarkInteractorTest {
         removeOutputBoundary = mock(RemoveBookmarkOutputBoundary.class);
         removeBookmarkInteractor = new RemoveBookmarkInteractor(userDAO, removeOutputBoundary, petDAO);
 
+        pet = new Pet("Owner1", "owner1@example.com", "1234567890", 31, "Cat", 3, "Breed1", "Male", "Active", "Bio1", "Location", true, "Pet1", "img1");
+
         when(userDAO.get(username)).thenReturn(user);
         when(user.getBookmarks()).thenReturn(allBookmarks);
+        when(petDAO.get(petID)).thenReturn(pet);
     }
 
     /**
@@ -60,9 +68,13 @@ public class RemoveBookmarkInteractorTest {
     public void testExecuteSuccessfullyRemovesBookmark() {
         removeBookmarkInteractor.execute(new BookmarkInputData(username, petID));
 
-        verify(user).getBookmarks();
+        verify(user,times(2)).getBookmarks();
         verify(userDAO).save(user);
         verify(removeOutputBoundary).prepareSuccessView(any(BookmarkOutputData.class));
-        assertTrue(allBookmarks.isEmpty(), "Bookmark list should be empty after removal");
+        ArgumentCaptor<Bookmark> bookmarkCaptor = ArgumentCaptor.forClass(Bookmark.class);
+        verify(user).removeBookmark(bookmarkCaptor.capture());
+
+        Bookmark output = bookmarkCaptor.getValue();
+        assertEquals(31, output.getPetID());
     }
 }
