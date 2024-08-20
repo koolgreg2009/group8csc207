@@ -68,8 +68,8 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
         }
         save("locations", locations);
     }
-    public void save(String key, List<String> breedNames){
-        data.put(key, breedNames);
+    public void save(String key, List<String> names){
+        data.put(key, names);
         save();
 
     }
