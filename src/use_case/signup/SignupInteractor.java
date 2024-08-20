@@ -1,7 +1,9 @@
 package use_case.signup;
 
+import java.time.LocalDateTime;
 import java.util.regex.Pattern;
 import data_access.UserDAOInterface;
+import entity.user.AdopterUser;
 import entity.user.UserFactory;
 
 /**
@@ -72,6 +74,11 @@ public class SignupInteractor implements SignupInputBoundary {
             userPresenter.prepareFailView("Invalid phone number.");
             return;
         }
+        LocalDateTime now = LocalDateTime.now();
+        AdopterUser user = adopterUserFactory.createAdopter(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getName(), signupInputData.getEmail(), signupInputData.getPhone());
+        userDataAccessObject.save(user);
+        SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), now.toString(), false);
+        userPresenter.prepareSuccessView(signupOutputData);
     }
 
     /**
