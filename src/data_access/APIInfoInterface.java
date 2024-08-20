@@ -29,7 +29,7 @@ public interface APIInfoInterface {
     /**
      * Persists or saves the data that has been retrieved or modified.
      */
-    void save();
+    void save(String key, List<String> breedNames);
 
     boolean exists(String string, String key);
 
