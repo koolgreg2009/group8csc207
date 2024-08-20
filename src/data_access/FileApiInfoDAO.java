@@ -46,10 +46,8 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
     public List<String> getData(String key) {
         return data.get(key);
     }
-
     /**
      * Retreives all breeds in rescuesAPI database
-     *
      * @throws IOException
      */
     @Override
@@ -67,7 +65,6 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
 
     /**
      * Retrieves the 250 of cat locations in database
-     *
      * @throws IOException
      */
     @Override
@@ -88,7 +85,9 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
         }
         save("locations", locations);
     }
-
+    public void save(String key, List<String> names){
+        data.put(key, names);
+    }
     /**
      * Saves the given data to the JSON file under the specified key.
      *
