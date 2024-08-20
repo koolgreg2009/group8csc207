@@ -50,7 +50,7 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
             }
         }
 
-        userBookmarks.remove(bookmarkToRemove);
+        user.removeBookmark(bookmarkToRemove);
         userDAO.save(user);
         List<Pet> pets = new ArrayList<>();
         List<LocalDateTime> times = new ArrayList<>();
@@ -58,8 +58,7 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
             pets.add(filePetDAO.get(bookmark.getPetID()));
             times.add(bookmark.getBookmarkedDate());
         }
-        List<PetDTO> petDtoList = pets == null ? new ArrayList<>()
-                : pets.stream()
+        List<PetDTO> petDtoList = pets.stream()
                 .map(pet -> new PetDTO(pet.getPetID(), pet.getName(), pet.getBreed(), pet.getGender(),
                         pet.getSpecies(), pet.getPetAge(), pet.getBio(), pet.getOwner(), pet.getEmail(),
                         pet.getPhoneNum(), pet.getActivityLevel(), pet.getLocation(), pet.getImgUrl()))
