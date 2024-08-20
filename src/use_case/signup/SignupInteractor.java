@@ -74,6 +74,10 @@ public class SignupInteractor implements SignupInputBoundary {
             userPresenter.prepareFailView("Invalid phone number.");
             return;
         }
+        if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
+            userPresenter.prepareFailView("Passwords don't match.");
+            return;
+        }
         LocalDateTime now = LocalDateTime.now();
         AdopterUser user = adopterUserFactory.createAdopter(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getName(), signupInputData.getEmail(), signupInputData.getPhone());
         userDataAccessObject.save(user);
