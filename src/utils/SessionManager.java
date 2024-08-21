@@ -1,11 +1,10 @@
-package interface_adapter;
+package utils;
 
 /**
  * Manages the session for the current user. This class handles user login and logout operations
  * and provides methods to retrieve the currently logged-in user's information.
  * <p>
- * This class cannot be instantiated due to its private constructor, and all operations
- * are performed through static methods.
+ * This class should not be instantiated. Uses singleton pattern so only one instance of it can exist at a time.
  */
 public class SessionManager {
     private String currentUser;
