@@ -22,7 +22,8 @@ import entity.user.User;
  */
 public class FileUserDAO implements UserDAOInterface {
 	private final File jsonFile;
-	private final Map<String, AdopterUser> accounts = new HashMap<String, AdopterUser>();
+	private final ObjectMapper objectMapper = new ObjectMapper();;
+	final Map<String, AdopterUser> accounts = new HashMap<String, AdopterUser>();
 
 	/**
 	 * Constructs a new FileUserDAO with the specified JSON file path.
@@ -38,7 +39,6 @@ public class FileUserDAO implements UserDAOInterface {
 		} else {
 			TypeReference<HashMap<String, AdopterUser>> typeRef = new TypeReference<HashMap<String, AdopterUser>>() {
 			};
-			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.registerModule(new JavaTimeModule());
 			accounts.putAll(objectMapper.readValue(jsonFile, typeRef));
 		}
