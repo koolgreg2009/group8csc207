@@ -154,7 +154,7 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         );
         logOut.addActionListener(
                 evt -> {
-                    SessionManager.logout();
+                    SessionManager.getInstance().logout();
                     viewManagerModel.setActiveView(loginViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }

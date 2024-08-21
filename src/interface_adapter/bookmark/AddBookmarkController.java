@@ -26,6 +26,6 @@ public class AddBookmarkController {
      *
      */
     public void execute(int petID){
-        this.addBookmarkInteractor.execute(new BookmarkInputData(SessionManager.getCurrentUser(), petID));
+        this.addBookmarkInteractor.execute(new BookmarkInputData(SessionManager.getInstance().getCurrentUser(), petID));
     }
 }

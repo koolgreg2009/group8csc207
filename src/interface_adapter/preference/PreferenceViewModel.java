@@ -288,7 +288,8 @@ public class PreferenceViewModel extends ViewModel {
             if (state.isInteraction()) {
                 fireTimePropertyChanged(key);
             }
-        });        delayTimer.setRepeats(false);
+        });
+        delayTimer.setRepeats(false);
         delayTimer.start();
     }
 

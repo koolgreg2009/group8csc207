@@ -25,6 +25,6 @@ public class RemoveBookmarkController {
      *
      */
     public void execute(int petID){
-        this.removeBookmarkInteractor.execute(new BookmarkInputData(SessionManager.getCurrentUser(), petID));
+        this.removeBookmarkInteractor.execute(new BookmarkInputData(SessionManager.getInstance().getCurrentUser(), petID));
     }
 }

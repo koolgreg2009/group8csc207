@@ -168,7 +168,7 @@ public class BookmarkView extends JPanel implements PropertyChangeListener, PetA
      * @param evt the action event
      */
     private void logoutActionPerformed(ActionEvent evt) {
-        SessionManager.logout();
+        SessionManager.getInstance().logout();
         viewManagerModel.setActiveView(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

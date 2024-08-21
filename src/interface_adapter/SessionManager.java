@@ -8,7 +8,8 @@ package interface_adapter;
  * are performed through static methods.
  */
 public class SessionManager {
-    private static String currentUser;
+    private String currentUser;
+    private static SessionManager instance;
 
     /**
      * Private constructor to prevent instantiation of this utility class.
@@ -16,20 +17,30 @@ public class SessionManager {
     private SessionManager() {}
 
     /**
+     * Singleton design pattern, gets SessionManager instance,
+     * @return SessionManager instnace
+     */
+    public static SessionManager getInstance() {
+        if (instance == null) {
+            instance = new SessionManager();
+        }
+        return instance;
+    }
+    /**
      * Logs in the specified user by setting the current user.
      *
      * @param user the username of the user to be logged in
      */
-    public static void login(String user) {
-        currentUser = user;
+    public void login(String user) {
+        this.currentUser = user;
     }
 
     /**
      * Logs out the current user by clearing the current user information.
      * This method should be called to end the session for the current user.
      */
-    public static void logout() { // call in logoutusecasepresenter
-        currentUser = null;
+    public void logout() { // call in logoutusecasepresenter
+        this.currentUser = null;
     }
 
     /**
@@ -37,7 +48,7 @@ public class SessionManager {
      *
      * @return the username of the current user, or {@code null} if no user is logged in
      */
-    public static String getCurrentUser() { // call in all use case controllers that need logged in user info
+    public String getCurrentUser() { // call in all use case controllers that need logged in user info
         return currentUser;
     }
 }
