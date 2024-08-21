@@ -154,14 +154,5 @@ public class CommonUser implements User {
 		return notifications;
 	}
 
-	/**
-	 * Returns a string representation of the user, including class name, username, password, name, and email.
-	 *
-	 * @return a string representation of the user
-	 */
-	@Override
-	public String toString(){
-		return this.getClass() + "username: " + this.getUsername()+"\npassword: " + this.getPassword()+"\nname: " + this.getName()+"\nemail: " + this.getEmail();
-	}
 
 }
