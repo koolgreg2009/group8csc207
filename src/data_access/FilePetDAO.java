@@ -216,8 +216,10 @@ public class FilePetDAO extends RescueAPIAbstract implements PetDAOInterface {
                 ? petNode.get("attributes").get("activityLevel").asText()
                 : "N/A";
         String gender = petNode.get("attributes").has("sex") ? petNode.get("attributes").get("sex").asText().replaceAll("\\s+", "") : "N/A";
-        String name = petNode.get("attributes").has("name") ? petNode.get("attributes").get("name").asText() :
-                "N/A";
+        String name = "N/A";
+        if (petNode.get("attributes").has("name")) {
+            name = petNode.get("attributes").get("name").asText();
+        }
         String imgUrl = petNode.get("attributes").has("pictureThumbnailUrl") ? petNode.get("attributes").get("pictureThumbnailUrl").asText() : "";
         String parsedUrl = imgUrl.split("\\?")[0];
         return new Pet(

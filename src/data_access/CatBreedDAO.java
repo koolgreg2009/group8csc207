@@ -15,9 +15,16 @@ import java.util.HashMap;
  * perform HTTP requests.
  */
 public class CatBreedDAO implements CatDAOInterface {
-    private final OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client;
     private static final String API_KEY = "live_DUQgLUE2gN2cW7JxlvdupPwS1n2CyUFee5yfvYXnyUps7D6CEF9yjk6bCHdwqGiY";
     private static final String API_URL = "https://api.thecatapi.com/v1/breeds/search";
+
+    public CatBreedDAO(){
+        this.client = new OkHttpClient();
+    }
+    public CatBreedDAO(OkHttpClient client) {
+        this.client = client;
+    }
 
     /**
      * Fetches breed information for a given breed name from TheCatAPI.
@@ -27,9 +34,11 @@ public class CatBreedDAO implements CatDAOInterface {
      */
     @Override
     public HashMap<String, Object> getBreedInformation(String breedName) {
+        // String url = System.getenv("API_URL") + "?q=" + breedName + "&attach_image=1";
         String url = API_URL + "?q=" + breedName + "&attach_image=1";
         Request request = new Request.Builder()
                 .url(url)
+//                .addHeader("x-api-key", System.getenv("API_KEY"))
                 .addHeader("x-api-key", API_KEY)
                 .build();
 
@@ -40,11 +49,10 @@ public class CatBreedDAO implements CatDAOInterface {
             return parseJsonResponseToMap(responseBody);
 
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         }
-    }
 
+    }
     /**
      * Parses the JSON response and extracts the required fields into a HashMap.
      *

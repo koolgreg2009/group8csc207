@@ -24,29 +24,20 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
     private final PetDAOInterface filePetDAO;
 
     /**
-     * Constructs a {@code RemoveBookmarkInteractor} with the specified data access objects and output boundary.
-     *
-     * @param userDAO              the data access object for managing user-related operations
-     * @param removeOutputBoundary the output boundary responsible for handling the results of the bookmark removal
-     *                             process
-     * @param filePetDAO           the data access object for managing pet-related operations
+     * Constructs a RemoveBookmarkInteractor with the specified user DAO and output boundary.
+     * @param userDAO the data access object for the user
+     * @param removeOutputBoundary the output boundary to handle the output of the bookmark removal process
      */
-    public RemoveBookmarkInteractor(UserDAOInterface userDAO, RemoveBookmarkOutputBoundary removeOutputBoundary,
-                                    PetDAOInterface filePetDAO) {
+    public RemoveBookmarkInteractor(UserDAOInterface userDAO, RemoveBookmarkOutputBoundary removeOutputBoundary, PetDAOInterface filepetDAO) {
         this.userDAO = userDAO;
         this.removeOutputBoundary = removeOutputBoundary;
-        this.filePetDAO = filePetDAO;
+        this.filePetDAO = filepetDAO;
+
     }
 
     /**
-     * Executes the removal of a bookmark based on the provided input data.
-     *
-     * This method retrieves the user and their bookmarks from the data access object, identifies the bookmark to be
-     * removed based on the pet ID, and updates the user's bookmark list accordingly. It then constructs the output data
-     * including the updated list of bookmarks and prepares the success view using the output boundary.
-     *
-     * @param inputData the data required to remove the bookmark, which includes the username and the pet ID of the
-     *                  bookmark to be removed
+     * Executes the removal a bookmark based on the input data given.
+     * @param inputData the data required to remove the bookmark.
      */
     public void execute(BookmarkInputData inputData){
         AdopterUser user = ((AdopterUser) userDAO.get(inputData.getUsername()));
@@ -59,7 +50,7 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
             }
         }
 
-        userBookmarks.remove(bookmarkToRemove);
+        user.removeBookmark(bookmarkToRemove);
         userDAO.save(user);
         List<Pet> pets = new ArrayList<>();
         List<LocalDateTime> times = new ArrayList<>();
@@ -67,9 +58,7 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
             pets.add(filePetDAO.get(bookmark.getPetID()));
             times.add(bookmark.getBookmarkedDate());
         }
-
-        List<PetDTO> petDtoList = pets == null ? new ArrayList<>()
-                : pets.stream()
+        List<PetDTO> petDtoList = pets.stream()
                 .map(pet -> new PetDTO(pet.getPetID(), pet.getName(), pet.getBreed(), pet.getGender(),
                         pet.getSpecies(), pet.getPetAge(), pet.getBio(), pet.getOwner(), pet.getEmail(),
                         pet.getPhoneNum(), pet.getActivityLevel(), pet.getLocation(), pet.getImgUrl()))
@@ -79,6 +68,7 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
         for(int i=0; i<pets.size(); i++){
             bookmarkDTO.add(new BookmarkDTO(petDtoList.get(i), times.get(i)));
         }
+
 
         BookmarkOutputData bookmarkOutputData = new BookmarkOutputData(userBookmarks, bookmarkToRemove, bookmarkDTO, user.getUsername());
         this.removeOutputBoundary.prepareSuccessView(bookmarkOutputData);
