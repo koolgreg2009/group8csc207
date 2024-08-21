@@ -67,7 +67,6 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
      * @param bookmarkViewModel the view model for bookmarks.
      * @param preferenceViewModel the view model for user preferences.
      * @param loginViewModel the view model for login state.
-     * @param profileViewModel the view model for user profile.
      * @param notifViewModel the view model for notifications.
      * @param viewManagerModel the view manager model for view navigation.
      * @param adoptController the controller for adopting pets.
