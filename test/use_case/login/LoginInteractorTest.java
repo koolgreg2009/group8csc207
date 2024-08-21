@@ -6,10 +6,11 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import data_access.UserDAOInterface;
 import entity.user.AdopterUser;
 
@@ -77,12 +78,15 @@ class LoginInteractorTest {
     @Test
     void testSuccessfulLogin() {
         AdopterUser adopterUser = new AdopterUser("existingUser", "correctPassword", "John Doe", "john.doe@example.com", "123-456-7890");
-        when(userDAO.existsByName(anyString())).thenReturn(true);
-        when(userDAO.get(anyString())).thenReturn(adopterUser);
+        when(userDAO.existsByName("existingUser")).thenReturn(true);
+        when(userDAO.get("existingUser")).thenReturn(adopterUser);
         LoginInputData inputData = new LoginInputData("existingUser", "correctPassword");
-
         loginInteractor.execute(inputData);
 
-        verify(loginPresenter).prepareSuccessView(new LoginOutputData("existingUser"));
+        ArgumentCaptor<LoginOutputData> captor = ArgumentCaptor.forClass(LoginOutputData.class);
+        verify(loginPresenter).prepareSuccessView(captor.capture());
+
+        LoginOutputData capturedOutputData = captor.getValue();
+        assertEquals("existingUser", capturedOutputData.getUsername());
     }
 }
