@@ -35,7 +35,7 @@ public class AdoptPresenter implements AdoptOutputBoundary {
      */
     @Override
     public void prepareAdopt(AdoptOutputData adoptOutputData) {
-        loggedInViewModel.setNotification("Thank you " + SessionManager.getCurrentUser() + " for adopting "
+        loggedInViewModel.setNotification("Thank you " + SessionManager.getInstance().getCurrentUser() + " for adopting "
                 + adoptOutputData.getID() + "\n" + "You may contact the owner " + adoptOutputData.getPetOwner()
                 + " through: \n" + adoptOutputData.getOwnerEmail() + " and " + adoptOutputData.getOwnerPhone(),
                 true);

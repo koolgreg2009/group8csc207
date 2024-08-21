@@ -34,7 +34,7 @@ public class DisplayBookmarkPresenter implements DisplayBookmarkPetsOutputBounda
     public void displayPetsOutput(DisplayBookmarkPetsOutputData displayBookmarkPetsOutputData) {
         BookmarkState bookmarkState = bookmarkViewModel.getBookmarkState();
         bookmarkState.setBookmarkDTO(displayBookmarkPetsOutputData.getBookmarks());
-        bookmarkState.setUsername(SessionManager.getCurrentUser());
+        bookmarkState.setUsername(SessionManager.getInstance().getCurrentUser());
         bookmarkViewModel.firePropertyChanged();
     }
 }

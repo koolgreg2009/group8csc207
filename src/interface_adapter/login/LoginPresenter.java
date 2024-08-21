@@ -38,9 +38,9 @@ public class LoginPresenter implements LoginOutputBoundary {
      */
     @Override
     public void prepareSuccessView(LoginOutputData data) {
-        SessionManager.login(data.getUsername());
+        SessionManager.getInstance().login(data.getUsername());
         DisplayPetsState state = displayPetsViewModel.getState();
-        state.setUsername(SessionManager.getCurrentUser());
+        state.setUsername(SessionManager.getInstance().getCurrentUser());
         displayPetsViewModel.firePropertyChanged();
     }
 

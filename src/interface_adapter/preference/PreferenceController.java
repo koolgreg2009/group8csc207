@@ -38,7 +38,7 @@ public class PreferenceController {
      */
     public void execute(String species, List<String> breeds, String breedKey, Integer minAge, Integer maxAge, String activityLevel, String location, String locationKey, String gender){
         UserPreference preferences = new UserPreference(species, breeds, minAge, maxAge, activityLevel, location, gender);
-        PreferenceData initialPreferences = new PreferenceData(SessionManager.getCurrentUser(), preferences, new PreferenceKeys(breedKey, locationKey));
+        PreferenceData initialPreferences = new PreferenceData(SessionManager.getInstance().getCurrentUser(), preferences, new PreferenceKeys(breedKey, locationKey));
         preferenceInteractor.execute(initialPreferences);
     }
 }
