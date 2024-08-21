@@ -42,15 +42,19 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
      */
     @Override
     public void execute(PreferenceData preferenceData){
+        boolean condition1 = true;
+        boolean condition2 = true;
         PreferenceKeys keys = preferenceData.getKeys();
         UserPreference preference = preferenceData.getUserPreference();
         if(!preference.getBreeds().isEmpty() && !infoDAO.exists(preference.getBreeds(), keys.getBreedKey())){
             userPresenter.prepareBreedFail();
+            condition1 = false;
         }
         if(!preference.getLocation().isEmpty() && !infoDAO.exists(preference.getLocation(), keys.getLocationKey())){
             userPresenter.prepareLocationFail();
+            condition2 = false;
         }
-        if (infoDAO.exists(preference.getBreeds(), keys.getBreedKey()) && infoDAO.exists(preference.getLocation(), keys.getLocationKey())) {
+        if (condition1 && condition2) {
             User user = userDataAccessObject.get(preferenceData.getUsername());
             ((AdopterUser) user).setPreferences(preference);
             userDataAccessObject.save(user);

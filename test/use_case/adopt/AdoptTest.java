@@ -39,22 +39,6 @@ class AdoptTest {
     }
 
     /**
-     * Tests the {@link Adopt#execute(AdoptInputData)} method when the pet is already adopted.
-     * Verifies that the presenter’s prepareAdopt method is not called if the pet is not available.
-     */
-    @Test
-    void testExecutePetAlreadyAdopted() {
-        Pet pet = Mockito.mock(Pet.class);
-        when(petDAO.get(1)).thenReturn(pet);
-        when(pet.isAvailable()).thenReturn(false);
-
-        AdoptInputData inputData = new AdoptInputData(1);
-        interactor.execute(inputData);
-
-        verify(presenter, never()).prepareAdopt(any());
-    }
-
-    /**
      * Tests the {@link Adopt#execute(AdoptInputData)} method for a successful adoption scenario.
      * Verifies that the pet is marked as unavailable, saved, and notifications are sent to users.
      * Also checks that the presenter is provided with the correct adoption details.

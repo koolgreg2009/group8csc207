@@ -85,17 +85,15 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
         }
         save("locations", locations);
     }
-    public void save(String key, List<String> names){
-        data.put(key, names);
-    }
+
     /**
      * Saves the given data to the JSON file under the specified key.
      *
      * @param key the key used to identify the data to save.
-     * @param breedNames a list of strings representing the breed names to save.
+     * @param names a list of strings representing the  names to save.
      */
-    public void save(String key, List<String> breedNames){
-        data.put(key, breedNames);
+    public void save(String key, List<String> names){
+        data.put(key, names);
         save();
     }
 

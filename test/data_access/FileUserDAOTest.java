@@ -2,6 +2,7 @@ package data_access;
 
 import static org.mockito.Mockito.*;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -16,7 +17,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,6 +78,38 @@ public class FileUserDAOTest {
         if (jsonFile.exists()) {
             jsonFile.delete();
         }
+    }
+
+    /**
+     * Tests when file length is not zero
+     * @throws IOException
+     */
+    @Test
+    public void testConstructorLoadsExistingData() throws IOException {
+        // Arrange
+        File existingFile = new File("existingFile.json");
+        if (!existingFile.exists()) {
+            existingFile.createNewFile();
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
+        // Simulate existing data in the file
+        HashMap<String, AdopterUser> mockData = new HashMap<>();
+        AdopterUser mockUser = new AdopterUser("existingUser", "password", "John Doe", "john@example.com", "1234567890");
+        mockData.put(mockUser.getUsername(), mockUser);
+        objectMapper.writeValue(existingFile, mockData);
+
+        // Act
+        FileUserDAO fileUserDAO = new FileUserDAO("existingFile.json");
+
+        // Assert
+        assertEquals(1, fileUserDAO.accounts.size());
+        assertTrue(fileUserDAO.existsByName("existingUser"));
+
+        // Cleanup
+        existingFile.delete();
     }
 
     /**
@@ -142,5 +177,39 @@ public class FileUserDAOTest {
         assertTrue(fileUserDAO.userHasBookmark("baerizz", 77));
         assertTrue(fileUserDAO.userHasBookmark("baerizz", 13));
         assertFalse(fileUserDAO.userHasBookmark("baerizz", 5));
+    }
+
+    /**
+     * Checks existsByEmail()
+     */
+    @Test
+    public void testExistsByEmail() {
+        // Arrange
+        AdopterUser user1 = new AdopterUser("user1", "password1", "John Doe", "john@example.com", "1234567890");
+        AdopterUser user2 = new AdopterUser("user2", "password2", "Jane Doe", "jane@example.com", "0987654321");
+        fileUserDAO.save(user1);
+        fileUserDAO.save(user2);
+
+        // Act & Assert
+        assertTrue(fileUserDAO.existsByEmail("john@example.com"));
+        assertTrue(fileUserDAO.existsByEmail("jane@example.com"));
+        assertFalse(fileUserDAO.existsByEmail("notexisting@example.com"));
+    }
+
+    /**
+     * Checks existsByPhone()
+     */
+    @Test
+    public void testExistsByPhone() {
+        // Arrange
+        AdopterUser user1 = new AdopterUser("user1", "password1", "John Doe", "john@example.com", "1234567890");
+        AdopterUser user2 = new AdopterUser("user2", "password2", "Jane Doe", "jane@example.com", "0987654321");
+        fileUserDAO.save(user1);
+        fileUserDAO.save(user2);
+
+        // Act & Assert
+        assertTrue(fileUserDAO.existsByPhone("1234567890"));
+        assertTrue(fileUserDAO.existsByPhone("0987654321"));
+        assertFalse(fileUserDAO.existsByPhone("0000000000"));
     }
 }

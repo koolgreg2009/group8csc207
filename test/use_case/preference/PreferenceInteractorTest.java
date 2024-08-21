@@ -1,67 +1,91 @@
 package use_case.preference;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import use_case.preference.PreferenceData;
+import use_case.preference.PreferenceInteractor;
+import entity.preference.UserPreference;
+import interface_adapter.preference.PreferenceKeys;
+import entity.user.AdopterUser;
+import data_access.APIInfoInterface;
+import data_access.UserDAOInterface;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
 
-import data_access.UserDAOInterface;
-import entity.preference.UserPreference;
-import entity.user.AdopterUser;
+public class PreferenceInteractorTest {
 
-/**
- * Unit test for the {@link PreferenceInteractor} class.
- * This class tests the functionality of the {@link PreferenceInteractor}'s execute method
- * which is responsible for editing user preferences.
- */
-class PreferenceInteractorTest {
-
-    private UserDAOInterface userDataAccessObject;
-    private PreferenceOutputBoundary userPresenter;
+    private UserDAOInterface userDAO;
+    private PreferenceOutputBoundary presenter;
+    private APIInfoInterface infoDAO;
     private PreferenceInteractor interactor;
 
-    /**
-     * Sets up the test environment, initializing the {@link PreferenceInteractor} instance
-     * with mocked dependencies before each test.
-     */
     @BeforeEach
     void setUp() {
-        userDataAccessObject = mock(UserDAOInterface.class);
-        userPresenter = mock(PreferenceOutputBoundary.class);
-        interactor = new PreferenceInteractor(userDataAccessObject, userPresenter, null);
+        userDAO = Mockito.mock(UserDAOInterface.class);
+        presenter = Mockito.mock(PreferenceOutputBoundary.class);
+        infoDAO = Mockito.mock(APIInfoInterface.class);
+        interactor = new PreferenceInteractor(userDAO, presenter, infoDAO);
     }
 
-    /**
-     * Tests the {@link PreferenceInteractor#execute(PreferenceData)} method for successfully editing
-     * user preferences.
-     *
-     * The test verifies that:
-     * 1. The user is fetched from the mock DAO.
-     * 2. The user's preferences are updated and saved.
-     * 3. The presenter is called to prepare a success view.
-     * 4. The updated preferences are correctly set on the user object.
-     */
     @Test
-    void testEditUserPreferencesSuccess() {
-        // Given
-        String username = "testUser";
-        UserPreference newPreferences = new UserPreference("Cat", List.of("British Shorthair"), 1, 5, "Low", "New York", "Female");
-        AdopterUser user = new AdopterUser(username, "password", "Test Name", "test@example.com", "1234567890");
-        when(userDataAccessObject.get(username)).thenReturn(user);
+    void testExecuteWithInvalidBreed() {
+        // Arrange
+        PreferenceData preferenceData = createTestPreferenceData();
+        when(infoDAO.exists(preferenceData.getUserPreference().getBreeds(), preferenceData.getKeys().getBreedKey())).thenReturn(false);
+        when(infoDAO.exists(preferenceData.getUserPreference().getLocation(), preferenceData.getKeys().getLocationKey())).thenReturn(true);
 
-        PreferenceData inputData = new PreferenceData(username, newPreferences, null);
+        // Act
+        interactor.execute(preferenceData);
 
-        interactor.execute(inputData);
+        // Assert
+        verify(presenter).prepareBreedFail();
+        verify(userDAO, never()).save(any());
+        verify(presenter, never()).prepareSuccessView();
+    }
 
-        verify(userDataAccessObject).get(username);
-        verify(userDataAccessObject).save(user);
-        verify(userPresenter).prepareSuccessView();
+    @Test
+    void testExecuteWithInvalidLocation() {
+        // Arrange
+        PreferenceData preferenceData = createTestPreferenceData();
+        when(infoDAO.exists(preferenceData.getUserPreference().getBreeds(), preferenceData.getKeys().getBreedKey())).thenReturn(true);
+        when(infoDAO.exists(preferenceData.getUserPreference().getLocation(), preferenceData.getKeys().getLocationKey())).thenReturn(false);
 
-        assertEquals(newPreferences, user.getPreferences());
+        // Act
+        interactor.execute(preferenceData);
+
+        // Assert
+        verify(presenter).prepareLocationFail();
+        verify(userDAO, never()).save(any());
+        verify(presenter, never()).prepareSuccessView();
+    }
+
+    @Test
+    void testExecuteWithValidPreferences() {
+        // Arrange
+        PreferenceData preferenceData = createTestPreferenceData();
+        when(infoDAO.exists(preferenceData.getUserPreference().getBreeds(), preferenceData.getKeys().getBreedKey())).thenReturn(true);
+        when(infoDAO.exists(preferenceData.getUserPreference().getLocation(), preferenceData.getKeys().getLocationKey())).thenReturn(true);
+        AdopterUser mockUser = Mockito.mock(AdopterUser.class);
+        when(userDAO.get(preferenceData.getUsername())).thenReturn(mockUser);
+
+        // Act
+        interactor.execute(preferenceData);
+
+        // Assert
+        verify(mockUser).setPreferences(preferenceData.getUserPreference());
+        verify(userDAO).save(mockUser);
+        verify(presenter).prepareSuccessView();
+    }
+
+    private PreferenceData createTestPreferenceData() {
+        // Create and return a PreferenceData instance suitable for testing
+        List<String> breeds = List.of("Breed1", "Breed2");
+        String location = "Some Location";
+        UserPreference userPreference = new UserPreference("Dog", breeds, 1, 10, "Medium", location, "Male");
+        PreferenceKeys keys = new PreferenceKeys("breedKey", "locationKey");
+        return new PreferenceData("testUser", userPreference, keys);
     }
 }

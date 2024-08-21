@@ -34,79 +34,38 @@ class SignupInteractorTest {
         interactor = new SignupInteractor(userDAO, presenter, userFactory);
     }
 
-    /**
-     * Tests the {@link SignupInteractor#execute(SignupInputData)} method when the username is empty.
-     * <p>
-     * The test verifies that the presenter receives the correct error message indicating that the username cannot be empty.
-     */
     @Test
     void testExecuteEmptyUsername() {
         SignupInputData inputData = new SignupInputData("", "password", "password", "John Doe", "john@example.com", "1234567890");
         interactor.execute(inputData);
 
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(presenter).prepareFailView(argumentCaptor.capture());
-
-        String errorMessage = argumentCaptor.getValue();
-        assertEquals("Username cannot be empty.", errorMessage);
+        verify(presenter).prepareFailView("Username cannot be empty.");
     }
 
-    /**
-     * Tests the {@link SignupInteractor#execute(SignupInputData)} method when the password is empty.
-     * <p>
-     * The test verifies that the presenter receives the correct error message indicating that the password cannot be empty.
-     */
     @Test
     void testExecuteEmptyPassword() {
         SignupInputData inputData = new SignupInputData("john", "", "password", "John Doe", "john@example.com", "1234567890");
         interactor.execute(inputData);
 
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(presenter).prepareFailView(argumentCaptor.capture());
-
-        String errorMessage = argumentCaptor.getValue();
-        assertEquals("Password cannot be empty.", errorMessage);
+        verify(presenter).prepareFailView("Password cannot be empty.");
     }
 
-    /**
-     * Tests the {@link SignupInteractor#execute(SignupInputData)} method when the repeat password field is empty.
-     * <p>
-     * The test verifies that the presenter receives the correct error message indicating that the repeat password cannot be empty.
-     */
     @Test
     void testExecuteEmptyRepeatPassword() {
         SignupInputData inputData = new SignupInputData("john", "password", "", "John Doe", "john@example.com", "1234567890");
         interactor.execute(inputData);
 
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(presenter).prepareFailView(argumentCaptor.capture());
-
-        String errorMessage = argumentCaptor.getValue();
-        assertEquals("Repeat Password cannot be empty.", errorMessage);
+        verify(presenter).prepareFailView("Repeat password cannot be empty.");
     }
 
-    /**
-     * Tests the {@link SignupInteractor#execute(SignupInputData)} method when the name field is empty.
-     * <p>
-     * The test verifies that the presenter receives the correct error message indicating that the name cannot be empty.
-     */
     @Test
     void testExecuteEmptyName() {
         SignupInputData inputData = new SignupInputData("john", "password", "password", "", "john@example.com", "1234567890");
         interactor.execute(inputData);
 
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(presenter).prepareFailView(argumentCaptor.capture());
-
-        String errorMessage = argumentCaptor.getValue();
-        assertEquals("Your name cannot be empty.", errorMessage);
+        verify(presenter).prepareFailView("Your name cannot be empty.");
     }
 
-    /**
-     * Tests the {@link SignupInteractor#execute(SignupInputData)} method when the username already exists.
-     * <p>
-     * The test verifies that the presenter receives the correct error message indicating that the username already exists.
-     */
     @Test
     void testExecuteUsernameAlreadyExists() {
         when(userDAO.existsByName("john")).thenReturn(true);
@@ -114,18 +73,9 @@ class SignupInteractorTest {
         SignupInputData inputData = new SignupInputData("john", "password", "password", "John Doe", "john@example.com", "1234567890");
         interactor.execute(inputData);
 
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(presenter).prepareFailView(argumentCaptor.capture());
-
-        String errorMessage = argumentCaptor.getValue();
-        assertEquals("Username already exists.", errorMessage);
+        verify(presenter).prepareFailView("Username already exists.");
     }
 
-    /**
-     * Tests the {@link SignupInteractor#execute(SignupInputData)} method when the email already exists.
-     * <p>
-     * The test verifies that the presenter receives the correct error message indicating that the email is already in use.
-     */
     @Test
     void testExecuteEmailAlreadyExists() {
         when(userDAO.existsByName("john")).thenReturn(false);
@@ -134,18 +84,9 @@ class SignupInteractorTest {
         SignupInputData inputData = new SignupInputData("john", "password", "password", "John Doe", "john@example.com", "1234567890");
         interactor.execute(inputData);
 
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(presenter).prepareFailView(argumentCaptor.capture());
-
-        String errorMessage = argumentCaptor.getValue();
-        assertEquals("Email already in use.", errorMessage);
+        verify(presenter).prepareFailView("Email already in use.");
     }
 
-    /**
-     * Tests the {@link SignupInteractor#execute(SignupInputData)} method when the phone number already exists.
-     * <p>
-     * The test verifies that the presenter receives the correct error message indicating that the phone number is already in use.
-     */
     @Test
     void testExecutePhoneAlreadyExists() {
         when(userDAO.existsByName("john")).thenReturn(false);
@@ -155,18 +96,9 @@ class SignupInteractorTest {
         SignupInputData inputData = new SignupInputData("john", "password", "password", "John Doe", "john@example.com", "1234567890");
         interactor.execute(inputData);
 
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(presenter).prepareFailView(argumentCaptor.capture());
-
-        String errorMessage = argumentCaptor.getValue();
-        assertEquals("Phone number already in use.", errorMessage);
+        verify(presenter).prepareFailView("Phone number already in use.");
     }
 
-    /**
-     * Tests the {@link SignupInteractor#execute(SignupInputData)} method when passwords do not match.
-     * <p>
-     * The test verifies that the presenter receives the correct error message indicating that the passwords do not match.
-     */
     @Test
     void testExecutePasswordsDoNotMatch() {
         when(userDAO.existsByName("john")).thenReturn(false);
@@ -176,18 +108,9 @@ class SignupInteractorTest {
         SignupInputData inputData = new SignupInputData("john", "password", "differentPassword", "John Doe", "john@example.com", "1234567890");
         interactor.execute(inputData);
 
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(presenter).prepareFailView(argumentCaptor.capture());
-
-        String errorMessage = argumentCaptor.getValue();
-        assertEquals("Passwords don't match.", errorMessage);
+        verify(presenter).prepareFailView("Passwords don't match.");
     }
 
-    /**
-     * Tests the {@link SignupInteractor#execute(SignupInputData)} method when the email address is invalid.
-     * <p>
-     * The test verifies that the presenter receives the correct error message indicating that the email address is invalid.
-     */
     @Test
     void testExecuteInvalidEmail() {
         when(userDAO.existsByName("john")).thenReturn(false);
@@ -197,18 +120,9 @@ class SignupInteractorTest {
         SignupInputData inputData = new SignupInputData("john", "password", "password", "John Doe", "invalid-email", "1234567890");
         interactor.execute(inputData);
 
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(presenter).prepareFailView(argumentCaptor.capture());
-
-        String errorMessage = argumentCaptor.getValue();
-        assertEquals("Invalid email address.", errorMessage);
+        verify(presenter).prepareFailView("Invalid email address.");
     }
 
-    /**
-     * Tests the {@link SignupInteractor#execute(SignupInputData)} method when the phone number is invalid.
-     * <p>
-     * The test verifies that the presenter receives the correct error message indicating that the phone number is invalid.
-     */
     @Test
     void testExecuteInvalidPhone() {
         when(userDAO.existsByName("john")).thenReturn(false);
@@ -218,27 +132,9 @@ class SignupInteractorTest {
         SignupInputData inputData = new SignupInputData("john", "password", "password", "John Doe", "john@example.com", "invalid-phone");
         interactor.execute(inputData);
 
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(presenter).prepareFailView(argumentCaptor.capture());
-
-        String errorMessage = argumentCaptor.getValue();
-        assertEquals("Invalid phone number.", errorMessage);
+        verify(presenter).prepareFailView("Invalid phone number.");
     }
 
-    /**
-     * Tests the successful execution of user signup.
-     * <p>
-     * This test ensures that when all validation checks pass (i.e., the username, email, and phone number are unique),
-     * the {@link SignupInteractor} correctly creates a new {@link AdopterUser} and the {@link SignupOutputBoundary}
-     * is informed of the successful signup.
-     * </p>
-     *
-     * @see SignupInteractor
-     * @see SignupOutputBoundary
-     * @see SignupInputData
-     * @see SignupOutputData
-     * @see AdopterUser
-     */
     @Test
     void testExecuteSuccessfulSignup() {
         when(userDAO.existsByName("john")).thenReturn(false);
