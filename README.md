@@ -13,12 +13,18 @@
 # About
 Our project is a platform that lists verified and healthy pets for adoption.
 The program will act as a pet adoption site in which users are able to scroll through pets that are up for adoption.
-Users looking to use_case.adopt are able to view all pets currently available for adoption.
+Users looking to adopt are able to view all pets currently available for adoption.
 Each user will be prompted to make a profile with their unique identification on the webpage,
 which they have to sign in to view the listed pets.
 Additionally, users can set preferences on their profile page and use those preferences as a filter in the search.
 The preference profile will include questions regarding the preferred pet type (cat for now), size, age, and
-personality to help find the perfect fit for the pet and the new owner.
+location to help find the perfect fit for the pet and the new owner.
+Users can view pet listings that match their preference in the home page. They can interact with pet listings through 
+ways such as adding/removing pets as bookmarks, viewing additional information about the pet, and adopting the pet.
+
+In the home page, users can navigate to the notifications page, where they can view notification messages about if 
+their bookmarked pet has been adopted, the preference page where they can change their preferences, as well as the 
+bookmark page, where they can view bookmarked pets as pet listings. 
 
 * This project was entirely written in Java.
 * Java Swing was used for the GUI.
@@ -35,7 +41,7 @@ personality to help find the perfect fit for the pet and the new owner.
 
 ## APIs Used
 * [RescueGroups.org](https://rescuegroups.org/services/adoptable-pet-data-api/): API that provides us adoptable pet data.
-* [TheCATAPI](https://documenter.getpostman.com/view/5578104/RWgqUxxh#intro): API that returns cat information.
+* [TheCATAPI](https://documenter.getpostman.com/view/5578104/RWgqUxxh#intro): API that returns cat breed information.
 
 # Technical Problems and Notes
 N/A (Feel free to fill it out or check currently ongoing issues)
