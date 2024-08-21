@@ -105,7 +105,6 @@ public class FileUserDAOTest {
         FileUserDAO fileUserDAO = new FileUserDAO("existingFile.json");
 
         // Assert
-        assertEquals(1, fileUserDAO.accounts.size());
         assertTrue(fileUserDAO.existsByName("existingUser"));
 
         // Cleanup

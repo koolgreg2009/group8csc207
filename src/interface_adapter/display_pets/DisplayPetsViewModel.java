@@ -53,12 +53,4 @@ public class DisplayPetsViewModel extends ViewModel {
         return state;
     }
 
-    /**
-     * Gets the username of the currently logged-in user.
-     *
-     * @return the username as a {@code String}.
-     */
-    public String getLoggedInUser() {
-        return state.getUsername();
-    }
 }
