@@ -1,7 +1,6 @@
 package view;
 
 import interface_adapter.preference.PreferenceState;
-import interface_adapter.SessionManager;
 import interface_adapter.display_pets.DisplayPetsController;
 import interface_adapter.get_matching.GetMatchingController;
 import interface_adapter.preference.PreferenceController;

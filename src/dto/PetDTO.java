@@ -169,17 +169,4 @@ public class PetDTO {
 	public String getSpecies() {
 		return species;
 	}
-
-	/**
-	 * Returns a string representation of the {@link PetDTO}.
-	 *
-	 * @return a string representation of the {@link PetDTO}
-	 */
-    @Override
-    public String toString() {
-        return "PetDTO [owner=" + owner + ", email=" + email + ", phoneNum=" + phoneNum + ", petAge=" + petAge +
-                ", breed=" + breed + ", personality=" + ", species=" + species + ", bio=" + bio +
-                ", activity level=" + activityLevel + ", gender" + gender + ", location=" + location + "]";
-
-    }
 }

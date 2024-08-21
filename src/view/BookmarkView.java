@@ -1,7 +1,7 @@
 package view;
 
 import dto.BookmarkDTO;
-import interface_adapter.SessionManager;
+import utils.SessionManager;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
 import interface_adapter.get_notifis.NotifViewModel;

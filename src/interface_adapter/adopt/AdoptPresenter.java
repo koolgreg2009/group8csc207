@@ -1,6 +1,6 @@
 package interface_adapter.adopt;
 
-import interface_adapter.SessionManager;
+import utils.SessionManager;
 import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.adopt.AdoptOutputBoundary;

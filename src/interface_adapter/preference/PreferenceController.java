@@ -1,7 +1,7 @@
 package interface_adapter.preference;
 
 import entity.preference.UserPreference;
-import interface_adapter.SessionManager;
+import utils.SessionManager;
 import use_case.preference.PreferenceData;
 import use_case.preference.PreferenceInputBoundary;
 import java.util.*;

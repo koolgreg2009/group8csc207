@@ -11,8 +11,7 @@ import java.util.List;
 import javax.swing.*;
 
 import dto.PetDTO;
-import interface_adapter.ProfileViewModel;
-import interface_adapter.SessionManager;
+import utils.SessionManager;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
 import interface_adapter.get_notifis.GetNotifController;
@@ -39,7 +38,6 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
     private final LoggedInViewModel loggedInViewModel;
     private final BookmarkViewModel bookmarkViewModel;
     private final PreferenceViewModel preferenceViewModel;
-    private final ProfileViewModel profileViewModel;
     private final LoginViewModel loginViewModel;
     private final ViewManagerModel viewManagerModel;
     private final NotifViewModel notifViewModel;
@@ -69,7 +67,6 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
      * @param bookmarkViewModel the view model for bookmarks.
      * @param preferenceViewModel the view model for user preferences.
      * @param loginViewModel the view model for login state.
-     * @param profileViewModel the view model for user profile.
      * @param notifViewModel the view model for notifications.
      * @param viewManagerModel the view manager model for view navigation.
      * @param adoptController the controller for adopting pets.
@@ -83,7 +80,6 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
                         BookmarkViewModel bookmarkViewModel,
                         PreferenceViewModel preferenceViewModel,
                         LoginViewModel loginViewModel,
-                        ProfileViewModel profileViewModel,
                         NotifViewModel notifViewModel,
                         ViewManagerModel viewManagerModel,
                         AdoptController adoptController,
@@ -96,7 +92,6 @@ public class LoggedInView extends JPanel implements PetActionView, ActionListene
         this.viewManagerModel = viewManagerModel;
         this.bookmarkViewModel = bookmarkViewModel;
         this.preferenceViewModel = preferenceViewModel;
-        this.profileViewModel = profileViewModel;
         this.notifViewModel = notifViewModel;
         this.loginViewModel = loginViewModel;
         this.adoptController = adoptController;

@@ -2,7 +2,6 @@ package app;
 
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
-import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.adopt.AdoptController;
 import interface_adapter.get_notifis.GetNotifController;
@@ -47,7 +46,6 @@ public class LoggedInUseCaseFactory {
                                       BookmarkViewModel bookmarkViewModel,
                                       PreferenceViewModel preferenceViewModel,
                                       LoginViewModel loginViewModel,
-                                      ProfileViewModel profileViewModel,
                                       NotifViewModel notifViewModel,
                                       UserDAOInterface userDAO,
                                       PetDAOInterface petDAO,
@@ -65,7 +63,7 @@ public class LoggedInUseCaseFactory {
         DisplayBookmarkController displayBookmarkController = DisplayBookmarkUseCaseFactory.displayBookmarkUseCase(
                 bookmarkViewModel, userDAO, petDAO);
         return new LoggedInView(petBioController, loggedInViewModel, bookmarkViewModel,
-                preferenceViewModel, loginViewModel, profileViewModel, notifViewModel, viewManagerModel,
+                preferenceViewModel, loginViewModel, notifViewModel, viewManagerModel,
                 adoptController, addBookmarkController, displayBookmarkController, removeBookmarkController,
                 getNotifController);
 

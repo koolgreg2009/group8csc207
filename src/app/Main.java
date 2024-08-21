@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.*;
-import interface_adapter.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.bookmark.BookmarkViewModel;
@@ -60,7 +59,6 @@ public class Main {
         BookmarkViewModel bookmarkViewModel = new BookmarkViewModel();
         NotifViewModel notifViewModel = new NotifViewModel();
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
-        ProfileViewModel profileViewModel = new ProfileViewModel();
         PetBioViewModel petBioViewModel = new PetBioViewModel();
 
         UserDAOInterface userDAO = null;
@@ -96,7 +94,7 @@ public class Main {
         views.add(displayPetsView, displayPetsView.viewName);
 
         LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
-                bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, notifViewModel,
+                bookmarkViewModel, preferenceViewModel, loginViewModel, notifViewModel,
                 userDAO, petDAO, petBioViewModel, displayPetsViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
