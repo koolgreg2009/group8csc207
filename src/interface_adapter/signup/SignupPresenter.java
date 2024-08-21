@@ -6,6 +6,7 @@ import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.preference.PreferenceViewModel;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupOutputData;
+import utils.SessionManager;
 
 /**
  * The presenter for the signup process, responsible for updating the view models

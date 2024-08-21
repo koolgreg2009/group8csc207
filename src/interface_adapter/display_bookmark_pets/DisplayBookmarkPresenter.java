@@ -1,6 +1,6 @@
 package interface_adapter.display_bookmark_pets;
 
-import interface_adapter.SessionManager;
+import utils.SessionManager;
 import interface_adapter.bookmark.BookmarkState;
 import interface_adapter.bookmark.BookmarkViewModel;
 import use_case.display_bookmark_pets.DisplayBookmarkPetsOutputBoundary;

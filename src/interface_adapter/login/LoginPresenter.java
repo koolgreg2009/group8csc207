@@ -1,6 +1,6 @@
 package interface_adapter.login;
 
-import interface_adapter.SessionManager;
+import utils.SessionManager;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.display_pets.DisplayPetsState;
 import interface_adapter.display_pets.DisplayPetsViewModel;

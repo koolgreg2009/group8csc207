@@ -1,6 +1,6 @@
 package interface_adapter.bookmark;
 
-import interface_adapter.SessionManager;
+import utils.SessionManager;
 import use_case.bookmarks.BookmarkInputBoundary;
 import use_case.bookmarks.BookmarkInputData;
 
