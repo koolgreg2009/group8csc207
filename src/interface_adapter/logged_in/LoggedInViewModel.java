@@ -1,42 +1,22 @@
 package interface_adapter.logged_in;
 
 import interface_adapter.ViewModel;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
 
 /**
  * The LoggedInViewModel class represents the view model for the logged-in state of the application.
  * It holds the state of the currently logged-in user and manages changes to this state.
  * This class also provides methods for handling property change events.
  *
- * @version 1.0
- * @since 2024-07-19
  */
 public class LoggedInViewModel extends ViewModel {
-
-    /** The title label for the logged-in view. */
     public final String TITLE_LABEL = "Logged In View";
-
-    /** The notification state of the logged-in user. */
     private NotificationState notifState = new NotificationState();
-    
     private LoggedInState state = new LoggedInState();
-
-    /** Label for Profile button */
-    public final String PROFILE_BUTTON_LABEL = "Profile";
-
-    /** Label for Preference button */
     public final String PREFERENCE_BUTTON_LABEL = "My Preferences";
-
-    /** Label for Bookmark button */
     public final String BOOKMARK_BUTTON_LABEL = "My Bookmarks";
-
-    /** The label for the logout button. */
     public final String LOGOUT_BUTTON_LABEL = "Log out";
-
-    /** The label for notification button. */
     public String NOTIF_BUTTON= "Notifications";
 
     /**
@@ -45,15 +25,6 @@ public class LoggedInViewModel extends ViewModel {
     public LoggedInViewModel() {
         super("logged in");
     }
-
-//    /**
-//     * Sets the state of the logged-in user.
-//     *
-//     * @param state
-//     */
-//    public void setState(LoggedInState state) {
-//        this.state = state;
-//    }
 
     /** Support for firing property change events. */
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -66,9 +37,15 @@ public class LoggedInViewModel extends ViewModel {
         support.firePropertyChange("state", null, this.state);
     }
 
+    /**
+     * Fires a property change event to notify listeners about changes to the notification state.
+     * This method triggers a property change event with the property name "notification".
+     */
     public void fireNotificationChanged() {
-        support.firePropertyChange("notification", null, this.state);
+        support.firePropertyChange("notification", null,
+                this.state);
     }
+
     /**
      * Adds a listener for property change events.
      *
@@ -96,6 +73,7 @@ public class LoggedInViewModel extends ViewModel {
     public String getLoggedInUser() {
         return state.getUsername();
     }
+
     /**
      * Setter for notification popup in state
      *

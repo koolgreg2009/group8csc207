@@ -1,13 +1,17 @@
 package use_case.adopt;
+
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import entity.Pet;
-
 import java.util.List;
 
 /**
- * Interactor responsible for notifying user that their bookmarked
+ * Interactor responsible for notifying the user that their bookmarked
  * pet has been adopted.
+ * <p>
+ * This class implements the {@link AdoptInputBoundary} interface and handles the process of updating the
+ * system when a pet is adopted. It interacts with data access objects (DAOs) to manage pet and user information
+ * and communicates with the presenter to provide feedback to the user.
  */
 public class Adopt implements AdoptInputBoundary {
     final PetDAOInterface petDAO;
@@ -41,19 +45,15 @@ public class Adopt implements AdoptInputBoundary {
     @Override
     public void execute(AdoptInputData adoptInputData) {
         Pet pet =  petDAO.get(adoptInputData.getPetID());
-        if (!pet.isAvailable()){
-            System.out.println("Pet" + pet.getPetID() + " has already been adopted and is unavailable.");
+        pet.markUnavailable();
+        List<String> users = userDAO.removePetFromAllUserBookmarks(pet.getPetID());
+        petDAO.save(pet);
+        for (String u : users) {
+            userDAO.get(u).addNotif(pet.getName() + " has found a home.");
         }
-        else {
-            pet.markUnavailable();
-            List<String> users = userDAO.removePetFromAllUserBookmarks(pet.getPetID());
-            petDAO.save(pet);
-            for (String u : users) {
-                userDAO.get(u).addNotif(pet.getName() + " has found a home.");
-            }
-            AdoptOutputData outputData = new AdoptOutputData(pet.getOwner(), pet.getEmail(), pet.getPhoneNum(),
-                    String.valueOf(pet.getName()));
-            userPresenter.prepareAdopt(outputData);
-        }
+        AdoptOutputData outputData = new AdoptOutputData(pet.getOwner(), pet.getEmail(), pet.getPhoneNum(),
+                String.valueOf(pet.getName()));
+        userPresenter.prepareAdopt(outputData);
+
     }
 }

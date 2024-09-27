@@ -1,7 +1,5 @@
 package app;
 
-import data_access.FilePetDAO;
-import data_access.FileUserDAO;
 import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.adopt.AdoptController;

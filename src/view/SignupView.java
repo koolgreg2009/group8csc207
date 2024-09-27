@@ -23,6 +23,11 @@ import interface_adapter.signup.SignupViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.preference.PreferenceViewModel;
 
+/**
+ * The SignupView class represents the UI for user sign-up.
+ * It includes input fields for username, password, repeated password, name, email, and phone.
+ * It also includes buttons to sign up or cancel the operation.
+ */
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "sign up";
@@ -43,6 +48,15 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JButton signUp;
     private final JButton cancel;
 
+    /**
+     * Constructs a new SignupView with the specified controller and view models.
+     *
+     * @param controller The SignupController for handling sign-up actions.
+     * @param signupViewModel The SignupViewModel containing the view's state and labels.
+     * @param viewManagerModel The ViewManagerModel for managing views.
+     * @param loginViewModel The LoginViewModel for managing login views.
+     * @param preferenceViewModel The PreferenceViewModel for managing preferences.
+     */
     public SignupView(SignupController controller, SignupViewModel signupViewModel, ViewManagerModel viewManagerModel,
                       LoginViewModel loginViewModel, PreferenceViewModel preferenceViewModel) {
 
@@ -83,12 +97,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         if (evt.getSource().equals(signUp)) {
                             SignupState currentState = signupViewModel.getState();
                             signupController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword(),
-                                    currentState.getRepeatPassword(),
-                                    currentState.getName(),
-                                    currentState.getEmail(),
-                                    currentState.getPhone()
+                                    currentState.getUsername().trim(),
+                                    currentState.getPassword().trim(),
+                                    currentState.getRepeatPassword().trim(),
+                                    currentState.getName().trim(),
+                                    currentState.getEmail().trim(),
+                                    currentState.getPhone().trim()
                             );
 
                         }
@@ -114,6 +128,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            passwordInputField.requestFocus();
+                        }
                     }
 
                     @Override
@@ -132,7 +149,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            repeatPasswordInputField.requestFocus();
+                        }
                     }
 
                     @Override
@@ -152,6 +171,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            nameInputField.requestFocus();
+                        }
                     }
 
                     @Override
@@ -170,6 +192,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            emailInputField.requestFocus();
+                        }
                     }
 
                     @Override
@@ -188,6 +213,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            phoneInputField.requestFocus();
+                        }
                     }
 
                     @Override
@@ -206,6 +234,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            signUp.doClick();
+                        }
                     }
 
                     @Override
@@ -225,9 +256,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(buttons);
     }
 
-
     /**
-     * React to a button click that results in evt.
+     * Reacts to a button click that results in an action event.
+     *
+     * @param evt The {@code ActionEvent} object describing the action event.
      */
     @Override
 	public void actionPerformed(ActionEvent evt) {
@@ -237,6 +269,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 usernameInputField.getText());
     }
 
+    /**
+     * Responds to property change events to update the view based on the new state.
+     *
+     * @param evt The {@code PropertyChangeEvent} object describing the event source
+     *            and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SignupState state = (SignupState) evt.getNewValue();

@@ -5,40 +5,63 @@ import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.preference.PreferenceOutputBoundary;
 
+/**
+ * The presenter for managing user preferences, handling the interaction between the preference use case
+ * and the various view models. This class is responsible for preparing the view based on the outcome
+ * of the preference use case execution and updating the UI components accordingly.
+ */
 public class PreferencePresenter implements PreferenceOutputBoundary {
-
-    /**
-     * The view manager model used to switch between views.
-     */
     private final ViewManagerModel viewManagerModel;
-
-    /**
-     * The view model for the logged-in view.
-     */
     private final LoggedInViewModel loggedInViewModel;
     private final DisplayPetsViewModel displayPetsViewModel;
+    private final PreferenceViewModel preferenceViewModel;
 
     /**
-     * The presenter for the preference use case.
+     * Constructs a {@code PreferencePresenter} with the specified view models and view manager model.
      *
-     * @param viewManagerModel the view Manager for our program to manage the change in views
-     * @param loggedInViewModel the logged in view model that is previously and afterward displayed
-     * @param displayPetsViewModel the Pets view model which is in charge of changing the pet listings after
+     * @param viewManagerModel       the view manager for handling view transitions.
+     * @param loggedInViewModel      the view model representing the logged-in user.
+     * @param displayPetsViewModel   the view model responsible for displaying pet listings.
+     * @param preferenceViewModel    the view model for managing and displaying user preferences.
      */
-    public PreferencePresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, DisplayPetsViewModel displayPetsViewModel) {
+    public PreferencePresenter(ViewManagerModel viewManagerModel,
+                               LoggedInViewModel loggedInViewModel,
+                               DisplayPetsViewModel displayPetsViewModel,
+                               PreferenceViewModel preferenceViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.displayPetsViewModel = displayPetsViewModel;
+        this.preferenceViewModel = preferenceViewModel;
     }
 
     /**
-     * Preperation for the preferences to be executed successfully
+     * Prepares the view to show the success state of the preference update.
      */
     @Override
     public void prepareSuccessView() {
-        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+        preferenceViewModel.getState().clearError();
+        preferenceViewModel.firePropertyChanged("error");
         displayPetsViewModel.firePropertyChanged();
+    }
+
+    /**
+     * Prepares the view to show an error state for an invalid breed.
+     */
+    @Override
+    public void prepareBreedFail(){
+        PreferenceState state = preferenceViewModel.getState();
+        state.setBreedError("Invalid Breed");
+        preferenceViewModel.firePropertyChanged("error");
+    }
+
+    /**
+     * Prepares the view to show an error state for an invalid location.
+     */
+    @Override
+    public void prepareLocationFail(){
+        PreferenceState state = preferenceViewModel.getState();
+        state.setLocationError("Invalid Location");
+        preferenceViewModel.firePropertyChanged("error");
     }
 }
 

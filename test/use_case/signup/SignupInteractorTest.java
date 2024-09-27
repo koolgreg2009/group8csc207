@@ -1,101 +1,156 @@
 package use_case.signup;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDateTime;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
 import data_access.UserDAOInterface;
 import entity.user.AdopterUser;
 import entity.user.UserFactory;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+/**
+ * Unit test for the {@link SignupInteractor} class.
+ * This class tests the functionality of the {@link SignupInteractor}'s execute method
+ * which handles user signup logic, including validation and creation of new users.
+ */
 class SignupInteractorTest {
-
-    @Mock
     private UserDAOInterface userDAO;
+    private SignupOutputBoundary presenter;
+    private UserFactory userFactory;
+    private SignupInteractor interactor;
 
-    @Mock
-    private SignupOutputBoundary signupPresenter;
-
-    @Mock
-    private UserFactory adopterUserFactory;
-
-    @InjectMocks
-    private SignupInteractor signupInteractor;
-
+    /**
+     * Sets up the test environment by initializing mocks and the {@link SignupInteractor} instance
+     * before each test.
+     */
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        userDAO = Mockito.mock(UserDAOInterface.class);
+        presenter = Mockito.mock(SignupOutputBoundary.class);
+        userFactory = Mockito.mock(UserFactory.class);
+        interactor = new SignupInteractor(userDAO, presenter, userFactory);
     }
 
     @Test
-    void testUserAlreadyExists() {
-        // Arrange
-        when(userDAO.existsByName(anyString())).thenReturn(true);
-        SignupInputData inputData = new SignupInputData("existingUser", "password", "password", "John Doe", "john.doe@example.com", "123-456-7890");
+    void testExecuteEmptyUsername() {
+        SignupInputData inputData = new SignupInputData("", "password", "password", "John Doe", "john@example.com", "1234567890");
+        interactor.execute(inputData);
 
-        // Act
-        signupInteractor.execute(inputData);
-
-        // Assert
-        verify(signupPresenter).prepareFailView("User already exists.");
+        verify(presenter).prepareFailView("Username cannot be empty.");
     }
 
     @Test
-    void testPasswordsDoNotMatch() {
-        // Arrange
-        when(userDAO.existsByName(anyString())).thenReturn(false);
-        SignupInputData inputData = new SignupInputData("newUser", "password", "differentPassword", "John Doe", "john.doe@example.com", "123-456-7890");
+    void testExecuteEmptyPassword() {
+        SignupInputData inputData = new SignupInputData("john", "", "password", "John Doe", "john@example.com", "1234567890");
+        interactor.execute(inputData);
 
-        // Act
-        signupInteractor.execute(inputData);
-
-        // Assert
-        verify(signupPresenter).prepareFailView("Passwords don't match.");
+        verify(presenter).prepareFailView("Password cannot be empty.");
     }
 
     @Test
-    void testPhoneWrongFormat() {
-        // Arrange
-        when(userDAO.existsByName(anyString())).thenReturn(false);
-        AdopterUser newUser = new AdopterUser("newUser", "password", "John Doe", "john.doe@example.com", "123-456-7890");
-        when(adopterUserFactory.createAdopter(anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(newUser);
-        SignupInputData inputData = new SignupInputData("newUser", "password", "password", "John Doe", "john.doe@example.com", "123-456-7890");
+    void testExecuteEmptyRepeatPassword() {
+        SignupInputData inputData = new SignupInputData("john", "password", "", "John Doe", "john@example.com", "1234567890");
+        interactor.execute(inputData);
 
-        // Act
-        signupInteractor.execute(inputData);
-
-        // Assert
-        verify(signupPresenter).prepareFailView("Invalid phone number.");
+        verify(presenter).prepareFailView("Repeat password cannot be empty.");
     }
 
     @Test
-    void testSuccessfulSignup() {
-        // Arrange
-        when(userDAO.existsByName(anyString())).thenReturn(false);
-        AdopterUser newUser = new AdopterUser("newUser", "password", "John Doe", "john.doe@example.com", "1234567890");
-        when(adopterUserFactory.createAdopter(anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(newUser);
-        LocalDateTime now = LocalDateTime.now();
-        SignupInputData inputData = new SignupInputData("newUser", "password", "password", "John Doe", "john.doe@example.com", "1234567890");
+    void testExecuteEmptyName() {
+        SignupInputData inputData = new SignupInputData("john", "password", "password", "", "john@example.com", "1234567890");
+        interactor.execute(inputData);
 
-        // Act
-        signupInteractor.execute(inputData);
-		ArgumentCaptor<SignupOutputData> outputCaptor = ArgumentCaptor.forClass(SignupOutputData.class);
-		verify(signupPresenter).prepareSuccessView(outputCaptor.capture());
+        verify(presenter).prepareFailView("Your name cannot be empty.");
+    }
 
+    @Test
+    void testExecuteUsernameAlreadyExists() {
+        when(userDAO.existsByName("john")).thenReturn(true);
 
-        // Assert
-        verify(userDAO).save(newUser);
-		SignupOutputData output = outputCaptor.getValue();
-		assertEquals("newUser", output.getUsername());
+        SignupInputData inputData = new SignupInputData("john", "password", "password", "John Doe", "john@example.com", "1234567890");
+        interactor.execute(inputData);
+
+        verify(presenter).prepareFailView("Username already exists.");
+    }
+
+    @Test
+    void testExecuteEmailAlreadyExists() {
+        when(userDAO.existsByName("john")).thenReturn(false);
+        when(userDAO.existsByEmail("john@example.com")).thenReturn(true);
+
+        SignupInputData inputData = new SignupInputData("john", "password", "password", "John Doe", "john@example.com", "1234567890");
+        interactor.execute(inputData);
+
+        verify(presenter).prepareFailView("Email already in use.");
+    }
+
+    @Test
+    void testExecutePhoneAlreadyExists() {
+        when(userDAO.existsByName("john")).thenReturn(false);
+        when(userDAO.existsByEmail("john@example.com")).thenReturn(false);
+        when(userDAO.existsByPhone("1234567890")).thenReturn(true);
+
+        SignupInputData inputData = new SignupInputData("john", "password", "password", "John Doe", "john@example.com", "1234567890");
+        interactor.execute(inputData);
+
+        verify(presenter).prepareFailView("Phone number already in use.");
+    }
+
+    @Test
+    void testExecutePasswordsDoNotMatch() {
+        when(userDAO.existsByName("john")).thenReturn(false);
+        when(userDAO.existsByEmail("john@example.com")).thenReturn(false);
+        when(userDAO.existsByPhone("1234567890")).thenReturn(false);
+
+        SignupInputData inputData = new SignupInputData("john", "password", "differentPassword", "John Doe", "john@example.com", "1234567890");
+        interactor.execute(inputData);
+
+        verify(presenter).prepareFailView("Passwords don't match.");
+    }
+
+    @Test
+    void testExecuteInvalidEmail() {
+        when(userDAO.existsByName("john")).thenReturn(false);
+        when(userDAO.existsByEmail("john@example.com")).thenReturn(false);
+        when(userDAO.existsByPhone("1234567890")).thenReturn(false);
+
+        SignupInputData inputData = new SignupInputData("john", "password", "password", "John Doe", "invalid-email", "1234567890");
+        interactor.execute(inputData);
+
+        verify(presenter).prepareFailView("Invalid email address.");
+    }
+
+    @Test
+    void testExecuteInvalidPhone() {
+        when(userDAO.existsByName("john")).thenReturn(false);
+        when(userDAO.existsByEmail("john@example.com")).thenReturn(false);
+        when(userDAO.existsByPhone("1234567890")).thenReturn(false);
+
+        SignupInputData inputData = new SignupInputData("john", "password", "password", "John Doe", "john@example.com", "invalid-phone");
+        interactor.execute(inputData);
+
+        verify(presenter).prepareFailView("Invalid phone number.");
+    }
+
+    @Test
+    void testExecuteSuccessfulSignup() {
+        when(userDAO.existsByName("john")).thenReturn(false);
+        when(userDAO.existsByEmail("john@example.com")).thenReturn(false);
+        when(userDAO.existsByPhone("1234567890")).thenReturn(false);
+
+        AdopterUser user = new AdopterUser("john", "password", "John Doe", "john@example.com", "1234567890");
+        when(userFactory.createAdopter("john", "password", "John Doe", "john@example.com", "1234567890")).thenReturn(user);
+
+        SignupInputData inputData = new SignupInputData("john", "password", "password", "John Doe", "john@example.com", "1234567890");
+        interactor.execute(inputData);
+
+        ArgumentCaptor<SignupOutputData> argumentCaptor = ArgumentCaptor.forClass(SignupOutputData.class);
+        verify(presenter).prepareSuccessView(argumentCaptor.capture());
+
+        SignupOutputData outputData = argumentCaptor.getValue();
+        assertEquals("john", outputData.getUsername());
     }
 }

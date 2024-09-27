@@ -1,18 +1,16 @@
 package use_case.signup;
 
-/** The SignupInputBoundary interface is the input boundary for the Signup use case.
- *  It provides an abstract method for executing the signup with the given input data.
- *
- * @version 1.0
- * @since 2024-07-19
+/**
+ * The {@code SignupInputBoundary} interface defines the input boundary for the signup use case.
+ * <p>
+ * It provides an abstract method for executing the signup process with the given input data.
  */
-
 public interface SignupInputBoundary {
 
     /**
-     * Executes the signup process using the provided signupInputData.
+     * Executes the signup process using the provided {@code SignupInputData}.
      *
-     * @param signupInputData
+     * @param signupInputData the data required to perform the signup operation.
      */
     void execute(SignupInputData signupInputData);
 }

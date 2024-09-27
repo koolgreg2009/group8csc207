@@ -12,8 +12,15 @@ import use_case.display_pets.DisplayPetsInteractor;
 import use_case.display_pets.DisplayPetsOutputBoundary;
 import view.DisplayPetsView;
 
+/**
+ * Factory class responsible for creating instances related to the display pets use case.
+ */
 public class DisplayPetsUseCaseFactory {
 
+	/**
+	 * Private constructor of {@link DisplayPetsUseCaseFactory} to prevent instantiation.
+	 * This class is intended to be used as a factory for creating use case instances.
+	 */
 	private DisplayPetsUseCaseFactory() {
 	}
 
@@ -22,14 +29,24 @@ public class DisplayPetsUseCaseFactory {
 										 LoggedInViewModel loggedInViewModel,
 										 UserDAOInterface userDAO,
 										 PetDAOInterface petDAO) {
-		DisplayPetsController displayPetsController = createLoginSuccessUseCase(viewManagerModel, loggedInViewModel,
+		DisplayPetsController displayPetsController = createDisplayPetsUseCase(viewManagerModel, loggedInViewModel,
 				userDAO, petDAO);
 		return new DisplayPetsView(displayPetsViewModel, displayPetsController);
 
 	}
 
-	public static DisplayPetsController createLoginSuccessUseCase(ViewManagerModel viewManagerModel,
-																   LoggedInViewModel loggedInViewModel, UserDAOInterface userDAO, PetDAOInterface petDAO) {
+	/**
+	 * Creates and returns an instance of {@link DisplayPetsView}.
+	 * Sets up the necessary dependencies including the view model and controller.
+	 *
+	 * @param viewManagerModel the model that manages the active view.
+	 * @param loggedInViewModel the view model representing the logged-in user's state.
+	 * @param userDAO the data access object for user-related operations.
+	 * @param petDAO the data access object for pet-related operations.
+	 * @return an instance of {@link DisplayPetsView}.
+	 */
+	public static DisplayPetsController createDisplayPetsUseCase(ViewManagerModel viewManagerModel,
+																 LoggedInViewModel loggedInViewModel, UserDAOInterface userDAO, PetDAOInterface petDAO) {
 
 		DisplayPetsOutputBoundary displayPetsOutputBoundary = new DisplayPetsPresenter(viewManagerModel,
 				loggedInViewModel);

@@ -21,10 +21,7 @@ import entity.user.User;
  * This class implements the UserDAOInterface to define the behavior for user data access.
  */
 public class FileUserDAO implements UserDAOInterface {
-	 // The file used for storing user data in JSON format.
 	private final File jsonFile;
-
-	 // A map of usernames to user objects for in-memory user data management.
 	private final Map<String, AdopterUser> accounts = new HashMap<String, AdopterUser>();
 
 	/**
@@ -99,6 +96,28 @@ public class FileUserDAO implements UserDAOInterface {
 	@Override
 	public boolean existsByName(String identifier) {
 		return accounts.containsKey(identifier);
+	}
+
+	/**
+	 * Checks if a user with the specified email exists in the system.
+	 *
+	 * @param email the email address to check.
+	 * @return true if a user with the specified email exists; false otherwise.
+	 */
+	@Override
+	public boolean existsByEmail(String email) {
+		return accounts.values().stream().anyMatch(user -> user.getEmail().equals(email));
+	}
+
+	/**
+	 * Checks if a user with the specified phone number exists in the system.
+	 *
+	 * @param phone the phone number to check.
+	 * @return true if a user with the specified phone number exists; false otherwise.
+	 */
+	@Override
+	public boolean existsByPhone(String phone) {
+		return accounts.values().stream().anyMatch(user -> user.getPhone().equals(phone));
 	}
 
 	/**

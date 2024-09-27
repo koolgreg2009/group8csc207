@@ -1,17 +1,15 @@
 package use_case.preference;
 
-/** The PreferenceInputBoundary interface is the input boundary for the preference use case.
- * It contains the abstract methods that will be implemented by the PreferenceInteractor class
- *
- * @version 1.0
- * @since 2024-07-18
+/**
+ * The {@code PreferenceInputBoundary} interface defines the input boundary for the preference use case.
+ * It declares the methods that must be implemented by the {@code PreferenceInteractor} class.
  */
-
 public interface PreferenceInputBoundary {
 
-    /** This execute method is an abstract that will be implemented by PreferenceInteractor class
+    /**
+     * Executes the preference use case with the provided {@code PreferenceData}.
      *
-     * @param preferenceData the preference data being input
+     * @param preferenceData the preference data to be processed by the use case.
      */
     void execute(PreferenceData preferenceData);
 }

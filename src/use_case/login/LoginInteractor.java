@@ -6,10 +6,7 @@ import entity.user.User;
 
 /**
  * The LoginInteractor class implements the LoginInputBoundary interface and handles the login process.
- * It validates the login data, checks if the user exists, and verifies the password.
- *
- * @version 1.0
- * @since 2024-07-19
+ * It validates the provided login data, checks if the user exists, and verifies the password.
  */
 public class LoginInteractor implements LoginInputBoundary {
     final UserDAOInterface userDataAccessObject;
@@ -19,9 +16,9 @@ public class LoginInteractor implements LoginInputBoundary {
     /**
      * Constructs a new LoginInteractor with the specified dependencies.
      *
-     * @param userDataAccessInterface
-     * @param petDAO 
-     * @param loginOutputBoundary
+     * @param userDataAccessInterface the data access object for user-related operations
+     * @param petDAO the data access object for pet-related operations (may be used in future extensions)
+     * @param loginOutputBoundary the boundary for handling the output of the login process
      */
     public LoginInteractor(UserDAOInterface userDataAccessInterface,
                            PetDAOInterface petDAO, LoginOutputBoundary loginOutputBoundary) {
@@ -31,10 +28,10 @@ public class LoginInteractor implements LoginInputBoundary {
     }
 
     /**
-     * Executes the login process with the given input data.
-     * Validates the data, checks if the user exists, and verifies the password.
+     * Executes the login process with the provided input data.
+     * This includes validating the login data, checking if the user exists, and verifying the password.
      *
-     * @param loginInputData
+     * @param loginInputData the data required to log in, including username and password
      */
     @Override
     public void execute(LoginInputData loginInputData) {

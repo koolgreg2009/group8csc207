@@ -1,25 +1,22 @@
 package use_case.pet_bio;
 
-
 import data_access.PetDAOInterface;
 import dto.PetDTO;
 import entity.Pet;
 
 /**
- * The PetBioInteractor class implements the PetBioInputBoundary interface and handles the pet bio use case
- *
- * @version 1.0
- * @since 2024-07-21
+ * The PetBioInteractor class implements the PetBioInputBoundary interface and handles the logic for the pet bio use case.
+ * It retrieves pet information and prepares it for presentation.
  */
 public class PetBioInteractor implements PetBioInputBoundary{
     final PetBioOutputBoundary bioPresenter;
     final PetDAOInterface petDAO;
 
     /**
-     * The constructor for the PetBioInteractor object with the specified output boundary and pet data access object.
+     * Constructs a PetBioInteractor with the specified output boundary and pet data access object.
      *
-     * @param bioPresenter the output boundary for the presenter
-     * @param petDAO the data access object which provides access the information for the specified pet
+     * @param bioPresenter the output boundary for presenting the pet bio information
+     * @param petDAO the data access object for retrieving pet information
      */
     public PetBioInteractor(PetBioOutputBoundary bioPresenter, PetDAOInterface petDAO) {
         this.bioPresenter = bioPresenter;
@@ -27,9 +24,12 @@ public class PetBioInteractor implements PetBioInputBoundary{
     }
 
     /**
-     * Goes into the pet's own page and allows the user to view the pet's information such as bio, donator and
-     * attributes
-     * @param petBioInputData the PetBioInputData that is being picked up through the input boundary.
+     * Retrieves the pet information based on the provided input data and prepares it for presentation.
+     *
+     * <p>This method fetches the pet details using the pet ID from the PetDAOInterface and creates a PetDTO object.
+     * It then passes the PetDTO along with the username to the output boundary for presentation.</p>
+     *
+     * @param petBioInputData the input data containing the pet ID and the username of the viewer
      */
     @Override
     public void execute(PetBioInputData petBioInputData) {

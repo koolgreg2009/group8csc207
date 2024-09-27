@@ -31,10 +31,11 @@ class FilePetDAOTest {
         }
     }
 
+
     @Test
     void testSaveAndGetPet() {
-		Pet pet = new Pet("John Doe", "john@example.com", "1234567890", 1, "Dog", 3, "Bulldog",
-				"Male", "High", "Loves to play", "New York", true, "test", "");
+        Pet pet = new Pet("John Doe", "john@example.com", "1234567890", 1, "Dog", 3, "Bulldog",
+                "Male", "High", "Loves to play", "New York", true, "test", "");
         petDAO.save(pet);
 
         Pet retrievedPet = petDAO.get(1);
@@ -45,10 +46,10 @@ class FilePetDAOTest {
 
     @Test
     void testGetPreferencePets() {
-		Pet pet1 = new Pet("John Doe", "john@example.com", "1234567890", 1, "Dog", 3, "Bulldog",
-				"Male", "High", "Loves to play", "New York", true, "John", "");
-		Pet pet2 = new Pet("Jane Doe", "jane@example.com", "0987654321", 2, "Cat", 2, "Siamese",
-				"Female", "Medium", "Loves to nap", "Los Angeles", true, "Jane", "");
+        Pet pet1 = new Pet("John Doe", "john@example.com", "1234567890", 1, "Dog", 3, "Bulldog",
+                "Male", "High", "Loves to play", "New York", true, "John", "");
+        Pet pet2 = new Pet("Jane Doe", "jane@example.com", "0987654321", 2, "Cat", 2, "Siamese",
+                "Female", "Medium", "Loves to nap", "Los Angeles", true, "Jane", "");
         petDAO.save(pet1);
         petDAO.save(pet2);
 
@@ -61,10 +62,10 @@ class FilePetDAOTest {
 
     @Test
     void testGetPreferencePetsByMultipleCriteria() {
-		Pet pet1 = new Pet("John Doe", "john@example.com", "1234567890", 1, "Dog", 3, "Bulldog",
-				"Male", "High", "Loves to play", "New York", true, "John", "");
-		Pet pet2 = new Pet("Jane Doe", "jane@example.com", "0987654321", 2, "Dog", 2, "Poodle",
-				"Female", "Medium", "Loves to nap", "New York", true, "Jane", "");
+        Pet pet1 = new Pet("John Doe", "john@example.com", "1234567890", 1, "Dog", 3, "Bulldog",
+                "Male", "High", "Loves to play", "New York", true, "John", "");
+        Pet pet2 = new Pet("Jane Doe", "jane@example.com", "0987654321", 2, "Dog", 2, "Poodle",
+                "Female", "Medium", "Loves to nap", "New York", true, "Jane", "");
         petDAO.save(pet1);
         petDAO.save(pet2);
 

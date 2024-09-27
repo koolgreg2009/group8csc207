@@ -7,11 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import data_access.FilePetDAO;
-import data_access.FileUserDAO;
-import data_access.PetDAOInterface;
-import data_access.UserDAOInterface;
-import interface_adapter.ProfileViewModel;
+import data_access.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.bookmark.BookmarkViewModel;
@@ -23,31 +19,38 @@ import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupViewModel;
 import view.*;
 
-public class Main {
-    public static void main(String[] args) {
-        // From Paul Gries's example
-        // Build the main program window, the main panel containing the
-        // various cards, and the layout, and stitch them together.
+import static app.NotifViewUseCaseFactory.createNotifView;
 
-        // The main application window.
+/**
+ * The Main class serves as the entry point to the Pet Adoption application.
+ * It initializes the application's main window, sets up the different views
+ * using a CardLayout, and creates instances of the necessary view models
+ * and data access objects.
+ * <p>
+ * The application displays a series of views to the user, including login,
+ * signup, pet display, bookmarks, notifications, and user profile.
+ * </p>
+ */
+public class Main {
+
+    /**
+     * The main method initializes and launches the Pet Adoption application.
+     *
+     * @param args command-line arguments (not used)
+     */
+    public static void main(String[] args) {
+
         JFrame application = new JFrame("Pet Adoption");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         application.setResizable(true);
         application.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        application.setSize(800, 500);
-        CardLayout cardLayout = new CardLayout();
 
-        // The various View objects. Only one view is visible at a time.
+        CardLayout cardLayout = new CardLayout();
         JPanel views = new JPanel(cardLayout);
         application.add(views);
-        // This keeps track of and manages which view is currently showing.
+
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
-
-        // The data for the views, such as username and password, are in the ViewModels.
-        // This information will be changed by a presenter object that is reporting the
-        // results from the use case. The ViewModels are observable, and will
-        // be observed by the Views.
 
         LoginViewModel loginViewModel = new LoginViewModel();
         DisplayPetsViewModel displayPetsViewModel = new DisplayPetsViewModel();
@@ -56,11 +59,12 @@ public class Main {
         BookmarkViewModel bookmarkViewModel = new BookmarkViewModel();
         NotifViewModel notifViewModel = new NotifViewModel();
         PreferenceViewModel preferenceViewModel = new PreferenceViewModel();
-        ProfileViewModel profileViewModel = new ProfileViewModel();
         PetBioViewModel petBioViewModel = new PetBioViewModel();
-        // creating user and pet DAO to be used for all use cases. declared outside so compiler doesnt cry
+
         UserDAOInterface userDAO = null;
         PetDAOInterface petDAO = null;
+        APIInfoInterface infoDAO = null;
+
         try{
             userDAO = new FileUserDAO("./users.json");
         } catch (IOException e) {
@@ -71,8 +75,14 @@ public class Main {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        try{
+            infoDAO = new FileApiInfoDAO("./data.json");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, preferenceViewModel, userDAO, displayPetsViewModel);
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel,
+                preferenceViewModel, userDAO, displayPetsViewModel);
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, displayPetsViewModel,
@@ -84,7 +94,7 @@ public class Main {
         views.add(displayPetsView, displayPetsView.viewName);
 
         LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
-                bookmarkViewModel, preferenceViewModel, loginViewModel, profileViewModel, notifViewModel,
+                bookmarkViewModel, preferenceViewModel, loginViewModel, notifViewModel,
                 userDAO, petDAO, petBioViewModel, displayPetsViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
@@ -97,20 +107,19 @@ public class Main {
                 displayPetsViewModel, userDAO,petDAO);
         views.add(bookmarkView, bookmarkView.viewName);
 
-        NotifView notifView = new NotifView(loggedInViewModel,viewManagerModel,notifViewModel);
+        NotifView notifView = createNotifView(loggedInViewModel, viewManagerModel, notifViewModel);
         views.add(notifView, notifView.viewName);
 
         ProfileView profileView = new ProfileView();
         views.add(profileView, profileView.viewName);
 
         PreferenceView preferenceView = PreferenceUsecaseFactory.create(viewManagerModel, loggedInViewModel,
-                preferenceViewModel, userDAO, displayPetsViewModel);
+                preferenceViewModel, userDAO, displayPetsViewModel, petDAO, infoDAO);
         views.add(preferenceView, preferenceView.viewName);
 
         viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        //application.pack();
         application.setLocationRelativeTo(null);
         application.setVisible(true);
     }

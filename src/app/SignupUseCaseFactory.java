@@ -64,7 +64,6 @@ public class SignupUseCaseFactory {
      */
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, PreferenceViewModel preferenceViewModel, UserDAOInterface userDataAccessObject, SignupViewModel signupViewModel, DisplayPetsViewModel displayPetsViewModel) throws IOException {
 
-        // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, preferenceViewModel, signupViewModel, displayPetsViewModel);
 
         AdopterUserFactory userFactory = new AdopterUserFactory();

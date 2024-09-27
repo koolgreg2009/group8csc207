@@ -1,8 +1,12 @@
 package app;
 
+import data_access.APIInfoInterface;
+import data_access.PetDAOInterface;
 import data_access.UserDAOInterface;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.display_pets.DisplayPetsController;
 import interface_adapter.display_pets.DisplayPetsViewModel;
+import interface_adapter.get_matching.GetMatchingController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferencePresenter;
@@ -12,11 +16,24 @@ import use_case.preference.PreferenceInteractor;
 import use_case.preference.PreferenceOutputBoundary;
 import view.PreferenceView;
 
+import static app.DisplayPetsUseCaseFactory.createDisplayPetsUseCase;
+import static app.GetMatchingStringUseCaseFactory.createMatchingUseCase;
+
 
 /**
- * Preference Usecase factory which takes all the data and returns a Preference controller
+ * Factory class for creating instances of use cases related to user preferences.
+ * This class is used to centralize the creation of various controllers and view models
+ * that manage user preference functionality within the application.
  */
 public class PreferenceUsecaseFactory {
+
+    /**
+     * Private constructor to prevent instantiation of the {@link PreferenceUsecaseFactory}.
+     * This class is intended to be used as a factory for creating use case instances.
+     */
+    private PreferenceUsecaseFactory(){
+
+    }
 
     /**
      * Constructor for Preference usecase factory which takes all the info the json path and gives a new preference
@@ -25,10 +42,14 @@ public class PreferenceUsecaseFactory {
      * @return the new preference controller or null if IOException is caught
      */
     public static PreferenceController createPreferenceUseCase(ViewManagerModel viewManagerModel,
-                                                               LoggedInViewModel loggedInViewModel, UserDAOInterface userDAO, DisplayPetsViewModel displayPetsViewModel) {
+                                                               LoggedInViewModel loggedInViewModel,
+                                                               UserDAOInterface userDAO,
+                                                               DisplayPetsViewModel displayPetsViewModel,
+                                                               APIInfoInterface fileApiInfoDAO,
+                                                               PreferenceViewModel preferenceViewModel) {
 
-            PreferenceOutputBoundary preferencePresenter = new PreferencePresenter(viewManagerModel, loggedInViewModel, displayPetsViewModel);
-            PreferenceInputBoundary preferenceInteractor = new PreferenceInteractor(userDAO, preferencePresenter);
+            PreferenceOutputBoundary preferencePresenter = new PreferencePresenter(viewManagerModel, loggedInViewModel, displayPetsViewModel, preferenceViewModel);
+            PreferenceInputBoundary preferenceInteractor = new PreferenceInteractor(userDAO, preferencePresenter, fileApiInfoDAO);
             return new PreferenceController(preferenceInteractor);
     }
 
@@ -49,9 +70,14 @@ public class PreferenceUsecaseFactory {
             LoggedInViewModel loggedInViewModel,
             PreferenceViewModel preferenceViewModel,
             UserDAOInterface userDAO,
-            DisplayPetsViewModel displayPetsViewModel) {
-        PreferenceController preferenceController = createPreferenceUseCase(viewManagerModel, loggedInViewModel, userDAO, displayPetsViewModel);
-        return new PreferenceView(preferenceViewModel, preferenceController, viewManagerModel, loggedInViewModel);
+            DisplayPetsViewModel displayPetsViewModel,
+            PetDAOInterface petDAO,
+            APIInfoInterface infoDAO){
+        GetMatchingController matchingController = createMatchingUseCase(infoDAO, preferenceViewModel);
+        PreferenceController preferenceController = createPreferenceUseCase(viewManagerModel, loggedInViewModel,
+                userDAO, displayPetsViewModel, infoDAO, preferenceViewModel);
+        DisplayPetsController displayPetsController = createDisplayPetsUseCase(viewManagerModel, loggedInViewModel, userDAO, petDAO);
+        return new PreferenceView(preferenceViewModel, preferenceController, matchingController, displayPetsController);
 
     }
 

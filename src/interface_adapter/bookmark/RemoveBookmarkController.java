@@ -1,10 +1,8 @@
 package interface_adapter.bookmark;
 
-import interface_adapter.SessionManager;
+import utils.SessionManager;
 import use_case.bookmarks.BookmarkInputBoundary;
 import use_case.bookmarks.BookmarkInputData;
-
-import java.util.Scanner;
 
 /**
  * Controller class responsible for removing bookmarks.
@@ -27,6 +25,6 @@ public class RemoveBookmarkController {
      *
      */
     public void execute(int petID){
-        this.removeBookmarkInteractor.execute(new BookmarkInputData(SessionManager.getCurrentUser(), petID));
+        this.removeBookmarkInteractor.execute(new BookmarkInputData(SessionManager.getInstance().getCurrentUser(), petID));
     }
 }

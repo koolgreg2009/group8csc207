@@ -1,10 +1,9 @@
 package interface_adapter.signup;
 
 /**
- * Represents the state of the signup process, which includes user input and any validation errors.
- *
- * @version 1.0
- * @since 2024-07-20
+ * Represents the state of the signup process, including user input and any validation errors.
+ * This class holds information about the user's signup details and provides methods to get
+ * and set these details, along with any error messages related to them.
  */
 public class SignupState {
     private String username = "";
@@ -21,9 +20,9 @@ public class SignupState {
     private String phoneError = null;
 
     /**
-     * Constructor for creating a new copy of SignupState based on an existing SignupState.
+     * Constructs a new SignupState as a copy of an existing SignupState.
      *
-     * @param copy SignupState to copy
+     * @param copy The SignupState to copy.
      */
     public SignupState(SignupState copy) {
         username = copy.username;
@@ -38,28 +37,26 @@ public class SignupState {
         emailError = copy.emailError;
         phone = copy.phone;
         phoneError = copy.phoneError;
-
     }
 
     /**
-     * Constructor to create a default SignupState that is empty.
+     * Constructs a default SignupState with empty fields.
      */
-    // Because of the previous copy constructor, the default constructor must be explicit.
     public SignupState() {}
 
     /**
      * Gets the username.
      *
-     * @return the username
+     * @return the username.
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * Gets the username error message
+     * Gets the username error message.
      *
-     * @return the username error if there is one
+     * @return the username error message, or null if there is no error.
      */
     public String getUsernameError() {
         return usernameError;
@@ -75,30 +72,12 @@ public class SignupState {
     }
 
     /**
-     * Gets the password error message.
+     * Gets the repeated password.
      *
-     * @return the password error if there is one
-     */
-    public String getPasswordError() {
-        return passwordError;
-    }
-
-    /**
-     * Gets the repeated password
-     *
-     * @return the repeated password
+     * @return the repeated password.
      */
     public String getRepeatPassword() {
         return repeatPassword;
-    }
-
-    /**
-     * Gets the repeat password error.
-     *
-     * @return the repeat password error if there is one
-     */
-    public String getRepeatPasswordError() {
-        return repeatPasswordError;
     }
 
     /**
@@ -110,14 +89,6 @@ public class SignupState {
         return name;
     }
 
-    /**
-     * Gets the name error message
-     *
-     * @return the name error if there is one
-     */
-    public String getNameError() {
-        return nameError;
-    }
 
     /**
      * Gets the email.
@@ -129,37 +100,21 @@ public class SignupState {
     }
 
     /**
-     * Gets the email error message
+     * Gets the email error message.
      *
-     * @return the email error if there is one
+     * @return the email error message, or null if there is no error.
      */
-    public String getEmailError() {
-        return emailError;
-    }
 
-    /**
-     * Gets the phone number.
-     *
-     * @return the phone number.
-     */
     public String getPhone() {
         return phone;
     }
 
     /**
-     * Gets the phone number error message
+     * Gets the phone number error message.
      *
-     * @return the phone number error if there is one
+     * @return the phone number error message, or null if there is no error.
      */
-    public String getPhoneError() {
-        return phoneError;
-    }
 
-    /**
-     * Sets the username.
-     *
-     * @param username the username being set
-     */
     public void setUsername(String username) {
         this.username = username.trim();
     }
@@ -167,7 +122,7 @@ public class SignupState {
     /**
      * Sets the username error message.
      *
-     * @param usernameError the error and message being sent if there is a username error
+     * @param usernameError the error message to set for the username.
      */
     public void setUsernameError(String usernameError) {
         this.usernameError = usernameError;
@@ -176,90 +131,56 @@ public class SignupState {
     /**
      * Sets the password.
      *
-     * @param password the password being set
+     * @param password the password to set.
      */
     public void setPassword(String password) {
         this.password = password.trim();
     }
 
-    /**
-     * Sets the password error message.
-     *
-     * @param passwordError the error and message being sent if there is a password error
-     */
-    public void setPasswordError(String passwordError) {
-        this.passwordError = passwordError;
-    }
 
     /**
-     * Sets the repeated password
+     * Sets the repeated password.
      *
-     * @param repeatPassword the repeated password being set
+     * @param repeatPassword the repeated password to set.
      */
     public void setRepeatPassword(String repeatPassword) {
         this.repeatPassword = repeatPassword.trim();
     }
 
-    /**
-     * Sets the repeated password error message.
-     *
-     * @param repeatPasswordError the error and message being sent if there is a repeat password error
-     */
-    public void setRepeatPasswordError(String repeatPasswordError) {
-        this.repeatPasswordError = repeatPasswordError;
-    }
 
     /**
      * Sets the name.
      *
-     * @param name the name being set
+     * @param name the name to set.
      */
     public void setName(String name) { this.name = name.trim(); }
 
     /**
      * Sets the name error message.
      *
-     * @param nameError the error and message being sent if there is a name error
+     * @param nameError the error message to set for the name.
      */
     public void setNameError(String nameError) { this.nameError = nameError; }
 
     /**
      * Sets the email.
      *
-     * @param email the email being set
+     * @param email the email to set.
      */
     public void setEmail(String email) { this.email = email.trim(); }
 
     /**
-     * Sets the email error message.
-     *
-     * @param emailError the error and message being sent if there is an email error
-     */
-    public void setEmailError(String emailError) { this.emailError = emailError; }
-
-    /**
      * Sets the phone number.
      *
-     * @param phone the phone number being set
+     * @param phone the phone number to set.
      */
     public void setPhone(String phone) { this.phone = phone.trim(); }
 
     /**
-     * Sets the phone error message.
+     * Returns a string representation of the SignupState, including the values of all fields.
      *
-     * @param phoneError the error and message being sent if there is a phone error
+     * @return a string representation of the SignupState.
      */
-    public void setPhoneError(String phoneError) { this.phoneError = phoneError; }
 
-    @Override
-    public String toString() {
-        return "SignupState{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", repeatPassword='" + repeatPassword + '\'' +
-                "name='" + name + '\'' +
-                "email='" + email + '\'' +
-                "phone='" + phone + '\'' +
-                '}';
-    }
 }
+
