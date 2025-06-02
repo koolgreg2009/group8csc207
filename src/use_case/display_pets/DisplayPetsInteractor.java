@@ -42,12 +42,14 @@ public class DisplayPetsInteractor implements DisplayPetsInputBoundary {
      *
      * @param loggedInInputData the input data containing the username of the user requesting the display of pets
      */
+    // rn this doesnt work. does not display pets
     @Override
     public void execute(DisplayPetsInputData loggedInInputData) {
         String userName = loggedInInputData.getUserName();
         User user = userDAO.get(userName);
-        UserPreference pref = ((AdopterUser)user).getPreferences();
-		ArrayList<Pet> pets = petDAO.getPreferencePets(pref);
+        //UserPreference pref = ((AdopterUser)user).getPreferences();
+        String username = user.getUsername();
+		ArrayList<Pet> pets = userDAO.getPreferencePets(username);
 		List<PetDTO> petDtoList = pets == null ? new ArrayList<PetDTO>()
 				: pets.stream()
 						.map(pet -> new PetDTO(pet.getPetID(), pet.getName(), pet.getBreed(), pet.getGender(),

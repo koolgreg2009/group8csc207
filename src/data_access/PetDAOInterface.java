@@ -24,7 +24,10 @@ public interface PetDAOInterface {
      */
     Pet get(int petID);
 
+
+
     /**
+     * (OLD) This will be moved to userDAO since it makes more sense to search via username
      * Retrieves a list of pets that match the specified user preferences.
      *
      * @param userPreference the {@link UserPreference} object containing user preferences.
