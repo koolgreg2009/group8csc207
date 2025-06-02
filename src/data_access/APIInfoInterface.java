@@ -32,29 +32,29 @@ public interface APIInfoInterface {
      */
     void getLocation() throws IOException;
 
-    /**
-     * Persists or saves the data that has been retrieved or modified.
-     *
-     * @param key the key used to identify the data to save.
-     * @param breedNames a list of strings representing the breed names to save.
-     */
-    void save(String key, List<String> breedNames);
+//    /**
+//     * Persists or saves the data that has been retrieved or modified.
+//     *
+//     * @param key the key used to identify the data to save.
+//     * @param breedNames a list of strings representing the breed names to save.
+//     */
+//    void save(String key, List<String> breedNames);
 
     /**
      * Checks if a specific string exists in the data associated with the specified key.
      *
      * @param string the string to check for existence.
-     * @param key the key used to identify the data to check against.
+     * @param table the key used to identify the data to check against.
      * @return {@code true} if the string exists, {@code false} otherwise.
      */
-    boolean exists(String string, String key);
+    boolean exists(String string, String table);
 
     /**
      * Checks if any of the specified strings exist in the data associated with the specified key.
      *
      * @param strings a list of strings to check for existence.
-     * @param key the key used to identify the data to check against.
+     * @param table the key used to identify the data to check against.
      * @return {@code true} if any of the strings exist, {@code false} otherwise.
      */
-    boolean exists(List<String> strings, String key);
+    boolean exists(List<String> strings, String table);
 }
