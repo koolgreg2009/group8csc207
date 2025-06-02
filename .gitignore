@@ -1,2 +1,4 @@
 *target/
 pets.json
+users.json
+data.db
