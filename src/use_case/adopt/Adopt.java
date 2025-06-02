@@ -49,7 +49,9 @@ public class Adopt implements AdoptInputBoundary {
         List<String> users = userDAO.removePetFromAllUserBookmarks(pet.getPetID());
         petDAO.save(pet);
         for (String u : users) {
-            userDAO.get(u).addNotif(pet.getName() + " has found a home.");
+            String message = pet.getName() + " has found a home.";
+            userDAO.get(u).addNotif(message);
+            userDAO.addNotification(u, message);
         }
         AdoptOutputData outputData = new AdoptOutputData(pet.getOwner(), pet.getEmail(), pet.getPhoneNum(),
                 String.valueOf(pet.getName()));

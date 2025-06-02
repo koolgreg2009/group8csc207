@@ -55,9 +55,7 @@ public class PreferenceInteractor implements PreferenceInputBoundary {
             condition2 = false;
         }
         if (condition1 && condition2) {
-            User user = userDataAccessObject.get(preferenceData.getUsername());
-            ((AdopterUser) user).setPreferences(preference);
-            userDataAccessObject.save(user);
+            userDataAccessObject.updatePreferences(preferenceData.getUsername(), preference);
             userPresenter.prepareSuccessView();
         }
     }

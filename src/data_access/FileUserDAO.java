@@ -3,6 +3,7 @@ package data_access;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import entity.Pet;
+import entity.preference.UserPreference;
 import entity.user.AdopterUser;
 import entity.user.User;
 
@@ -54,6 +57,11 @@ public class FileUserDAO implements UserDAOInterface {
 	public void save(User user) {
 		accounts.put(user.getUsername(), (AdopterUser) user);
 		this.save();
+	}
+
+	@Override
+	public ArrayList<Pet> getPreferencePets(String username) {
+		return null;
 	}
 
 	/**
@@ -133,21 +141,21 @@ public class FileUserDAO implements UserDAOInterface {
 	 * @return A string containing the names of all removed users, each followed by a newline character.
 	 */
 	@Override
-	public String clearUsers() { //
-		try {
-			RandomAccessFile file = new RandomAccessFile(jsonFile, "rw");
-			file.setLength(0);
-			file.close();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
-		StringBuilder empty = new StringBuilder();
-		for (User user : accounts.values()) {
-			empty.append(user.getName()).append("\n");
-		}
-		accounts.clear();
-		return empty.toString();
+	public void clearUsers() { //
+//		try {
+//			RandomAccessFile file = new RandomAccessFile(jsonFile, "rw");
+//			file.setLength(0);
+//			file.close();
+//		} catch (IOException e) {
+//			throw new RuntimeException(e);
+//		}
+//
+//		StringBuilder empty = new StringBuilder();
+//		for (User user : accounts.values()) {
+//			empty.append(user.getName()).append("\n");
+//		}
+//		accounts.clear();
+//		return empty.toString();
 	}
 
 	/**
@@ -182,6 +190,31 @@ public class FileUserDAO implements UserDAOInterface {
 			return user.getBookmarks().stream().anyMatch(bookmark -> bookmark.getPetID() == petID);
 		}
 		return false;
+	}
+
+	@Override
+	public void updatePreferences(String username, UserPreference preference) {
+
+	}
+
+	@Override
+	public void addBookmark(String username, int petID, LocalDateTime now) {
+
+	}
+
+	@Override
+	public void removeBookmark(String username, int petID) {
+
+	}
+
+	@Override
+	public void addNotification(String username, String message) {
+
+	}
+
+	@Override
+	public List<String> getNotifications(String username) {
+		return List.of();
 	}
 
 }

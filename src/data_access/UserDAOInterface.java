@@ -1,6 +1,11 @@
 package data_access;
+import entity.Pet;
+import entity.preference.UserPreference;
 import entity.user.User;
 
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +23,9 @@ public interface UserDAOInterface {
 	 * @param user The user to be saved.
 	 */
 	void save(User user);
+
+	// makes more sense to put this in the user dao
+	ArrayList<Pet> getPreferencePets(String username);
 
 	/**
 	 * Checks if a user with the specified identifier (username) already exists in the data source.
@@ -48,7 +56,7 @@ public interface UserDAOInterface {
 	 *
 	 * @return A string listing the names of all users that were removed, each on a new line.
 	 */
-	String clearUsers();
+	void clearUsers();
 
 	/**
 	 * Retrieves the user with the specified username.
@@ -75,4 +83,13 @@ public interface UserDAOInterface {
 	 */
 	boolean userHasBookmark(String username, int petID);
 
+	void updatePreferences(String username, UserPreference preference);
+
+	void addBookmark(String username, int petID, LocalDateTime now);
+
+	void removeBookmark(String username, int petID);
+
+	void addNotification(String username, String message);
+
+	List<String> getNotifications(String username);
 }

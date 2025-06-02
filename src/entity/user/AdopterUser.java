@@ -98,6 +98,7 @@ public class AdopterUser extends CommonUser{
 	public void addBookmark(Bookmark bookmark) {
 		bookmarks.add(bookmark);
 	}
+	// need to
 
 	/**
 	 * Removes the specified bookmark from the adopter user.
@@ -115,6 +116,22 @@ public class AdopterUser extends CommonUser{
 	 */
 	public List<Bookmark> getBookmarks() {
 		return this.bookmarks;
+	}
+
+	/**
+	 * In state check to see if user has a bookmark
+	 * @param petID
+	 * @return boolean based on if bookmark is present or not.
+	 */
+	public boolean hasBookmark(int petID) {
+		if (bookmarks == null) return false;
+
+		for (Bookmark b : bookmarks) {
+			if (b.getPetID() == petID) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

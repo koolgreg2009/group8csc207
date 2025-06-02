@@ -30,8 +30,7 @@ public class GetNotifInteractor implements GetNotifInputBoundary{
      * @param getNotifInputData the data containing the username for which notifications are to be retrieved
      */
     public void execute(GetNotifInputData getNotifInputData){
-        AdopterUser user = ((AdopterUser) userDAO.get(getNotifInputData.getUser()));
-        List<String> listNotifs = user.getNotifications();
+        List<String> listNotifs = userDAO.getNotifications(getNotifInputData.getUser());
 
         GetNotifOutputData outputData = new GetNotifOutputData(listNotifs);
         userPresenter.updateNotif(outputData);

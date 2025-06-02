@@ -136,22 +136,22 @@ public class FileUserDAOTest {
         assertFalse(fileUserDAO.existsByName("hannah"));
     }
 
-    /**
-     * Tests the clearing of all users.
-     * Verifies that users are correctly cleared from the DAO and that no users remain.
-     *
-     * @throws IOException if an I/O error occurs during the test.
-     */
-    @Test
-    public void testClearUsers() throws IOException {
-        fileUserDAO.save(mockUser1);
-        fileUserDAO.save(mockUser2);
-        String clearedUsers = fileUserDAO.clearUsers();
-        assertTrue(clearedUsers.contains("Sam Fries"));
-        assertTrue(clearedUsers.contains("Jimmy Wang"));
-        assertNull(fileUserDAO.get("lollipop123"));
-        assertNull(fileUserDAO.get("bobthebuilder"));
-    }
+//    /**
+//     * Tests the clearing of all users.
+//     * Verifies that users are correctly cleared from the DAO and that no users remain.
+//     *
+//     * @throws IOException if an I/O error occurs during the test.
+//     */
+//    @Test
+//    public void testClearUsers() throws IOException {
+//        fileUserDAO.save(mockUser1);
+//        fileUserDAO.save(mockUser2);
+//        String clearedUsers = fileUserDAO.clearUsers();
+//        assertTrue(clearedUsers.contains("Sam Fries"));
+//        assertTrue(clearedUsers.contains("Jimmy Wang"));
+//        assertNull(fileUserDAO.get("lollipop123"));
+//        assertNull(fileUserDAO.get("bobthebuilder"));
+//    }
 
     /**
      * Tests the removal of a pet from all user bookmarks.

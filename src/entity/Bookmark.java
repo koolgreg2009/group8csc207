@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 public class Bookmark {
+	private final String username;
 	private final int petID;
 	private final LocalDateTime bookmarkedDate;
 
@@ -23,8 +24,8 @@ public class Bookmark {
 	 * @param time the date and time when the bookmark was created
 	 */
 	@JsonCreator()
-	public Bookmark(@JsonProperty("petID") int petID, @JsonProperty("time") LocalDateTime time) {
-
+	public Bookmark(String username, @JsonProperty("petID") int petID, @JsonProperty("time") LocalDateTime time) {
+		this.username = username;
 		this.petID = petID;
 		this.bookmarkedDate = time;
 	}
