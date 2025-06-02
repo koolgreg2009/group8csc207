@@ -12,7 +12,7 @@
 
 # About
 Our project is a platform that lists verified and healthy pets for adoption.
-The program will act as a pet adoption site in which users are able to scroll through pets that are up for adoption.
+The program will simulate as a pet adoption site in which users are able to scroll through pets that are up for adoption.
 Users looking to adopt are able to view all pets currently available for adoption.
 Each user will be prompted to make a profile with their unique identification on the webpage,
 which they have to sign in to view the listed pets.
@@ -20,7 +20,9 @@ Additionally, users can set preferences on their profile page and use those pref
 The preference profile will include questions regarding the preferred pet type (cat for now), size, age, and
 location to help find the perfect fit for the pet and the new owner.
 Users can view pet listings that match their preference in the home page. They can interact with pet listings through 
-ways such as adding/removing pets as bookmarks, viewing additional information about the pet, and adopting the pet.
+ways such as adding/removing pets as bookmarks, viewing additional information about the pet, and adopting the pet. 
+In the additional information page, users can click on the TextLabel "breed", in which information about the breed
+will be displayed. 
 
 In the home page, users can navigate to the notifications page, where they can view notification messages about if 
 their bookmarked pet has been adopted, the preference page where they can change their preferences, as well as the 
@@ -42,6 +44,25 @@ bookmark page, where they can view bookmarked pets as pet listings.
 ## APIs Used
 * [RescueGroups.org](https://rescuegroups.org/services/adoptable-pet-data-api/): API that provides us adoptable pet data.
 * [TheCATAPI](https://documenter.getpostman.com/view/5578104/RWgqUxxh#intro): API that returns cat breed information.
+
+## Data persistence
+* The project offers two forms of data storage systems:
+  * Files
+  * SQLite
+* Respective DAO runs SQL queries to read and write entity information
+* To swap between the implementations, simply uncomment and comment out the respective initialization codes in [Main.java](src/app/Main.java)
+
+### Files
+* Stores entities in json form using DAO's with File prefix in users.json, pets.json, and data.json
+* 
+### SQL Usage
+* Stores User, Pet, Bookmark, UserPreference Entities in SQL tables within data.db
+* Uses SQLite. No database setup required — app will create `.db` files on first run.
+* run sqlite3 data.db to view contents of tables
+* Two main entities are User and Pet, with respective primary keys username and pet_id. User to UserPreference is 1 to 1,
+but stored in separate table as it's not a primitive datatype. User to bookmark is one to many, with primary key being
+  (user, pet_id). 
+* Misc data such as pet locations and breed names are stored in the locations and breeds table. 
 
 # Technical Problems and Notes
 N/A (Feel free to fill it out or check currently ongoing issues)
