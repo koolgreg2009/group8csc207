@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * species, breeds, age range, activity level, location, and gender.
  */
 public class UserPreference{
+	private String username;
 	private String species;
 	private List<String> breeds;
 	private int minAge;
@@ -16,14 +17,6 @@ public class UserPreference{
 	private String activityLevel;
 	private String location;
 	private String gender;
-
-	/**
-	 * Constructs an empty {@code UserPreference} object.
-	 * <p>This constructor allows for the creation of a {@code UserPreference} object
-	 * without initializing any fields. Fields can be set using setter methods.
-	 */
-	public UserPreference(){
-	}
 
 	/**
 	 * Constructs a {@code UserPreference} object with the specified preferences.
@@ -36,7 +29,8 @@ public class UserPreference{
 	 * @param location      the preferred location of the pet
 	 * @param gender        the preferred gender of the pet
 	 */
-	public UserPreference(String species, List<String> breeds, int minAge, int maxAge, String activityLevel, String location, String gender){
+	public UserPreference(String username, String species, List<String> breeds, int minAge, int maxAge, String activityLevel, String location, String gender){
+		this.username = username;
 		this.species = species;
 		this.breeds = breeds;
 		this.minAge = minAge;
@@ -45,7 +39,21 @@ public class UserPreference{
 		this.location = location;
 		this.gender = gender;
 	}
+	/**
+	 * Constructs an empty {@code UserPreference} object.
+	 * <p>This constructor allows for the creation of a {@code UserPreference} object
+	 * without initializing any fields. Fields can be set using setter methods.
+	 */
+	public UserPreference(){
+	}
 
+	/**
+	 *  Getter method for username
+	 * @return string username
+	 */
+	public String getUsername() {
+		return username;
+	}
 	/** Gets the user's preferred species
 	 * @return A string of the user's preferred species
 	 */
