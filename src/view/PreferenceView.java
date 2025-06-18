@@ -5,6 +5,7 @@ import interface_adapter.display_pets.DisplayPetsController;
 import interface_adapter.get_matching.GetMatchingController;
 import interface_adapter.preference.PreferenceController;
 import interface_adapter.preference.PreferenceViewModel;
+import utils.SessionManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -118,6 +119,7 @@ public class PreferenceView extends JPanel implements ActionListener, PropertyCh
 
                     if (preferenceViewModel.validatePreferences()) {
                         preferenceController.execute(
+                                SessionManager.getInstance().getCurrentUser(),
                                 preferenceState.getSpecies(),
                                 preferenceViewModel.capitalizeFirstLetter((preferenceState.getBreed().trim()).split(", ")),
                                 "breeds",

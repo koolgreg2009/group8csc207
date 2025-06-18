@@ -3,28 +3,22 @@ package data_access;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import entity.Pet;
 import entity.preference.UserPreference;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import utils.IdCounter;
 
 /**
  * The {@code FilePetDAO} class is responsible for handling the retrieval, parsing, and saving
  * of pet data to a JSON file. It implements the {@link PetDAOInterface} and interacts with the
  * RescueAPI to fetch pet data based on user preferences and availability.
  */
-public class FilePetDAO extends RescueAPIAbstract implements PetDAOInterface {
+public class FilePetDAO extends RescueAPIPetGet implements PetDAOInterface {
+    private File jsonFile;
     private final Map<String, Pet> pets = new HashMap<>();
 
     /**
@@ -35,7 +29,8 @@ public class FilePetDAO extends RescueAPIAbstract implements PetDAOInterface {
      * @throws IOException if an I/O error occurs while reading the JSON file or interacting with the API.
      */
     public FilePetDAO(String jsonPath) throws IOException {
-        super(jsonPath);
+        super();
+        this.jsonFile = new File(jsonPath);
         if (jsonFile.length() == 0) {
             fetchAndStorePets();
             save();
@@ -87,6 +82,7 @@ public class FilePetDAO extends RescueAPIAbstract implements PetDAOInterface {
      * @param userPreference the user preferences to filter pets by.
      * @return an {@link ArrayList} of {@link Pet} entities that match the user's preferences.
      */
+    // changed it so that it takes username instead of preference
     @Override
     public ArrayList<Pet> getPreferencePets(UserPreference userPreference) {
         ArrayList<Pet> matchingPets = new ArrayList<>();
@@ -150,108 +146,6 @@ public class FilePetDAO extends RescueAPIAbstract implements PetDAOInterface {
         return (min == 0 || value >= min) && (max == 0 || value <= max);
     }
 
-    /**
-     * Fetches and stores pet data from the RescueAPI.
-     *
-     * @throws IOException if an I/O error occurs during the API interaction.
-     */
-    public void fetchAndStorePets() throws IOException {
-        String response = makeAPICall("/public/animals/search/available/cats?limit=100");
-        JsonNode root = objectMapper.readTree(response);
-        JsonNode data = root.get("data");
-        JsonNode included = root.get("included");
-        Map<String, String> locationMap = parseLocations(included);
-        for (JsonNode petNode : data) {
-            Pet pet = parsePet(petNode, locationMap);
-            if (pet != null) {
-                save(pet);
-            }
-        }
-    }
-
-    /**
-     * Parses location data from the API response.
-     *
-     * @param included the included node from the API response.
-     * @return a map that associates location IDs with city and state strings.
-     */
-    private Map<String, String> parseLocations(JsonNode included) {
-        Map<String, String> locationMap = new HashMap<>();
-        if (included.isArray()) {
-            for (JsonNode item : included) {
-                if ("locations".equals(item.path("type").asText())) {
-                    String locationId = item.path("id").asText();
-                    String cityState = item.path("attributes").path("citystate").asText();
-                    locationMap.put(locationId, cityState);
-                }
-            }
-        }
-        return locationMap;
-    }
-
-    /**
-     * Parses a {@link JsonNode} representing a pet into a {@link Pet} entity.
-     *
-     * @param petNode the {@link JsonNode} representing the pet.
-     * @param locationMap a map of location IDs to city and state strings.
-     * @return a {@link Pet} entity, or {@code null} if the parsing fails.
-     * @throws IOException if an I/O error occurs during the parsing.
-     */
-    private Pet parsePet(JsonNode petNode, Map<String, String> locationMap) throws IOException {
-        String locationId = petNode.path("relationships").path("locations").path("data").get(0).path("id").asText();
-        String location = locationMap.get(locationId).isEmpty() ? "N/A" : locationMap.get(locationId);
-        String orgId = petNode.get("relationships").get("orgs").get("data").get(0).get("id").asText();
-        String orgUrl = "/public/orgs/" + orgId;
-        String orgResponseBody = makeAPICall(orgUrl);
-        JsonNode orgRoot = objectMapper.readTree(orgResponseBody);
-        JsonNode dataNode = orgRoot.get("data");
-        JsonNode orgData = dataNode.get(0).get("attributes");
-        String owner = orgData.get("name").asText();
-        String email = orgData.has("email") ? orgData.get("email").asText().replaceAll("\\s+", "") : "N/A";
-        String phoneNum = orgData.has("phone") ? orgData.get("phone").asText().replaceAll("\\s+", "") : "N/A";
-        int age = petNode.get("attributes").has("ageString") ? parseAgeString(petNode.get("attributes").get("ageString").asText()) : 0;
-        String breed = petNode.get("attributes").get("breedPrimary").asText();
-        String desc =  petNode.get("attributes").has("descriptionText") ? removeHTML(petNode.get("attributes").get("descriptionText").asText()) : "N/A";
-        String activityLevel = petNode.get("attributes").has("activityLevel")
-                ? petNode.get("attributes").get("activityLevel").asText()
-                : "N/A";
-        String gender = petNode.get("attributes").has("sex") ? petNode.get("attributes").get("sex").asText().replaceAll("\\s+", "") : "N/A";
-        String name = "N/A";
-        if (petNode.get("attributes").has("name")) {
-            name = petNode.get("attributes").get("name").asText();
-        }
-        String imgUrl = petNode.get("attributes").has("pictureThumbnailUrl") ? petNode.get("attributes").get("pictureThumbnailUrl").asText() : "";
-        String parsedUrl = imgUrl.split("\\?")[0];
-        return new Pet(
-                owner,
-                email,
-                phoneNum,
-                IdCounter.getNextID(),
-                "Cat",
-                age,
-                breed,
-                gender,
-                activityLevel,
-                desc,
-                location,
-                true,
-                name,
-                parsedUrl
-        );
-    }
-
-    /**
-     * Parses a string representing age into an integer value representing months.
-     *
-     * <p>RI: The format of the ageString must be in "x Years y Months" format.</p>
-     *
-     * @param ageString the string representing the age of the pet.
-     * @return the age of the pet in months.
-     */
-    private int parseAgeString(String ageString) {
-        String[] split =  ageString.split(" ");
-        return Integer.parseInt(split[0]);
-    }
 
     /**
      * Retrieves all pets that are available.
@@ -262,13 +156,5 @@ public class FilePetDAO extends RescueAPIAbstract implements PetDAOInterface {
 		return pets.values().stream().filter(pet -> pet.isAvailable()).collect(Collectors.toCollection(ArrayList::new));
 	}
 
-    /**
-     * Removes common HTML escape characters from a string.
-     *
-     * @param text the string from which to remove HTML escape characters.
-     * @return the cleaned string with HTML escape characters replaced with their corresponding symbols.
-     */
-    private String removeHTML(String text){
-        return text.replace("&nbsp;", " ").replace("&#39;", "'").replace("&amp;", "&").replace("&quot;", "\"");
-    }
+
 }

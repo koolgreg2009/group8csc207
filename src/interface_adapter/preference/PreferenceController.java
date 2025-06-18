@@ -36,8 +36,8 @@ public class PreferenceController {
      * @param locationKey   string to indicate to interactor what to read to validate location
      * @param breedKey      string to indicate to interactor what to read to validate breed
      */
-    public void execute(String species, List<String> breeds, String breedKey, Integer minAge, Integer maxAge, String activityLevel, String location, String locationKey, String gender){
-        UserPreference preferences = new UserPreference(species, breeds, minAge, maxAge, activityLevel, location, gender);
+    public void execute(String username, String species, List<String> breeds, String breedKey, Integer minAge, Integer maxAge, String activityLevel, String location, String locationKey, String gender){
+        UserPreference preferences = new UserPreference(username, species, breeds, minAge, maxAge, activityLevel, location, gender);
         PreferenceData initialPreferences = new PreferenceData(SessionManager.getInstance().getCurrentUser(), preferences, new PreferenceKeys(breedKey, locationKey));
         preferenceInteractor.execute(initialPreferences);
     }

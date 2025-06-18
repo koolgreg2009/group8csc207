@@ -5,7 +5,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.util.concurrent.TimeUnit;
@@ -13,27 +12,28 @@ import java.util.concurrent.TimeUnit;
 /**
  * Abstract class for interacting with the RescueGroups API and managing local JSON file operations.
  */
-public abstract class RescueAPIAbstract {
-    protected final File jsonFile;
+public class RescueAPIBase {
     protected final String API_KEY = "Av56m5jr";
     protected final String BASE_URL = "https://api.rescuegroups.org/v5";
     protected final OkHttpClient client;
     protected final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * Constructs a {@link RescueAPIAbstract} instance with the specified JSON file path.
+     * Constructs a {@link RescueAPIBase} instance with the specified JSON file path.
      * Sets up an HTTP client with custom timeouts.
      *
-     * @param jsonPath the path to the JSON file for storing or retrieving data.
      * @throws IOException if an I/O error occurs while initializing the file.
      */
-    protected RescueAPIAbstract(String jsonPath) throws IOException {
-        jsonFile = new File(jsonPath);
-        client = new OkHttpClient.Builder()
-                .connectTimeout(15, TimeUnit.SECONDS)
-                .writeTimeout(15, TimeUnit.SECONDS)
-                .readTimeout(25, TimeUnit.SECONDS)
-                .build();
+    protected RescueAPIBase() {
+        try {
+            client = new OkHttpClient.Builder()
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    .writeTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(25, TimeUnit.SECONDS)
+                    .build();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create client" + e.getMessage());
+        }
     }
 
     /**
@@ -77,4 +77,6 @@ public abstract class RescueAPIAbstract {
     protected ObjectMapper getObjectMapper() {
         return objectMapper;
     }
+
+
 }

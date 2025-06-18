@@ -2,12 +2,19 @@ package app;
 
 import java.awt.CardLayout;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.*;
+import entity.Pet;
+import entity.user.AdopterUser;
+import entity.user.User;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.get_notifis.NotifViewModel;
 import interface_adapter.bookmark.BookmarkViewModel;
@@ -17,6 +24,8 @@ import interface_adapter.display_pets.DisplayPetsViewModel;
 import interface_adapter.pet_bio.PetBioViewModel;
 import interface_adapter.preference.PreferenceViewModel;
 import interface_adapter.signup.SignupViewModel;
+import utils.DatabaseInitializer;
+import utils.DatabaseSeeder;
 import view.*;
 
 import static app.NotifViewUseCaseFactory.createNotifView;
@@ -65,21 +74,49 @@ public class Main {
         PetDAOInterface petDAO = null;
         APIInfoInterface infoDAO = null;
 
+        /**
+         * SQL DATA STORAGE IMPLEMENTATION INITIALIZATION
+         */
+        Connection conn = null;
+        String dbURL = "jdbc:sqlite:data.db";
+        try {
+            conn = DriverManager.getConnection(dbURL);
+            new DatabaseInitializer(conn).initializeSchema();
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+
         try{
-            userDAO = new FileUserDAO("./users.json");
-        } catch (IOException e) {
-            System.out.println("Could not open user data file.");
+            userDAO = new SQLUserDAO(conn);
+        } catch(SQLException e) {
+            System.out.println("Could not create user database \n " + e.getMessage());
         }
         try{
-            petDAO = new FilePetDAO("./pets.json");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+            infoDAO = new SQLAPIInfoDao(conn);
+        } catch(SQLException e) {
+            System.out.println("Could not create API info database \n " + e.getMessage());
         }
-        try{
-            infoDAO = new FileApiInfoDAO("./data.json");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        petDAO = new SQLPetDAO(conn);
+
+        /**
+         * FILE DATA STORAGE IMPLEMENTATION INITIALIZATION
+         */
+//        try{
+//            userDAO = new   FileUserDAO("./users.json");
+//        } catch (IOException e) {
+//            System.out.println("Could not open user data file.");
+//        }
+//        try{
+//            petDAO = new FilePetDAO("./pets.json");
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        try{
+//            infoDAO = new FileApiInfoDAO("./data.json");
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
+
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel,
                 preferenceViewModel, userDAO, displayPetsViewModel);

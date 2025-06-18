@@ -51,7 +51,7 @@ public class RemoveBookmarkInteractor implements BookmarkInputBoundary {
         }
 
         user.removeBookmark(bookmarkToRemove);
-        userDAO.save(user);
+        userDAO.removeBookmark(user.getUsername(), inputData.getPetID());
         List<Pet> pets = new ArrayList<>();
         List<LocalDateTime> times = new ArrayList<>();
         for(Bookmark bookmark: user.getBookmarks()){

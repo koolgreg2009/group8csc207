@@ -3,9 +3,9 @@ package data_access;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -14,8 +14,9 @@ import java.util.*;
  * the retrieval, parsing, and saving of API data related to cat breeds and locations.
  * It interacts with a JSON file to store and manage the retrieved data.
  */
-public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterface{
+public class FileApiInfoDAO extends RescueAPIBase implements APIInfoInterface{
     private final Map<String, List<String>> data = new HashMap<>();
+    private File jsonFile;
 
     /**
      * Constructs a {@code FileApiInfoDAO} instance and initializes it with data from the specified JSON file.
@@ -25,7 +26,8 @@ public class FileApiInfoDAO extends RescueAPIAbstract implements APIInfoInterfac
      * @throws IOException if an I/O error occurs while reading the JSON file or interacting with the API.
      */
     public FileApiInfoDAO(String jsonPath) throws IOException {
-        super(jsonPath);
+        super();
+        this.jsonFile = new File(jsonPath);
         if (jsonFile.length() == 0) {
             getBreedInfo();
             getLocation();
