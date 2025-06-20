@@ -54,7 +54,7 @@ bookmark page, where they can view bookmarked pets as pet listings.
 
 ### Files
 * Stores entities in json form using DAO's with File prefix in users.json, pets.json, and data.json
-* 
+
 ### SQL Usage
 * Stores User, Pet, Bookmark, UserPreference Entities in SQL tables within data.db
 * Uses SQLite. No database setup required — app will create `.db` files on first run.
